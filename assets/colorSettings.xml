@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<library>
+	<colorSettings amount="4">
+		<colorSetting name="red" id="0">
+			<points amount="4">
+				<point id="0">
+					<x>0</x>
+					<y>0</y>
+				</point>
+				<point id="1">
+					<x>0.0513784513</x>
+					<y>0.204444438</y>
+				</point>
+				<point id="2">
+					<x>0.692982435</x>
+					<y>0.52444452</y>
+				</point>
+				<point id="3">
+					<x>1</x>
+					<y>1</y>
+				</point>
+			</points>
+		</colorSetting>
+		<colorSetting name="green" id="1">
+			<points amount="4">
+				<point id="0">
+					<x>0</x>
+					<y>0</y>
+				</point>
+				<point id="1">
+					<x>0.0701754466</x>
+					<y>0.182222277</y>
+				</point>
+				<point id="2">
+					<x>0.715538859</x>
+					<y>0.511111021</y>
+				</point>
+				<point id="3">
+					<x>1</x>
+					<y>1</y>
+				</point>
+			</points>
+		</colorSetting>
+		<colorSetting name="blue" id="2">
+			<points amount="4">
+				<point id="0">
+					<x>0</x>
+					<y>0</y>
+				</point>
+				<point id="1">
+					<x>0.12656644</x>
+					<y>0.395555586</y>
+				</point>
+				<point id="2">
+					<x>0.708020031</x>
+					<y>0.600000024</y>
+				</point>
+				<point id="3">
+					<x>1</x>
+					<y>1</y>
+				</point>
+			</points>
+		</colorSetting>
+		<colorSetting name="intensity" id="3">
+			<points amount="4">
+				<point id="0">
+					<x>0</x>
+					<y>0</y>
+				</point>
+				<point id="1">
+					<x>0.333333343</x>
+					<y>0.333333343</y>
+				</point>
+				<point id="2">
+					<x>0.666666687</x>
+					<y>0.666666687</y>
+				</point>
+				<point id="3">
+					<x>1</x>
+					<y>1</y>
+				</point>
+			</points>
+		</colorSetting>
+	</colorSettings>
+</library>
+
