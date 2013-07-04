@@ -18,7 +18,8 @@ Dependencies
 -------
 
 libcinder (http://libcinder.org/)
-CinderIlda (https://github.com/saynono/CinderIlda)
+Cinder-Gwen (https://github.com/reakinator/Cinder-Gwen)
+Cinder-Ilda (https://github.com/saynono/CinderIlda)
 
 
 Notes
