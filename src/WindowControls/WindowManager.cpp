@@ -45,18 +45,21 @@ void WindowManager::createMainControls(){
 
 void WindowManager::addSettingsList(){
     
-//    mCanvas->GetDock()->GetLeft
+    mSettingsControl = new SettingsPanel( mCanvas );
+    mSettingsControl->setup();
+
+    /*
     Gwen::Controls::DockBase* dock = new Gwen::Controls::DockBase( mCanvas );
     dock->Dock( Gwen::Pos::Fill );
     Gwen::Controls::CollapsibleList* pList = new Gwen::Controls::CollapsibleList( dock );
     pList->SetHeight(300);
-//    mCanvas->
     Gwen::Controls::TabControl* tabControl = dock->GetLeft()->GetTabControl();
 	tabControl->AddPage( "Settings", pList );
 	dock->GetLeft()->SetWidth( 250 );
     
     Gwen::Controls::CollapsibleCategory* cat = pList->Add( "Basic" );
-    
+     
+    */
 //    Gwen::Controls::Button* pButton = cat->Add("Normal Window");//new Gwen::Controls::Button( cat );
 ////    pButton->SetPos( 0, 0 );
 //    
@@ -117,8 +120,18 @@ void WindowManager::addPreviewWindow(){
 	control->SetPos( 0, 0 );
     control->SetPadding(Gwen::Padding(0,0,0,0));
 	control->Dock( Gwen::Pos::Fill );
+//    window->DisableResizing();
     pPreviewControl = control;
     
+}
+
+void WindowManager::setPreviewFbo(ci::gl::Fbo* fbo){
+    pPreviewControl->setPreviewFbo(fbo);
+}
+
+void WindowManager::setIldaFrame(ciilda::Frame* frame){
+    pPreviewControl->setIldaFrame(frame);
+    mSettingsControl->setIldaFrame(frame);
 }
 
 

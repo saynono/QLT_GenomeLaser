@@ -11,6 +11,7 @@
 
 #include "cinder/app/AppBasic.h"
 #include "cinder/Xml.h"
+#include "cinder/gl/Fbo.h"
 
 #include "cigwen/GwenRendererGl.h"
 #include "cigwen/GwenInput.h"
@@ -27,6 +28,10 @@
 
 #include "ColourCorrectionWindow.h"
 #include "PreviewWindow.h"
+#include "SettingsPanel.h"
+
+
+#include "CinderIldaFrame.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -44,6 +49,9 @@ public:
     
     ColourCorrectionWindow* getColorValueController();
 
+    void setPreviewFbo(ci::gl::Fbo* fbo);
+    void setIldaFrame(ciilda::Frame* frame);
+    
 private:
     
     void addPreviewWindow();
@@ -56,8 +64,11 @@ private:
 	Gwen::Controls::Canvas*     mCanvas;
     PreviewWindow*              pPreviewControl;
     ColourCorrectionWindow*     pColourControl;
+    SettingsPanel*              mSettingsControl;
         
     XmlTree                     mSettingsSaver;
+    
+    ci::gl::Fbo*                mPreviewFbo;
     
 };
 

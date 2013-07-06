@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>CinderApp.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.libcinder.LaserTrails</string>
+	<string>com.nono.laser.QLT</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -20,6 +20,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.graphics-design</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

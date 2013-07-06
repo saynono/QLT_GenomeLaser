@@ -13,6 +13,9 @@
 
 #include "cinder/Matrix44.h"
 #include "cinder/Camera.h"
+#include "cinder/gl/Fbo.h"
+
+#include "CinderIldaFrame.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -27,10 +30,17 @@ public:
 	virtual void Render( Gwen::Skin::Base* skin );
 	virtual void RenderUnder( Gwen::Skin::Base* skin );
     
+    void setPreviewFbo(ci::gl::Fbo* fbo);
+    void setIldaFrame(ciilda::Frame* frame);
+    
 private:
     ci::Matrix44f		mCubeRotation;
 	ci::CameraPersp		mCamera;
-	
+    ci::gl::Fbo*        mPreviewFbo;
+    ciilda::Frame*      mIldaFrame;
+    bool                bPreviewFboSet;
+    bool                bIldaFrameSet;
+
 };
 
 

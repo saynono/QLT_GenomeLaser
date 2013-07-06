@@ -27,7 +27,7 @@
 		ADB0303F56EB457F9B7FB5AA /* OscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EC51F005F404DFCB04B7B87 /* OscBundle.cpp */; };
 		DB767C9C9A644BEFB1E72162 /* OscListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 858AF63FDBD648A892518096 /* OscListener.cpp */; };
 		FC33FBD1238E4C24BDE11866 /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E1267F1AFDB4DDBA06E5DA6 /* UdpSocket.cpp */; };
-		FF2FD43E1786268E00D19321 /* LaserTrailsApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4321786268E00D19321 /* LaserTrailsApp.cpp */; };
+		FF2FD43E1786268E00D19321 /* QLT_Main_App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */; };
 		FF2FD43F1786268E00D19321 /* ColourCorrectionWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4341786268E00D19321 /* ColourCorrectionWindow.cpp */; };
 		FF2FD4401786268E00D19321 /* LaserDrawersBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4371786268E00D19321 /* LaserDrawersBase.cpp */; };
 		FF2FD4411786268E00D19321 /* PreviewWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4391786268E00D19321 /* PreviewWindow.cpp */; };
@@ -105,6 +105,7 @@
 		FF390BAA16F7A0C600375C51 /* CinderGwen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3908CE16F7A0C600375C51 /* CinderGwen.cpp */; };
 		FF390BAB16F7A0C600375C51 /* GwenInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3908D016F7A0C600375C51 /* GwenInput.cpp */; };
 		FF390BAC16F7A0C600375C51 /* GwenRendererGl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3908D216F7A0C600375C51 /* GwenRendererGl.cpp */; };
+		FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -152,7 +153,7 @@
 		E5327341DC434474884B9096 /* OscTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OscTypes.h; path = ../../../../../../../cinder_apprewrite/blocks/OSC/src/osc/OscTypes.h; sourceTree = "<group>"; };
 		EBE010C6F9484F47931D368C /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
 		FD7C21B4480549A6908E2741 /* UdpSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UdpSocket.h; path = ../../../../../../../cinder_apprewrite/blocks/OSC/src/ip/UdpSocket.h; sourceTree = "<group>"; };
-		FF2FD4321786268E00D19321 /* LaserTrailsApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LaserTrailsApp.cpp; path = ../src/LaserTrailsApp.cpp; sourceTree = "<group>"; };
+		FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = QLT_Main_App.cpp; path = ../src/QLT_Main_App.cpp; sourceTree = "<group>"; };
 		FF2FD4341786268E00D19321 /* ColourCorrectionWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColourCorrectionWindow.cpp; sourceTree = "<group>"; };
 		FF2FD4351786268E00D19321 /* ColourCorrectionWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColourCorrectionWindow.h; sourceTree = "<group>"; };
 		FF2FD4371786268E00D19321 /* LaserDrawersBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LaserDrawersBase.cpp; sourceTree = "<group>"; };
@@ -350,6 +351,8 @@
 		FF3908D116F7A0C600375C51 /* GwenInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GwenInput.h; sourceTree = "<group>"; };
 		FF3908D216F7A0C600375C51 /* GwenRendererGl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GwenRendererGl.cpp; sourceTree = "<group>"; };
 		FF3908D316F7A0C600375C51 /* GwenRendererGl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GwenRendererGl.h; sourceTree = "<group>"; };
+		FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsPanel.cpp; sourceTree = "<group>"; };
+		FFB6C8291788787D00F41E8C /* SettingsPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsPanel.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -384,7 +387,7 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				FF2FD4321786268E00D19321 /* LaserTrailsApp.cpp */,
+				FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */,
 				FF2FD4331786268E00D19321 /* WindowControls */,
 			);
 			name = Source;
@@ -540,6 +543,8 @@
 				FF2FD43A1786268E00D19321 /* PreviewWindow.h */,
 				FF2FD43B1786268E00D19321 /* WindowManager.cpp */,
 				FF2FD43C1786268E00D19321 /* WindowManager.h */,
+				FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */,
+				FFB6C8291788787D00F41E8C /* SettingsPanel.h */,
 			);
 			name = WindowControls;
 			path = ../src/WindowControls;
@@ -980,6 +985,9 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "http://say-nono.com";
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "QLT_GenomeLaser" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -1096,7 +1104,7 @@
 				FF390BAA16F7A0C600375C51 /* CinderGwen.cpp in Sources */,
 				FF390BAB16F7A0C600375C51 /* GwenInput.cpp in Sources */,
 				FF390BAC16F7A0C600375C51 /* GwenRendererGl.cpp in Sources */,
-				FF2FD43E1786268E00D19321 /* LaserTrailsApp.cpp in Sources */,
+				FF2FD43E1786268E00D19321 /* QLT_Main_App.cpp in Sources */,
 				FF2FD43F1786268E00D19321 /* ColourCorrectionWindow.cpp in Sources */,
 				FF2FD4401786268E00D19321 /* LaserDrawersBase.cpp in Sources */,
 				FF2FD4411786268E00D19321 /* PreviewWindow.cpp in Sources */,
@@ -1104,6 +1112,7 @@
 				FF2FD4C71786269A00D19321 /* etherdream.c in Sources */,
 				FF2FD5051786269A00D19321 /* CinderEtherdream.cpp in Sources */,
 				FF2FD5061786269A00D19321 /* CinderIldaFrame.cpp in Sources */,
+				FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

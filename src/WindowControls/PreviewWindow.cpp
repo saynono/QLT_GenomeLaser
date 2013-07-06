@@ -19,6 +19,7 @@ using namespace ci;
 PreviewWindow::PreviewWindow( Gwen::Controls::Base *parent )
 : Controls::Base( parent, "cigwen sample CustomControl" )
 {
+    bPreviewFboSet = false;
 }
 
 PreviewWindow::~PreviewWindow()
@@ -105,6 +106,11 @@ void PreviewWindow::Render( Skin::Base* skin )
     gl::color( ci::Color( 0,0,0 ) );
     gl::drawSolidRect(Rectf(0,0,width,height));
     
+    if(bIldaFrameSet){
+        mIldaFrame->draw(0,0,width,height);
+//        gl::draw( mPreviewFbo->getTexture(),Rectf(0,0,m_InnerBounds.w,m_InnerBounds.h) );
+    }
+    
     gl::popMatrices();    
     
 }
@@ -112,4 +118,15 @@ void PreviewWindow::Render( Skin::Base* skin )
 
 void PreviewWindow::RenderUnder( Skin::Base* skin )
 {
+}
+
+void PreviewWindow::setPreviewFbo(ci::gl::Fbo* fbo){
+    
+    mPreviewFbo = fbo;
+    bPreviewFboSet = true;
+}
+
+void PreviewWindow::setIldaFrame(ciilda::Frame* frame){
+    mIldaFrame = frame;
+    bIldaFrameSet = true;
 }
