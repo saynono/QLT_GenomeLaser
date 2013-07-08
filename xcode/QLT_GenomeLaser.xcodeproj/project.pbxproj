@@ -105,6 +105,7 @@
 		FF390BAA16F7A0C600375C51 /* CinderGwen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3908CE16F7A0C600375C51 /* CinderGwen.cpp */; };
 		FF390BAB16F7A0C600375C51 /* GwenInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3908D016F7A0C600375C51 /* GwenInput.cpp */; };
 		FF390BAC16F7A0C600375C51 /* GwenRendererGl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3908D216F7A0C600375C51 /* GwenRendererGl.cpp */; };
+		FF81DBFA178B5D10000566C1 /* Preview3DWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */; };
 		FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */; };
 /* End PBXBuildFile section */
 
@@ -351,8 +352,11 @@
 		FF3908D116F7A0C600375C51 /* GwenInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GwenInput.h; sourceTree = "<group>"; };
 		FF3908D216F7A0C600375C51 /* GwenRendererGl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GwenRendererGl.cpp; sourceTree = "<group>"; };
 		FF3908D316F7A0C600375C51 /* GwenRendererGl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GwenRendererGl.h; sourceTree = "<group>"; };
+		FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Preview3DWindow.cpp; sourceTree = "<group>"; };
+		FF81DBF9178B5D10000566C1 /* Preview3DWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preview3DWindow.h; sourceTree = "<group>"; };
 		FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsPanel.cpp; sourceTree = "<group>"; };
 		FFB6C8291788787D00F41E8C /* SettingsPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsPanel.h; sourceTree = "<group>"; };
+		FFB6C82D1789725E00F41E8C /* CinderLaserDac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CinderLaserDac.h; path = cilaserdac/CinderLaserDac.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -541,6 +545,8 @@
 				FF2FD4361786268E00D19321 /* LaserDrawers */,
 				FF2FD4391786268E00D19321 /* PreviewWindow.cpp */,
 				FF2FD43A1786268E00D19321 /* PreviewWindow.h */,
+				FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */,
+				FF81DBF9178B5D10000566C1 /* Preview3DWindow.h */,
 				FF2FD43B1786268E00D19321 /* WindowManager.cpp */,
 				FF2FD43C1786268E00D19321 /* WindowManager.h */,
 				FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */,
@@ -622,6 +628,7 @@
 		FF2FD4B11786269A00D19321 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				FFB6C82B1789721000F41E8C /* cilaserdac */,
 				FF2FD4B21786269A00D19321 /* cietherdream */,
 				FF2FD4B51786269A00D19321 /* ciilda */,
 			);
@@ -959,6 +966,14 @@
 			path = ../../../../src/cigwen;
 			sourceTree = "<group>";
 		};
+		FFB6C82B1789721000F41E8C /* cilaserdac */ = {
+			isa = PBXGroup;
+			children = (
+				FFB6C82D1789725E00F41E8C /* CinderLaserDac.h */,
+			);
+			name = cilaserdac;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -969,6 +984,7 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
+				FF81DBFB178B65BA000566C1 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1017,6 +1033,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		FF81DBFB178B65BA000566C1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /usr/bin/ruby;
+			shellScript = "#!/usr/bin/env ruby\n\n# Giants' Shoulders Trodden Upon\n# Based on the xcode auto-versioning script for Subversion by Axel Andersson\n# Updated for git by Marcus S. Zarra and Matt Long\n# Converted to ruby by Abizer Nasir\n\n# Improved? By Jonathan Zhan\n\n# Appends the number of commits on the current branch and a short git hash to the version number set in Xcode.\n# Writes this information to CFBundleVersion in your Apps info.plist\n\n# How to use:\n# Xcode > Product > Edit Schemes\n# Pick a Scheme (I use Archive, so it only gets updatethis when doing new distribution builds)\n# Add a run script to pre-actions for your chosen scheme\n# Set your shell to \"/usr/bin/env ruby\" and get build settings from your target of choice\n# You're done!\n\n######################################################\n\n# These are the common places where git is installed.\n# Change this if your path isn't here\n\ncommon_git_paths = %w[/usr/bin/git /usr/local/git/bin/git /opt/local/bin/git]\ngit_path = \"\"\n\ncommon_git_paths.each do |p|\nif File.exist?(p)\ngit_path = p\nbreak\nend\nend\n\nif git_path == \"\"\nputs \"Path to git not found\"\nexit\nend\n\nsourceRoot = ENV['PROJECT_DIR']\n\nDir.chdir(sourceRoot){\n\tcommand_line = git_path + \" rev-parse --short HEAD\"\n\tsha = `#{command_line}`.chomp #short git hash\n\tver = `git describe`\n\trevRaw = `git rev-list --all | wc -l`.chomp #total number of commits\n\trev = \"r\" + revRaw.gsub(/\\s+/,\"\") # last git tag\n    \n\tinfo_file = ENV['SRCROOT'].gsub(/ /){\"\\\\ \"} + \"/\" + ENV['INFOPLIST_FILE'].gsub(/ /){\"\\\\ \"}\n    \n\t`/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion #{rev+'/'+sha}\" #{info_file}`\n    `/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion #{rev+'/'+sha}\" #{ENV['INFOPLIST_PATH']}`\n}\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {
@@ -1113,6 +1145,7 @@
 				FF2FD5051786269A00D19321 /* CinderEtherdream.cpp in Sources */,
 				FF2FD5061786269A00D19321 /* CinderIldaFrame.cpp in Sources */,
 				FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */,
+				FF81DBFA178B5D10000566C1 /* Preview3DWindow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,9 +25,12 @@
 #include "Gwen/Controls/WindowControl.h"
 #include "Gwen/Controls/CollapsibleList.h"
 #include "Gwen/Controls/CollapsibleCategory.h"
+#include "Gwen/Controls/StatusBar.h"
+#include "Gwen/Controls/Label.h"
 
 #include "ColourCorrectionWindow.h"
 #include "PreviewWindow.h"
+#include "Preview3DWindow.h"
 #include "SettingsPanel.h"
 
 
@@ -51,10 +54,12 @@ public:
 
     void setPreviewFbo(ci::gl::Fbo* fbo);
     void setIldaFrame(ciilda::Frame* frame);
+    void setLaserController(ciilda::LaserController* controller);
     
 private:
     
     void addPreviewWindow();
+    void addPreview3DWindow();
     void addSettingsList();
     void addColourCorrectionWindow();
     void createMainControls();
@@ -63,12 +68,16 @@ private:
 	cigwen::GwenInputRef        mGwenInput;
 	Gwen::Controls::Canvas*     mCanvas;
     PreviewWindow*              pPreviewControl;
+    Preview3DWindow*            pPreview3DControl;
     ColourCorrectionWindow*     pColourControl;
+    Gwen::Controls::Label*      pStatusFPSLabel;
+    Gwen::Controls::Label*      pStatusBuildLabel;
     SettingsPanel*              mSettingsControl;
         
     XmlTree                     mSettingsSaver;
     
     ci::gl::Fbo*                mPreviewFbo;
+    string                      mRenderDate;
     
 };
 

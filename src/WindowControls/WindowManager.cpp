@@ -10,14 +10,17 @@
 
 	
 void WindowManager::setup(){
+    mRenderDate = "BUILD " + toString(__DATE__) + "  |  " + toString(__TIME__);
     createMainControls();
     addSettingsList();
     addPreviewWindow();
+    addPreview3DWindow();
     addColourCorrectionWindow();
 }
 	
 void WindowManager::update(){
-	
+	mSettingsControl->update();
+    pStatusFPSLabel->SetText( toString((int)getFrameRate()) + " FPS        ");
 }
 
 void WindowManager::draw(){
@@ -25,6 +28,7 @@ void WindowManager::draw(){
 }
 
 void WindowManager::createMainControls(){
+    
 	getWindow()->setTitle( "QLT GenomeLaser v1" );
         
 	mRenderer = new cigwen::GwenRendererGl();
@@ -40,47 +44,29 @@ void WindowManager::createMainControls(){
 	mCanvas->SetDrawBackground( true );
 	mCanvas->SetBackgroundColor( cigwen::toGwen( Color::gray( 0.2 ) ) );
     
-	mGwenInput = cigwen::GwenInput::create( mCanvas );    
+	mGwenInput = cigwen::GwenInput::create( mCanvas );
+    
+    
+    
+//    Dock( Pos::Fill );
+    Gwen::Controls::StatusBar* pStatus = new Gwen::Controls::StatusBar( mCanvas );
+    pStatusBuildLabel = new Gwen::Controls::Label( pStatus );
+    pStatusBuildLabel->SetText( mRenderDate );
+    pStatusBuildLabel->SetWidth(300);
+    pStatusFPSLabel = new Gwen::Controls::Label( pStatus );
+    pStatusFPSLabel->SetText( "000 FPS" );
+    pStatusFPSLabel->SetWidth(300);
+    pStatusFPSLabel->SetAlignment( Gwen::Pos::Right );
+    pStatus->SetPadding(Gwen::Padding( 10,5,10,5 ));
+    pStatus->AddControl( pStatusBuildLabel, false );
+    pStatus->SetPadding( Gwen::Padding( 10,5,10,5 ));
+    pStatus->AddControl( pStatusFPSLabel, true );
 }
 
 void WindowManager::addSettingsList(){
     
     mSettingsControl = new SettingsPanel( mCanvas );
     mSettingsControl->setup();
-
-    /*
-    Gwen::Controls::DockBase* dock = new Gwen::Controls::DockBase( mCanvas );
-    dock->Dock( Gwen::Pos::Fill );
-    Gwen::Controls::CollapsibleList* pList = new Gwen::Controls::CollapsibleList( dock );
-    pList->SetHeight(300);
-    Gwen::Controls::TabControl* tabControl = dock->GetLeft()->GetTabControl();
-	tabControl->AddPage( "Settings", pList );
-	dock->GetLeft()->SetWidth( 250 );
-    
-    Gwen::Controls::CollapsibleCategory* cat = pList->Add( "Basic" );
-     
-    */
-//    Gwen::Controls::Button* pButton = cat->Add("Normal Window");//new Gwen::Controls::Button( cat );
-////    pButton->SetPos( 0, 0 );
-//    
-//    pColourControl = new ColourCorrectionWindow(cat);
-////	pColourControl->SetPos( 0, 40 );
-//    pColourControl->SetPadding(Gwen::Padding(0,0,0,0));
-////    pColourControl->SetSize(240, 250);
-////    pColourControl->SetHeight(150);
-//	pColourControl->Dock( Gwen::Pos::Fill );
-//    
-//    
-//    auto window = new Gwen::Controls::WindowControl( cat );
-//	window->SetTitle( "PREVIEW" );
-//	window->SetSize( 480, 500 );
-//	window->SetPos( 400, 100 );
-//    window->SetPadding(Gwen::Padding(0,0,0,0));
-//	window->SetDeleteOnClose( true );
-//    window->SetClosable(false);
-////	tabControl->AddPage( "lala", window );
-//    
-//    
 
 }
 
@@ -106,10 +92,13 @@ void WindowManager::addColourCorrectionWindow(){
 
 void WindowManager::addPreviewWindow(){
     
+    int px = mSettingsControl->GetRenderBounds().x + mSettingsControl->GetRenderBounds().w;
+    
 	auto window = new Gwen::Controls::WindowControl( mCanvas );
 	window->SetTitle( "PREVIEW" );
 	window->SetSize( 480, 500 );
-	window->SetPos( getWindowWidth() - window->GetBounds().w, 0 );
+//	window->SetPos( getWindowWidth() - window->GetBounds().w, 0 );
+	window->SetPos( px, 0 );
     window->SetPadding(Gwen::Padding(0,0,0,0));
 	window->SetDeleteOnClose( true );
     window->SetClosable(false);
@@ -125,13 +114,36 @@ void WindowManager::addPreviewWindow(){
     
 }
 
+void WindowManager::addPreview3DWindow(){
+    
+	auto window = new Gwen::Controls::WindowControl( mCanvas );
+	window->SetTitle( "PREVIEW 3D" );
+	window->SetSize( 480, 500 );
+	window->SetPos( getWindowWidth() - window->GetBounds().w, 0 );
+    window->SetPadding(Gwen::Padding(0,0,0,0));
+	window->SetDeleteOnClose( true );
+    window->SetClosable(false);
+    
+	Preview3DWindow *control = new Preview3DWindow( window );
+	control->SetPos( 0, 0 );
+    control->SetPadding(Gwen::Padding(0,0,0,0));
+	control->Dock( Gwen::Pos::Fill );
+    //    window->DisableResizing();
+    pPreview3DControl = control;
+    
+}
+
 void WindowManager::setPreviewFbo(ci::gl::Fbo* fbo){
-    pPreviewControl->setPreviewFbo(fbo);
+    pPreview3DControl->setPreviewFbo(fbo);
 }
 
 void WindowManager::setIldaFrame(ciilda::Frame* frame){
     pPreviewControl->setIldaFrame(frame);
     mSettingsControl->setIldaFrame(frame);
+}
+
+void WindowManager::setLaserController(ciilda::LaserController* controller){
+    mSettingsControl->setLaserController(controller);
 }
 
 

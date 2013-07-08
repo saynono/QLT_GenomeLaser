@@ -24,10 +24,10 @@ private:
     
     WindowManager mWindowManager;
     
-    ciilda::Etherdream      mEtherdream;
-    ciilda::Frame           mIldaFrame;
+    ciilda::LaserController*    mLaserController;
+    ciilda::Frame               mIldaFrame;
     
-    ci::gl::Fbo             mPreviewFbo;
+    ci::gl::Fbo                 mPreview3DFbo;
     
 };
 
@@ -50,15 +50,18 @@ void QLT_Main_App::setup()
     setWindowSize(1280, 800);
     setWindowPos((getDisplay()->getWidth() - getWindowWidth()) / 2 , (getDisplay()->getHeight() - getWindowHeight()) / 2);
     mWindowManager.setup();
-    mEtherdream.setup();
+    
+    mLaserController = new ciilda::Etherdream();
+    mLaserController->setup();
 
     createInitialLaser();
 
 	gl::Fbo::Format format;
     //	format.setSamples( 2 ); // uncomment this to enable 4x antialiasing
-	mPreviewFbo = gl::Fbo( 1000, 1000, format );
-    mWindowManager.setPreviewFbo(&mPreviewFbo);
+	mPreview3DFbo = gl::Fbo( 1000, 1000, format );
+    mWindowManager.setPreviewFbo(&mPreview3DFbo);
     mWindowManager.setIldaFrame(&mIldaFrame);
+    mWindowManager.setLaserController(mLaserController);
     
     
 //    mWindowManager.getColorValueController()->getColorValues(&laserComm.mColorTableRed,0);
@@ -119,41 +122,33 @@ void QLT_Main_App::createInitialLaser(){
     mIldaFrame.addShape2d(shapeOrg,ColorA(1,0,0,1));
     mIldaFrame.addPath2d(something);
     mIldaFrame.addPath2d(triangle, ColorA(1,0,1,1));
-    mIldaFrame.moveTo(Vec2f(.3,.2));
-    mIldaFrame.lineTo(Vec2f(.6,.2));
-    mIldaFrame.lineTo(Vec2f(.6,.6));
     mIldaFrame.end();
+    mLaserController->setPoints(mIldaFrame);
+    mLaserController->send();
 }
 
 void QLT_Main_App::update()
 {
     mWindowManager.update();
+    mLaserController->setPoints(mIldaFrame);
+    mLaserController->send();
 }
 
 void QLT_Main_App::draw()
 {
 
-    mPreviewFbo.bindFramebuffer();
+    mPreview3DFbo.bindFramebuffer();
 	gl::clear( Color( 0, 0, 0 ) );
-    mIldaFrame.draw(0,0,mPreviewFbo.getWidth(),mPreviewFbo.getHeight());
-    mPreviewFbo.unbindFramebuffer();
+    mIldaFrame.draw(0,0,mPreview3DFbo.getWidth(),mPreview3DFbo.getHeight());
+    mPreview3DFbo.unbindFramebuffer();
 
-    // clear out the window with black
 	gl::clear( Color( 0, 0, 0 ) );
     
-//    float ratioX = getWindowWidth() / 4096.0f;
-//    float ratioY = getWindowHeight() / 4096.0f;
-//    float percent = (float)getMousePos().x/(float)getDisplay()->getWidth();
-//    l = min(l,max(0,(int)(l * percent)));
     
     mWindowManager.draw();
     
-    
-//    mIldaFrame.draw(10,10,300,300);
-//    
-//    gl::draw( mPreviewFbo.getTexture(),Rectf(10,320,300,600) );
-
-//    gl::draw( mPreviewFbo.getTexture() );
+//	gl::color( Color( 1,1,1 ) );
+//    gl::draw( mPreview3DFbo.getTexture() );
     
 }
 

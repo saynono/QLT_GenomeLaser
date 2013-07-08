@@ -10,7 +10,8 @@
 
 
 SettingsPanel::SettingsPanel(Gwen::Controls::Base *parent): Gwen::Controls::DockBase( parent ){
-//    , "QLT Settings Dock"
+    bIldaFrameSet = false;
+    bLaserControllerSet = false;
 }
 
 SettingsPanel::~SettingsPanel(){
@@ -42,13 +43,19 @@ void SettingsPanel::setup(){
     Gwen::Controls::CollapsibleList* pList = new Gwen::Controls::CollapsibleList( dock );
     pList->SetHeight(300);
 	tabControl->AddPage( "Settings", pList );
+    tabControl->SetAllowReorder(false);
+    
 	dock->GetLeft()->SetWidth( 250 );
     
-    Gwen::Controls::CollapsibleCategory* cat1 = pList->Add( "Basic" );
+    Gwen::Controls::CollapsibleCategory* cat1 = pList->Add( "Laser Stats" );
     Gwen::Controls::CollapsibleCategory* cat2 = pList->Add( "Laser Output Settings" );
+
+//    cat1->get
     
-    Gwen::Controls::Button* pButton1 = cat1->Add("Normal Window");//new Gwen::Controls::Button( cat );
-    Gwen::Controls::Button* pButton2 = cat1->Add("Normal Window");//new Gwen::Controls::Button( cat );
+    Gwen::Padding padding = Gwen::Padding( 10, 0, 10, 30 );
+    cat1->SetPadding( padding );
+//    Gwen::Controls::Button* pButton1 = cat1->Add("Normal Window");//new Gwen::Controls::Button( cat );
+//    Gwen::Controls::Button* pButton2 = cat1->Add("Normal Window");//new Gwen::Controls::Button( cat );
 
 //    Gwen::Controls::Button* pButton3 = cat2->Add("Not Normal Window");//new Gwen::Controls::Button( cat );
 //    Gwen::Controls::Button* pButton4 = cat2->Add("Burp");//new Gwen::Controls::Button( cat );
@@ -58,11 +65,17 @@ void SettingsPanel::setup(){
 //    cat2->SetSize(250, 400);
     
     mLaserCat = cat2;
+    mLaserStatsCat = cat1;
 
 }
 
 void SettingsPanel::update(){
-	
+    if(bIldaFrameSet){
+        mLabelsValueMap["Points Count"]->SetValue( toString( mIldaFrame->getPoints().size()) );
+        mLabelsValueMap["Length Blank"]->SetValue( toString( mIldaFrame->stats.lengthBlank) );
+        mLabelsValueMap["Length Visible"]->SetValue( toString( mIldaFrame->stats.lengthLines) );
+        mLabelsValueMap["Length Total"]->SetValue( toString( mIldaFrame->stats.lengthTotal) );
+    }
 }
 
 void SettingsPanel::setIldaFrame(ciilda::Frame* frame){
@@ -70,6 +83,7 @@ void SettingsPanel::setIldaFrame(ciilda::Frame* frame){
     
     Gwen::Controls::Base* pSlider;
     Gwen::Controls::Base* pCheckBox;
+    Gwen::Controls::Base* pLabel;
     
     pSlider = addSlider(mLaserCat, getBounds(mLaserCatElements), "Target Points Count", mIldaFrame->params.output.targetPointCount, 1, 3000 );
     mLaserCatElements.push_back(pSlider);
@@ -86,12 +100,52 @@ void SettingsPanel::setIldaFrame(ciilda::Frame* frame){
     pCheckBox = addCheckBox(mLaserCat, getBounds(mLaserCatElements), "Draw Points", mIldaFrame->params.draw.points );
     mLaserCatElements.push_back(pCheckBox);
     
+    pLabel = addProperty(mLaserCat, getBounds(mLaserCatElements), "Points Count", 0);
+    mLaserCatElements.push_back(pLabel);
+    
+    pLabel = addProperty(mLaserStatsCat, getBounds(mLaserStatsCatElements), "Length Blank", 0);
+    mLaserStatsCatElements.push_back(pLabel);
+
+    pLabel = addProperty(mLaserStatsCat, getBounds(mLaserStatsCatElements), "Length Visible", 0);
+    mLaserStatsCatElements.push_back(pLabel);
+    
+    pLabel = addProperty(mLaserStatsCat, getBounds(mLaserStatsCatElements), "Length Total", 0);
+    mLaserStatsCatElements.push_back(pLabel);
+    
+    bIldaFrameSet = true;
+    
+//    Rectf r = getBounds(mLaserCatElements);
+//    ColourCorrectionWindow *control = new ColourCorrectionWindow( mLaserCat );
+//    control->setup();
+//	control->SetPos( r.getX1(), r.getY1() );
+//    control->SetPadding(Gwen::Padding(0,0,0,0));
+//	control->Dock( Gwen::Pos::Fill );
+
 //    struct {
 //        bool doFlipX;
 //        bool doFlipY;
 //        Vec2f offset;
 //        Vec2f scale;
 //    } transform;
+
+}
+
+void SettingsPanel::setLaserController(ciilda::LaserController* controller){
+    mLaserController = controller;
+    
+    Gwen::Controls::Base* pSlider;
+    Gwen::Controls::Base* pCheckBox;
+    
+    pSlider = addSlider(mLaserCat, getBounds(mLaserCatElements), "Laser pps", mLaserController->getPPS(), 1000, 30000 );
+    mLaserCatElements.push_back(pSlider);
+    
+    bLaserControllerSet = true;
+
+
+//    pCheckBox = addCheckBox(mLaserCat, getBounds(mLaserCatElements), "Laser DAC PointPerSecond", mLaserController->getPPS() );
+//    mLaserCatElements.push_back(pCheckBox);
+    
+    
 
 }
 
@@ -151,15 +205,39 @@ Gwen::Controls::Base* SettingsPanel::addSlider( Base* pControl , Rectf bounds, s
     return pSlider;
 }
 
+Gwen::Controls::Base* SettingsPanel::addProperty( Base* pControl , Rectf bounds, string name, int val){
+    Gwen::Controls::Label* pLabelName = new Gwen::Controls::Label( pControl );
+    Gwen::Controls::Label* pLabelValue = new Gwen::Controls::Label( pControl );
+    int px = bounds.getX1();
+    int py = bounds.getY1();
+    int w = bounds.getWidth();
+    //    labeled->SetName( name );
+    pLabelName->SetPos( px, py );
+    pLabelName->SetText( name );
+    pLabelName->SetAlignment(Gwen::Pos::Left );
+//    pLabelName->SetName( name );
+
+    pLabelValue->SetPos( px, py );
+    pLabelValue->SetWidth( w );
+    pLabelValue->SetText( toString(val) );
+    pLabelValue->SetAlignment( Gwen::Pos::Right );
+    pLabelValue->SetName( name );
+
+    mLabelsValueMap[name] = pLabelValue;
+    return pLabelName;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////
 
 Rectf SettingsPanel::getBounds(const vector<Gwen::Controls::Base*>& vec){
     Rectf rect;
-    rect.set(10, vec.size() * 40 + 50, 200 + 10, 30);
-    //    int py = mSlider.size() * 20 + 50;
-    //    int px = 10;
-    //    int w = 200;
+    int h = 0;
+    int dist = 15;
+    for(int i=0;i<vec.size();i++){
+        h += vec[i]->GetSize().y + dist;
+    }
+    rect.set(10, h + 50, 200 + 10, 30);
     return rect;
 }
 
@@ -185,6 +263,10 @@ void SettingsPanel::onSliderLaserOutput( Base* pControl ){
         mIldaFrame->params.output.endCount = ( int ) pSlider->GetFloatValue();
         mIldaFrame->update();
     }
+    else if (controlName.compare("Laser pps") == 0){
+        mLaserController->setPPS(( int ) pSlider->GetFloatValue());
+    }
+    
     
 }
 
