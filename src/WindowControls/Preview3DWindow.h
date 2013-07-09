@@ -39,4 +39,6 @@ private:
     bool                bPreviewFboSet;
     bool                bIldaFrameSet;
     
+    gl::Texture         mImageTemp;
+    ci::gl::Fbo         mFboTemp;
 };

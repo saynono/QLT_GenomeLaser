@@ -10,7 +10,7 @@
 
 	
 void WindowManager::setup(){
-    mRenderDate = "BUILD " + toString(__DATE__) + "  |  " + toString(__TIME__);
+    mRenderDate = "BUILD " + toString(__DATE__) + " " + toString(__TIME__) + "  CINDER VERSION " + CINDER_VERSION_STR;
     createMainControls();
     addSettingsList();
     addPreviewWindow();
@@ -73,9 +73,9 @@ void WindowManager::addSettingsList(){
 void WindowManager::addColourCorrectionWindow(){
 	auto window = new Gwen::Controls::WindowControl( mCanvas );
 	window->SetTitle( "COLOUR CORRECTION" );
-	window->SetSize( 280, 300 );
+	window->SetSize( 180, 200 );
 //	window->SetPos( 200, 100 );
-	window->SetPos( getWindowWidth() - window->GetBounds().w - window->GetBounds().x - 480, 0 );
+	window->SetPos( 250, 600 );
     window->SetPadding(Gwen::Padding(0,0,0,0));
 	window->SetDeleteOnClose( true );
     window->SetClosable(false);
@@ -93,7 +93,7 @@ void WindowManager::addColourCorrectionWindow(){
 void WindowManager::addPreviewWindow(){
     
     int px = mSettingsControl->GetRenderBounds().x + mSettingsControl->GetRenderBounds().w;
-    
+    px = 250;
 	auto window = new Gwen::Controls::WindowControl( mCanvas );
 	window->SetTitle( "PREVIEW" );
 	window->SetSize( 480, 500 );

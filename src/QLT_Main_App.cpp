@@ -1,10 +1,13 @@
 #include "cinder/app/AppNative.h"
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Fbo.h"
-#include "WindowManager.h"
 
 #include "CinderIldaFrame.h"
 #include "CinderEtherdream.h"
+
+
+#include "WindowManager.h"
+#include "LaserPreview3D.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -26,8 +29,7 @@ private:
     
     ciilda::LaserController*    mLaserController;
     ciilda::Frame               mIldaFrame;
-    
-    ci::gl::Fbo                 mPreview3DFbo;
+    LaserPreview3D              mLaserPreview3D;
     
 };
 
@@ -56,20 +58,15 @@ void QLT_Main_App::setup()
 
     createInitialLaser();
 
-	gl::Fbo::Format format;
-    //	format.setSamples( 2 ); // uncomment this to enable 4x antialiasing
-	mPreview3DFbo = gl::Fbo( 1000, 1000, format );
-    mWindowManager.setPreviewFbo(&mPreview3DFbo);
+    mLaserPreview3D.setup( &mIldaFrame,1024,1024 );
+    
+    mWindowManager.setPreviewFbo( mLaserPreview3D.getTexture() );
     mWindowManager.setIldaFrame(&mIldaFrame);
     mWindowManager.setLaserController(mLaserController);
     
+    gl::disableDepthRead();
+    gl::disableDepthWrite();
     
-//    mWindowManager.getColorValueController()->getColorValues(&laserComm.mColorTableRed,0);
-//    mWindowManager.getColorValueController()->getColorValues(&laserComm.mColorTableGreen,1);
-//    mWindowManager.getColorValueController()->getColorValues(&laserComm.mColorTableBlue,2);
-//    mWindowManager.getColorValueController()->getColorValues(&laserComm.mColorTableIntensity,3);
-//
-//    mWindowManager.getColorValueController()->connectColorValues(&laserComm.mColorTableRed,&laserComm.mColorTableGreen,&laserComm.mColorTableBlue,&laserComm.mColorTableIntensity);
 }
 
 void QLT_Main_App::mouseDown( MouseEvent event )
@@ -105,7 +102,7 @@ void QLT_Main_App::createInitialLaser(){
     
     matrix.setToIdentity();
     matrix.scale(Vec2f( 1.0/(float)getWindowWidth(), 1.0/(float)getWindowHeight()));
-    matrix.scale(.1);
+    matrix.scale(.4);
     
     triangle.transform(matrix);
     something.transform(matrix);
@@ -117,11 +114,16 @@ void QLT_Main_App::createInitialLaser(){
     something.transform(matrix);
     shapeOrg.transform(matrix);
     
-//    mIldaFrame.params.output.targetPointCount = 200;
     mIldaFrame.begin();
     mIldaFrame.addShape2d(shapeOrg,ColorA(1,0,0,1));
     mIldaFrame.addPath2d(something);
     mIldaFrame.addPath2d(triangle, ColorA(1,0,1,1));
+//    mIldaFrame.moveTo(Vec2f(.2,.2));
+//    mIldaFrame.lineTo(Vec2f(.8,.2));
+//    mIldaFrame.setColor( ColorA(.5,.4,.2,.7) );
+//    mIldaFrame.lineTo(Vec2f(.8,.8));
+//    mIldaFrame.lineTo(Vec2f(.2,.8));
+//    mIldaFrame.lineTo(Vec2f(.2,.2));
     mIldaFrame.end();
     mLaserController->setPoints(mIldaFrame);
     mLaserController->send();
@@ -129,6 +131,7 @@ void QLT_Main_App::createInitialLaser(){
 
 void QLT_Main_App::update()
 {
+    mLaserPreview3D.update();
     mWindowManager.update();
     mLaserController->setPoints(mIldaFrame);
     mLaserController->send();
@@ -136,20 +139,15 @@ void QLT_Main_App::update()
 
 void QLT_Main_App::draw()
 {
-
-    mPreview3DFbo.bindFramebuffer();
-	gl::clear( Color( 0, 0, 0 ) );
-    mIldaFrame.draw(0,0,mPreview3DFbo.getWidth(),mPreview3DFbo.getHeight());
-    mPreview3DFbo.unbindFramebuffer();
-
-	gl::clear( Color( 0, 0, 0 ) );
     
+	gl::clear( Color( 0, 0, 0 ) ); 
+    gl::setViewport( getWindowBounds() );
+    
+    mLaserPreview3D.draw();
     
     mWindowManager.draw();
-    
-//	gl::color( Color( 1,1,1 ) );
-//    gl::draw( mPreview3DFbo.getTexture() );
-    
+
 }
+
 
 CINDER_APP_NATIVE( QLT_Main_App, RendererGl )

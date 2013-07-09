@@ -75,6 +75,8 @@ void SettingsPanel::update(){
         mLabelsValueMap["Length Blank"]->SetValue( toString( mIldaFrame->stats.lengthBlank) );
         mLabelsValueMap["Length Visible"]->SetValue( toString( mIldaFrame->stats.lengthLines) );
         mLabelsValueMap["Length Total"]->SetValue( toString( mIldaFrame->stats.lengthTotal) );
+        mLabelsValueMap["Contour Count"]->SetValue( toString( mIldaFrame->stats.countContours) );
+        mLabelsValueMap["Segment Count"]->SetValue( toString( mIldaFrame->stats.countSegments) );
     }
 }
 
@@ -100,8 +102,8 @@ void SettingsPanel::setIldaFrame(ciilda::Frame* frame){
     pCheckBox = addCheckBox(mLaserCat, getBounds(mLaserCatElements), "Draw Points", mIldaFrame->params.draw.points );
     mLaserCatElements.push_back(pCheckBox);
     
-    pLabel = addProperty(mLaserCat, getBounds(mLaserCatElements), "Points Count", 0);
-    mLaserCatElements.push_back(pLabel);
+    pLabel = addProperty(mLaserCat, getBounds(mLaserStatsCatElements), "Points Count", 0);
+    mLaserStatsCatElements.push_back(pLabel);
     
     pLabel = addProperty(mLaserStatsCat, getBounds(mLaserStatsCatElements), "Length Blank", 0);
     mLaserStatsCatElements.push_back(pLabel);
@@ -111,6 +113,13 @@ void SettingsPanel::setIldaFrame(ciilda::Frame* frame){
     
     pLabel = addProperty(mLaserStatsCat, getBounds(mLaserStatsCatElements), "Length Total", 0);
     mLaserStatsCatElements.push_back(pLabel);
+    
+    pLabel = addProperty(mLaserStatsCat, getBounds(mLaserStatsCatElements), "Contour Count", 0);
+    mLaserStatsCatElements.push_back(pLabel);
+    
+    pLabel = addProperty(mLaserStatsCat, getBounds(mLaserStatsCatElements), "Segment Count", 0);
+    mLaserStatsCatElements.push_back(pLabel);
+
     
     bIldaFrameSet = true;
     

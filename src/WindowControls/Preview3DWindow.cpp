@@ -20,6 +20,11 @@ Preview3DWindow::Preview3DWindow( Gwen::Controls::Base *parent )
 : Controls::Base( parent, "Preview3DWindow" )
 {
     bPreviewFboSet = false;
+    mImageTemp = gl::Texture( loadImage( loadAsset( "images/logo_outline_white.png" ) ) );
+    gl::Fbo::Format format;
+//    format.enableDepthBuffer(false);
+    mFboTemp = gl::Fbo(mImageTemp.getWidth(),mImageTemp.getHeight(),format);
+    mFboTemp.getTexture().setFlipped(true);
 }
 
 Preview3DWindow::~Preview3DWindow()
@@ -28,7 +33,15 @@ Preview3DWindow::~Preview3DWindow()
 
 void Preview3DWindow::Render( Skin::Base* skin )
 {
-	Vec2f pos( cigwen::fromGwen( LocalPosToCanvas() ) );
+
+    mFboTemp.bindFramebuffer();
+    gl::clear();
+    gl::color(1, 1, 1);
+    gl::draw( mImageTemp );
+    mFboTemp.unbindFramebuffer();
+
+    
+    Vec2f pos( cigwen::fromGwen( LocalPosToCanvas() ) );
 	ci::Rectf bounds( cigwen::fromGwen( GetBounds() ) );
 	float aspect = (float)m_InnerBounds.w / (float)m_InnerBounds.h;
     
@@ -50,14 +63,15 @@ void Preview3DWindow::Render( Skin::Base* skin )
     Vec2f offset(bounds.getWidth()-width,bounds.getHeight()-height);
 	gl::translate( offset/2.0 );
     
-    gl::color( ci::Color( 0,0,0 ) );
+    gl::color( ci::Color( 1,0,0 ) );
     gl::drawSolidRect(Rectf(0,0,width,height));
     
     if(bPreviewFboSet){
-        gl::draw( mPreview3DFbo->getTexture(),Rectf(0,0,m_InnerBounds.w,m_InnerBounds.h) );
+        gl::color( ci::Color( 1,1,1 ) );
+        gl::draw( mPreview3DFbo->getTexture(0), Rectf(0,0,width,height) );
     }
     
-    gl::popMatrices();    
+    gl::popMatrices();
     
 }
 
