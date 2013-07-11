@@ -16,6 +16,7 @@
 #include "cinder/gl/Fbo.h"
 
 #include "CinderIldaFrame.h"
+#include "LaserPreview3D.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -31,16 +32,29 @@ public:
 	virtual void RenderUnder( Gwen::Skin::Base* skin );
     
     void setPreviewFbo(ci::gl::Fbo* fbo);
-    void onMousePress(int x, int y, bool bDown);
+    void setLaserPreview3d( LaserPreview3D* laserPreview3D );
+    
+    virtual void OnMouseMoved( int x, int y, int deltaX, int deltaY );
+    virtual void OnMouseClickLeft( int x, int y, bool bDown );
+    virtual void OnMouseEnter();
+    virtual void OnMouseLeave();
+
+public:
     
     Gwen::Event::Caller	onPress;
     
 private:
+    
+    Vec2f               mMouseDownOffset;
+    Vec2f               mMouseDownSmoothed;
+    Vec3f               mCameraPosition;
     ci::Matrix44f		mCubeRotation;
 	ci::CameraPersp		mCamera;
     ci::gl::Fbo*        mPreview3DFbo;
+    LaserPreview3D*     mLaserPreview3D;
     bool                bPreviewFboSet;
     bool                bIldaFrameSet;
+    bool                bMouseDown;
     
     gl::Texture         mImageTemp;
     ci::gl::Fbo         mFboTemp;

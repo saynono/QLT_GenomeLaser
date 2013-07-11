@@ -13,9 +13,11 @@ void LaserPreview3D::setup( ciilda::Frame* frame, int w, int h ){
     
     mLaserAngle = 60;
     
+    mPov			= POV( cinder::app::App::get() , ci::Vec3f( 0.0f, 0.0f, 10.0f ), ci::Vec3f( 0.0f, 0.0f, 0.0f ) );
+    
 	mCamera = CameraPersp( w, h, 60.0f, 0.0001f, 1000.0f );
 	mCamera.lookAt( Vec3f( 0.0f, -1.0f, 0.0f ), Vec3f::zero() );
-	mCameraPosition = Vec3f( 0.0f, 0.0f, -9.0f );
+	mCameraPosition = Vec3f( 0.0f, 0.0f, -3.0f );
 	mUp				= Vec3f::yAxis();
     mIldaFrame      = frame;
     
@@ -32,6 +34,13 @@ void LaserPreview3D::update(){
 	mCamera.lookAt( mCameraPosition, mTargetPosition, mUp );
     mTempRotation.rotate( Vec3f( 0.16666f, 0.333333f, 0.666666f ).normalized(), 0.01f );
 //	mTempRotation *= mQuat;
+//
+//    mPov.update();
+
+//    
+//    float xd = ( mCurrentMouse.x - mLastMouse.x ) * 0.025f;	
+//	mPov.adjustAngle( -xd, mCurrentMouse.y - ( getWindowHeight() * 0.5f ) );
+//
 }
 
 void LaserPreview3D::draw(){

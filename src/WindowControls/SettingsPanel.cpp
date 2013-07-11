@@ -231,7 +231,6 @@ Rectf SettingsPanel::getBounds(const vector<Gwen::Controls::Base*>& vec){
         h += vec[i]->GetSize().y + dist;
     }
     rect.set(10, h + 50, 200 + 10, 30);
-    console() << " ADD : "  << rect << std::endl;
     return rect;
 }
 

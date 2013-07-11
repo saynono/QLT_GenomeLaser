@@ -8,6 +8,9 @@
 
 #include "WindowManager.h"
 #include "LaserPreview3D.h"
+#include "DataManager.h"
+#include "DataToShapeConverter.h"
+
 
 using namespace ci;
 using namespace ci::app;
@@ -30,6 +33,9 @@ private:
     ciilda::LaserController*    mLaserController;
     ciilda::Frame               mIldaFrame;
     LaserPreview3D              mLaserPreview3D;
+    DataManager                 mDataManager;
+    DataToShapeConverter        mShapeConverter;
+    int                         mDataCounter;
     
 };
 
@@ -47,7 +53,14 @@ void QLT_Main_App::setup()
 #endif
 //	addAssetDirectory( rootPath / "assets" );
    
+    
+    mDataCounter = 0;
+    
     gl::enableVerticalSync();
+    
+    mDataManager.setup();
+    mShapeConverter.setup();
+
     
     setWindowSize(getDisplay()->getWidth()-100, getDisplay()->getHeight()-100);
     setWindowPos((getDisplay()->getWidth() - getWindowWidth()) / 2 , (getDisplay()->getHeight() - getWindowHeight()) / 2);
@@ -131,6 +144,33 @@ void QLT_Main_App::createInitialLaser(){
 
 void QLT_Main_App::update()
 {
+    
+    int dc = (int)(getElapsedSeconds() * 5.0);
+    if( dc != mDataCounter){
+        mDataCounter = dc;
+        char d = mDataManager.getNextData();
+        Shape2d s = mShapeConverter.convertChar(d);
+        Rectf r = s.calcBoundingBox();
+        int h = r.getHeight();
+        console() << "HEIGHT: " << r << std::endl;
+        
+        float scale = 1.0/ ((float)h * 5);
+        MatrixAffine2f matrix;
+        matrix.setToIdentity(); 
+        matrix.scale( Vec2f(scale,scale) );
+        s.transform(matrix);
+//        matrix.translate( -Vec2f(r.x1,40) );
+        matrix.setToIdentity();
+        matrix.translate( Vec2f(.5,-.5) );
+        s.transform(matrix);
+        
+        mIldaFrame.begin();
+        mIldaFrame.addShape2d( s );
+        mIldaFrame.end();
+        mLaserController->setPoints(mIldaFrame);
+        mLaserController->send();
+    }
+    
     mLaserPreview3D.update();
     mWindowManager.update();
     mLaserController->setPoints(mIldaFrame);

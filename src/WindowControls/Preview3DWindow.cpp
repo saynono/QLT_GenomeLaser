@@ -19,24 +19,33 @@ using namespace ci;
 Preview3DWindow::Preview3DWindow( Gwen::Controls::Base *parent )
 : Controls::Base( parent, "Preview3DWindow" )
 {
+    
+    SetMouseInputEnabled( true );
+    
+    bMouseDown = false;
     bPreviewFboSet = false;
     mImageTemp = gl::Texture( loadImage( loadAsset( "images/logo_outline_white.png" ) ) );
     gl::Fbo::Format format;
 //    format.enableDepthBuffer(false);
     mFboTemp = gl::Fbo(mImageTemp.getWidth(),mImageTemp.getHeight(),format);
-    mFboTemp.getTexture().setFlipped(true);
-    
-//    onPress.Add( this, &Preview3DWindow::onMousePress );
-    
+    mFboTemp.getTexture().setFlipped(true);    
+//    this->onPress.Add( this, &Preview3DWindow::onMousePress );
+//    this->onPress.Add( this, &Preview3DWindow::onMousePressP );
 }
 
 Preview3DWindow::~Preview3DWindow()
 {
 }
 
+
 void Preview3DWindow::Render( Skin::Base* skin )
 {
+    
+//    mLaserPreview3D->
+//    mEyeNode.mAcc += Vec3f( posOffset.xy(), distFromCenter );
+//    console() << " mMouseDownSmoothed : " << mMouseDownSmoothed << std::endl;
 
+    
     mFboTemp.bindFramebuffer();
     gl::clear();
     gl::color(1, 1, 1);
@@ -53,7 +62,7 @@ void Preview3DWindow::Render( Skin::Base* skin )
     float width = bounds.getWidth();
     float height = bounds.getHeight();
     
-    if(aspect > 1){
+    if(aspect < 1){
         width /= aspect;
     }else{
         height *= aspect;
@@ -75,7 +84,7 @@ void Preview3DWindow::Render( Skin::Base* skin )
     }
     
     gl::popMatrices();
-    
+
 }
 
 
@@ -88,6 +97,40 @@ void Preview3DWindow::setPreviewFbo(ci::gl::Fbo* fbo){
     bPreviewFboSet = true;
 }
 
-void Preview3DWindow::onMousePress(int x, int y, bool bDown){
-    console() << " X : " << x << "  Y : " << y << "  " << bDown << std::endl;
+void Preview3DWindow::setLaserPreview3d( LaserPreview3D* laserPreview3D ){
+    mLaserPreview3D = laserPreview3D;
 }
+
+void Preview3DWindow::OnMouseMoved( int x, int y, int deltaX, int deltaY ){
+
+    if(bMouseDown){
+        Vec2f dist = mMouseDownOffset - Vec2f(x,y);
+        mCameraPosition = mLaserPreview3D->getCameraPosition();
+        mMouseDownSmoothed = lerp( mMouseDownSmoothed,dist,.04f );
+        
+        Quatf mQuat;
+        mQuat.set(mMouseDownSmoothed.x/1000.0, mMouseDownSmoothed.y/1000.0, 0);
+        
+//        mCameraPosition += Vec3f( mMouseDownSmoothed.xy(), -3.0 );
+//        mLaserPreview3D->setCameraPosition( mCameraPosition + Vec3f( mMouseDownSmoothed.xy(), -3.0 ) );
+    }
+}
+
+void Preview3DWindow::OnMouseClickLeft( int x, int y, bool bDown ) {
+    bMouseDown = bDown;
+    mMouseDownOffset = Vec2f(x,y);
+    mMouseDownSmoothed = Vec2f::zero();
+}
+
+void Preview3DWindow::OnMouseEnter(){
+    bMouseDown = false;
+}
+
+void Preview3DWindow::OnMouseLeave(){
+    bMouseDown = false;
+}
+
+
+
+
+

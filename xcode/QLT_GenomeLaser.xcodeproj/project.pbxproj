@@ -31,7 +31,6 @@
 		FF04652F178CCF30005FE797 /* CinderIldaFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF046203178CCF30005FE797 /* CinderIldaFrame.cpp */; };
 		FF2FD43E1786268E00D19321 /* QLT_Main_App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */; };
 		FF2FD43F1786268E00D19321 /* ColourCorrectionWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4341786268E00D19321 /* ColourCorrectionWindow.cpp */; };
-		FF2FD4401786268E00D19321 /* LaserDrawersBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4371786268E00D19321 /* LaserDrawersBase.cpp */; };
 		FF2FD4411786268E00D19321 /* PreviewWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4391786268E00D19321 /* PreviewWindow.cpp */; };
 		FF2FD4421786268E00D19321 /* WindowManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD43B1786268E00D19321 /* WindowManager.cpp */; };
 		FF3DAC57178CD3D000B6AF61 /* CinderGwen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3DA97B178CD3D000B6AF61 /* CinderGwen.cpp */; };
@@ -104,6 +103,9 @@
 		FF3DAE19178CD3F400B6AF61 /* Skin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3DAD73178CD3F400B6AF61 /* Skin.cpp */; };
 		FF3DAE1A178CD3F400B6AF61 /* ToolTip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3DAD74178CD3F400B6AF61 /* ToolTip.cpp */; };
 		FF3DAE1B178CD3F400B6AF61 /* Utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3DAD75178CD3F400B6AF61 /* Utility.cpp */; };
+		FF53DBBA178F018A0057A39B /* POV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF53DBB9178F018A0057A39B /* POV.cpp */; };
+		FF53DBBE178F02E90057A39B /* DataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF53DBBC178F02E90057A39B /* DataManager.cpp */; };
+		FF53DBC1178F14760057A39B /* DataToShapeConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF53DBBF178F14760057A39B /* DataToShapeConverter.cpp */; };
 		FF81DBFA178B5D10000566C1 /* Preview3DWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */; };
 		FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */; };
 /* End PBXBuildFile section */
@@ -148,8 +150,6 @@
 		FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = QLT_Main_App.cpp; path = ../src/QLT_Main_App.cpp; sourceTree = "<group>"; };
 		FF2FD4341786268E00D19321 /* ColourCorrectionWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColourCorrectionWindow.cpp; sourceTree = "<group>"; };
 		FF2FD4351786268E00D19321 /* ColourCorrectionWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColourCorrectionWindow.h; sourceTree = "<group>"; };
-		FF2FD4371786268E00D19321 /* LaserDrawersBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LaserDrawersBase.cpp; sourceTree = "<group>"; };
-		FF2FD4381786268E00D19321 /* LaserDrawersBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserDrawersBase.h; sourceTree = "<group>"; };
 		FF2FD4391786268E00D19321 /* PreviewWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PreviewWindow.cpp; sourceTree = "<group>"; };
 		FF2FD43A1786268E00D19321 /* PreviewWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewWindow.h; sourceTree = "<group>"; };
 		FF2FD43B1786268E00D19321 /* WindowManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WindowManager.cpp; sourceTree = "<group>"; };
@@ -344,6 +344,12 @@
 		FF3DAD73178CD3F400B6AF61 /* Skin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Skin.cpp; sourceTree = "<group>"; };
 		FF3DAD74178CD3F400B6AF61 /* ToolTip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToolTip.cpp; sourceTree = "<group>"; };
 		FF3DAD75178CD3F400B6AF61 /* Utility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utility.cpp; sourceTree = "<group>"; };
+		FF53DBB8178F011D0057A39B /* POV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = POV.h; path = ../src/Views/POV.h; sourceTree = "<group>"; };
+		FF53DBB9178F018A0057A39B /* POV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = POV.cpp; path = ../src/Views/POV.cpp; sourceTree = "<group>"; };
+		FF53DBBC178F02E90057A39B /* DataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataManager.cpp; path = ../src/Data/DataManager.cpp; sourceTree = "<group>"; };
+		FF53DBBD178F02E90057A39B /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataManager.h; path = ../src/Data/DataManager.h; sourceTree = "<group>"; };
+		FF53DBBF178F14760057A39B /* DataToShapeConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataToShapeConverter.cpp; sourceTree = "<group>"; };
+		FF53DBC0178F14760057A39B /* DataToShapeConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataToShapeConverter.h; sourceTree = "<group>"; };
 		FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Preview3DWindow.cpp; sourceTree = "<group>"; };
 		FF81DBF9178B5D10000566C1 /* Preview3DWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preview3DWindow.h; sourceTree = "<group>"; };
 		FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsPanel.cpp; sourceTree = "<group>"; };
@@ -383,6 +389,7 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				FF53DBBB178F02D30057A39B /* Data */,
 				FF045DD9178CA54A005FE797 /* Views */,
 				FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */,
 				FF2FD4331786268E00D19321 /* WindowControls */,
@@ -467,6 +474,8 @@
 			children = (
 				FF045DDA178CA569005FE797 /* LaserPreview3D.cpp */,
 				FF045DDB178CA569005FE797 /* LaserPreview3D.h */,
+				FF53DBB8178F011D0057A39B /* POV.h */,
+				FF53DBB9178F018A0057A39B /* POV.cpp */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -615,7 +624,6 @@
 			children = (
 				FF2FD4341786268E00D19321 /* ColourCorrectionWindow.cpp */,
 				FF2FD4351786268E00D19321 /* ColourCorrectionWindow.h */,
-				FF2FD4361786268E00D19321 /* LaserDrawers */,
 				FF2FD4391786268E00D19321 /* PreviewWindow.cpp */,
 				FF2FD43A1786268E00D19321 /* PreviewWindow.h */,
 				FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */,
@@ -627,15 +635,6 @@
 			);
 			name = WindowControls;
 			path = ../src/WindowControls;
-			sourceTree = "<group>";
-		};
-		FF2FD4361786268E00D19321 /* LaserDrawers */ = {
-			isa = PBXGroup;
-			children = (
-				FF2FD4371786268E00D19321 /* LaserDrawersBase.cpp */,
-				FF2FD4381786268E00D19321 /* LaserDrawersBase.h */,
-			);
-			path = LaserDrawers;
 			sourceTree = "<group>";
 		};
 		FF3DA5CF178CD3C900B6AF61 /* Cinder-Gwen */ = {
@@ -988,6 +987,17 @@
 			path = Dialog;
 			sourceTree = "<group>";
 		};
+		FF53DBBB178F02D30057A39B /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				FF53DBBC178F02E90057A39B /* DataManager.cpp */,
+				FF53DBBD178F02E90057A39B /* DataManager.h */,
+				FF53DBBF178F14760057A39B /* DataToShapeConverter.cpp */,
+				FF53DBC0178F14760057A39B /* DataToShapeConverter.h */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1058,7 +1068,6 @@
 			files = (
 				FF2FD43E1786268E00D19321 /* QLT_Main_App.cpp in Sources */,
 				FF2FD43F1786268E00D19321 /* ColourCorrectionWindow.cpp in Sources */,
-				FF2FD4401786268E00D19321 /* LaserDrawersBase.cpp in Sources */,
 				FF2FD4411786268E00D19321 /* PreviewWindow.cpp in Sources */,
 				FF2FD4421786268E00D19321 /* WindowManager.cpp in Sources */,
 				FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */,
@@ -1140,6 +1149,9 @@
 				FF3DAE19178CD3F400B6AF61 /* Skin.cpp in Sources */,
 				FF3DAE1A178CD3F400B6AF61 /* ToolTip.cpp in Sources */,
 				FF3DAE1B178CD3F400B6AF61 /* Utility.cpp in Sources */,
+				FF53DBBA178F018A0057A39B /* POV.cpp in Sources */,
+				FF53DBBE178F02E90057A39B /* DataManager.cpp in Sources */,
+				FF53DBC1178F14760057A39B /* DataToShapeConverter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

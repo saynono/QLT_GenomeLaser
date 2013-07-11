@@ -151,6 +151,10 @@ void WindowManager::addPreviewWindow(){
     pPreviewControl = control;
     m_Splitter->SetPanel( panelId, control );
     
+    Gwen::Controls::Label* label =  new Gwen::Controls::Label( control );
+    label->SetText( "PREVIEW" );
+
+    
 }
 
 void WindowManager::addPreview3DWindow(){
@@ -163,7 +167,10 @@ void WindowManager::addPreview3DWindow(){
 	control->Dock( Gwen::Pos::Fill );
     pPreview3DControl = control;
     m_Splitter->SetPanel( panelId, control );
-    
+
+    Gwen::Controls::Label* label =  new Gwen::Controls::Label( control );
+    label->SetText( "PREVIEW 3D" );
+
 }
 
 void WindowManager::setPreviewFbo(ci::gl::Fbo* fbo){
@@ -181,6 +188,7 @@ void WindowManager::setLaserController(ciilda::LaserController* controller){
 
 void WindowManager::setLaserPreview3d( LaserPreview3D* laserPreview3D ){
     mSettingsControl->setLaserPreview3d( laserPreview3D );
+    pPreview3DControl->setLaserPreview3d( laserPreview3D );
 }
 
 void WindowManager::saveSettings(){

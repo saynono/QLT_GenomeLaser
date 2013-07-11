@@ -14,6 +14,8 @@
 #include "CinderIldaFrame.h"
 #include "cinder/gl/Fbo.h"
 
+#include "POV.h"
+
 using namespace ci;
 using namespace ci::app;
 using namespace std;
@@ -41,6 +43,8 @@ private:
     ci::CameraPersp				mCamera;
     ciilda::Frame*              mIldaFrame;
     ci::gl::Fbo                 mPreview3DFbo;
+    
+    POV                         mPov;
 
 
     Vec3f                       mCameraPosition;
