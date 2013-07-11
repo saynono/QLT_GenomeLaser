@@ -6,10 +6,10 @@
 #include "CinderEtherdream.h"
 
 
+#include "DataToShapeConverter.h"
 #include "WindowManager.h"
 #include "LaserPreview3D.h"
 #include "DataManager.h"
-#include "DataToShapeConverter.h"
 
 
 using namespace ci;
@@ -59,7 +59,7 @@ void QLT_Main_App::setup()
     gl::enableVerticalSync();
     
     mDataManager.setup();
-//    mShapeConverter.setup();
+    mShapeConverter.setup();
 
     
     setWindowSize(getDisplay()->getWidth()-100, getDisplay()->getHeight()-100);
@@ -146,7 +146,7 @@ void QLT_Main_App::update()
 {
     
     int dc = (int)(getElapsedSeconds() * 5.0);
-    if( dc != mDataCounter && false){
+    if( dc != mDataCounter){
         mDataCounter = dc;
         char d = mDataManager.getNextData();
         Shape2d s = mShapeConverter.convertChar(d);

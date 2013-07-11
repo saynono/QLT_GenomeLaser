@@ -96,6 +96,7 @@
 		FF3DAE1B178CD3F400B6AF61 /* Utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3DAD75178CD3F400B6AF61 /* Utility.cpp */; };
 		FF53DBBA178F018A0057A39B /* POV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF53DBB9178F018A0057A39B /* POV.cpp */; };
 		FF53DBBE178F02E90057A39B /* DataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF53DBBC178F02E90057A39B /* DataManager.cpp */; };
+		FF53DBCA178F70910057A39B /* DataToShapeConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF53DBC8178F70910057A39B /* DataToShapeConverter.cpp */; };
 		FF81DBFA178B5D10000566C1 /* Preview3DWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */; };
 		FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */; };
 /* End PBXBuildFile section */
@@ -330,8 +331,8 @@
 		FF53DBB9178F018A0057A39B /* POV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = POV.cpp; path = ../src/Views/POV.cpp; sourceTree = "<group>"; };
 		FF53DBBC178F02E90057A39B /* DataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataManager.cpp; path = ../src/Data/DataManager.cpp; sourceTree = "<group>"; };
 		FF53DBBD178F02E90057A39B /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataManager.h; path = ../src/Data/DataManager.h; sourceTree = "<group>"; };
-		FF53DBC4178F6C000057A39B /* DataToShapeConverter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DataToShapeConverter.cpp; sourceTree = "<group>"; };
-		FF53DBC5178F6C000057A39B /* DataToShapeConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataToShapeConverter.h; sourceTree = "<group>"; };
+		FF53DBC8178F70910057A39B /* DataToShapeConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataToShapeConverter.cpp; sourceTree = "<group>"; };
+		FF53DBC9178F70910057A39B /* DataToShapeConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataToShapeConverter.h; sourceTree = "<group>"; };
 		FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Preview3DWindow.cpp; sourceTree = "<group>"; };
 		FF81DBF9178B5D10000566C1 /* Preview3DWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preview3DWindow.h; sourceTree = "<group>"; };
 		FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsPanel.cpp; sourceTree = "<group>"; };
@@ -930,8 +931,8 @@
 		FF53DBBB178F02D30057A39B /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				FF53DBC4178F6C000057A39B /* DataToShapeConverter.cpp */,
-				FF53DBC5178F6C000057A39B /* DataToShapeConverter.h */,
+				FF53DBC8178F70910057A39B /* DataToShapeConverter.cpp */,
+				FF53DBC9178F70910057A39B /* DataToShapeConverter.h */,
 				FF53DBBC178F02E90057A39B /* DataManager.cpp */,
 				FF53DBBD178F02E90057A39B /* DataManager.h */,
 			);
@@ -1084,6 +1085,7 @@
 				FF3DAE1B178CD3F400B6AF61 /* Utility.cpp in Sources */,
 				FF53DBBA178F018A0057A39B /* POV.cpp in Sources */,
 				FF53DBBE178F02E90057A39B /* DataManager.cpp in Sources */,
+				FF53DBCA178F70910057A39B /* DataToShapeConverter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1093,6 +1095,7 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -1118,6 +1121,7 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1158,7 +1162,7 @@
 					"\"$(CINDER_PATH)/blocks/Cinder-Gwen/src\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx;
+				SDKROOT = "";
 				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
 			};
 			name = Debug;
@@ -1179,7 +1183,7 @@
 					"\"$(CINDER_PATH)/blocks/Cinder-Gwen/src\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx;
+				SDKROOT = "";
 				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
 			};
 			name = Release;
