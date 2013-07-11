@@ -17,12 +17,8 @@
 		8CAD261B3F44420299720856 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 829936C27E0D49088EED4802 /* CinderApp.icns */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		FF045DDC178CA569005FE797 /* LaserPreview3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF045DDA178CA569005FE797 /* LaserPreview3D.cpp */; };
-		FF0464E9178CCF30005FE797 /* libEasyLase.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FF046199178CCF2F005FE797 /* libEasyLase.dylib */; };
-		FF0464EA178CCF30005FE797 /* libftd2xx.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FF04619A178CCF2F005FE797 /* libftd2xx.dylib */; };
 		FF0464EB178CCF30005FE797 /* fatfs_readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = FF04619E178CCF2F005FE797 /* fatfs_readme.txt */; };
 		FF0464EC178CCF30005FE797 /* openocd.cfg in Resources */ = {isa = PBXBuildFile; fileRef = FF04619F178CCF2F005FE797 /* openocd.cfg */; };
-		FF0464ED178CCF30005FE797 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = FF0461A2178CCF2F005FE797 /* .gitignore */; };
-		FF0464EE178CCF30005FE797 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = FF0461A4178CCF2F005FE797 /* .gitignore */; };
 		FF0464EF178CCF30005FE797 /* etherdream.c in Sources */ = {isa = PBXBuildFile; fileRef = FF0461A5178CCF2F005FE797 /* etherdream.c */; };
 		FF0464F0178CCF30005FE797 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = FF0461A7178CCF2F005FE797 /* Makefile */; };
 		FF0464F1178CCF30005FE797 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = FF0461A8178CCF2F005FE797 /* test.c */; };
@@ -128,9 +124,6 @@
 		EBE010C6F9484F47931D368C /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
 		FF045DDA178CA569005FE797 /* LaserPreview3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LaserPreview3D.cpp; path = ../src/Views/LaserPreview3D.cpp; sourceTree = "<group>"; };
 		FF045DDB178CA569005FE797 /* LaserPreview3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LaserPreview3D.h; path = ../src/Views/LaserPreview3D.h; sourceTree = "<group>"; };
-		FF046198178CCF2F005FE797 /* easyLase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easyLase.h; sourceTree = "<group>"; };
-		FF046199178CCF2F005FE797 /* libEasyLase.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libEasyLase.dylib; sourceTree = "<group>"; };
-		FF04619A178CCF2F005FE797 /* libftd2xx.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libftd2xx.dylib; sourceTree = "<group>"; };
 		FF04619E178CCF2F005FE797 /* fatfs_readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fatfs_readme.txt; sourceTree = "<group>"; };
 		FF04619F178CCF2F005FE797 /* openocd.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = openocd.cfg; sourceTree = "<group>"; };
 		FF0461A0178CCF2F005FE797 /* protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol.h; sourceTree = "<group>"; };
@@ -369,8 +362,6 @@
 				00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */,
 				00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */,
 				00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */,
-				FF0464E9178CCF30005FE797 /* libEasyLase.dylib in Frameworks */,
-				FF0464EA178CCF30005FE797 /* libftd2xx.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,44 +484,9 @@
 		FF046193178CCF2F005FE797 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				FF046194178CCF2F005FE797 /* easyLase */,
 				FF04619B178CCF2F005FE797 /* etherdream */,
 			);
 			path = lib;
-			sourceTree = "<group>";
-		};
-		FF046194178CCF2F005FE797 /* easyLase */ = {
-			isa = PBXGroup;
-			children = (
-				FF046195178CCF2F005FE797 /* libs */,
-			);
-			path = easyLase;
-			sourceTree = "<group>";
-		};
-		FF046195178CCF2F005FE797 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				FF046196178CCF2F005FE797 /* driver */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
-		FF046196178CCF2F005FE797 /* driver */ = {
-			isa = PBXGroup;
-			children = (
-				FF046197178CCF2F005FE797 /* libEasyLase */,
-			);
-			path = driver;
-			sourceTree = "<group>";
-		};
-		FF046197178CCF2F005FE797 /* libEasyLase */ = {
-			isa = PBXGroup;
-			children = (
-				FF046198178CCF2F005FE797 /* easyLase.h */,
-				FF046199178CCF2F005FE797 /* libEasyLase.dylib */,
-				FF04619A178CCF2F005FE797 /* libftd2xx.dylib */,
-			);
-			path = libEasyLase;
 			sourceTree = "<group>";
 		};
 		FF04619B178CCF2F005FE797 /* etherdream */ = {
@@ -1054,8 +1010,6 @@
 				8CAD261B3F44420299720856 /* CinderApp.icns in Resources */,
 				FF0464EB178CCF30005FE797 /* fatfs_readme.txt in Resources */,
 				FF0464EC178CCF30005FE797 /* openocd.cfg in Resources */,
-				FF0464ED178CCF30005FE797 /* .gitignore in Resources */,
-				FF0464EE178CCF30005FE797 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1174,10 +1128,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../../../cinder_apprewrite/blocks/Cinder-Gwen/lib/gwen/gwen/lib\"",
-					"\"$(SRCROOT)/../../../../../../../cinder_apprewrite/blocks/Cinder-Ilda/lib/easyLase/libs/driver/libEasyLase\"",
-					"\"$(SRCROOT)/../../../../../../../Cinder_0.8.5/blocks/Cinder-Gwen/lib/gwen/gwen/lib\"",
-					"\"$(SRCROOT)/../../../../../../../Cinder_0.8.5/blocks/Cinder-Ilda/lib/easyLase/libs/driver/libEasyLase\"",
+					"\"$(CINDER_PATH)/blocks/Cinder-Gwen/lib/gwen/gwen/lib\"",
 				);
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
 				PRODUCT_NAME = QLT_GenomeLaser;
@@ -1203,10 +1154,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../../../cinder_apprewrite/blocks/Cinder-Gwen/lib/gwen/gwen/lib\"",
-					"\"$(SRCROOT)/../../../../../../../cinder_apprewrite/blocks/Cinder-Ilda/lib/easyLase/libs/driver/libEasyLase\"",
-					"\"$(SRCROOT)/../../../../../../../Cinder_0.8.5/blocks/Cinder-Gwen/lib/gwen/gwen/lib\"",
-					"\"$(SRCROOT)/../../../../../../../Cinder_0.8.5/blocks/Cinder-Ilda/lib/easyLase/libs/driver/libEasyLase\"",
+					"\"$(CINDER_PATH)/blocks/Cinder-Gwen/lib/gwen/gwen/lib\"",
 				);
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
 				PRODUCT_NAME = QLT_GenomeLaser;
@@ -1233,7 +1181,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include ../../../../../../../cinder_apprewrite/blocks/OSC/src";
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
 			};
 			name = Debug;
 		};
@@ -1254,7 +1202,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include ../../../../../../../cinder_apprewrite/blocks/OSC/src";
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
 			};
 			name = Release;
 		};
