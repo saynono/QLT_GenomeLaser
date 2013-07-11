@@ -59,7 +59,7 @@ void QLT_Main_App::setup()
     gl::enableVerticalSync();
     
     mDataManager.setup();
-    mShapeConverter.setup();
+//    mShapeConverter.setup();
 
     
     setWindowSize(getDisplay()->getWidth()-100, getDisplay()->getHeight()-100);
@@ -146,7 +146,7 @@ void QLT_Main_App::update()
 {
     
     int dc = (int)(getElapsedSeconds() * 5.0);
-    if( dc != mDataCounter){
+    if( dc != mDataCounter && false){
         mDataCounter = dc;
         char d = mDataManager.getNextData();
         Shape2d s = mShapeConverter.convertChar(d);

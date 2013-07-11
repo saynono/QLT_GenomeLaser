@@ -17,12 +17,7 @@
 		8CAD261B3F44420299720856 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 829936C27E0D49088EED4802 /* CinderApp.icns */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		FF045DDC178CA569005FE797 /* LaserPreview3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF045DDA178CA569005FE797 /* LaserPreview3D.cpp */; };
-		FF0464EB178CCF30005FE797 /* fatfs_readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = FF04619E178CCF2F005FE797 /* fatfs_readme.txt */; };
-		FF0464EC178CCF30005FE797 /* openocd.cfg in Resources */ = {isa = PBXBuildFile; fileRef = FF04619F178CCF2F005FE797 /* openocd.cfg */; };
 		FF0464EF178CCF30005FE797 /* etherdream.c in Sources */ = {isa = PBXBuildFile; fileRef = FF0461A5178CCF2F005FE797 /* etherdream.c */; };
-		FF0464F0178CCF30005FE797 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = FF0461A7178CCF2F005FE797 /* Makefile */; };
-		FF0464F1178CCF30005FE797 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = FF0461A8178CCF2F005FE797 /* test.c */; };
-		FF0464F2178CCF30005FE797 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = FF0461A9178CCF2F005FE797 /* Makefile */; };
 		FF04652E178CCF30005FE797 /* CinderEtherdream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF046200178CCF30005FE797 /* CinderEtherdream.cpp */; };
 		FF04652F178CCF30005FE797 /* CinderIldaFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF046203178CCF30005FE797 /* CinderIldaFrame.cpp */; };
 		FF2FD43E1786268E00D19321 /* QLT_Main_App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */; };
@@ -101,7 +96,6 @@
 		FF3DAE1B178CD3F400B6AF61 /* Utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3DAD75178CD3F400B6AF61 /* Utility.cpp */; };
 		FF53DBBA178F018A0057A39B /* POV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF53DBB9178F018A0057A39B /* POV.cpp */; };
 		FF53DBBE178F02E90057A39B /* DataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF53DBBC178F02E90057A39B /* DataManager.cpp */; };
-		FF53DBC1178F14760057A39B /* DataToShapeConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF53DBBF178F14760057A39B /* DataToShapeConverter.cpp */; };
 		FF81DBFA178B5D10000566C1 /* Preview3DWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */; };
 		FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */; };
 /* End PBXBuildFile section */
@@ -127,13 +121,8 @@
 		FF04619E178CCF2F005FE797 /* fatfs_readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fatfs_readme.txt; sourceTree = "<group>"; };
 		FF04619F178CCF2F005FE797 /* openocd.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = openocd.cfg; sourceTree = "<group>"; };
 		FF0461A0178CCF2F005FE797 /* protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol.h; sourceTree = "<group>"; };
-		FF0461A2178CCF2F005FE797 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		FF0461A4178CCF2F005FE797 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		FF0461A5178CCF2F005FE797 /* etherdream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = etherdream.c; sourceTree = "<group>"; };
 		FF0461A6178CCF2F005FE797 /* etherdream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = etherdream.h; sourceTree = "<group>"; };
-		FF0461A7178CCF2F005FE797 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		FF0461A8178CCF2F005FE797 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
-		FF0461A9178CCF2F005FE797 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		FF046200178CCF30005FE797 /* CinderEtherdream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CinderEtherdream.cpp; sourceTree = "<group>"; };
 		FF046201178CCF30005FE797 /* CinderEtherdream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderEtherdream.h; sourceTree = "<group>"; };
 		FF046203178CCF30005FE797 /* CinderIldaFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CinderIldaFrame.cpp; sourceTree = "<group>"; };
@@ -341,8 +330,8 @@
 		FF53DBB9178F018A0057A39B /* POV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = POV.cpp; path = ../src/Views/POV.cpp; sourceTree = "<group>"; };
 		FF53DBBC178F02E90057A39B /* DataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataManager.cpp; path = ../src/Data/DataManager.cpp; sourceTree = "<group>"; };
 		FF53DBBD178F02E90057A39B /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataManager.h; path = ../src/Data/DataManager.h; sourceTree = "<group>"; };
-		FF53DBBF178F14760057A39B /* DataToShapeConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataToShapeConverter.cpp; sourceTree = "<group>"; };
-		FF53DBC0178F14760057A39B /* DataToShapeConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataToShapeConverter.h; sourceTree = "<group>"; };
+		FF53DBC4178F6C000057A39B /* DataToShapeConverter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DataToShapeConverter.cpp; sourceTree = "<group>"; };
+		FF53DBC5178F6C000057A39B /* DataToShapeConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataToShapeConverter.h; sourceTree = "<group>"; };
 		FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Preview3DWindow.cpp; sourceTree = "<group>"; };
 		FF81DBF9178B5D10000566C1 /* Preview3DWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preview3DWindow.h; sourceTree = "<group>"; };
 		FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsPanel.cpp; sourceTree = "<group>"; };
@@ -519,9 +508,7 @@
 		FF0461A1178CCF2F005FE797 /* driver */ = {
 			isa = PBXGroup;
 			children = (
-				FF0461A2178CCF2F005FE797 /* .gitignore */,
 				FF0461A3178CCF2F005FE797 /* libetherdream */,
-				FF0461A9178CCF2F005FE797 /* Makefile */,
 			);
 			path = driver;
 			sourceTree = "<group>";
@@ -529,11 +516,8 @@
 		FF0461A3178CCF2F005FE797 /* libetherdream */ = {
 			isa = PBXGroup;
 			children = (
-				FF0461A4178CCF2F005FE797 /* .gitignore */,
 				FF0461A5178CCF2F005FE797 /* etherdream.c */,
 				FF0461A6178CCF2F005FE797 /* etherdream.h */,
-				FF0461A7178CCF2F005FE797 /* Makefile */,
-				FF0461A8178CCF2F005FE797 /* test.c */,
 			);
 			path = libetherdream;
 			sourceTree = "<group>";
@@ -946,10 +930,10 @@
 		FF53DBBB178F02D30057A39B /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				FF53DBC4178F6C000057A39B /* DataToShapeConverter.cpp */,
+				FF53DBC5178F6C000057A39B /* DataToShapeConverter.h */,
 				FF53DBBC178F02E90057A39B /* DataManager.cpp */,
 				FF53DBBD178F02E90057A39B /* DataManager.h */,
-				FF53DBBF178F14760057A39B /* DataToShapeConverter.cpp */,
-				FF53DBC0178F14760057A39B /* DataToShapeConverter.h */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -1008,8 +992,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CAD261B3F44420299720856 /* CinderApp.icns in Resources */,
-				FF0464EB178CCF30005FE797 /* fatfs_readme.txt in Resources */,
-				FF0464EC178CCF30005FE797 /* openocd.cfg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1028,9 +1010,6 @@
 				FF81DBFA178B5D10000566C1 /* Preview3DWindow.cpp in Sources */,
 				FF045DDC178CA569005FE797 /* LaserPreview3D.cpp in Sources */,
 				FF0464EF178CCF30005FE797 /* etherdream.c in Sources */,
-				FF0464F0178CCF30005FE797 /* Makefile in Sources */,
-				FF0464F1178CCF30005FE797 /* test.c in Sources */,
-				FF0464F2178CCF30005FE797 /* Makefile in Sources */,
 				FF04652E178CCF30005FE797 /* CinderEtherdream.cpp in Sources */,
 				FF04652F178CCF30005FE797 /* CinderIldaFrame.cpp in Sources */,
 				FF3DAC57178CD3D000B6AF61 /* CinderGwen.cpp in Sources */,
@@ -1105,7 +1084,6 @@
 				FF3DAE1B178CD3F400B6AF61 /* Utility.cpp in Sources */,
 				FF53DBBA178F018A0057A39B /* POV.cpp in Sources */,
 				FF53DBBE178F02E90057A39B /* DataManager.cpp in Sources */,
-				FF53DBC1178F14760057A39B /* DataToShapeConverter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
