@@ -9,23 +9,17 @@
 #include "SettingsPanel.h"
 
 
-SettingsPanel::SettingsPanel(Gwen::Controls::Base *parent): Gwen::Controls::DockBase( parent ){
-    bIldaFrameSet = false;
-    bLaserControllerSet = false;
+SettingsPanel::SettingsPanel(){
 }
 
 SettingsPanel::~SettingsPanel(){
 }
 
-void SettingsPanel::Render( Gwen::Skin::Base* skin )
-{
-}
-
-void SettingsPanel::RenderUnder( Gwen::Skin::Base* skin )
-{
-}
-
-void SettingsPanel::setup(){
+void SettingsPanel::setup(Gwen::Controls::DockBase *parent){
+    
+    bIldaFrameSet = false;
+    bLaserControllerSet = false;
+    mLaserCatElements.clear();
 
 ////    Gwen::Controls::DockBase* dock = new Gwen::Controls::DockBase( mCanvas );
 //    this->Dock( Gwen::Pos::Fill );
@@ -36,36 +30,25 @@ void SettingsPanel::setup(){
 //	tabControl->AddPage( "Settings", pList );
 //	this->GetLeft()->SetWidth( 250 );
 
-    
-    Gwen::Controls::DockBase* dock = this;
-    dock->Dock( Gwen::Pos::Fill );
-    Gwen::Controls::TabControl* tabControl = dock->GetLeft()->GetTabControl();
-    Gwen::Controls::CollapsibleList* pList = new Gwen::Controls::CollapsibleList( dock );
+    Gwen::Controls::TabControl* tabControl = parent->GetLeft()->GetTabControl();
+
+    Gwen::Controls::CollapsibleList* pList = new Gwen::Controls::CollapsibleList( parent );
     pList->SetHeight(300);
 	tabControl->AddPage( "Settings", pList );
     tabControl->SetAllowReorder(false);
     
-	dock->GetLeft()->SetWidth( 250 );
+	parent->GetLeft()->SetWidth( 250 );
     
     Gwen::Controls::CollapsibleCategory* cat1 = pList->Add( "Laser Stats" );
     Gwen::Controls::CollapsibleCategory* cat2 = pList->Add( "Laser Output Settings" );
 
 //    cat1->get
     
-    Gwen::Padding padding = Gwen::Padding( 10, 0, 10, 30 );
-    cat1->SetPadding( padding );
-//    Gwen::Controls::Button* pButton1 = cat1->Add("Normal Window");//new Gwen::Controls::Button( cat );
-//    Gwen::Controls::Button* pButton2 = cat1->Add("Normal Window");//new Gwen::Controls::Button( cat );
-
-//    Gwen::Controls::Button* pButton3 = cat2->Add("Not Normal Window");//new Gwen::Controls::Button( cat );
-//    Gwen::Controls::Button* pButton4 = cat2->Add("Burp");//new Gwen::Controls::Button( cat );
-//    pButton4->SetPos( 10, 60 );
-//    pButton4->SetSize(200, 60 );
-//    
-//    cat2->SetSize(250, 400);
+//    Gwen::Padding padding = Gwen::Padding( 10, 0, 10, 30 );
+//    cat1->SetPadding( padding );
     
-    mLaserCat = cat2;
     mLaserStatsCat = cat1;
+    mLaserCat = cat2;
 
 }
 
@@ -102,7 +85,7 @@ void SettingsPanel::setIldaFrame(ciilda::Frame* frame){
     pCheckBox = addCheckBox(mLaserCat, getBounds(mLaserCatElements), "Draw Points", mIldaFrame->params.draw.points );
     mLaserCatElements.push_back(pCheckBox);
     
-    pLabel = addProperty(mLaserCat, getBounds(mLaserStatsCatElements), "Points Count", 0);
+    pLabel = addProperty(mLaserStatsCat, getBounds(mLaserStatsCatElements), "Points Count", 0);
     mLaserStatsCatElements.push_back(pLabel);
     
     pLabel = addProperty(mLaserStatsCat, getBounds(mLaserStatsCatElements), "Length Blank", 0);
@@ -150,18 +133,19 @@ void SettingsPanel::setLaserController(ciilda::LaserController* controller){
     
     bLaserControllerSet = true;
 
-
-//    pCheckBox = addCheckBox(mLaserCat, getBounds(mLaserCatElements), "Laser DAC PointPerSecond", mLaserController->getPPS() );
-//    mLaserCatElements.push_back(pCheckBox);
-    
-    
-
 }
+
+void SettingsPanel::setLaserPreview3d( LaserPreview3D* laserPreview3D ){
+    mLaserPreview3D = laserPreview3D;
+    Gwen::Controls::Base* pSlider = addSlider(mLaserCat, getBounds(mLaserCatElements), "Laser Angle", mLaserPreview3D->getLaserAngle(), 0, 180 );
+    mLaserCatElements.push_back(pSlider);
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////
 
-Gwen::Controls::Base* SettingsPanel::addCheckBox( Base* pControl , Rectf bounds, string name, bool selected){
+Gwen::Controls::Base* SettingsPanel::addCheckBox( Gwen::Controls::Base* pControl , Rectf bounds, string name, bool selected){
     Gwen::Controls::CheckBoxWithLabel* labeled = new Gwen::Controls::CheckBoxWithLabel( pControl );
     int px = bounds.getX1();
     int py = bounds.getY1();
@@ -176,7 +160,7 @@ Gwen::Controls::Base* SettingsPanel::addCheckBox( Base* pControl , Rectf bounds,
     return labeled;
 }
 
-Gwen::Controls::Base* SettingsPanel::addSlider( Base* pControl , Rectf bounds, string name, int value, int valueMin, int valueMax){
+Gwen::Controls::Base* SettingsPanel::addSlider( Gwen::Controls::Base* pControl , Rectf bounds, string name, int value, int valueMin, int valueMax){
 //
 //    int py = mSlider.size() * 20 + 50;
 //    int px = 10;
@@ -214,7 +198,7 @@ Gwen::Controls::Base* SettingsPanel::addSlider( Base* pControl , Rectf bounds, s
     return pSlider;
 }
 
-Gwen::Controls::Base* SettingsPanel::addProperty( Base* pControl , Rectf bounds, string name, int val){
+Gwen::Controls::Base* SettingsPanel::addProperty( Gwen::Controls::Base* pControl , Rectf bounds, string name, int val){
     Gwen::Controls::Label* pLabelName = new Gwen::Controls::Label( pControl );
     Gwen::Controls::Label* pLabelValue = new Gwen::Controls::Label( pControl );
     int px = bounds.getX1();
@@ -247,13 +231,14 @@ Rectf SettingsPanel::getBounds(const vector<Gwen::Controls::Base*>& vec){
         h += vec[i]->GetSize().y + dist;
     }
     rect.set(10, h + 50, 200 + 10, 30);
+    console() << " ADD : "  << rect << std::endl;
     return rect;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////    ACTIONS
 
-void SettingsPanel::onSliderLaserOutput( Base* pControl ){
+void SettingsPanel::onSliderLaserOutput( Gwen::Controls::Base* pControl ){
     Gwen::Controls::Label* label = mLabelsMap[pControl];
     Gwen::Controls::Slider* pSlider = ( Gwen::Controls::Slider* ) pControl;
     label->SetValue( toString(( int ) pSlider->GetFloatValue()));
@@ -275,11 +260,14 @@ void SettingsPanel::onSliderLaserOutput( Base* pControl ){
     else if (controlName.compare("Laser pps") == 0){
         mLaserController->setPPS(( int ) pSlider->GetFloatValue());
     }
+    else if (controlName.compare("Laser Angle") == 0){
+        mLaserPreview3D->setLaserAngle( ( int ) pSlider->GetFloatValue() );
+    }
     
     
 }
 
-void SettingsPanel::onCheckBoxLaserOutput( Base* pControl ){
+void SettingsPanel::onCheckBoxLaserOutput( Gwen::Controls::Base* pControl ){
     
     Gwen::Controls::CheckBox* pCheckBox = ( Gwen::Controls::CheckBox* ) pControl;
     string controlName = pControl->GetName().c_str();

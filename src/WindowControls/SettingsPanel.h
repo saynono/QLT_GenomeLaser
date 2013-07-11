@@ -27,35 +27,34 @@
 #include "CinderIldaFrame.h"
 #include "CinderLaserDac.h"
 #include "ColourCorrectionWindow.h"
+#include "LaserPreview3D.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-class SettingsPanel : public Gwen::Controls::DockBase {
+class SettingsPanel: public Gwen::Event::Handler {
 
 public:
 	
-    SettingsPanel( Gwen::Controls::Base *parent );
-    virtual ~SettingsPanel();
+    SettingsPanel();
+    ~SettingsPanel();
     
-	virtual void Render( Gwen::Skin::Base* skin );
-	virtual void RenderUnder( Gwen::Skin::Base* skin );
-
-	void setup();
+	void setup( Gwen::Controls::DockBase *parent );
 	void update();
 	void draw();
     
     void setIldaFrame(ciilda::Frame* frame);
     void setLaserController(ciilda::LaserController* controller);
+    void setLaserPreview3d( LaserPreview3D* laserPreview3D );
     
 private:
 
-    void onSliderLaserOutput( Base* pControl );
-    void onCheckBoxLaserOutput( Base* pControl );
-    Gwen::Controls::Base* addCheckBox( Base* pControl , Rectf bounds, string name, bool selected);
-    Gwen::Controls::Base* addSlider( Base* pControl , Rectf bounds, string name, int value, int valueMin, int valueMax);
-    Gwen::Controls::Base* addProperty( Base* pControl , Rectf bounds, string name, int val);
+    void onSliderLaserOutput( Gwen::Controls::Base* pControl );
+    void onCheckBoxLaserOutput( Gwen::Controls::Base* pControl );
+    Gwen::Controls::Base* addCheckBox( Gwen::Controls::Base* pControl , Rectf bounds, string name, bool selected);
+    Gwen::Controls::Base* addSlider( Gwen::Controls::Base* pControl , Rectf bounds, string name, int value, int valueMin, int valueMax);
+    Gwen::Controls::Base* addProperty( Gwen::Controls::Base* pControl , Rectf bounds, string name, int val);
     Rectf getBounds(const vector<Gwen::Controls::Base*>& vec);
     
     
@@ -64,6 +63,8 @@ private:
     
     ciilda::Frame*                              mIldaFrame;
     ciilda::LaserController*                    mLaserController;
+    
+    LaserPreview3D*                             mLaserPreview3D;
 
     
     Gwen::Controls::CollapsibleCategory*        mLaserCat;

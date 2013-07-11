@@ -31,6 +31,9 @@ public:
 	virtual void RenderUnder( Gwen::Skin::Base* skin );
     
     void setPreviewFbo(ci::gl::Fbo* fbo);
+    void onMousePress(int x, int y, bool bDown);
+    
+    Gwen::Event::Caller	onPress;
     
 private:
     ci::Matrix44f		mCubeRotation;

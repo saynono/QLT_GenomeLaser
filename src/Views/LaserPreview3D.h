@@ -32,7 +32,10 @@ public:
     Vec3f getTargetPosition();
     
     ci::gl::Fbo* getTexture();
-
+    
+    int getLaserAngle();
+    void setLaserAngle(int a);
+    
 private:
     
     ci::CameraPersp				mCamera;
@@ -45,6 +48,8 @@ private:
     Vec3f                       mUp;
 
     Matrix44f                   mTempRotation;
+    Quatf                       mQuat;
+    int                         mLaserAngle;
 	
 };
 

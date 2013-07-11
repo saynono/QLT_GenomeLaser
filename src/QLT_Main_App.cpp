@@ -49,7 +49,7 @@ void QLT_Main_App::setup()
    
     gl::enableVerticalSync();
     
-    setWindowSize(1280, 800);
+    setWindowSize(getDisplay()->getWidth()-100, getDisplay()->getHeight()-100);
     setWindowPos((getDisplay()->getWidth() - getWindowWidth()) / 2 , (getDisplay()->getHeight() - getWindowHeight()) / 2);
     mWindowManager.setup();
     
@@ -61,9 +61,9 @@ void QLT_Main_App::setup()
     mLaserPreview3D.setup( &mIldaFrame,1024,1024 );
     
     mWindowManager.setPreviewFbo( mLaserPreview3D.getTexture() );
+    mWindowManager.setLaserPreview3d( &mLaserPreview3D );
     mWindowManager.setIldaFrame(&mIldaFrame);
     mWindowManager.setLaserController(mLaserController);
-    
     gl::disableDepthRead();
     gl::disableDepthWrite();
     
@@ -118,12 +118,12 @@ void QLT_Main_App::createInitialLaser(){
     mIldaFrame.addShape2d(shapeOrg,ColorA(1,0,0,1));
     mIldaFrame.addPath2d(something);
     mIldaFrame.addPath2d(triangle, ColorA(1,0,1,1));
-//    mIldaFrame.moveTo(Vec2f(.2,.2));
-//    mIldaFrame.lineTo(Vec2f(.8,.2));
-//    mIldaFrame.setColor( ColorA(.5,.4,.2,.7) );
-//    mIldaFrame.lineTo(Vec2f(.8,.8));
-//    mIldaFrame.lineTo(Vec2f(.2,.8));
-//    mIldaFrame.lineTo(Vec2f(.2,.2));
+    mIldaFrame.moveTo(Vec2f(.2,.2));
+    mIldaFrame.lineTo(Vec2f(.8,.2));
+    mIldaFrame.setColor( ColorA(.5,.4,.2,.7) );
+    mIldaFrame.lineTo(Vec2f(.8,.8));
+    mIldaFrame.lineTo(Vec2f(.2,.8));
+    mIldaFrame.lineTo(Vec2f(.2,.2));
     mIldaFrame.end();
     mLaserController->setPoints(mIldaFrame);
     mLaserController->send();

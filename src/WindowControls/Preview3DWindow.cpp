@@ -25,6 +25,9 @@ Preview3DWindow::Preview3DWindow( Gwen::Controls::Base *parent )
 //    format.enableDepthBuffer(false);
     mFboTemp = gl::Fbo(mImageTemp.getWidth(),mImageTemp.getHeight(),format);
     mFboTemp.getTexture().setFlipped(true);
+    
+//    onPress.Add( this, &Preview3DWindow::onMousePress );
+    
 }
 
 Preview3DWindow::~Preview3DWindow()
@@ -83,4 +86,8 @@ void Preview3DWindow::RenderUnder( Skin::Base* skin )
 void Preview3DWindow::setPreviewFbo(ci::gl::Fbo* fbo){
     mPreview3DFbo = fbo;
     bPreviewFboSet = true;
+}
+
+void Preview3DWindow::onMousePress(int x, int y, bool bDown){
+    console() << " X : " << x << "  Y : " << y << "  " << bDown << std::endl;
 }
