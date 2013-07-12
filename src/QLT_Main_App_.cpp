@@ -145,34 +145,30 @@ void QLT_Main_App::createInitialLaser(){
 void QLT_Main_App::update()
 {
     
-    float speed = 1.1f;
-    float dc = (getElapsedSeconds() * speed);
-    if( (int)dc != mDataCounter){
-        mDataCounter = (int)dc;
+    int dc = (int)(getElapsedSeconds() * 5.0);
+    if( dc != mDataCounter){
+        mDataCounter = dc;
         char d = mDataManager.getNextData();
         Shape2d s = mShapeConverter.convertChar(d);
+        Rectf r = s.calcBoundingBox();
+        int h = r.getHeight();
+        console() << "HEIGHT: " << r << std::endl;
+        
+        float scale = 1.0/ ((float)h * 5);
+        MatrixAffine2f matrix;
+        matrix.setToIdentity(); 
+        matrix.scale( Vec2f(scale,scale) );
+        s.transform(matrix);
+//        matrix.translate( -Vec2f(r.x1,40) );
+        matrix.setToIdentity();
+        matrix.translate( Vec2f(.5,-.5) );
+        s.transform(matrix);
+        
         mIldaFrame.begin();
-        mIldaFrame.setColor( ColorA(.5,.4,.2,.7) );
-        mIldaFrame.moveTo(Vec2f(.2,.2));
-        mIldaFrame.lineTo(Vec2f(.8,.2));
-        mIldaFrame.lineTo(Vec2f(.8,.8));
-        mIldaFrame.lineTo(Vec2f(.2,.8));
-        mIldaFrame.lineTo(Vec2f(.2,.2));
-        mIldaFrame.setColor( ColorA(.5,.4,.2,.7) );
         mIldaFrame.addShape2d( s );
         mIldaFrame.end();
         mLaserController->setPoints(mIldaFrame);
         mLaserController->send();
-    }else{
-        if( dc-mDataCounter > .9 ){
-//            char d = '_';
-//            Shape2d s = mShapeConverter.convertChar(d);
-//            mIldaFrame.begin();
-//            mIldaFrame.addShape2d( s );
-//            mIldaFrame.end();
-//            mLaserController->setPoints(mIldaFrame);
-//            mLaserController->send();            
-        }
     }
     
     mLaserPreview3D.update();

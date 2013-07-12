@@ -21,7 +21,7 @@ class DataToShapeConverter{
 
 public:
 	
-//	void setup();
+	void setup();
     Shape2d convertChar(char c);
     
 private:
