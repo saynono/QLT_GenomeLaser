@@ -45,25 +45,22 @@ void QLT_Main_App::shutdown(){
 
 void QLT_Main_App::setup()
 {
- 	// TODO: find a better way..
-#if defined( CINDER_COCOA )
-	fs::path rootPath = getAppPath().parent_path().parent_path().parent_path().parent_path().parent_path().parent_path();
-#else
-	fs::path rootPath = getAppPath().parent_path().parent_path().parent_path().parent_path().parent_path();
-#endif
-//	addAssetDirectory( rootPath / "assets" );
+// 	// TODO: find a better way..
+//#if defined( CINDER_COCOA )
+//	fs::path rootPath = getAppPath().parent_path().parent_path().parent_path().parent_path().parent_path().parent_path();
+//#else
+//	fs::path rootPath = getAppPath().parent_path().parent_path().parent_path().parent_path().parent_path();
+//#endif
+////	addAssetDirectory( rootPath / "assets" );
    
     
     mDataCounter = 0;
     
-    gl::enableVerticalSync();
+    setWindowSize(getDisplay()->getWidth()-100, getDisplay()->getHeight()-100);
+    setWindowPos((getDisplay()->getWidth() - getWindowWidth()) / 2 , (getDisplay()->getHeight() - getWindowHeight()) / 2);
     
     mDataManager.setup();
     mShapeConverter.setup();
-
-    
-    setWindowSize(getDisplay()->getWidth()-100, getDisplay()->getHeight()-100);
-    setWindowPos((getDisplay()->getWidth() - getWindowWidth()) / 2 , (getDisplay()->getHeight() - getWindowHeight()) / 2);
     mWindowManager.setup();
     
     mLaserController = new ciilda::Etherdream();
@@ -77,8 +74,10 @@ void QLT_Main_App::setup()
     mWindowManager.setLaserPreview3d( &mLaserPreview3D );
     mWindowManager.setIldaFrame(&mIldaFrame);
     mWindowManager.setLaserController(mLaserController);
+    
     gl::disableDepthRead();
     gl::disableDepthWrite();
+    gl::enableVerticalSync();
     
 }
 
