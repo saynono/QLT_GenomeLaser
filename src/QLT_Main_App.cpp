@@ -45,15 +45,7 @@ void QLT_Main_App::shutdown(){
 
 void QLT_Main_App::setup()
 {
- 	// TODO: find a better way..
-#if defined( CINDER_COCOA )
-	fs::path rootPath = getAppPath().parent_path().parent_path().parent_path().parent_path().parent_path().parent_path();
-#else
-	fs::path rootPath = getAppPath().parent_path().parent_path().parent_path().parent_path().parent_path();
-#endif
-//	addAssetDirectory( rootPath / "assets" );
-   
-    
+
     mDataCounter = 0;
     
     gl::enableVerticalSync();
