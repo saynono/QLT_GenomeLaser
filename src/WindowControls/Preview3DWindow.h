@@ -31,6 +31,8 @@ public:
 	virtual void Render( Gwen::Skin::Base* skin );
 	virtual void RenderUnder( Gwen::Skin::Base* skin );
     
+    void update();
+    
     void setPreviewFbo(ci::gl::Fbo* fbo);
     void setLaserPreview3d( LaserPreview3D* laserPreview3D );
     
@@ -38,6 +40,7 @@ public:
     virtual void OnMouseClickLeft( int x, int y, bool bDown );
     virtual void OnMouseEnter();
     virtual void OnMouseLeave();
+    virtual void OnMouseDoubleClickLeft( int x, int y );
 
 public:
     
@@ -46,8 +49,9 @@ public:
 private:
     
     Vec2f               mMouseDownOffset;
+    Vec2f               mMouseDownCurrent;
     Vec2f               mMouseDownSmoothed;
-    Vec3f               mCameraPosition;
+    Vec3f               mCameraPositionOrg;
     ci::Matrix44f		mCubeRotation;
 	ci::CameraPersp		mCamera;
     ci::gl::Fbo*        mPreview3DFbo;

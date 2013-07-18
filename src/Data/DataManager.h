@@ -9,10 +9,13 @@
 #pragma once
 
 
-#include "cinder/app/AppBasic.h"
 #include <string>
 #include <iostream>
 #include <fstream>
+
+#include "cinder/app/AppBasic.h"
+#include "cinder/Buffer.h"
+
 
 using namespace ci;
 using namespace ci::app;
@@ -26,10 +29,17 @@ public:
         string destription;
         string data;
     } fastaSequence;
-	
+
+    typedef struct{
+        string destription;
+        char* data;
+        int length;
+    } fastaSequenceBits;
+
 	void setup();
     void loadData(string file);
     void addSequence( string descript, string data );
+    fastaSequenceBits convertSequenceToBit(const fastaSequence& seq);
 	void update();
     void draw();
 
@@ -40,6 +50,7 @@ private:
 
     cinder::fs::path            mFilename;
     vector<fastaSequence>       mFastaData;
+    vector<fastaSequenceBits>   mFastaDataBits;
     
     int                         mCurrentSequence;
     int                         mCurrentDataPosition;

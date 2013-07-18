@@ -33,6 +33,8 @@ public:
     Vec3f getCameraPosition();
     Vec3f getTargetPosition();
     
+    void resetView();
+    
     ci::gl::Fbo* getTexture();
     
     int getLaserAngle();

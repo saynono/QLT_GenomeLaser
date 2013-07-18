@@ -14,44 +14,66 @@ void DataManager::setup(){
     mCurrentDataPosition = 0;
     mCurrentSequence = 0;
     
-    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205_shorter");
+//    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205");
+    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205_short");
+//    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205_short2");
+//    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205_shorter");
 //    fstream inFile(filename.c_str());
     
-    std::ifstream myfile;
-    myfile.open( mFilename.c_str(), ifstream::in);
+//    std::ifstream myfile;
+//    myfile.open( mFilename.c_str(), ifstream::in);
     
-    string line;
-    int cnt=0;
-    string descript;
-    string data = "";
-    while (getline (myfile, line))
-    {
-        if(line.size() > 0){
-            //        console() << cnt++ << " => " << line << std::endl;
-            if(line.at(0) == '>'){
-                addSequence(descript,data);
-                descript = line;
+    
+    Buffer b = Buffer( loadFile( mFilename ) );
+    
+    size_t size = b.getDataSize();
+    console() << " DATA SIZE " << size << std::endl;
+
+    bool descriptionStarts = false;
+    
+    char* datas = (char*)b.getData();
+    string seqDescription = "";
+    string seqData = "";
+    
+    for(int i=0;i<10000;i++){
+        
+        char d = *(datas+i);
+        if(d=='>'){
+            addSequence(seqDescription,seqData);
+            descriptionStarts = true;
+            seqDescription = "";
+            seqData = "";
+        }else if(d==10){
+            descriptionStarts = false;
+        }
+        
+        if(d != 10){
+            if(descriptionStarts){
+                seqDescription += d;
             }else{
-                data += line + '\n';
-            }            
+                seqData += d;
+            }
         }
     }
     
-    addSequence(descript,data);    
-    console() << "Sequences  found : " << mFastaData.size() << std::endl;
-
 }
 
 void DataManager::addSequence( string descript, string data ){
     if(data.size() > 0 && descript.size() > 0){
-        console() << "New Sequence : " << descript << std::endl;
+        console() << "New Sequence : " << descript << "     length: " << data.size() << std::endl << data << std::endl << std::endl;
 //        struct fastaSequence seq;
         fastaSequence seq;
         seq.destription = descript;
         seq.data = data;
         mFastaData.push_back(seq);
+//        fastaSequenceBits b = convertSequenceToBit(seq);
     }
 }
+
+//fastaSequenceBits DataManager::convertSequenceToBit(const fastaSequence& seq){
+//    fastaSequenceBits b;
+//    return b;
+//}
 
 void DataManager::update(){
 	
@@ -70,6 +92,7 @@ vector<string> DataManager::getData(int pos, int len){
 }
 
 char DataManager::getNextData(){
+    
     if(mFastaData.size() == 0) return 'n';
     
     mCurrentDataPosition ++;

@@ -370,8 +370,8 @@
 			children = (
 				FF53DBBB178F02D30057A39B /* Data */,
 				FF045DD9178CA54A005FE797 /* Views */,
-				FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */,
 				FF2FD4331786268E00D19321 /* WindowControls */,
+				FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -1150,6 +1150,7 @@
 				CINDER_PATH = ../../../../../../../Cinder_0.8.5;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1171,6 +1172,7 @@
 				CINDER_PATH = ../../../../../../../Cinder_0.8.5;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (

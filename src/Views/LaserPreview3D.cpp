@@ -32,7 +32,8 @@ void LaserPreview3D::setup( ciilda::Frame* frame, int w, int h ){
 	
 void LaserPreview3D::update(){
 	mCamera.lookAt( mCameraPosition, mTargetPosition, mUp );
-    mTempRotation.rotate( Vec3f( 0.16666f, 0.333333f, 0.666666f ).normalized(), 0.01f );
+//    mTempRotation.rotate( Vec3f( 0.16666f, 0.333333f, 0.666666f ).normalized(), 0.01f );
+    
 //	mTempRotation *= mQuat;
 //
 //    mPov.update();
@@ -71,15 +72,17 @@ void LaserPreview3D::draw(){
     gl::pushMatrices();
 	gl::setMatrices( mCamera );
 
+    
+    gl::multModelView( mTempRotation );
+    gl::color(.4, .4, .4);
+    gl::drawCube( Vec3f::zero(), Vec3f(.05,.05,.05) );
+
     gl::enableAlphaBlending();
-//    gl::enable( GL_DEPTH_TEST );
+    //    gl::enable( GL_DEPTH_TEST );
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     //    gl::enableAdditiveBlending();
-    
-    gl::multModelView( mTempRotation );
-    gl::color(1, 1, 1);
-    gl::drawCube( Vec3f::zero(), Vec3f(.2,.2,.2) );
+
     
     gl::pushMatrices();
 //    gl::scale( Vec3f(scale,scale,scale) );
@@ -146,6 +149,10 @@ Vec3f LaserPreview3D::getCameraPosition(){
 
 Vec3f LaserPreview3D::getTargetPosition(){
     return mTargetPosition;
+}
+
+void LaserPreview3D::resetView(){
+    mCameraPosition = Vec3f( 0.0f, 0.0f, -3.0f );
 }
 
 ci::gl::Fbo* LaserPreview3D::getTexture(){
