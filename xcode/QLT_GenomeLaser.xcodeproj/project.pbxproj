@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -96,6 +96,8 @@
 		FF3DAE1B178CD3F400B6AF61 /* Utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3DAD75178CD3F400B6AF61 /* Utility.cpp */; };
 		FF53DBBA178F018A0057A39B /* POV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF53DBB9178F018A0057A39B /* POV.cpp */; };
 		FF53DBBE178F02E90057A39B /* DataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF53DBBC178F02E90057A39B /* DataManager.cpp */; };
+		FF81B7A11798C3DA000F0D3C /* CircularDataLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81B79F1798C176000F0D3C /* CircularDataLayer.cpp */; };
+		FF81B7A41798C3FC000F0D3C /* CircularDataWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81B7A21798C3F6000F0D3C /* CircularDataWindow.cpp */; };
 		FF81DBFA178B5D10000566C1 /* Preview3DWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */; };
 		FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */; };
 		FFFD8A2D178F7DC500DA74A3 /* DataToShapeConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFFD8A2B178F7DC100DA74A3 /* DataToShapeConverter.cpp */; };
@@ -329,6 +331,10 @@
 		FF53DBB9178F018A0057A39B /* POV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = POV.cpp; path = ../src/Views/POV.cpp; sourceTree = "<group>"; };
 		FF53DBBC178F02E90057A39B /* DataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataManager.cpp; path = ../src/Data/DataManager.cpp; sourceTree = "<group>"; };
 		FF53DBBD178F02E90057A39B /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataManager.h; path = ../src/Data/DataManager.h; sourceTree = "<group>"; };
+		FF81B79F1798C176000F0D3C /* CircularDataLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CircularDataLayer.cpp; path = ../src/Views/CircularDataLayer.cpp; sourceTree = "<group>"; };
+		FF81B7A01798C176000F0D3C /* CircularDataLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CircularDataLayer.h; path = ../src/Views/CircularDataLayer.h; sourceTree = "<group>"; };
+		FF81B7A21798C3F6000F0D3C /* CircularDataWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CircularDataWindow.cpp; sourceTree = "<group>"; };
+		FF81B7A31798C3F6000F0D3C /* CircularDataWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircularDataWindow.h; sourceTree = "<group>"; };
 		FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Preview3DWindow.cpp; sourceTree = "<group>"; };
 		FF81DBF9178B5D10000566C1 /* Preview3DWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preview3DWindow.h; sourceTree = "<group>"; };
 		FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsPanel.cpp; sourceTree = "<group>"; };
@@ -451,6 +457,8 @@
 		FF045DD9178CA54A005FE797 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FF81B79F1798C176000F0D3C /* CircularDataLayer.cpp */,
+				FF81B7A01798C176000F0D3C /* CircularDataLayer.h */,
 				FF045DDA178CA569005FE797 /* LaserPreview3D.cpp */,
 				FF045DDB178CA569005FE797 /* LaserPreview3D.h */,
 				FF53DBB8178F011D0057A39B /* POV.h */,
@@ -559,6 +567,8 @@
 		FF2FD4331786268E00D19321 /* WindowControls */ = {
 			isa = PBXGroup;
 			children = (
+				FF81B7A21798C3F6000F0D3C /* CircularDataWindow.cpp */,
+				FF81B7A31798C3F6000F0D3C /* CircularDataWindow.h */,
 				FF2FD4341786268E00D19321 /* ColourCorrectionWindow.cpp */,
 				FF2FD4351786268E00D19321 /* ColourCorrectionWindow.h */,
 				FF2FD4391786268E00D19321 /* PreviewWindow.cpp */,
@@ -962,10 +972,11 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "http://say-nono.com";
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "QLT_GenomeLaser" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -1082,6 +1093,8 @@
 				FF53DBBA178F018A0057A39B /* POV.cpp in Sources */,
 				FF53DBBE178F02E90057A39B /* DataManager.cpp in Sources */,
 				FFFD8A2D178F7DC500DA74A3 /* DataToShapeConverter.cpp in Sources */,
+				FF81B7A11798C3DA000F0D3C /* CircularDataLayer.cpp in Sources */,
+				FF81B7A41798C3FC000F0D3C /* CircularDataWindow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
