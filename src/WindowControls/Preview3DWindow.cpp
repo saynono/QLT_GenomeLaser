@@ -22,6 +22,9 @@ Preview3DWindow::Preview3DWindow( Gwen::Controls::Base *parent )
     
     SetMouseInputEnabled( true );
     
+    mMouseDownCurrent = Vec2f::zero();
+    mMouseDownOffset = Vec2f::zero();
+    
     bMouseDown = false;
     bPreviewFboSet = false;
     mImageTemp = gl::Texture( loadImage( loadAsset( "images/logo_outline_white.png" ) ) );
@@ -37,6 +40,7 @@ Preview3DWindow::~Preview3DWindow()
 {
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Preview3DWindow::Render( Skin::Base* skin )
 {
@@ -92,6 +96,8 @@ void Preview3DWindow::RenderUnder( Skin::Base* skin )
 {
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void Preview3DWindow::setPreviewFbo(ci::gl::Fbo* fbo){
     mPreview3DFbo = fbo;
     bPreviewFboSet = true;
@@ -101,25 +107,54 @@ void Preview3DWindow::setLaserPreview3d( LaserPreview3D* laserPreview3D ){
     mLaserPreview3D = laserPreview3D;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Preview3DWindow::update(){
+    
+    Vec2f dist = mMouseDownOffset - mMouseDownCurrent;
+    if(dist.length() > 10){
+        mMouseDownSmoothed = lerp( mMouseDownSmoothed,dist,.04f );
+//        Vec3f mLaserPreview3D->getCameraPosition()
+//        console() << "mMouseDownSmoothed : " << mMouseDownSmoothed << std::endl;
+    
+        Vec3f cam = mCameraPositionOrg;
+        cam.rotateY( toRadians(mMouseDownSmoothed.x / 1.0) );
+        cam.rotateX( toRadians(mMouseDownSmoothed.y / 10.0) );
+        mLaserPreview3D->setCameraPosition(cam);
+        
+//        mCameraPosition = mLaserPreview3D->getCameraPosition();
+//        Quatf mQuat;
+//        mQuat.set(mMouseDownSmoothed.x/1000.0, mMouseDownSmoothed.y/1000.0, 0);
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void Preview3DWindow::OnMouseMoved( int x, int y, int deltaX, int deltaY ){
 
     if(bMouseDown){
-        Vec2f dist = mMouseDownOffset - Vec2f(x,y);
-        mCameraPosition = mLaserPreview3D->getCameraPosition();
-        mMouseDownSmoothed = lerp( mMouseDownSmoothed,dist,.04f );
-        
-        Quatf mQuat;
-        mQuat.set(mMouseDownSmoothed.x/1000.0, mMouseDownSmoothed.y/1000.0, 0);
-        
-//        mCameraPosition += Vec3f( mMouseDownSmoothed.xy(), -3.0 );
-//        mLaserPreview3D->setCameraPosition( mCameraPosition + Vec3f( mMouseDownSmoothed.xy(), -3.0 ) );
+        mMouseDownCurrent = Vec2f(x,y);
+//        Vec2f dist = mMouseDownOffset - Vec2f(x,y);
+//        mCameraPosition = mLaserPreview3D->getCameraPosition();
+//        mMouseDownSmoothed = lerp( mMouseDownSmoothed,dist,.04f );
+//        
+//        console() << "mMouseDownSmoothed : " << mMouseDownSmoothed << std::endl;
+//        
+//        Quatf mQuat;
+//        mQuat.set(mMouseDownSmoothed.x/1000.0, mMouseDownSmoothed.y/1000.0, 0);
+//        
+////        mCameraPosition += Vec3f( mMouseDownSmoothed.xy(), -3.0 );
+////        mLaserPreview3D->setCameraPosition( mCameraPosition + Vec3f( mMouseDownSmoothed.xy(), -3.0 ) );
     }
 }
 
 void Preview3DWindow::OnMouseClickLeft( int x, int y, bool bDown ) {
     bMouseDown = bDown;
-    mMouseDownOffset = Vec2f(x,y);
-    mMouseDownSmoothed = Vec2f::zero();
+    if(bMouseDown){
+        mMouseDownOffset = Vec2f(x,y);
+        mMouseDownSmoothed = Vec2f::zero();
+        mCameraPositionOrg = mLaserPreview3D->getCameraPosition();
+    }
 }
 
 void Preview3DWindow::OnMouseEnter(){
@@ -130,6 +165,12 @@ void Preview3DWindow::OnMouseLeave(){
     bMouseDown = false;
 }
 
+void Preview3DWindow::OnMouseDoubleClickLeft( int x, int y ){
+    mLaserPreview3D->resetView();
+    mMouseDownOffset = Vec2f(x,y);
+    mMouseDownSmoothed = Vec2f::zero();
+    mCameraPositionOrg = mLaserPreview3D->getCameraPosition();
+}
 
 
 

@@ -16,11 +16,9 @@ void DataToShapeConverter::setup(){
 
 	
 Shape2d DataToShapeConverter::convertChar(char c){
-    
-    console() << "DataToShapeConverter::convertChar : " << c << std::endl;
-    
+        
     Shape2d s = mFont.getGlyphShape( mFont.getGlyphChar(c));
-    Rectf r = s.calcBoundingBox();
+    Rectf r;
     int h = r.getHeight();
     
     if(h != 0){
@@ -29,9 +27,10 @@ Shape2d DataToShapeConverter::convertChar(char c){
         matrix.setToIdentity();
         matrix.scale( Vec2f(scale,scale) );
         s.transform(matrix);
-        //        matrix.translate( -Vec2f(r.x1,40) );
+        r = s.calcBoundingBox();
         matrix.setToIdentity();
-        matrix.translate( Vec2f(.5,-.5) );
+        matrix.translate( Vec2f(.5,.5) );
+        matrix.translate( Vec2f(-r.getCenter().x,-r.getCenter().y) );
         s.transform(matrix);
     }
     

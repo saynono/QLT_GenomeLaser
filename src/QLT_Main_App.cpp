@@ -9,6 +9,7 @@
 #include "DataToShapeConverter.h"
 #include "WindowManager.h"
 #include "LaserPreview3D.h"
+#include "CircularDataLayer.h"
 #include "DataManager.h"
 
 
@@ -33,6 +34,7 @@ private:
     ciilda::LaserController*    mLaserController;
     ciilda::Frame               mIldaFrame;
     LaserPreview3D              mLaserPreview3D;
+    CircularDataLayer           mCircDataLayer;
     DataManager                 mDataManager;
     DataToShapeConverter        mShapeConverter;
     int                         mDataCounter;
@@ -45,22 +47,17 @@ void QLT_Main_App::shutdown(){
 
 void QLT_Main_App::setup()
 {
-// 	// TODO: find a better way..
-//#if defined( CINDER_COCOA )
-//	fs::path rootPath = getAppPath().parent_path().parent_path().parent_path().parent_path().parent_path().parent_path();
-//#else
-//	fs::path rootPath = getAppPath().parent_path().parent_path().parent_path().parent_path().parent_path();
-//#endif
-////	addAssetDirectory( rootPath / "assets" );
-   
-    
+
     mDataCounter = 0;
     
-    setWindowSize(getDisplay()->getWidth()-100, getDisplay()->getHeight()-100);
-    setWindowPos((getDisplay()->getWidth() - getWindowWidth()) / 2 , (getDisplay()->getHeight() - getWindowHeight()) / 2);
+    gl::enableVerticalSync();
     
     mDataManager.setup();
     mShapeConverter.setup();
+
+    
+    setWindowSize(getDisplay()->getWidth()-100, getDisplay()->getHeight()-100);
+    setWindowPos((getDisplay()->getWidth() - getWindowWidth()) / 2 , (getDisplay()->getHeight() - getWindowHeight()) / 2);
     mWindowManager.setup();
     
     mLaserController = new ciilda::Etherdream();
@@ -69,16 +66,18 @@ void QLT_Main_App::setup()
     createInitialLaser();
 
     mLaserPreview3D.setup( &mIldaFrame,1024,1024 );
+    mCircDataLayer.setup(1024,1024);
+    mCircDataLayer.setDataBuffer(mDataManager.getDataBuffer());
+    mCircDataLayer.updateLayer(100,10000);
     
     mWindowManager.setPreviewFbo( mLaserPreview3D.getTexture() );
     mWindowManager.setLaserPreview3d( &mLaserPreview3D );
+    mWindowManager.setCircularDataLayer( &mCircDataLayer );
     mWindowManager.setIldaFrame(&mIldaFrame);
     mWindowManager.setLaserController(mLaserController);
-    
     gl::disableDepthRead();
     gl::disableDepthWrite();
-    gl::enableVerticalSync();
-    
+
 }
 
 void QLT_Main_App::mouseDown( MouseEvent event )
@@ -139,6 +138,7 @@ void QLT_Main_App::createInitialLaser(){
     mIldaFrame.end();
     mLaserController->setPoints(mIldaFrame);
     mLaserController->send();
+
 }
 
 void QLT_Main_App::update()
@@ -157,6 +157,7 @@ void QLT_Main_App::update()
         mIldaFrame.lineTo(Vec2f(.8,.8));
         mIldaFrame.lineTo(Vec2f(.2,.8));
         mIldaFrame.lineTo(Vec2f(.2,.2));
+//        mIldaFrame.setColor( ColorA(1,1,1,1) );
         mIldaFrame.setColor( ColorA(.5,.4,.2,.7) );
         mIldaFrame.addShape2d( s );
         mIldaFrame.end();
@@ -170,11 +171,13 @@ void QLT_Main_App::update()
 //            mIldaFrame.addShape2d( s );
 //            mIldaFrame.end();
 //            mLaserController->setPoints(mIldaFrame);
-//            mLaserController->send();            
+//            mLaserController->send();
         }
     }
     
     mLaserPreview3D.update();
+    mCircDataLayer.updateLayer(100,10000);
+
     mWindowManager.update();
     mLaserController->setPoints(mIldaFrame);
     mLaserController->send();
@@ -183,7 +186,7 @@ void QLT_Main_App::update()
 void QLT_Main_App::draw()
 {
     
-	gl::clear( Color( 0, 0, 0 ) ); 
+	gl::clear( ci::Color( 0, 0, 0 ) );
     gl::setViewport( getWindowBounds() );
     
     mLaserPreview3D.draw();

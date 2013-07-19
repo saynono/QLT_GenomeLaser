@@ -16,10 +16,12 @@ void WindowManager::setup(){
     addPreviewWindow();
     addPreview3DWindow();
     addColourCorrectionWindow();
+    addCircularDataWindow();
 }
 	
 void WindowManager::update(){
 	mSettingsControl->update();
+    pPreview3DControl->update();
     pStatusFPSLabel->SetText( toString((int)getFrameRate()) + " FPS        ");
 }
 
@@ -42,7 +44,7 @@ void WindowManager::createMainControls(){
 	mCanvas = new Gwen::Controls::Canvas( skin );
 	mCanvas->SetSize( getWindowWidth(), getWindowHeight() - 24 );
 	mCanvas->SetDrawBackground( true );
-	mCanvas->SetBackgroundColor( cigwen::toGwen( Color::gray( 0.2 ) ) );
+	mCanvas->SetBackgroundColor( cigwen::toGwen( ColorA::gray( 0.2 ) ) );
     mCanvas->Dock( Gwen::Pos::Fill );
         
 	mGwenInput = cigwen::GwenInput::create( mCanvas );
@@ -173,6 +175,22 @@ void WindowManager::addPreview3DWindow(){
 
 }
 
+void WindowManager::addCircularDataWindow(){
+
+    int panelId = 2;
+    Gwen::Controls::Base* panel = m_Splitter->GetPanel(panelId);
+    
+	CircularDataWindow *control = new CircularDataWindow( panel );
+    control->SetPadding(Gwen::Padding(0,0,0,0));
+	control->Dock( Gwen::Pos::Fill );
+    pCircularControl = control;
+    m_Splitter->SetPanel( panelId, control );
+    
+    Gwen::Controls::Label* label =  new Gwen::Controls::Label( control );
+    label->SetText( "Circular Layer" );
+
+}
+
 void WindowManager::setPreviewFbo(ci::gl::Fbo* fbo){
     pPreview3DControl->setPreviewFbo(fbo);
 }
@@ -189,6 +207,10 @@ void WindowManager::setLaserController(ciilda::LaserController* controller){
 void WindowManager::setLaserPreview3d( LaserPreview3D* laserPreview3D ){
     mSettingsControl->setLaserPreview3d( laserPreview3D );
     pPreview3DControl->setLaserPreview3d( laserPreview3D );
+}
+
+void WindowManager::setCircularDataLayer( CircularDataLayer* circularDataLaser ){
+    pCircularControl->setCircularDataLayer( circularDataLaser );
 }
 
 void WindowManager::saveSettings(){

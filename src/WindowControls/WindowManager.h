@@ -33,9 +33,11 @@
 #include "ColourCorrectionWindow.h"
 #include "PreviewWindow.h"
 #include "Preview3DWindow.h"
+#include "CircularDataWindow.h"
+
 #include "SettingsPanel.h"
 #include "LaserPreview3D.h"
-
+#include "CircularDataLayer.h"
 
 #include "CinderIldaFrame.h"
 
@@ -59,12 +61,14 @@ public:
     void setIldaFrame(ciilda::Frame* frame);
     void setLaserController(ciilda::LaserController* controller);
     void setLaserPreview3d( LaserPreview3D* laserPreview3D );
+    void setCircularDataLayer( CircularDataLayer* circularDataLaser );
     
 private:
     
     void setupMainArea();
     void addPreviewWindow();
     void addPreview3DWindow();
+    void addCircularDataWindow();
     void addSettingsList();
     void addColourCorrectionWindow();
     void createMainControls();
@@ -80,10 +84,12 @@ private:
 	Gwen::Controls::Canvas*     mCanvas;
     Gwen::Controls::Base*       mMainArea;
     Gwen::Controls::DockBase*   mTotalWindowArea;
+    
     PreviewWindow*              pPreviewControl;
     Preview3DWindow*            pPreview3DControl;
+    CircularDataWindow*         pCircularControl;
     ColourCorrectionWindow*     pColourControl;
-//    LaserPreview3D*             mLaserPreview3D;
+    
     Gwen::Controls::Label*      pStatusFPSLabel;
     Gwen::Controls::Label*      pStatusBuildLabel;
     SettingsPanel*              mSettingsControl;
