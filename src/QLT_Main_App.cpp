@@ -149,14 +149,15 @@ void QLT_Main_App::update()
     if( (int)dc != mDataCounter){
         mDataCounter = (int)dc;
         char d = mDataManager.getNextData();
+//        d = min('a',d);
         Shape2d s = mShapeConverter.convertChar(d);
         mIldaFrame.begin();
         mIldaFrame.setColor( ColorA(.5,.4,.2,.7) );
-        mIldaFrame.moveTo(Vec2f(.2,.2));
-        mIldaFrame.lineTo(Vec2f(.8,.2));
-        mIldaFrame.lineTo(Vec2f(.8,.8));
-        mIldaFrame.lineTo(Vec2f(.2,.8));
-        mIldaFrame.lineTo(Vec2f(.2,.2));
+//        mIldaFrame.moveTo(Vec2f(.2,.2));
+//        mIldaFrame.lineTo(Vec2f(.8,.2));
+//        mIldaFrame.lineTo(Vec2f(.8,.8));
+//        mIldaFrame.lineTo(Vec2f(.2,.8));
+//        mIldaFrame.lineTo(Vec2f(.2,.2));
 //        mIldaFrame.setColor( ColorA(1,1,1,1) );
         mIldaFrame.setColor( ColorA(.5,.4,.2,.7) );
         mIldaFrame.addShape2d( s );
