@@ -145,6 +145,7 @@ void QLT_Main_App::update()
 {
     
     float speed = 1.1f;
+    float sc = 1.0f;
     float dc = (getElapsedSeconds() * speed);
     if( (int)dc != mDataCounter){
         mDataCounter = (int)dc;
@@ -153,6 +154,12 @@ void QLT_Main_App::update()
         Shape2d s = mShapeConverter.convertChar(d);
         mIldaFrame.begin();
         mIldaFrame.setColor( ColorA(.5,.4,.2,.7) );
+        mIldaFrame.moveTo(Vec2f(0.5,0));
+        float amount = 50;
+        for(int i=0;i<=amount;i++){
+            mIldaFrame.moveTo(Vec2f((sin(i/amount * M_PI * 2) * sc *.9+1)/2.0, (cos(i/amount * M_PI * 2) * sc *.9+1)/2.0));
+            mIldaFrame.lineTo(Vec2f((sin(i/amount * M_PI * 2) * sc+1)/2.0, (cos(i/amount * M_PI * 2) * sc+1)/2.0));
+        }
 //        mIldaFrame.moveTo(Vec2f(.2,.2));
 //        mIldaFrame.lineTo(Vec2f(.8,.2));
 //        mIldaFrame.lineTo(Vec2f(.8,.8));
@@ -160,7 +167,7 @@ void QLT_Main_App::update()
 //        mIldaFrame.lineTo(Vec2f(.2,.2));
 //        mIldaFrame.setColor( ColorA(1,1,1,1) );
         mIldaFrame.setColor( ColorA(.5,.4,.2,.7) );
-        mIldaFrame.addShape2d( s );
+//        mIldaFrame.addShape2d( s );
         mIldaFrame.end();
         mLaserController->setPoints(mIldaFrame);
         mLaserController->send();

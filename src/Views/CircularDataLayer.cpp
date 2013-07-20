@@ -55,7 +55,7 @@ void CircularDataLayer::updateLayer(int pos, int len){
             
             char d = *(datas+(int)i)-'A'+30;
             clr = (d*2) / 255.0;// mRandom.nextFloat(1.0f);
-            if(i<100) console() << i << " -> " << clr << std::endl;
+//            if(i<100) console() << i << " -> " << clr << std::endl;
             gl::color( Color( clr,clr,clr ) );
             gl::vertex(sin(ir)*rad,cos(ir)*rad);
             rad -= radAdd;//(((int)(i/360))/1000.0f);

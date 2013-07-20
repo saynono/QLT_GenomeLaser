@@ -13,6 +13,7 @@
 #include "cinder/Camera.h"
 #include "CinderIldaFrame.h"
 #include "cinder/gl/Fbo.h"
+#include "cinder/Quaternion.h"
 
 #include "POV.h"
 

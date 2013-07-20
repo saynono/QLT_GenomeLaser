@@ -27,6 +27,7 @@ void LaserPreview3D::setup( ciilda::Frame* frame, int w, int h ){
     
     mTempRotation.setToIdentity();
     mTempRotation.rotate( Vec3f( 0.0f, 0.0f, 1.0f ).normalized(), toRadians(-90.0f) );
+    mTempRotation *= Quatf( Vec3f( 0.0f, 1.0f, 0.0f ).normalized(), toRadians(-90.0f) );
 //    mQuat.g
 
 }
@@ -49,16 +50,16 @@ void LaserPreview3D::draw(){
     
     float scale = 1.0/(float)kIldaMaxPoint;
     float clrScale = 1.0/(float)kIldaMaxIntensity;
-    scale *= 5.0;
-    Vec3f pointRay( 0,0,-3 );
+//    scale *= 5.0;
+    Vec3f pointRay( 0,0,-1 );
     Vec3f point3d;
     Vec3f pointScale3d;
-    float angleLaser = toRadians( mLaserAngle / 2.0 );
+    float angleLaser = toRadians( (float)mLaserAngle );
     ColorA clr;
     vector<ciilda::Point> points = mIldaFrame->getPoints();
     int l = points.size();
     
-    pointScale3d.x = toRadians( angleLaser/2.0f );
+    pointScale3d.x = toRadians( angleLaser );
     pointScale3d.y = pointScale3d.x;
     pointScale3d.z = 1.0;
     
@@ -101,26 +102,88 @@ void LaserPreview3D::draw(){
 //    point3d.rotateX( angleLaser );
 //    gl::drawLine(Vec3f( 0,0,0 ), point3d);
 
-    gl::begin(GL_TRIANGLES);
-    for(int i=0;i<l-1;i++){
-        clr = ColorAf( points[i].r*clrScale, points[i].g*clrScale, points[i].b*clrScale, points[i].a*clrScale );
-        gl::color( clr );
-        gl::vertex( 0,0,0 );
-        clr.a = 0;
-        gl::color( clr );
+    Quatf quat;
+    Quatf quatx;
+    Quatf quaty;
+    
+    int rotVersion = 1;
+//    quat
+
+    
+    
+    if(rotVersion==3){
+        gl::begin(GL_TRIANGLES);
+        for(int i=0;i<l-1;i++){
+            clr = ColorAf( points[i].r*clrScale, points[i].g*clrScale, points[i].b*clrScale, points[i].a*clrScale );
+            gl::color( clr );
+            gl::vertex( 0,0,0 );
+            clr.a = 0;
+            gl::color( clr );
+            quat = Quatf::identity();
+            quat *= Quatf( Vec3f( points[i].x*scale, 0, 0), angleLaser );
+            quat *= Quatf( Vec3f( 0, points[i].y*scale, 0), angleLaser );
+            point3d = pointRay;
+            point3d.rotate( quat.getAxis(), quat.getAngle() );
+            gl::vertex( point3d );
+            
+            quat = Quatf::identity();
+            quat *= Quatf( Vec3f( points[i+1].x*scale, 0, 0), angleLaser );
+            quat *= Quatf( Vec3f( 0, points[i+1].y*scale, 0), angleLaser );
+            point3d = pointRay;
+            point3d.rotate( quat.getAxis(), quat.getAngle() );
+            gl::vertex( point3d );
+            
+        }
+        gl::end();
+    }else if(rotVersion==2){
+        gl::begin(GL_TRIANGLES);
+        for(int i=0;i<l-1;i++){
+            clr = ColorAf( points[i].r*clrScale, points[i].g*clrScale, points[i].b*clrScale, points[i].a*clrScale );
+            gl::color( clr );
+            gl::vertex( 0,0,0 );
+            clr.a = 0;
+            gl::color( clr );
         
-        point3d = pointRay;
-        point3d.rotate( Vec3f(points[i].x,points[i].y,0)*scale, angleLaser );
-        point3d.normalize();
-        gl::vertex( point3d );
+            quat = Quatf::identity();
+            quat *= Quatf( Vec3f(1,0,0), points[i].x*scale*angleLaser );
+            quat *= Quatf( Vec3f(0,1,0), points[i].y*scale*angleLaser );
+            point3d = pointRay;
+            point3d.rotate( quat.getAxis(), quat.getAngle() );
+            gl::vertex( point3d );
         
-        point3d = pointRay;
-        point3d.rotate( Vec3f(points[i+1].x,points[i+1].y,0)*scale, angleLaser );
-        point3d.normalize();
-        gl::vertex( point3d );
+            quat = Quatf::identity();
+            quat *= Quatf( Vec3f(1,0,0), points[i+1].x*scale*angleLaser );
+            quat *= Quatf( Vec3f(0,1,0), points[i+1].y*scale*angleLaser );
+            point3d = pointRay;
+            point3d.rotate( quat.getAxis(), quat.getAngle() );
+            gl::vertex( point3d );
         
+        }
+        gl::end();
+    }else if(rotVersion==1){
+        gl::begin(GL_TRIANGLES);
+        for(int i=0;i<l-1;i++){
+            clr = ColorAf( points[i].r*clrScale, points[i].g*clrScale, points[i].b*clrScale, points[i].a*clrScale );
+            gl::color( clr );
+            gl::vertex( 0,0,0 );
+            clr.a = 0;
+            gl::color( clr );
+            
+            point3d = pointRay;
+            point3d.rotate( Vec3f(points[i].x,points[i].y,0)*scale, angleLaser );
+            point3d.normalize();
+            gl::vertex( point3d );
+            
+            point3d = pointRay;
+            point3d.rotate( Vec3f(points[i+1].x,points[i+1].y,0)*scale, angleLaser );
+            point3d.normalize();
+            gl::vertex( point3d );
+            
+        }
+        gl::end();
     }
-    gl::end();
+
+    
     glDisable(GL_BLEND);
     gl::disable( GL_DEPTH_TEST );
 
