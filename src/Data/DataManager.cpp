@@ -6,35 +6,50 @@
 //  Copyright (c) 2013 http://say-nono.com. All rights reserved.
 //
 
+
+
 #include "DataManager.h"
 
-	
+
 void DataManager::setup(){
     
     mCurrentDataPosition = 0;
     mCurrentSequence = 0;
     
 //    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205");
-    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205_short");
+//    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205_short");
 //    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205_short2");
 //    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205_shorter");
-//    fstream inFile(filename.c_str());
     
-//    std::ifstream myfile;
-//    myfile.open( mFilename.c_str(), ifstream::in);
+    fs::path path1 = getAssetPath("data/genome/CM000663.1| Homo sapiens chromoso _ part.fasta");
+    fs::path path2 = getAssetPath("data/genome/CCDS_exons.current.txt");
     
+    loadChromosomeData(path1);
+    loadExomeData(path2);
     
+}
+
+void DataManager::loadChromosomeData(cinder::fs::path path){
+    mFilename = path;
     Buffer b = Buffer( loadFile( mFilename ) );
-    console() << "2: " << getElapsedSeconds() << std::endl;
-    
     size_t size = b.getDataSize();
-    console() << " DATA SIZE " << size << std::endl;
 
     bool descriptionStarts = false;
     
     char* datas = (char*)b.getData();
     string seqDescription = "";
     string seqData = "";
+    
+    mDataBufferOffset = 0;
+    
+    if(*(datas) == '>'){
+        for(int i=0;i<10000;i++){
+            if(*(datas+i) == 10){
+                mDataBufferOffset = i+1;
+                break;
+            }
+        }
+    }
     
     for(int i=0;i<10000;i++){
         
@@ -59,17 +74,27 @@ void DataManager::setup(){
     
     mDataBuffer = b;
     
+//    int len = 10;
+//    char dataBits[len/2];
+//    createBitChain(20000,len,dataBits);
+
 }
+
+void DataManager::loadExomeData(cinder::fs::path path){
+    mFilenameExome = path;
+}
+
+
+
+
+
 
 void DataManager::addSequence( string descript, string data ){
     if(data.size() > 0 && descript.size() > 0){
-        console() << "New Sequence : " << descript << "     length: " << data.size() << std::endl << data << std::endl << std::endl;
-//        struct fastaSequence seq;
         fastaSequence seq;
         seq.destription = descript;
         seq.data = data;
         mFastaData.push_back(seq);
-//        fastaSequenceBits b = convertSequenceToBit(seq);
     }
 }
 
@@ -92,6 +117,86 @@ void DataManager::loadData(string file){
 
 Buffer* DataManager::getDataBuffer(){
     return &mDataBuffer;
+}
+
+void DataManager::createBitChain(int pos, int len, char* data){
+    
+    // Be sure that all the data is set to zero!
+    memset(data, 0, len/2);
+    
+    char* datas = (char*)mDataBuffer.getData();
+    
+    int start = pos + mDataBufferOffset;
+    int end = start+len;
+    char d;
+    int cnt = 0;
+    int dataCharPos = 0;
+    int dataBitPos = 0;
+//    for(int i=start;i<end;i+=2){
+//        d = *(datas+i);
+//        data[dataCharPos];
+//        
+//        dataCharPos = (int)(cnt / 4);
+//        dataBitPos = cnt%4;
+//        cnt++;
+//    }
+
+    
+//    datas[start+0] = 'A';
+//    datas[start+1] = 'C';
+//    datas[start+2] = 'G';
+//    datas[start+3] = 'T';
+//    datas[start+4] = 'A';
+//    datas[start+5] = 'A';
+//    datas[start+6] = 'A';
+//    datas[start+7] = 'C';
+    
+    for(int i=start;i<end;i++){
+        
+        d = *(datas+i);
+        dataCharPos = (int)(cnt / 4);
+        dataBitPos = ((cnt%4)/2) * 4;
+
+        // seems to be the fastest way to do it like this according to:
+        // http://stackoverflow.com/questions/6860525/c-what-is-faster-lookup-in-hashmap-or-switch-statement
+        //
+        switch(d){
+            case 'A':
+                data[dataCharPos] |= 1 << dataBitPos;
+                break;
+            case 'C':
+                data[dataCharPos] |= 2 << dataBitPos;
+                break;
+            case 'G':
+                data[dataCharPos] |= 4 << dataBitPos;
+                break;
+            case 'T':
+                data[dataCharPos] |= 8 << dataBitPos;
+                break;
+            
+        }
+        
+//        console() << i << "     " << d << " dataCharPos:" << dataCharPos << "      dataBitPos:" << dataBitPos << std::endl;        
+        
+        cnt++;
+    }
+    
+    
+//    for(int i=0;i<len/8;i++){
+//        data[i] = i;
+//    }
+    
+//    for(int j=0;j<len/4;j++){
+//        for(int i = 7; i >= 0; i--)
+//        {
+//            d = data[j];
+//            std::cout << ((d >> i) & 1);
+//        }
+//        std::cout <<  "  ";
+//        if(j%4==3) std::cout << std::endl;
+//    }
+//    std::cout << std::endl;    
+
 }
 
 //char* DataManager::getData(int pos, int len){

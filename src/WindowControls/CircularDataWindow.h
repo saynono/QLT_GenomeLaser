@@ -10,9 +10,11 @@
 
 
 #include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Label.h"
 #include "cinder/gl/Fbo.h"
 
 #include "CircularDataLayer.h"
+#include "DataController.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -30,7 +32,8 @@ public:
     void update();
     
     void setCircularDataLayer( CircularDataLayer* layer );
-    
+    void setDataController( DataController* d );
+
 //    virtual void OnMouseMoved( int x, int y, int deltaX, int deltaY );
 //    virtual void OnMouseClickLeft( int x, int y, bool bDown );
 //    virtual void OnMouseEnter();
@@ -44,7 +47,11 @@ public:
 private:
     
     bool                        bLayerSet;
-    CircularDataLayer*          mDataLayer;
+    bool                        bDataControllerSet;
+    DataController*             mDataController;
+
+    CircularDataLayer*                  mDataLayer;
+    vector<Gwen::Controls::Label*>      mCrawlerLabels;
 	
 };
 

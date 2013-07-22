@@ -14,6 +14,8 @@
 #include "cinder/gl/Texture.h"
 #include "cinder/Rand.h"
 
+#include "DataController.h"
+
 using namespace ci;
 using namespace ci::app;
 using namespace std;
@@ -24,15 +26,21 @@ public:
 	
 	void setup(int w, int h);
     void setDataBuffer(Buffer* buffer);
-	void updateLayer(int pos, int len);
+    void setDataController(DataController* d);
+	void updateLayer();
+    void drawCircularDataStructure(int pos, int len);
     gl::Fbo* getTexture();
     
 private:
     
     bool                bDataBufferSet;
+    bool                bDataControllerSet;
 	Buffer*             mBuffer;
     gl::Fbo             mCircularDataFbo;
+    gl::Fbo             mCircularDataStructureFbo;
     ci::Rand            mRandom;
+    DataController*     mDataController;
+    
 };
 
 

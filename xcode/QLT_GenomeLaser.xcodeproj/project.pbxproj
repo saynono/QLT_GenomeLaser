@@ -99,7 +99,9 @@
 		FF81B7A11798C3DA000F0D3C /* CircularDataLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81B79F1798C176000F0D3C /* CircularDataLayer.cpp */; };
 		FF81B7A41798C3FC000F0D3C /* CircularDataWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81B7A21798C3F6000F0D3C /* CircularDataWindow.cpp */; };
 		FF81DBFA178B5D10000566C1 /* Preview3DWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */; };
+		FFA7ECC7179AD60300999CEF /* DataConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7ECC5179AD60300999CEF /* DataConverter.cpp */; };
 		FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */; };
+		FFF16388179DE7330092398C /* DataController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFF16386179DE7330092398C /* DataController.cpp */; };
 		FFFD8A2D178F7DC500DA74A3 /* DataToShapeConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFFD8A2B178F7DC100DA74A3 /* DataToShapeConverter.cpp */; };
 /* End PBXBuildFile section */
 
@@ -337,8 +339,13 @@
 		FF81B7A31798C3F6000F0D3C /* CircularDataWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircularDataWindow.h; sourceTree = "<group>"; };
 		FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Preview3DWindow.cpp; sourceTree = "<group>"; };
 		FF81DBF9178B5D10000566C1 /* Preview3DWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preview3DWindow.h; sourceTree = "<group>"; };
+		FFA7ECC5179AD60300999CEF /* DataConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataConverter.cpp; path = ../src/Data/DataConverter.cpp; sourceTree = "<group>"; };
+		FFA7ECC6179AD60300999CEF /* DataConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataConverter.h; path = ../src/Data/DataConverter.h; sourceTree = "<group>"; };
 		FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsPanel.cpp; sourceTree = "<group>"; };
 		FFB6C8291788787D00F41E8C /* SettingsPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsPanel.h; sourceTree = "<group>"; };
+		FFF16386179DE7330092398C /* DataController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataController.cpp; path = ../src/Controller/DataController.cpp; sourceTree = "<group>"; };
+		FFF16387179DE7330092398C /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataController.h; path = ../src/Controller/DataController.h; sourceTree = "<group>"; };
+		FFF16389179DEC2C0092398C /* DataCrawler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DataCrawler.h; path = ../src/Data/DataCrawler.h; sourceTree = "<group>"; };
 		FFFD8A2B178F7DC100DA74A3 /* DataToShapeConverter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DataToShapeConverter.cpp; path = ../src/Data/DataToShapeConverter.cpp; sourceTree = "<group>"; };
 		FFFD8A2C178F7DC100DA74A3 /* DataToShapeConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DataToShapeConverter.h; path = ../src/Data/DataToShapeConverter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -374,6 +381,7 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				FFF16385179DE7190092398C /* Controller */,
 				FF53DBBB178F02D30057A39B /* Data */,
 				FF045DD9178CA54A005FE797 /* Views */,
 				FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */,
@@ -474,7 +482,7 @@
 				FF0461FE178CCF30005FE797 /* src */,
 			);
 			name = "Cinder-Ilda";
-			path = "../../../../../../../Cinder_0.8.5/blocks/Cinder-Ilda";
+			path = "../../../../../../Cinder_0.8.5/blocks/Cinder-Ilda";
 			sourceTree = "<group>";
 		};
 		FF046193178CCF2F005FE797 /* lib */ = {
@@ -591,7 +599,7 @@
 				FF3DA979178CD3D000B6AF61 /* src */,
 			);
 			name = "Cinder-Gwen";
-			path = "../../../../../../../Cinder_0.8.5/blocks/Cinder-Gwen";
+			path = "../../../../../../Cinder_0.8.5/blocks/Cinder-Gwen";
 			sourceTree = "<group>";
 		};
 		FF3DA5DB178CD3CA00B6AF61 /* lib */ = {
@@ -941,8 +949,20 @@
 				FFFD8A2C178F7DC100DA74A3 /* DataToShapeConverter.h */,
 				FF53DBBC178F02E90057A39B /* DataManager.cpp */,
 				FF53DBBD178F02E90057A39B /* DataManager.h */,
+				FFA7ECC5179AD60300999CEF /* DataConverter.cpp */,
+				FFA7ECC6179AD60300999CEF /* DataConverter.h */,
+				FFF16389179DEC2C0092398C /* DataCrawler.h */,
 			);
 			name = Data;
+			sourceTree = "<group>";
+		};
+		FFF16385179DE7190092398C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FFF16386179DE7330092398C /* DataController.cpp */,
+				FFF16387179DE7330092398C /* DataController.h */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1095,6 +1115,8 @@
 				FFFD8A2D178F7DC500DA74A3 /* DataToShapeConverter.cpp in Sources */,
 				FF81B7A11798C3DA000F0D3C /* CircularDataLayer.cpp in Sources */,
 				FF81B7A41798C3FC000F0D3C /* CircularDataWindow.cpp in Sources */,
+				FFA7ECC7179AD60300999CEF /* DataConverter.cpp in Sources */,
+				FFF16388179DE7330092398C /* DataController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1105,6 +1127,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CINDER_PATH = ../../../../../../Cinder_0.8.5;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -1131,6 +1154,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CINDER_PATH = ../../../../../../Cinder_0.8.5;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";

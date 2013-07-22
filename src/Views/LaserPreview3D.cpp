@@ -11,7 +11,7 @@
 	
 void LaserPreview3D::setup( ciilda::Frame* frame, int w, int h ){
     
-    mLaserAngle = 60;
+    mLaserAngle = 80;
     
     mPov			= POV( cinder::app::App::get() , ci::Vec3f( 0.0f, 0.0f, 10.0f ), ci::Vec3f( 0.0f, 0.0f, 0.0f ) );
     
@@ -68,7 +68,7 @@ void LaserPreview3D::draw(){
     gl::setViewport( mPreview3DFbo.getBounds() );
     gl::pushMatrices();
     gl::setMatricesWindow( mPreview3DFbo.getSize(), false ); // *NEW*
-	gl::clear( Color( .15, .1, .2 ) );
+	gl::clear( Color( 0,0,0 ) );
     gl::color( Color( 1, 1, 1 ) );
     
     gl::pushMatrices();
@@ -87,31 +87,49 @@ void LaserPreview3D::draw(){
 
     
     gl::pushMatrices();
-//    gl::scale( Vec3f(scale,scale,scale) );
     gl::color( ColorAf(1,1,1,.5) );
-    
-//    gl::lineWidth(5);
-//    point3d = pointRay;
-//    gl::drawLine(Vec3f( 0,0,0 ), point3d);
-//
-//    point3d = pointRay;
-//    point3d.rotate( Vec3f(1,1,0), angleLaser );
-//    gl::drawLine(Vec3f( 0,0,0 ), point3d);
-//
-//    point3d = pointRay;
-//    point3d.rotateX( angleLaser );
-//    gl::drawLine(Vec3f( 0,0,0 ), point3d);
 
     Quatf quat;
     Quatf quatx;
     Quatf quaty;
     
-    int rotVersion = 1;
-//    quat
+    int rotVersion = 4;
+    float angleProj = scale*mLaserAngle/90.0;
+    float a1,a2;
+    if(rotVersion==4){
+        gl::begin(GL_TRIANGLES);
+        Vec3f pNow,pBefore;
+        for(int i=0;i<l-1;i++){
+            clr = ColorAf( points[i].r*clrScale, points[i].g*clrScale, points[i].b*clrScale, points[i].a*clrScale );
+            gl::color( clr );
+            gl::vertex( 0,0,0 );
+            clr.a = 0;
+            gl::color( clr );
+            
+            if(i==0){
+                a1 = toRadians((Vec2f(points[i].x,points[i].y)*angleProj).length()*90);
+                a2 = atan2(points[i].x,points[i].y);
+                point3d = pointRay;
+                point3d.rotateY(a1);
+                point3d.rotateZ(a2);
+            }else{
+                point3d = pNow;
+            }
+            gl::vertex( point3d );
+            
+            a1 = toRadians((Vec2f(points[i+1].x,points[i+1].y)*angleProj).length()*90);
+            a2 = atan2(points[i+1].x,points[i].y);
+            
+            point3d = pointRay;
+            point3d.rotateY(a1);
+            point3d.rotateZ(a2);
+            gl::vertex( point3d );
 
-    
-    
-    if(rotVersion==3){
+            pNow = point3d;
+            
+        }
+        gl::end();
+    }else if(rotVersion==3){
         gl::begin(GL_TRIANGLES);
         for(int i=0;i<l-1;i++){
             clr = ColorAf( points[i].r*clrScale, points[i].g*clrScale, points[i].b*clrScale, points[i].a*clrScale );
@@ -167,6 +185,7 @@ void LaserPreview3D::draw(){
             gl::color( clr );
             gl::vertex( 0,0,0 );
             clr.a = 0;
+//            clr.a = 1;
             gl::color( clr );
             
             point3d = pointRay;

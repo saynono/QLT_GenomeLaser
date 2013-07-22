@@ -32,6 +32,8 @@ PreviewWindow::~PreviewWindow()
 
 void PreviewWindow::Render( Skin::Base* skin )
 {
+    
+    float outputScale = mIldaFrame->params.output.transform.scale.x;
 	Vec2f pos( cigwen::fromGwen( LocalPosToCanvas() ) );
 	ci::Rectf bounds( cigwen::fromGwen( GetBounds() ) );
 	float aspect = (float)m_InnerBounds.w / (float)m_InnerBounds.h;
@@ -39,6 +41,8 @@ void PreviewWindow::Render( Skin::Base* skin )
     
     float width = bounds.getWidth();
     float height = bounds.getHeight();
+    float width2 = width/2.0;
+    float height2 = height/2.0;
     
     if(aspect > 1){
         width /= aspect;
@@ -47,7 +51,8 @@ void PreviewWindow::Render( Skin::Base* skin )
     }
     
 	gl::translate( pos );
-    gl::color( ci::Color( 0.1,0.1,0.1 ) );
+//    gl::color( ci::Color( 0.1,0.1,0.1 ) );
+    gl::color( ci::Color( 0,0,0 ) );
     gl::drawSolidRect(Rectf(0,0,m_InnerBounds.w,m_InnerBounds.h));
     
     Vec2f offset(bounds.getWidth()-width,bounds.getHeight()-height);
@@ -61,6 +66,17 @@ void PreviewWindow::Render( Skin::Base* skin )
 //        gl::draw( mPreviewFbo->getTexture(),Rectf(0,0,m_InnerBounds.w,m_InnerBounds.h) );
     }
     
+    gl::pushMatrices();
+    
+    gl::color( ci::ColorA( .5,.5,.5,.5 ) );
+    gl::drawStrokedRect( Rectf(0,0,width,height) );
+    gl::translate( Vec2f(width/2,height/2) );
+    gl::drawStrokedCircle(Vec2f::zero(), width/2.0);
+    gl::drawStrokedCircle(Vec2f::zero(), 5);
+    
+    gl::color( ci::Color( 1,0,0 ) );
+    gl::drawStrokedCircle(Vec2f::zero(), width/2.0*outputScale);
+    gl::popMatrices();
     gl::popMatrices();    
     
 }

@@ -38,6 +38,7 @@
 #include "SettingsPanel.h"
 #include "LaserPreview3D.h"
 #include "CircularDataLayer.h"
+#include "DataController.h"
 
 #include "CinderIldaFrame.h"
 
@@ -62,6 +63,7 @@ public:
     void setLaserController(ciilda::LaserController* controller);
     void setLaserPreview3d( LaserPreview3D* laserPreview3D );
     void setCircularDataLayer( CircularDataLayer* circularDataLaser );
+    void setDataController(DataController* d);
     
 private:
     

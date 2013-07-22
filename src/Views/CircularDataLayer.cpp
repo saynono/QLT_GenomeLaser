@@ -11,10 +11,11 @@
 	
 void CircularDataLayer::setup(int w, int h){
     bDataBufferSet = false;
+	bDataControllerSet = false;
     gl::Fbo::Format format;
     //	format.setSamples( 2 ); // uncomment this to enable 4x antialiasing
 	mCircularDataFbo = gl::Fbo( w, h, format );
-    
+	mCircularDataStructureFbo = gl::Fbo( w, h, format );
 }
 
 void CircularDataLayer::setDataBuffer(Buffer* buffer){
@@ -22,15 +23,38 @@ void CircularDataLayer::setDataBuffer(Buffer* buffer){
     mBuffer = buffer;
 }
 
-void CircularDataLayer::updateLayer(int pos, int len){    
+void CircularDataLayer::setDataController(DataController* d){
+	bDataControllerSet = true;
+    mDataController = d;
+}
+
+void CircularDataLayer::updateLayer(){
     mCircularDataFbo.bindFramebuffer();
     glPushAttrib( GL_VIEWPORT_BIT ); // *NEW*
     gl::pushMatrices();
     
     gl::setViewport( mCircularDataFbo.getBounds() );
+    gl::setMatricesWindow( mCircularDataFbo.getSize(), false ); // *NEW*
+//    gl::setMatricesWindow( Vec2f::one(), false ); // *NEW*
+	gl::clear( Color( 0,0,0 ) );
+    gl::color( Color( 1, 1, 1 ) );
+    
+    gl::draw( mCircularDataStructureFbo.getTexture() );
+    
+    gl::popMatrices();
+    glPopAttrib(); // *NEW*
+    mCircularDataFbo.unbindFramebuffer();
+}
+
+void CircularDataLayer::drawCircularDataStructure(int pos, int len){
+    mCircularDataStructureFbo.bindFramebuffer();
+    glPushAttrib( GL_VIEWPORT_BIT ); // *NEW*
+    gl::pushMatrices();
+    
+    gl::setViewport( mCircularDataStructureFbo.getBounds() );
 //    gl::setMatricesWindow( mCircularDataFbo.getSize(), false ); // *NEW*
     gl::setMatricesWindow( Vec2f::one(), false ); // *NEW*
-	gl::clear( Color( .1, .1, .14 ) );
+	gl::clear( Color( 0,0,0 ) );
     gl::color( Color( 1, 1, 1 ) );
     
     gl::pushMatrices();
@@ -47,6 +71,7 @@ void CircularDataLayer::updateLayer(int pos, int len){
         int circles = 200;
         float circAngle = (circles * (M_PI*2)) / (float)amount;
         float radAdd = rad / (float)amount;
+        radAdd /= 2.0;
         char* datas = (char*)mBuffer->getData();
 
         gl::begin(GL_LINE_STRIP);
@@ -69,7 +94,7 @@ void CircularDataLayer::updateLayer(int pos, int len){
 
     gl::popMatrices();
     glPopAttrib(); // *NEW*
-    mCircularDataFbo.unbindFramebuffer();   
+    mCircularDataStructureFbo.unbindFramebuffer();
 }
 
 gl::Fbo* CircularDataLayer::getTexture(){

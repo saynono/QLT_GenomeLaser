@@ -110,6 +110,12 @@ void WindowManager::setupMainArea(){
     }
     {
         Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
+        pButton->SetText( "Data Layer" );
+        pButton->onPress.Add( this, &WindowManager::zoomToPanel );
+        pStatus->AddControl( pButton, false );
+    }
+    {
+        Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
         pButton->SetText( "Show All Panels" );
         pButton->onPress.Add( this, &WindowManager::showAllPanels );
         pStatus->AddControl( pButton, true );
@@ -187,7 +193,7 @@ void WindowManager::addCircularDataWindow(){
     m_Splitter->SetPanel( panelId, control );
     
     Gwen::Controls::Label* label =  new Gwen::Controls::Label( control );
-    label->SetText( "Circular Layer" );
+    label->SetText( "DATA LAYER" );
 
 }
 
@@ -213,6 +219,10 @@ void WindowManager::setCircularDataLayer( CircularDataLayer* circularDataLaser )
     pCircularControl->setCircularDataLayer( circularDataLaser );
 }
 
+void WindowManager::setDataController(DataController* d){
+    pCircularControl->setDataController( d );
+}
+
 void WindowManager::saveSettings(){
     
 }
@@ -236,7 +246,11 @@ void WindowManager::zoomToPanel( Gwen::Event::Info info ){
     else if(name.compare("Preview") == 0){
         panelID = 0;
     }
+    else if(name.compare("Data Layer") == 0){
+        panelID = 2;
+    }
     m_Splitter->Zoom( panelID );
 }
+
 
 

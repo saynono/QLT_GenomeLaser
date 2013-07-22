@@ -69,6 +69,10 @@ void SettingsPanel::setIldaFrame(ciilda::Frame* frame){
     Gwen::Controls::Base* pSlider;
     Gwen::Controls::Base* pCheckBox;
     Gwen::Controls::Base* pLabel;
+
+    pSlider = addSlider(mLaserCat, getBounds(mLaserCatElements), "Scaling", mIldaFrame->params.output.transform.scale.x*100, 5, 100 );
+    mLaserCatElements.push_back(pSlider);
+
     
     pSlider = addSlider(mLaserCat, getBounds(mLaserCatElements), "Target Points Count", mIldaFrame->params.output.targetPointCount, 1, 3000 );
     mLaserCatElements.push_back(pSlider);
@@ -262,7 +266,11 @@ void SettingsPanel::onSliderLaserOutput( Gwen::Controls::Base* pControl ){
     else if (controlName.compare("Laser Angle") == 0){
         mLaserPreview3D->setLaserAngle( ( int ) pSlider->GetFloatValue() );
     }
-    
+    else if (controlName.compare("Scaling") == 0){
+        float scale = pSlider->GetFloatValue()/100.0f;
+        mIldaFrame->params.output.transform.scale.x = scale;
+        mIldaFrame->params.output.transform.scale.y = scale;
+    }
     
 }
 
