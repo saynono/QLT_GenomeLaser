@@ -22,11 +22,20 @@ using namespace std;
 
 class DataController{
     
+    
+    struct Say { // Simple functor to print stuff to the console
+        Say( std::string message ) : mMessage( message ) {}
+        void operator()(){ app::console() << mMessage << std::endl; }
+            
+            std::string mMessage;
+            };
+    
 public:
 	
 	void setup(DataManager* dm);
 	void update();
 	vector<DataCrawler>* getCrawler();
+    void resetCrawler();
 
 private:
     

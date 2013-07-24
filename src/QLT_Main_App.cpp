@@ -54,7 +54,7 @@ void QLT_Main_App::shutdown(){
 
 void QLT_Main_App::setup()
 {
-
+    
     mDataCounter = 0;
     
     gl::enableVerticalSync();
