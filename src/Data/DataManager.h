@@ -46,40 +46,45 @@ using namespace std;
 class DataManager{
 
     
+//    CG
+//    AT
+//    GC
+//    TA
+    
 //    A --> adenosine           0001
-#define BASE_A                  1;
+#define BASE_A                  0;
 //    C --> cytidine            0010
-#define BASE_C                  2;
+#define BASE_C                  1;
 //    G --> guanine             0100
-#define BASE_G                  4;
+#define BASE_G                  2;
 //    T --> thymidine           1000
-#define BASE_T                  8;
+#define BASE_T                  3;
     
-//    R --> G A (purine)        0101
-#define BASEGA                  5
-#define AG                      5
-    
-//    Y --> T C (pyrimidine)    1010
-#define TC                      10
-#define CT                      10
-    
-//    K --> G T (keto)
-#define GT                      12
-#define TG                      12
-
-//    M --> A C (amino)
-#define AC                      3
-#define CA                      3
-    
-//    S --> G C (strong)
-#define GT                      6
-#define TG                      6
-    
-//    W --> A T (weak)
-#define AT                      9
-#define TA                      9
-
-    
+////    R --> G A (purine)        0101
+//#define BASEGA                  5
+//#define AG                      5
+//    
+////    Y --> T C (pyrimidine)    1010
+//#define TC                      10
+//#define CT                      10
+//    
+////    K --> G T (keto)
+//#define GT                      12
+//#define TG                      12
+//
+////    M --> A C (amino)
+//#define AC                      3
+//#define CA                      3
+//    
+////    S --> G C (strong)
+//#define GT                      6
+//#define TG                      6
+//    
+////    W --> A T (weak)
+//#define AT                      9
+//#define TA                      9
+//
+//    
     
 public:
     

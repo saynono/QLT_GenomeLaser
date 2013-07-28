@@ -165,7 +165,7 @@ void SettingsPanel::setLaserPreview3d( LaserPreview3D* laserPreview3D ){
     Gwen::Controls::Base* pCheckBox;
     Gwen::Controls::Base* pLabel;
 
-    pSlider = addSlider(mLaserCat, getBounds(mLaserCatElements), "Laser Angle", mLaserPreview3D->getLaserAngle(), 0, 180 );
+    pSlider = addSlider(mLaserCat, getBounds(mLaserCatElements), "Laser Angle", mLaserPreview3D->getLaserAngle(), 0, 90 );
     mLaserCatElements.push_back(pSlider);
     
     
@@ -291,7 +291,7 @@ void SettingsPanel::onSliderLaserOutput( Gwen::Controls::Base* pControl ){
     Gwen::Controls::Label* label = mLabelsMap[pControl];
     Gwen::Controls::Slider* pSlider = ( Gwen::Controls::Slider* ) pControl;
     label->SetValue( toString(( int ) pSlider->GetFloatValue()));
-    console() << label->GetValue().c_str() << "   Slider Value: " <<  ( float ) pSlider->GetFloatValue() << std::endl;
+//    console() << label->GetValue().c_str() << "   Slider Value: " <<  ( float ) pSlider->GetFloatValue() << std::endl;
     
     string controlName = pSlider->GetName().c_str();
     if (controlName.compare("Target Points Count") == 0){

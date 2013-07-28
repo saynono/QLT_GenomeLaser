@@ -122,7 +122,7 @@ Buffer* DataManager::getDataBuffer(){
 void DataManager::createBitChain(int pos, int len, char* data){
     
     // Be sure that all the data is set to zero!
-    memset(data, 0, len/2);
+    memset(data, 0, len/4);
     
     char* datas = (char*)mDataBuffer.getData();
     
@@ -155,36 +155,28 @@ void DataManager::createBitChain(int pos, int len, char* data){
         
         d = *(datas+i);
         dataCharPos = (int)(cnt / 4);
-        dataBitPos = ((cnt%4)/2) * 4;
+        dataBitPos = ((cnt%4)) * 2;
 
         // seems to be the fastest way to do it like this according to:
         // http://stackoverflow.com/questions/6860525/c-what-is-faster-lookup-in-hashmap-or-switch-statement
         //
         switch(d){
             case 'A':
-                data[dataCharPos] |= 1 << dataBitPos;
+                data[dataCharPos] |= 0 << dataBitPos;
                 break;
             case 'C':
-                data[dataCharPos] |= 2 << dataBitPos;
+                data[dataCharPos] |= 1 << dataBitPos;
                 break;
             case 'G':
-                data[dataCharPos] |= 4 << dataBitPos;
+                data[dataCharPos] |= 2 << dataBitPos;
                 break;
             case 'T':
-                data[dataCharPos] |= 8 << dataBitPos;
+                data[dataCharPos] |= 3 << dataBitPos;
                 break;
             
         }
-        
-//        console() << i << "     " << d << " dataCharPos:" << dataCharPos << "      dataBitPos:" << dataBitPos << std::endl;        
-        
         cnt++;
     }
-    
-    
-//    for(int i=0;i<len/8;i++){
-//        data[i] = i;
-//    }
     
 //    for(int j=0;j<len/4;j++){
 //        for(int i = 7; i >= 0; i--)
@@ -199,9 +191,6 @@ void DataManager::createBitChain(int pos, int len, char* data){
 
 }
 
-//char* DataManager::getData(int pos, int len){
-//    
-//}
 
 char DataManager::getNextData(){
     

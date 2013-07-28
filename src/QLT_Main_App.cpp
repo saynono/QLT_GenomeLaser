@@ -14,6 +14,9 @@
 #include "DataConverter.h"
 #include "DataController.h"
 
+#include "ColouredShape2d.h"
+
+
 
 
 using namespace ci;
@@ -177,29 +180,30 @@ void QLT_Main_App::displayDataBits(){
     
     //TODO need to fix the offset (20000)
     
-    Shape2d s1,s2;
-    int len = 100;
-    char dataBits[len/2];
-    int dataOffset = 20000+getElapsedFrames();
+    ColouredShape2d s1,s2;
+    int len = 8*10;
+    char dataBits[(int)ceil(len/4)];
+    int dataOffset = 20000;//+getElapsedFrames();
     float startAngle = toRadians(-(float)getElapsedFrames()/10.0);
+//    float startAngle = toRadians(0.0f);
     
     mDataManager.createBitChain(dataOffset,len,dataBits);
 //    s1 = mDataConverter.convertBitChainToCircularShape(dataBits, len/2, .1, startAngle, toRadians(180.0), .92);
-    s1 = mDataConverter.convertBitChainToCircularShape(dataBits, len/2, .4, startAngle, toRadians(180.0), .8);
+    s1 = mDataConverter.convertBitChainToShape(dataBits, len, .16, startAngle, toRadians(90.0), .8);
     
-    int len2 = 100;
-    char dataBits2[len/2];
+    int len2 = 20;
+    char dataBits2[(int)ceil(len/4)];
     int dataOffset2 = 50000;//+getElapsedFrames();
     float startAngle2 = toRadians(-getElapsedSeconds());
     
     mDataManager.createBitChain(dataOffset2,len2,dataBits2);
-    s2 = mDataConverter.convertBitChainToCircularShape(dataBits2, len2/2, .1, startAngle2, toRadians(270.0), .65);
+    s2 = mDataConverter.convertBitChainToShape(dataBits2, len2, .1, startAngle2, toRadians(270.0), .65);
 
     mIldaFrame.begin();
     mIldaFrame.setColor( ColorA(1,1,1,1) );
-    mIldaFrame.addShape2d( s1 );
+    mIldaFrame.addColouredShape2d( s1 );
     mIldaFrame.setColor( ColorA(1,0,1,1) );
-    mIldaFrame.addShape2d( s2 );
+    mIldaFrame.addColouredShape2d( s2 );
     mIldaFrame.end();
     mLaserController->setPoints(mIldaFrame);
     mLaserController->send();
@@ -256,7 +260,20 @@ void QLT_Main_App::draw()
     mLaserPreview3D.draw();
     
     mWindowManager.draw();
-
+    
+    
+//    ColouredShape2d shape;
+//    shape.moveTo( Vec2f(100,100) );
+//    shape.color( ColorAf(1,0,0,1) );
+//    shape.lineTo( Vec2f(1000,100) );
+//    shape.color( ColorAf(0,1,1,1) );
+//    shape.lineTo( Vec2f(1000,600) );
+//    shape.color( ColorAf(1,0,1,1) );
+//    shape.lineTo( Vec2f(100,600) );
+//    shape.quadTo( Vec2f(400,350), Vec2f(100,100) );
+//    shape.draw();
+//    gl::draw( shape );
+    
 }
 
 

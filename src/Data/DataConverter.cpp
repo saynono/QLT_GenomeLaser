@@ -9,68 +9,85 @@
 #include "DataConverter.h"
 
 
-Shape2d DataConverter::convertBitChainToCircularShape(char* data, int len, float lineHeight, float circStartAngle, float circLength, float circDiameter){
+ColouredShape2d DataConverter::convertBitChainToShape(char* data, int len, float lineHeight, float circStartAngle, float circLength, float circDiameter){
     
-    Shape2d s;
+    ColouredShape2d s;
     Vec2f p;
     Vec2f pNorm(0,.5);
     Vec2f pOffset(.5,.5);
     
-    int pairs = len*2;
+    int basePairs = len;
     
     float circDiaLong = circDiameter + lineHeight/2.0;
     float circDiaShort = circDiameter - lineHeight/2.0;
     
-    float rotStepPair = circLength / (float) (len*2);
+    float rotStepPair = circLength / (float) (basePairs);
     float rotStepPairDist = (rotStepPair*.5);
-    float rotStepBit = (rotStepPair*.5)/3.0;
+    float rotStepBit = (rotStepPair-rotStepPairDist)/2.0;
     
-    pNorm.rotate(circStartAngle-rotStepPairDist/2.0);
+    pNorm.rotate(circStartAngle+rotStepPairDist/2.0);
     p = pNorm;
     
     char d;
+    int basePairBit;
     int bitOffset;
-    int lineCounter = 0;
     
-    s.moveTo( p*circDiaLong+pOffset );
+    mLineCounter = 0;
     
-    for(int i=0;i<pairs;i++){
+    drawLine( &s, p*circDiaShort+pOffset, p*circDiaLong+pOffset );
+    
+    for(int i=0;i<basePairs/4;i++){
         
-        d = data[i/2];
-        bitOffset = (i%2)*4;
+        d = data[i/4];
+        
+        
         for(int j=0;j<4;j++){
-            if( ((d>>(bitOffset+j)) & 1) ==1 ){
-                
-                // TO AVOID LONG BLANK DISTANCES
-                if(lineCounter%2==1){
-                    s.moveTo( p*circDiaShort+pOffset );
-                    s.lineTo( p*circDiaLong+pOffset );
-                }else{
-                    s.moveTo( p*circDiaLong+pOffset );
-                    s.lineTo( p*circDiaShort+pOffset );
-                }
-                lineCounter++;
+
+            bitOffset = j*2;
+            
+            basePairBit = (d>>(bitOffset)) & 3;
+            
+            switch(basePairBit){
+                case 0:
+//                    console() << "A";
+                    break;
+                case 1:
+//                    console() << "C";
+                    break;
+                case 2:
+//                    console() << "G";
+                    break;
+                case 3:
+//                    console() << "T";
+                    break;
             }
+            
+            if( (basePairBit & 1) == 1) drawLine( &s, p*circDiaShort+pOffset, p*circDiaLong+pOffset );
+//            drawLine( &s, p*circDiaShort+pOffset, p*circDiaLong+pOffset );
             p.rotate(rotStepBit);
+            
+            if( (basePairBit & 2) == 2) drawLine( &s, p*circDiaShort+pOffset, p*circDiaLong+pOffset );
+//            drawLine( &s, p*circDiaShort+pOffset, p*circDiaLong+pOffset );
+            p.rotate(rotStepBit);
+            
+            p.rotate(rotStepPairDist);
+
         }
-        p.rotate(rotStepPair);
+        
+        drawLine( &s, p*circDiaShort+pOffset, p*circDiaLong+pOffset );
         
     }
-    
-//    for(int j=0;j<len;j++){
-//        for(int i = 7; i >= 0; i--)
-//        {
-//            d = data[j];
-//            std::cout << ((d >> i) & 1);
-//        }
-//        std::cout <<  "  ";
-//        if(j%4==3) std::cout << std::endl;
-//    }
-    
     return s;
 }
 
-//bool DataConverter::addLines(Shape2d* shape, char c){
-//    
-//}
-
+void DataConverter::drawLine(ColouredShape2d* s, Vec2f p1, Vec2f p2){
+    s->color( lerp( ColorAf(1,.7,.1,1), ColorAf(.5,0,1,1), mLineCounter/100.0) );
+    if(mLineCounter%2==1){
+        s->moveTo( p1 );
+        s->lineTo( p2 );
+    }else{
+        s->moveTo( p2 );
+        s->lineTo( p1 );
+    }
+    mLineCounter ++;
+}

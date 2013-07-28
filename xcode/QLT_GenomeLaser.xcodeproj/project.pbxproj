@@ -99,6 +99,7 @@
 		FF81B7A11798C3DA000F0D3C /* CircularDataLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81B79F1798C176000F0D3C /* CircularDataLayer.cpp */; };
 		FF81B7A41798C3FC000F0D3C /* CircularDataWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81B7A21798C3F6000F0D3C /* CircularDataWindow.cpp */; };
 		FF81DBFA178B5D10000566C1 /* Preview3DWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */; };
+		FF82DDC617A5CDE300631BF2 /* ColouredShape2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF82DDC417A5CDD100631BF2 /* ColouredShape2d.cpp */; };
 		FFA7ECC7179AD60300999CEF /* DataConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7ECC5179AD60300999CEF /* DataConverter.cpp */; };
 		FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */; };
 		FFF16388179DE7330092398C /* DataController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFF16386179DE7330092398C /* DataController.cpp */; };
@@ -339,6 +340,8 @@
 		FF81B7A31798C3F6000F0D3C /* CircularDataWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircularDataWindow.h; sourceTree = "<group>"; };
 		FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Preview3DWindow.cpp; sourceTree = "<group>"; };
 		FF81DBF9178B5D10000566C1 /* Preview3DWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preview3DWindow.h; sourceTree = "<group>"; };
+		FF82DDC417A5CDD100631BF2 /* ColouredShape2d.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ColouredShape2d.cpp; sourceTree = "<group>"; };
+		FF82DDC517A5CDD100631BF2 /* ColouredShape2d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColouredShape2d.h; sourceTree = "<group>"; };
 		FFA7ECC5179AD60300999CEF /* DataConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataConverter.cpp; path = ../src/Data/DataConverter.cpp; sourceTree = "<group>"; };
 		FFA7ECC6179AD60300999CEF /* DataConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataConverter.h; path = ../src/Data/DataConverter.h; sourceTree = "<group>"; };
 		FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsPanel.cpp; sourceTree = "<group>"; };
@@ -381,6 +384,7 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				FF82DDC017A5C39B00631BF2 /* Utils */,
 				FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */,
 				FFF16385179DE7190092398C /* Controller */,
 				FF53DBBB178F02D30057A39B /* Data */,
@@ -557,6 +561,8 @@
 		FF046202178CCF30005FE797 /* ciilda */ = {
 			isa = PBXGroup;
 			children = (
+				FF82DDC417A5CDD100631BF2 /* ColouredShape2d.cpp */,
+				FF82DDC517A5CDD100631BF2 /* ColouredShape2d.h */,
 				FF046203178CCF30005FE797 /* CinderIldaFrame.cpp */,
 				FF046204178CCF30005FE797 /* CinderIldaFrame.h */,
 				FF046205178CCF30005FE797 /* CinderIldaPoint.h */,
@@ -956,6 +962,13 @@
 			name = Data;
 			sourceTree = "<group>";
 		};
+		FF82DDC017A5C39B00631BF2 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		FFF16385179DE7190092398C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -1117,6 +1130,7 @@
 				FF81B7A41798C3FC000F0D3C /* CircularDataWindow.cpp in Sources */,
 				FFA7ECC7179AD60300999CEF /* DataConverter.cpp in Sources */,
 				FFF16388179DE7330092398C /* DataController.cpp in Sources */,
+				FF82DDC617A5CDE300631BF2 /* ColouredShape2d.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

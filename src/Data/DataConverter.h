@@ -10,7 +10,7 @@
 
 
 #include "cinder/app/AppBasic.h"
-#include "cinder/Shape2d.h"
+#include "ColouredShape2d.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -20,9 +20,15 @@ class DataConverter{
 
 public:
 	
-	Shape2d convertBitChainToCircularShape(char* data, int len, float lineHeight, float circStartAngle, float circLength, float circDiameter);
+	ColouredShape2d convertBitChainToShape(char* data, int len, float lineHeight, float circStartAngle, float circLength, float circDiameter);
 
-	
+private:
+    
+    void drawLine(ColouredShape2d* s, Vec2f p1, Vec2f p2);
+
+    int mLineCounter;
+
+    
 };
 
 
