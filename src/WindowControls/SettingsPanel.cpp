@@ -46,7 +46,7 @@ void SettingsPanel::setup(Gwen::Controls::DockBase *parent){
 
 //    cat1->get
     
-    Gwen::Padding padding = Gwen::Padding( 10, 0, 10, 2 0 );
+    Gwen::Padding padding = Gwen::Padding( 10, 0, 10, 2 );
     cat1->SetPadding( padding );
     cat2->SetPadding( padding );
     cat3->SetPadding( padding );
