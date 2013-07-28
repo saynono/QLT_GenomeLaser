@@ -482,7 +482,7 @@
 				FF0461FE178CCF30005FE797 /* src */,
 			);
 			name = "Cinder-Ilda";
-			path = "../../../../../../Cinder_0.8.5/blocks/Cinder-Ilda";
+			path = ../../../cinder_0.8.5/blocks/CinderIlda;
 			sourceTree = "<group>";
 		};
 		FF046193178CCF2F005FE797 /* lib */ = {
@@ -599,7 +599,7 @@
 				FF3DA979178CD3D000B6AF61 /* src */,
 			);
 			name = "Cinder-Gwen";
-			path = "../../../../../../Cinder_0.8.5/blocks/Cinder-Gwen";
+			path = "../../../cinder_0.8.5/blocks/Cinder-Gwen";
 			sourceTree = "<group>";
 		};
 		FF3DA5DB178CD3CA00B6AF61 /* lib */ = {
@@ -1127,7 +1127,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CINDER_PATH = ../../../../../../Cinder_0.8.5;
+				CINDER_PATH = ../../../Cinder_0.8.5;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -1154,7 +1154,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CINDER_PATH = ../../../../../../Cinder_0.8.5;
+				CINDER_PATH = ../../../Cinder_0.8.5;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1184,7 +1184,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
-				CINDER_PATH = ../../../../../../../Cinder_0.8.5;
+				CINDER_PATH = ../../../../cinder_0.8.5;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1205,7 +1205,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
-				CINDER_PATH = ../../../../../../../Cinder_0.8.5;
+				CINDER_PATH = ../../../../cinder_0.8.5;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
