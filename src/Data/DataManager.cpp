@@ -16,14 +16,13 @@ void DataManager::setup(){
     mCurrentDataPosition = 0;
     mCurrentSequence = 0;
     
-    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205");
+//    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205");
 //    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205_short");
 //    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205_short2");
 //    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205_shorter");
     
-    console() << " ----> " << mFilename << std::endl;
-    fs::path path1 = getAssetPath("./data/genome/CM000663.1| Homo sapiens chromoso _ part.fasta");
-    fs::path path2 = getAssetPath("./data/genome/CCDS_exons.current.txt");
+    fs::path path1 = getAssetPath("data/genome/CM000663.1| Homo sapiens chromoso _ part.fasta");
+    fs::path path2 = getAssetPath("data/genome/CCDS_exons.current.txt");
     
     loadChromosomeData(path1);
     loadExomeData(path2);
