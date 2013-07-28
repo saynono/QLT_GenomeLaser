@@ -69,9 +69,12 @@ private:
     
     Gwen::Controls::CollapsibleCategory*        mLaserCat;
     Gwen::Controls::CollapsibleCategory*        mLaserStatsCat;
+    Gwen::Controls::CollapsibleCategory*        mLaserPreviewCat;
+    Gwen::Controls::CollapsibleCategory*        mLaserColourCorCat;
     
     vector<Gwen::Controls::Base*>                               mLaserCatElements;
     vector<Gwen::Controls::Base*>                               mLaserStatsCatElements;
+    vector<Gwen::Controls::Base*>                               mLaserPreviewCatElements;
     map<Gwen::Controls::Base*,Gwen::Controls::Label*>           mLabelsMap;
     map<string,Gwen::Controls::Label*>                          mLabelsValueMap;
     

@@ -30,6 +30,7 @@ Shape2d DataConverter::convertBitChainToCircularShape(char* data, int len, float
     
     char d;
     int bitOffset;
+    int lineCounter = 0;
     
     s.moveTo( p*circDiaLong+pOffset );
     
@@ -39,8 +40,16 @@ Shape2d DataConverter::convertBitChainToCircularShape(char* data, int len, float
         bitOffset = (i%2)*4;
         for(int j=0;j<4;j++){
             if( ((d>>(bitOffset+j)) & 1) ==1 ){
-                s.moveTo( p*circDiaLong+pOffset );
-                s.lineTo( p*circDiaShort+pOffset );
+                
+                // TO AVOID LONG BLANK DISTANCES
+                if(lineCounter%2==1){
+                    s.moveTo( p*circDiaShort+pOffset );
+                    s.lineTo( p*circDiaLong+pOffset );
+                }else{
+                    s.moveTo( p*circDiaLong+pOffset );
+                    s.lineTo( p*circDiaShort+pOffset );
+                }
+                lineCounter++;
             }
             p.rotate(rotStepBit);
         }

@@ -15,7 +15,7 @@ void WindowManager::setup(){
     addSettingsList();
     addPreviewWindow();
     addPreview3DWindow();
-    addColourCorrectionWindow();
+//    addColourCorrectionWindow();
     addCircularDataWindow();
 }
 	
@@ -31,7 +31,7 @@ void WindowManager::draw(){
 
 void WindowManager::createMainControls(){
     
-	getWindow()->setTitle( "QLT GenomeLaser v1" );
+	getWindow()->setTitle( "QLT GenomeLaser v1.1" );
     
 	mRenderer = new cigwen::GwenRendererGl();
 	mRenderer->Init();
@@ -100,24 +100,28 @@ void WindowManager::setupMainArea(){
 //        packet.String = "Hallosolo";
         pButton->SetText( "Preview" );
         pButton->onPress.Add( this, &WindowManager::zoomToPanel, packet );
+        pButton->AddAccelerator( "1" );
         pStatus->AddControl( pButton, false );
     }
     {
         Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
         pButton->SetText( "Preview3D" );
         pButton->onPress.Add( this, &WindowManager::zoomToPanel );
+        pButton->AddAccelerator( "2" );
         pStatus->AddControl( pButton, false );
     }
     {
         Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
         pButton->SetText( "Data Layer" );
         pButton->onPress.Add( this, &WindowManager::zoomToPanel );
+        pButton->AddAccelerator( "3" );
         pStatus->AddControl( pButton, false );
     }
     {
         Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
         pButton->SetText( "Show All Panels" );
         pButton->onPress.Add( this, &WindowManager::showAllPanels );
+        pButton->AddAccelerator( "0" );
         pStatus->AddControl( pButton, true );
     }    
 }

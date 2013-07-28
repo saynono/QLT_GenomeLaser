@@ -78,14 +78,13 @@ void Preview3DWindow::Render( Skin::Base* skin )
     
     Vec2f offset(bounds.getWidth()-width,bounds.getHeight()-height);
 	gl::translate( offset/2.0 );
-    
-    gl::color( ci::Color( 1,0,0 ) );
-    gl::drawSolidRect(Rectf(0,0,width,height));
-    
+        
+    gl::disableAlphaBlending();
     if(bPreviewFboSet){
         gl::color( ci::Color( 1,1,1 ) );
         gl::draw( mPreview3DFbo->getTexture(0), Rectf(0,0,width,height) );
     }
+    gl::enableAlphaBlending();
     
     gl::popMatrices();
 
@@ -118,8 +117,8 @@ void Preview3DWindow::update(){
 //        console() << "mMouseDownSmoothed : " << mMouseDownSmoothed << std::endl;
     
         Vec3f cam = mCameraPositionOrg;
-        cam.rotateY( toRadians(mMouseDownSmoothed.x / 1.0) );
         cam.rotateX( toRadians(mMouseDownSmoothed.y / 10.0) );
+        cam.rotateY( toRadians(mMouseDownSmoothed.x / 1.0) );
         mLaserPreview3D->setCameraPosition(cam);
         
 //        mCameraPosition = mLaserPreview3D->getCameraPosition();

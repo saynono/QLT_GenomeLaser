@@ -381,10 +381,10 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */,
 				FFF16385179DE7190092398C /* Controller */,
 				FF53DBBB178F02D30057A39B /* Data */,
 				FF045DD9178CA54A005FE797 /* Views */,
-				FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */,
 				FF2FD4331786268E00D19321 /* WindowControls */,
 			);
 			name = Source;

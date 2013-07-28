@@ -24,6 +24,17 @@ using namespace std;
 class LaserPreview3D{
 
 public:
+    
+    
+    struct {
+        bool showFrame;
+        bool showDotsOnGauze;
+        bool showLinesOnGauze;
+        bool showRays;
+        bool showFans;
+        float fansIntensity;
+    } paramsView;
+
 	
 	void setup(ciilda::Frame* frame, int w, int h);
 	void update();
@@ -43,6 +54,21 @@ public:
     
 private:
     
+    struct GauzeDots{
+        Vec3f       vec;
+        ColorAf     clr;
+    };
+    
+    void                        drawLaserDotsOnGauze();
+    void                        drawLaserLinesOnGauze(float alpha);
+    void                        drawLaserRays(float alpha);
+    void                        drawLaserFansTest(float alpha);
+    void                        drawLaserFans(float alpha);
+    void                        drawLaserFansTests();
+    
+    void                        calculateDotsOnGauze();
+
+    
     ci::CameraPersp				mCamera;
     ciilda::Frame*              mIldaFrame;
     ci::gl::Fbo                 mPreview3DFbo;
@@ -57,6 +83,7 @@ private:
     Matrix44f                   mTempRotation;
     Quatf                       mQuat;
     int                         mLaserAngle;
+    vector<GauzeDots>           mGauzeDots;
 	
 };
 

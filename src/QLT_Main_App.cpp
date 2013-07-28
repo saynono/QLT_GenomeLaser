@@ -178,16 +178,16 @@ void QLT_Main_App::displayDataBits(){
     //TODO need to fix the offset (20000)
     
     Shape2d s1,s2;
-    int len = 90;
+    int len = 10;
     char dataBits[len/2];
-    int dataOffset = 20000+getElapsedFrames();
+    int dataOffset = 20000;//+getElapsedFrames();
     float startAngle = toRadians(-(float)getElapsedFrames()/10.0);
     
     mDataManager.createBitChain(dataOffset,len,dataBits);
-    s1 = mDataConverter.convertBitChainToCircularShape(dataBits, len/2, .1, startAngle, toRadians(180.0), .92);
-
+//    s1 = mDataConverter.convertBitChainToCircularShape(dataBits, len/2, .1, startAngle, toRadians(180.0), .92);
+    s1 = mDataConverter.convertBitChainToCircularShape(dataBits, len/2, .4, startAngle, toRadians(180.0), .8);
     
-    int len2 = 40;
+    int len2 = 10;
     char dataBits2[len/2];
     int dataOffset2 = 50000;//+getElapsedFrames();
     float startAngle2 = toRadians(-getElapsedSeconds());
@@ -198,8 +198,8 @@ void QLT_Main_App::displayDataBits(){
     mIldaFrame.begin();
     mIldaFrame.setColor( ColorA(1,1,1,1) );
     mIldaFrame.addShape2d( s1 );
-    mIldaFrame.setColor( ColorA(1,0,1,1) );
-    mIldaFrame.addShape2d( s2 );
+//    mIldaFrame.setColor( ColorA(1,0,1,1) );
+//    mIldaFrame.addShape2d( s2 );
     mIldaFrame.end();
     mLaserController->setPoints(mIldaFrame);
     mLaserController->send();

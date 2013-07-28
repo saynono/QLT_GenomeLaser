@@ -41,15 +41,21 @@ void SettingsPanel::setup(Gwen::Controls::DockBase *parent){
     
     Gwen::Controls::CollapsibleCategory* cat1 = pList->Add( "Laser Stats" );
     Gwen::Controls::CollapsibleCategory* cat2 = pList->Add( "Laser Output Settings" );
+    Gwen::Controls::CollapsibleCategory* cat4 = pList->Add( "Laser Colour Correction" );
+    Gwen::Controls::CollapsibleCategory* cat3 = pList->Add( "Laser Preview Settings" );
 
 //    cat1->get
     
-//    Gwen::Padding padding = Gwen::Padding( 10, 0, 10, 30 );
-//    cat1->SetPadding( padding );
+    Gwen::Padding padding = Gwen::Padding( 10, 0, 10, 2 0 );
+    cat1->SetPadding( padding );
+    cat2->SetPadding( padding );
+    cat3->SetPadding( padding );
+    cat4->SetPadding( padding );
     
     mLaserStatsCat = cat1;
     mLaserCat = cat2;
-
+    mLaserPreviewCat = cat3;
+    mLaserColourCorCat = cat4;
 }
 
 void SettingsPanel::update(){
@@ -110,12 +116,25 @@ void SettingsPanel::setIldaFrame(ciilda::Frame* frame){
     
     bIldaFrameSet = true;
     
-//    Rectf r = getBounds(mLaserCatElements);
-//    ColourCorrectionWindow *control = new ColourCorrectionWindow( mLaserCat );
+    
+//    ColourCorrectionWindow *control = new ColourCorrectionWindow( window );
 //    control->setup();
-//	control->SetPos( r.getX1(), r.getY1() );
+//	control->SetPos( 0, 0 );
 //    control->SetPadding(Gwen::Padding(0,0,0,0));
 //	control->Dock( Gwen::Pos::Fill );
+//    pColourControl = control;
+
+    
+    Rectf r = getBounds(mLaserCatElements);
+    ColourCorrectionWindow *control = new ColourCorrectionWindow( mLaserColourCorCat );
+    control->setup();
+    control->SetBounds( 10, 30, r.getWidth(), 200 );
+//	control->SetPos( r.getX1(), r.getY1() );
+    control->SetPadding(Gwen::Padding(0,0,0,0));
+//	control->Dock( Gwen::Pos::Fill );
+    
+//    mLaserCatElements.push_back( control );
+    
 
 //    struct {
 //        bool doFlipX;
@@ -141,8 +160,35 @@ void SettingsPanel::setLaserController(ciilda::LaserController* controller){
 
 void SettingsPanel::setLaserPreview3d( LaserPreview3D* laserPreview3D ){
     mLaserPreview3D = laserPreview3D;
-    Gwen::Controls::Base* pSlider = addSlider(mLaserCat, getBounds(mLaserCatElements), "Laser Angle", mLaserPreview3D->getLaserAngle(), 0, 180 );
+
+    Gwen::Controls::Base* pSlider;
+    Gwen::Controls::Base* pCheckBox;
+    Gwen::Controls::Base* pLabel;
+
+    pSlider = addSlider(mLaserCat, getBounds(mLaserCatElements), "Laser Angle", mLaserPreview3D->getLaserAngle(), 0, 180 );
     mLaserCatElements.push_back(pSlider);
+    
+    
+    pCheckBox = addCheckBox(mLaserPreviewCat, getBounds(mLaserPreviewCatElements), "Show Frame", mLaserPreview3D->paramsView.showFrame );
+    mLaserPreviewCatElements.push_back(pCheckBox);
+    
+    pCheckBox = addCheckBox(mLaserPreviewCat, getBounds(mLaserPreviewCatElements), "Show Dots on Gauze", mLaserPreview3D->paramsView.showDotsOnGauze );
+    mLaserPreviewCatElements.push_back(pCheckBox);
+
+    pCheckBox = addCheckBox(mLaserPreviewCat, getBounds(mLaserPreviewCatElements), "Show Lines on Gauze", mLaserPreview3D->paramsView.showLinesOnGauze );
+    mLaserPreviewCatElements.push_back(pCheckBox);
+
+    pCheckBox = addCheckBox(mLaserPreviewCat, getBounds(mLaserPreviewCatElements), "Show Rays", mLaserPreview3D->paramsView.showRays );
+    mLaserPreviewCatElements.push_back(pCheckBox);
+
+    pCheckBox = addCheckBox(mLaserPreviewCat, getBounds(mLaserPreviewCatElements), "Show Fans", mLaserPreview3D->paramsView.showFans );
+    mLaserPreviewCatElements.push_back(pCheckBox);
+    
+    pSlider = addSlider(mLaserPreviewCat, getBounds(mLaserPreviewCatElements), "Fans Intensity", mLaserPreview3D->paramsView.fansIntensity*100.0f, 0, 100 );
+    mLaserPreviewCatElements.push_back(pSlider);
+
+
+    
 }
 
 
@@ -234,7 +280,7 @@ Rectf SettingsPanel::getBounds(const vector<Gwen::Controls::Base*>& vec){
     for(int i=0;i<vec.size();i++){
         h += vec[i]->GetSize().y + dist;
     }
-    rect.set(10, h + 50, 200 + 10, 30);
+    rect.set(10, h + 35, 200 + 10, 30);
     return rect;
 }
 
@@ -271,6 +317,10 @@ void SettingsPanel::onSliderLaserOutput( Gwen::Controls::Base* pControl ){
         mIldaFrame->params.output.transform.scale.x = scale;
         mIldaFrame->params.output.transform.scale.y = scale;
     }
+    else if(controlName.compare("Fans Intensity") == 0){
+        mLaserPreview3D->paramsView.fansIntensity = ( float ) pSlider->GetFloatValue() / 100.0;
+        
+    }
     
 }
 
@@ -283,8 +333,29 @@ void SettingsPanel::onCheckBoxLaserOutput( Gwen::Controls::Base* pControl ){
         mIldaFrame->params.draw.lines = pCheckBox->IsChecked() == 1;
 //        console() <<  "mIldaFrame->params.draw.lines : " << mIldaFrame->params.draw.lines << std::endl;
     }
+    else if (controlName.compare("Show Frame") == 0){
+        mLaserPreview3D->paramsView.showFrame = pCheckBox->IsChecked() == 1;
+    }
     else if (controlName.compare("Draw Points") == 0){
         mIldaFrame->params.draw.points = pCheckBox->IsChecked() == 1;
     }
+    else if (controlName.compare("Show Dots on Gauze") == 0){
+        mLaserPreview3D->paramsView.showDotsOnGauze = pCheckBox->IsChecked() == 1;
+    }
+    else if (controlName.compare("Show Lines on Gauze") == 0){
+        mLaserPreview3D->paramsView.showLinesOnGauze = pCheckBox->IsChecked() == 1;
+    }
+    else if (controlName.compare("Show Rays") == 0){
+        mLaserPreview3D->paramsView.showRays = pCheckBox->IsChecked() == 1;
+    }
+    else if (controlName.compare("Show Fans") == 0){
+        mLaserPreview3D->paramsView.showFans = pCheckBox->IsChecked() == 1;
+    }
+    
+    
+    
+    
+    
+    
     
 }
