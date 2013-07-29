@@ -42,6 +42,9 @@
 
 #include "CinderIldaFrame.h"
 
+#include "MainController.h"
+#include "ViewManager.h"
+
 using namespace ci;
 using namespace ci::app;
 using namespace std;
@@ -50,7 +53,9 @@ class WindowManager: public Gwen::Event::Handler{
 
 public:
 	
-	void setup();
+	void setup( MainController* mc, ViewManager* vm );
+    void setMainController( MainController* mc );
+    void setViewManager( ViewManager* vm );
 	void update();
 	void draw();
     
@@ -58,8 +63,8 @@ public:
     
     ColourCorrectionWindow* getColorValueController();
 
-    void setPreviewFbo(ci::gl::Fbo* fbo);
-    void setIldaFrame(ciilda::Frame* frame);
+    void setPreviewFbo( ci::gl::Fbo* fbo );
+    void setIldaFrameRef( ciilda::Frame* frame );
     void setLaserController(ciilda::LaserController* controller);
     void setLaserPreview3d( LaserPreview3D* laserPreview3D );
     void setCircularDataLayer( CircularDataLayer* circularDataLaser );
@@ -87,6 +92,8 @@ private:
     Gwen::Controls::Base*       mMainArea;
     Gwen::Controls::DockBase*   mTotalWindowArea;
     
+    MainController*             mMainController;
+    ViewManager*                mViewManager;
     PreviewWindow*              pPreviewControl;
     Preview3DWindow*            pPreview3DControl;
     CircularDataWindow*         pCircularControl;

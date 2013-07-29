@@ -36,7 +36,8 @@ public:
     } paramsView;
 
 	
-	void setup(ciilda::Frame* frame, int w, int h);
+	void setup(int w, int h);
+    void calculateDotsOnGauze( ciilda::Frame* frame);
 	void update();
 	void draw();
     
@@ -65,12 +66,9 @@ private:
     void                        drawLaserFansTest(float alpha);
     void                        drawLaserFans(float alpha);
     void                        drawLaserFansTests();
-    
-    void                        calculateDotsOnGauze();
 
     
     ci::CameraPersp				mCamera;
-    ciilda::Frame*              mIldaFrame;
     ci::gl::Fbo                 mPreview3DFbo;
     
     POV                         mPov;

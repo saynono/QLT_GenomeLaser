@@ -9,7 +9,7 @@
 #include "WindowManager.h"
 
 	
-void WindowManager::setup(){
+void WindowManager::setup( MainController* mc, ViewManager* vm ){
     mRenderDate = "BUILD " + toString(__DATE__) + " " + toString(__TIME__) + "  CINDER VERSION " + CINDER_VERSION_STR;
     createMainControls();
     addSettingsList();
@@ -17,8 +17,30 @@ void WindowManager::setup(){
     addPreview3DWindow();
 //    addColourCorrectionWindow();
     addCircularDataWindow();
+    
+    setMainController( mc );
+    setViewManager( vm );
 }
-	
+
+//---------------------------------------------------------------------------------------------------------
+
+void WindowManager::setMainController( MainController* mc ){
+    mMainController = mc;
+    setDataController( mMainController->getDataController() );
+    setIldaFrameRef( mMainController->getFrameRef() );
+}
+
+void WindowManager::setViewManager( ViewManager* vm ){
+    mViewManager = vm;
+    mViewManager->getLaserPreview3D()->getTexture();
+    setPreviewFbo( mViewManager->getLaserPreview3D()->getTexture() );
+    setLaserPreview3d( mViewManager->getLaserPreview3D() );
+    setCircularDataLayer( mViewManager->getCircularDataLayer() );
+}
+
+
+//---------------------------------------------------------------------------------------------------------
+
 void WindowManager::update(){
 	mSettingsControl->update();
     pPreview3DControl->update();
@@ -28,6 +50,8 @@ void WindowManager::update(){
 void WindowManager::draw(){
     mCanvas->RenderCanvas();
 }
+
+//---------------------------------------------------------------------------------------------------------
 
 void WindowManager::createMainControls(){
     
@@ -205,9 +229,9 @@ void WindowManager::setPreviewFbo(ci::gl::Fbo* fbo){
     pPreview3DControl->setPreviewFbo(fbo);
 }
 
-void WindowManager::setIldaFrame(ciilda::Frame* frame){
-    pPreviewControl->setIldaFrame(frame);
-    mSettingsControl->setIldaFrame(frame);
+void WindowManager::setIldaFrameRef( ciilda::Frame* frame ){
+    pPreviewControl->setIldaFrame( frame );
+    mSettingsControl->setIldaFrame( frame );
 }
 
 void WindowManager::setLaserController(ciilda::LaserController* controller){

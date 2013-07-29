@@ -11,8 +11,10 @@ This project is running on libcinder (http://libcinder.org/);
 
 Licence
 -------
-The code in this repository is available under the [MIT License](https://secure.wikimedia.org/wikipedia/en/wiki/Mit_license).  
-Copyright (c) 2013 Vincent Rebers, [www.say-nono.com](http://www.say-nono.com)
+The code in this repository is available under the
+[Attribution-NonCommercial-ShareAlike 3.0 Unported](http://creativecommons.org/licenses/by-nc-sa/3.0/).  
+
+2013 Vincent Rebers, [www.say-nono.com](http://www.say-nono.com)
 
 Dependencies
 -------
