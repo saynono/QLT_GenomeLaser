@@ -119,6 +119,55 @@ Buffer* DataManager::getDataBuffer(){
     return &mDataBuffer;
 }
 
+const GenomeData::BasePairDataSet DataManager::createBasePairDataSet(int pos, int len){
+    GenomeData::BasePairDataSet dataSet;
+    // Be sure that all the data is set to zero!
+    char rawData[(int)ceil(len/4)];
+    memset(rawData, 0, len/4);
+    dataSet.dataBits = rawData;
+    
+    char* datas = (char*)mDataBuffer.getData();
+    
+    int start = pos + mDataBufferOffset;
+    int end = start+len;
+    char d;
+    int cnt = 0;
+    int dataCharPos = 0;
+    int dataBitPos = 0;
+    
+    for(int i=start;i<end;i++){
+        
+        d = *(datas+i);
+        dataCharPos = (int)(cnt / 4);
+        dataBitPos = ((cnt%4)) * 2;
+        
+        // seems to be the fastest way to do it like this according to:
+        // http://stackoverflow.com/questions/6860525/c-what-is-faster-lookup-in-hashmap-or-switch-statement
+        //
+        switch(d){
+            case 'A':
+                dataSet.dataBits[dataCharPos] |= 0 << dataBitPos;
+                break;
+            case 'C':
+                dataSet.dataBits[dataCharPos] |= 1 << dataBitPos;
+                break;
+            case 'G':
+                dataSet.dataBits[dataCharPos] |= 2 << dataBitPos;
+                break;
+            case 'T':
+                dataSet.dataBits[dataCharPos] |= 3 << dataBitPos;
+                break;
+                
+        }
+        cnt++;
+    }
+
+    dataSet.startPosition = pos;
+    dataSet.basePairsCount = len;
+    
+    return dataSet;
+}
+
 void DataManager::createBitChain(int pos, int len, char* data){
     
     // Be sure that all the data is set to zero!

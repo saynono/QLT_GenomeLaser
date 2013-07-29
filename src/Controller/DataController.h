@@ -15,6 +15,7 @@
 
 #include "DataManager.h"
 #include "DataCrawler.h"
+#include "GenomeData.h"
 
 using namespace ci;
 using namespace ci::app;

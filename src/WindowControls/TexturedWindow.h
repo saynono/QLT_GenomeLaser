@@ -1,5 +1,5 @@
 //
-//  CrawlerController.h
+//  TexturedWindow.h
 //  QLT_GenomeLaser
 //
 //  Created by say nono on 29.07.13.
@@ -15,7 +15,7 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-class CrawlerController{
+class TexturedWindow{
 
 public:
 	

@@ -20,9 +20,12 @@
 		FF0464EF178CCF30005FE797 /* etherdream.c in Sources */ = {isa = PBXBuildFile; fileRef = FF0461A5178CCF2F005FE797 /* etherdream.c */; };
 		FF04652E178CCF30005FE797 /* CinderEtherdream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF046200178CCF30005FE797 /* CinderEtherdream.cpp */; };
 		FF04652F178CCF30005FE797 /* CinderIldaFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF046203178CCF30005FE797 /* CinderIldaFrame.cpp */; };
-		FF24954217A6F06100F8B0C3 /* CrawlerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF24954017A6F06100F8B0C3 /* CrawlerController.cpp */; };
 		FF24954517A6F12D00F8B0C3 /* MainController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF24954317A6F12D00F8B0C3 /* MainController.cpp */; };
 		FF24954817A6F90C00F8B0C3 /* ViewManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF24954617A6F90B00F8B0C3 /* ViewManager.cpp */; };
+		FF24954B17A70B0F00F8B0C3 /* TexturedWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF24954917A70B0F00F8B0C3 /* TexturedWindow.cpp */; };
+		FF24955017A714A400F8B0C3 /* PluginController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF24954E17A714A400F8B0C3 /* PluginController.cpp */; };
+		FF24955617A714D300F8B0C3 /* BasePlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF24955417A714D300F8B0C3 /* BasePlugin.cpp */; };
+		FF24955917A7174200F8B0C3 /* BitsAndLinesPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF24955717A7174100F8B0C3 /* BitsAndLinesPlugin.cpp */; };
 		FF2FD43E1786268E00D19321 /* QLT_Main_App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */; };
 		FF2FD43F1786268E00D19321 /* ColourCorrectionWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4341786268E00D19321 /* ColourCorrectionWindow.cpp */; };
 		FF2FD4411786268E00D19321 /* PreviewWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4391786268E00D19321 /* PreviewWindow.cpp */; };
@@ -136,12 +139,19 @@
 		FF046204178CCF30005FE797 /* CinderIldaFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderIldaFrame.h; sourceTree = "<group>"; };
 		FF046205178CCF30005FE797 /* CinderIldaPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderIldaPoint.h; sourceTree = "<group>"; };
 		FF046207178CCF30005FE797 /* CinderLaserDac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderLaserDac.h; sourceTree = "<group>"; };
-		FF24954017A6F06100F8B0C3 /* CrawlerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrawlerController.cpp; path = ../src/Controller/CrawlerController.cpp; sourceTree = "<group>"; };
-		FF24954117A6F06100F8B0C3 /* CrawlerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrawlerController.h; path = ../src/Controller/CrawlerController.h; sourceTree = "<group>"; };
 		FF24954317A6F12D00F8B0C3 /* MainController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainController.cpp; path = ../src/Controller/MainController.cpp; sourceTree = "<group>"; };
 		FF24954417A6F12D00F8B0C3 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainController.h; path = ../src/Controller/MainController.h; sourceTree = "<group>"; };
 		FF24954617A6F90B00F8B0C3 /* ViewManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ViewManager.cpp; path = ../src/Views/ViewManager.cpp; sourceTree = "<group>"; };
 		FF24954717A6F90B00F8B0C3 /* ViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewManager.h; path = ../src/Views/ViewManager.h; sourceTree = "<group>"; };
+		FF24954917A70B0F00F8B0C3 /* TexturedWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TexturedWindow.cpp; sourceTree = "<group>"; };
+		FF24954A17A70B0F00F8B0C3 /* TexturedWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TexturedWindow.h; sourceTree = "<group>"; };
+		FF24954C17A7124300F8B0C3 /* GenomeData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GenomeData.h; path = ../src/Data/GenomeData.h; sourceTree = "<group>"; };
+		FF24954E17A714A400F8B0C3 /* PluginController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PluginController.cpp; path = ../src/Controller/plugins/PluginController.cpp; sourceTree = "<group>"; };
+		FF24954F17A714A400F8B0C3 /* PluginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PluginController.h; path = ../src/Controller/plugins/PluginController.h; sourceTree = "<group>"; };
+		FF24955417A714D300F8B0C3 /* BasePlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BasePlugin.cpp; path = ../src/Controller/plugins/BasePlugin.cpp; sourceTree = "<group>"; };
+		FF24955517A714D300F8B0C3 /* BasePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasePlugin.h; path = ../src/Controller/plugins/BasePlugin.h; sourceTree = "<group>"; };
+		FF24955717A7174100F8B0C3 /* BitsAndLinesPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BitsAndLinesPlugin.cpp; path = ../src/Controller/plugins/BitsAndLinesPlugin.cpp; sourceTree = "<group>"; };
+		FF24955817A7174100F8B0C3 /* BitsAndLinesPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitsAndLinesPlugin.h; path = ../src/Controller/plugins/BitsAndLinesPlugin.h; sourceTree = "<group>"; };
 		FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = QLT_Main_App.cpp; path = ../src/QLT_Main_App.cpp; sourceTree = "<group>"; };
 		FF2FD4341786268E00D19321 /* ColourCorrectionWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColourCorrectionWindow.cpp; sourceTree = "<group>"; };
 		FF2FD4351786268E00D19321 /* ColourCorrectionWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColourCorrectionWindow.h; sourceTree = "<group>"; };
@@ -393,12 +403,12 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				FF82DDC017A5C39B00631BF2 /* Utils */,
 				FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */,
 				FFF16385179DE7190092398C /* Controller */,
 				FF53DBBB178F02D30057A39B /* Data */,
 				FF045DD9178CA54A005FE797 /* Views */,
 				FF2FD4331786268E00D19321 /* WindowControls */,
+				FF82DDC017A5C39B00631BF2 /* Utils */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -589,6 +599,19 @@
 			path = cilaserdac;
 			sourceTree = "<group>";
 		};
+		FF24954D17A7148100F8B0C3 /* plugins */ = {
+			isa = PBXGroup;
+			children = (
+				FF24954E17A714A400F8B0C3 /* PluginController.cpp */,
+				FF24954F17A714A400F8B0C3 /* PluginController.h */,
+				FF24955417A714D300F8B0C3 /* BasePlugin.cpp */,
+				FF24955517A714D300F8B0C3 /* BasePlugin.h */,
+				FF24955717A7174100F8B0C3 /* BitsAndLinesPlugin.cpp */,
+				FF24955817A7174100F8B0C3 /* BitsAndLinesPlugin.h */,
+			);
+			name = plugins;
+			sourceTree = "<group>";
+		};
 		FF2FD4331786268E00D19321 /* WindowControls */ = {
 			isa = PBXGroup;
 			children = (
@@ -604,6 +627,8 @@
 				FF81DBF9178B5D10000566C1 /* Preview3DWindow.h */,
 				FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */,
 				FFB6C8291788787D00F41E8C /* SettingsPanel.h */,
+				FF24954917A70B0F00F8B0C3 /* TexturedWindow.cpp */,
+				FF24954A17A70B0F00F8B0C3 /* TexturedWindow.h */,
 			);
 			name = WindowControls;
 			path = ../src/WindowControls;
@@ -969,6 +994,7 @@
 				FFA7ECC5179AD60300999CEF /* DataConverter.cpp */,
 				FFA7ECC6179AD60300999CEF /* DataConverter.h */,
 				FFF16389179DEC2C0092398C /* DataCrawler.h */,
+				FF24954C17A7124300F8B0C3 /* GenomeData.h */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -983,10 +1009,9 @@
 		FFF16385179DE7190092398C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				FF24954D17A7148100F8B0C3 /* plugins */,
 				FFF16386179DE7330092398C /* DataController.cpp */,
 				FFF16387179DE7330092398C /* DataController.h */,
-				FF24954017A6F06100F8B0C3 /* CrawlerController.cpp */,
-				FF24954117A6F06100F8B0C3 /* CrawlerController.h */,
 				FF24954317A6F12D00F8B0C3 /* MainController.cpp */,
 				FF24954417A6F12D00F8B0C3 /* MainController.h */,
 			);
@@ -1146,9 +1171,12 @@
 				FFA7ECC7179AD60300999CEF /* DataConverter.cpp in Sources */,
 				FFF16388179DE7330092398C /* DataController.cpp in Sources */,
 				FF82DDC617A5CDE300631BF2 /* ColouredShape2d.cpp in Sources */,
-				FF24954217A6F06100F8B0C3 /* CrawlerController.cpp in Sources */,
 				FF24954517A6F12D00F8B0C3 /* MainController.cpp in Sources */,
 				FF24954817A6F90C00F8B0C3 /* ViewManager.cpp in Sources */,
+				FF24954B17A70B0F00F8B0C3 /* TexturedWindow.cpp in Sources */,
+				FF24955017A714A400F8B0C3 /* PluginController.cpp in Sources */,
+				FF24955617A714D300F8B0C3 /* BasePlugin.cpp in Sources */,
+				FF24955917A7174200F8B0C3 /* BitsAndLinesPlugin.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

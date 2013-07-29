@@ -38,6 +38,8 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/Buffer.h"
 
+#include "GenomeData.h"
+
 
 using namespace ci;
 using namespace ci::app;
@@ -113,6 +115,7 @@ public:
     Buffer* getDataBuffer();
 //    vector<string> getData(int pos, int len);
     char getNextData();
+    const GenomeData::BasePairDataSet createBasePairDataSet(int pos, int len);
     void createBitChain(int pos, int len, char* data);
 
 private:

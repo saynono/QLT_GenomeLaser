@@ -35,12 +35,6 @@ public:
     void setDataController( DataController* d );
     
     void drawArc( Vec2f center, float dia, float angleStart, float angleEnd );
-
-//    virtual void OnMouseMoved( int x, int y, int deltaX, int deltaY );
-//    virtual void OnMouseClickLeft( int x, int y, bool bDown );
-//    virtual void OnMouseEnter();
-//    virtual void OnMouseLeave();
-//    virtual void OnMouseDoubleClickLeft( int x, int y );
     
 public:
     

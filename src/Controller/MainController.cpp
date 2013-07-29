@@ -13,10 +13,12 @@ void MainController::setup(){
     mDataManager.setup();
     mDataController.setup(&mDataManager);
     mShapeConverter.setup();
+    mPluginController.setup();
 }
 	
 void MainController::update(){
     createShapes();
+    mPluginController.update();
 }
 
 //-----------------------------------------------------------------------------------------------------
@@ -48,11 +50,9 @@ DataManager* MainController::getDataManager(){
 void MainController::createShapes(){
 	mCurrentShape.clear();
     createTempDataBits();
-//    mIldaFrame.clear();
     mIldaFrame.begin();
     mIldaFrame.addColouredShape2d( mCurrentShape );
     mIldaFrame.end();
-//    console() << " mCurrentShape : " << mCurrentShape.getNumContours() << std::endl;
 }
 
 
@@ -61,24 +61,21 @@ void MainController::createTempDataBits(){
     
     //TODO need to fix the offset (20000)
     
-    ColouredShape2d s1,s2;
     int len = 8*10;
-    char dataBits[(int)ceil(len/4)];
     int dataOffset = 20000;//+getElapsedFrames();
-    float startAngle = toRadians(-(float)getElapsedFrames()/10.0);
-    //    float startAngle = toRadians(0.0f);
+    const GenomeData::BasePairDataSet dataSet = mDataManager.createBasePairDataSet(dataOffset,len);
+    const ColouredShape2d s1 = mPluginController.getShape(0, dataSet);
     
-    mDataManager.createBitChain(dataOffset,len,dataBits);
-    //    s1 = mDataConverter.convertBitChainToCircularShape(dataBits, len/2, .1, startAngle, toRadians(180.0), .92);
-    s1 = mDataConverter.convertBitChainToShape(dataBits, len, .5, startAngle, toRadians(90.0), .5);
-    
-    int len2 = 20;
-    char dataBits2[(int)ceil(len/4)];
+    int len2 = 5*8;
+    char dataBits2[(int)ceil(len2/4)];
     int dataOffset2 = 50000;//+getElapsedFrames();
-    float startAngle2 = toRadians(-getElapsedSeconds());
+//    float startAngle2 = toRadians(-getElapsedSeconds());
     
-    mDataManager.createBitChain(dataOffset2,len2,dataBits2);
-    s2 = mDataConverter.convertBitChainToShape(dataBits2, len2, .1, startAngle2, toRadians(270.0), .65);
+    const GenomeData::BasePairDataSet dataSet2 = mDataManager.createBasePairDataSet(dataOffset2,len2);
+    const ColouredShape2d s2 = mPluginController.getShape(1, dataSet2);
+
+//    mDataManager.createBitChain(dataOffset2,len2,dataBits2);
+//    const ColouredShape2d s2 = mDataConverter.convertBitChainToShape(dataBits2, len2, .1, startAngle2, toRadians(270.0), .65);
     
     mCurrentShape.appendColouredShape2d(s1);
     mCurrentShape.appendColouredShape2d(s2);

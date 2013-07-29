@@ -90,7 +90,6 @@ void CircularDataWindow::Render( Gwen::Skin::Base* skin )
             gl::drawLine(Vec2f(-100,h), Vec2f(0,h) );
             gl::drawLine(Vec2f(0,h), Vec2f(0,h) + vec * (1.0-dia/dist)  );
             
-//            gl::color( ci::Color( 0,1,1 ) );
             gl::lineWidth(4);
             drawArc( center, dia, angleOffset, angleOffset + crawler->at(i).length );
             gl::lineWidth(1);

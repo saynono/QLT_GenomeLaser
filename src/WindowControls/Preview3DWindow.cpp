@@ -63,8 +63,8 @@ void Preview3DWindow::Render( Skin::Base* skin )
     
     gl::pushMatrices();
     
-    float width = bounds.getWidth();
-    float height = bounds.getHeight();
+    float width = max( (float)mPreview3DFbo->getWidth(), bounds.getWidth());
+    float height = max( (float)mPreview3DFbo->getHeight(), bounds.getHeight());
     
     if(aspect < 1){
         width /= aspect;

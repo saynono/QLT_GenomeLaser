@@ -19,6 +19,8 @@
 #include "DataToShapeConverter.h"
 
 #include "ColouredShape2d.h"
+#include "PluginController.h"
+
 
 
 using namespace ci;
@@ -51,12 +53,13 @@ private:
     DataToShapeConverter        mShapeConverter;
     DataConverter               mDataConverter;
     DataController              mDataController;
+    PluginController            mPluginController;
     
     
     
     ColouredShape2d             mCurrentShape;
     ciilda::Frame               mIldaFrame;
-	
+    
 };
 
 
