@@ -63,8 +63,8 @@ void Preview3DWindow::Render( Skin::Base* skin )
     
     gl::pushMatrices();
     
-    float width = max( (float)mPreview3DFbo->getWidth(), bounds.getWidth());
-    float height = max( (float)mPreview3DFbo->getHeight(), bounds.getHeight());
+    float width = min( (float)mPreview3DFbo->getWidth(), bounds.getWidth());
+    float height = min( (float)mPreview3DFbo->getHeight(), bounds.getHeight());
     
     if(aspect < 1){
         width /= aspect;
@@ -73,7 +73,7 @@ void Preview3DWindow::Render( Skin::Base* skin )
     }
     
 	gl::translate( pos );
-    gl::color( ci::Color( 0.1,0.1,0.1 ) );
+    gl::color( ci::Color( 0,0,0 ) );
     gl::drawSolidRect(Rectf(0,0,m_InnerBounds.w,m_InnerBounds.h));
     
     Vec2f offset(bounds.getWidth()-width,bounds.getHeight()-height);

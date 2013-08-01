@@ -12,6 +12,8 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/Rand.h"
 
+#include "OscMessage.h"
+
 #include "GenomeData.h"
 #include "ColouredShape2d.h"
 
@@ -23,15 +25,28 @@ class BasePlugin{
 
 public:
 	
-	virtual void setup();
-    virtual void dispose();
-//	virtual void update();
-    virtual const ColouredShape2d& getShape(const GenomeData::BasePairDataSet& dataSet);
+    virtual ~BasePlugin(){};
+	virtual void setup(){};
+    virtual void dispose(){};
+    virtual const ColouredShape2d& getShape(const GenomeData::BasePairDataSet& dataSet) {return ColouredShape2d(); };
 	
+    virtual void onActivated(){};
+    virtual void onDeActivated(){};
+    
+    virtual void processOSCMessage( const osc::Message& message ) {};
+
+    const string pluginID() { return mPluginID;};
+
+    void activate(bool b){ bIsActive = b; };
+    bool isActivated(){ return bIsActive; };
+    
 protected:
     
-    Rand                mRandom;
-
+    BasePlugin( string name = "BasePlugin" );
+    
+    bool            bIsActive;
+    string          mPluginID;
+    
 };
 
 

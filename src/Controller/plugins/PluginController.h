@@ -13,6 +13,8 @@
 #include "GenomeData.h"
 #include "BasePlugin.h"
 #include "BitsAndLinesPlugin.h"
+#include "PluginOSCController.h"
+
 
 using namespace ci;
 using namespace ci::app;
@@ -23,16 +25,25 @@ class PluginController{
 public:
 	
 	void setup();
+    void dispose();
 	void update();
+    void addPlugin( BasePlugin* plugin );
     const ColouredShape2d& getShape( int crawlerID, const GenomeData::BasePairDataSet& dataSet );
 
 	
 private:
     
+    PluginOSCController         mOscController;
+    
+    
     BitsAndLinesPlugin          mTempPlugin1;
     BitsAndLinesPlugin          mTempPlugin2;
+    BitsAndLinesPlugin          mTempPlugin3;
+    BitsAndLinesPlugin          mTempPlugin4;
+    BitsAndLinesPlugin          mTempPlugin5;
 
-    vector<BasePlugin*>         mPlugins;
+    vector<BasePlugin*>                 mPlugins;
+    map<string, vector<BasePlugin*> >     mPluginsDirectory;
     
 };
 

@@ -22,10 +22,13 @@ class BitsAndLinesPlugin: public BasePlugin{
 
 public:
 	
+    BitsAndLinesPlugin();
 	virtual void setup();
+    virtual const string pluginID() { return "BitsAndLinesPlugin";};
     virtual void dispose();
+    virtual void processOSCMessage( const osc::Message& message );
     virtual const ColouredShape2d& getShape( const GenomeData::BasePairDataSet& dataSet );
-
+    
 private:
 
     void    convertBitChainToShape(const char* data, int len, float lineHeight, float circStartAngle, float circLength, float circDiameter);

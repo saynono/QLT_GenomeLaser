@@ -8,12 +8,15 @@
 
 #include "BitsAndLinesPlugin.h"
 
+BitsAndLinesPlugin::BitsAndLinesPlugin(): BasePlugin( "BitsAndLinesPlugin" ){
+    
+}
 	
 void BitsAndLinesPlugin::setup(){
     
     mStartAngle = Rand::randFloat(-M_PI,M_PI);
     mSpeed = Rand::randFloat(-M_PI,M_PI);
-    mLineHeight = Rand::randFloat(0.0,.2);
+    mLineHeight = Rand::randFloat(0.0,.4);
     mLinePosition = Rand::randFloat(mLineHeight/2.0,1-mLineHeight/2.0);
     mLength = toRadians(Rand::randFloat(0.0,1.0)*180);
     
@@ -22,8 +25,46 @@ void BitsAndLinesPlugin::setup(){
 }
 
 void BitsAndLinesPlugin::dispose(){
+}
+
+
+//------------------------------------------------------------------------------------------------------
+
+
+void BitsAndLinesPlugin::processOSCMessage( const osc::Message& message ) {
+    for (int i = 0; i < message.getNumArgs(); i++) {
+        if( message.getArgType(i) == osc::TYPE_INT32 ) {
+            try {
+                message.getArgAsInt32(i);
+            }
+            catch (...) {
+                console() << "Exception reading argument as int32" << std::endl;
+            }
+        }
+        else if( message.getArgType(i) == osc::TYPE_FLOAT ) {
+            try {
+                float val = message.getArgAsFloat(i);
+                mLength = toRadians( val*360 );
+                mLinePosition = val;
+            }
+            catch (...) {
+                console() << "Exception reading argument as float" << std::endl;
+            }
+        }
+        else if( message.getArgType(i) == osc::TYPE_STRING) {
+            try {
+                message.getArgAsString(i);
+            }
+            catch (...) {
+                console() << "Exception reading argument as string" << std::endl;
+            }
+        }
+    }
     
 }
+
+
+//------------------------------------------------------------------------------------------------------
 
 const ColouredShape2d& BitsAndLinesPlugin::getShape( const GenomeData::BasePairDataSet& dataSet ){
 
@@ -103,6 +144,8 @@ void BitsAndLinesPlugin::convertBitChainToShape(const char* data, int len, float
         
     }
 }
+
+//------------------------------------------------------------------------------------------------------
 
 void BitsAndLinesPlugin::drawLine(ColouredShape2d* s, Vec2f p1, Vec2f p2){
     s->color( lerp( ColorAf(1,.7,.1,1), ColorAf(.5,0,1,1), mLineCounter/100.0) );

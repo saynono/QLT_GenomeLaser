@@ -9,18 +9,20 @@
 #include "BasePlugin.h"
 
 
-void BasePlugin::setup(){
-    
+BasePlugin::BasePlugin(string name){
+    bIsActive = true;
+    mPluginID = name;
 }
-
-void BasePlugin::dispose(){
-    
-}
-
-//void BasePlugin::update(const GenomeData::BasePairDataSet& dataSet){
+//
+//void BasePlugin::dispose(){
 //    
 //}
 //
-const ColouredShape2d& BasePlugin::getShape(const GenomeData::BasePairDataSet& dataSet){
-    
-}
+////void BasePlugin::update(const GenomeData::BasePairDataSet& dataSet){
+////    
+////}
+////
+//const ColouredShape2d& BasePlugin::getShape(const GenomeData::BasePairDataSet& dataSet){
+//    
+//}
+
