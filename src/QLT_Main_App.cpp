@@ -22,6 +22,7 @@ class QLT_Main_App : public AppNative {
     void shutdown();
 	void update();
 	void draw();
+    void keyDown( KeyEvent event );
     
 private:
     
@@ -29,6 +30,7 @@ private:
     MainController              mMainController;
     ViewManager                 mViewManager;
     WindowManager               mWindowManager;
+    bool                        mFullScreen;
     
 };
 
@@ -50,6 +52,9 @@ void QLT_Main_App::setup()
     gl::disableDepthWrite();
     gl::enableVerticalSync();
     
+    mFullScreen = true;
+    setFullScreen( mFullScreen );
+    
 }
 
 
@@ -67,17 +72,34 @@ void QLT_Main_App::update()
 
     mLaserController->setPoints( mMainController.getFrame() );
     mLaserController->send();
+    
+	if ( mFullScreen != isFullScreen() ) {
+		setFullScreen( mFullScreen );
+//        if(mFullScreen) hideCursor();
+	}
 
 }
 
 void QLT_Main_App::draw()
 {
     
-	gl::clear( ci::Color( 0, 0, 0 ) );
+	gl::clear( ci::Color( 0x26/255.f,0x27/255.f,0x26/255.f ) );
     gl::setViewport( getWindowBounds() );
     
     mWindowManager.draw();
     
+}
+
+void QLT_Main_App::keyDown( KeyEvent event )
+{
+    switch(event.getCode()){
+        case 'q':
+            quit();
+            break;
+        case 'f':
+            mFullScreen = !mFullScreen;
+            break;
+    }
 }
 
 

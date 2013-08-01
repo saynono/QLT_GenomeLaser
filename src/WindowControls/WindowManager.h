@@ -29,6 +29,7 @@
 #include "Gwen/Controls/Label.h"
 #include "Gwen/Controls/CrossSplitter.h"
 #include "Gwen/Controls/Layout/Position.h"
+#include "Gwen/Controls/WindowControl.h"
 
 #include "ColourCorrectionWindow.h"
 #include "PreviewWindow.h"
@@ -91,6 +92,7 @@ private:
 	Gwen::Controls::Canvas*     mCanvas;
     Gwen::Controls::Base*       mMainArea;
     Gwen::Controls::DockBase*   mTotalWindowArea;
+    Gwen::Controls::CrossSplitter* m_Splitter;
     
     MainController*             mMainController;
     ViewManager*                mViewManager;
@@ -108,7 +110,6 @@ private:
     ci::gl::Fbo*                mPreviewFbo;
     string                      mRenderDate;
     
-    Gwen::Controls::CrossSplitter* m_Splitter;
     
     
 };

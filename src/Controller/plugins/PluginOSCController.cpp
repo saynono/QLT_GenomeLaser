@@ -35,8 +35,8 @@ void PluginOSCController::update(){
 void PluginOSCController::processMessage( const osc::Message& message ){
     string address = message.getAddress();
     
-    console() << "New message received" << std::endl;
-    console() << "Address: " << message.getAddress() << std::endl;
+//    console() << "New message received" << std::endl;
+//    console() << "Address: " << message.getAddress() << std::endl;
     
     vector<string> tokens;
     boost::split(tokens,address,boost::is_any_of("/"));
@@ -53,9 +53,9 @@ void PluginOSCController::processMessage( const osc::Message& message ){
     string sig = boost::to_upper_copy(tokens[0]);
     map<string, vector<BasePlugin*> >::const_iterator itr;
     for(itr = mPluginsDirectory.begin(); itr != mPluginsDirectory.end(); ++itr){
-        console() << "Key: " << (*itr).first << " Value: " << (*itr).second.size();
+//        console() << "Key: " << (*itr).first << " Value: " << (*itr).second.size();
         if(sig.compare( boost::to_upper_copy( (*itr).first )) == 0 ){
-            console() << " FOUND THE PLUGIN! " << std::endl;
+//            console() << " FOUND THE PLUGIN! " << std::endl;
             isPluginMessage = true;
             break;
         }

@@ -63,12 +63,12 @@ void WindowManager::createMainControls(){
 	Gwen::Skin::TexturedBase* skin = new Gwen::Skin::TexturedBase( mRenderer );
 //    skin->Init( "DefaultSkin.png" );
 //    skin->Init( "obscureskin.png" );
-    skin->Init( "NonoSkin.png" );
+    skin->Init( "skins/GenomeLaserSkin.png" );
     
 	mCanvas = new Gwen::Controls::Canvas( skin );
 	mCanvas->SetSize( getWindowWidth(), getWindowHeight() - 24 );
 	mCanvas->SetDrawBackground( true );
-	mCanvas->SetBackgroundColor( cigwen::toGwen( ColorA::gray( 0.2 ) ) );
+	mCanvas->SetBackgroundColor( cigwen::toGwen( ci::Color( 0x26/255.f,0x27/255.f,0x26/255.f ) ) );
     mCanvas->Dock( Gwen::Pos::Fill );
         
 	mGwenInput = cigwen::GwenInput::create( mCanvas );
@@ -104,6 +104,7 @@ void WindowManager::setupMainArea(){
     m_Splitter = new Gwen::Controls::CrossSplitter( pCenter );
     m_Splitter->SetPos( 0, 0 );
     m_Splitter->Dock( Gwen::Pos::Fill );
+    m_Splitter->SetSplitterSize(2);
     {
         Gwen::Controls::Label* testButton =  new Gwen::Controls::Label( m_Splitter );
         testButton->SetText( "BOTTOMRIGHT" );
@@ -181,6 +182,14 @@ void WindowManager::addPreviewWindow(){
     
     int panelId = 0;
     Gwen::Controls::Base* panel = m_Splitter->GetPanel(panelId);
+    
+//    Gwen::Controls::WindowControl* pWindow = new Gwen::Controls::WindowControl( panel );
+//    pWindow->SetTitle( "PREVIEW" );
+//    pWindow->SetSize( 200 + rand() % 100, 200 + rand() % 100 );
+//    pWindow->SetPos( rand() % 700, rand() % 400 );
+//    pWindow->SetDeleteOnClose( true );
+    
+    
 	PreviewWindow *control = new PreviewWindow( panel );
     control->SetPadding(Gwen::Padding(0,0,0,0));
 	control->Dock( Gwen::Pos::Fill );
@@ -189,7 +198,7 @@ void WindowManager::addPreviewWindow(){
     
     Gwen::Controls::Label* label =  new Gwen::Controls::Label( control );
     label->SetText( "PREVIEW" );
-
+    label->SetPos(10, 10);
     
 }
 
@@ -206,7 +215,7 @@ void WindowManager::addPreview3DWindow(){
 
     Gwen::Controls::Label* label =  new Gwen::Controls::Label( control );
     label->SetText( "PREVIEW 3D" );
-
+    label->SetPos(10, 10);
 }
 
 void WindowManager::addCircularDataWindow(){
@@ -222,7 +231,7 @@ void WindowManager::addCircularDataWindow(){
     
     Gwen::Controls::Label* label =  new Gwen::Controls::Label( control );
     label->SetText( "DATA LAYER" );
-
+    label->SetPos(10, 10);
 }
 
 void WindowManager::setPreviewFbo(ci::gl::Fbo* fbo){

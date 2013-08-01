@@ -9,6 +9,7 @@
 #pragma once
 
 #include <stdlib.h>
+#include <boost/algorithm/string.hpp>
 
 #include "cinder/Xml.h"
 

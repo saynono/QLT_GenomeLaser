@@ -33,16 +33,15 @@ void SettingsPanel::setup(Gwen::Controls::DockBase *parent){
     Gwen::Controls::TabControl* tabControl = parent->GetLeft()->GetTabControl();
 
     Gwen::Controls::CollapsibleList* pList = new Gwen::Controls::CollapsibleList( parent );
-    pList->SetHeight(300);
 	tabControl->AddPage( "Settings", pList );
     tabControl->SetAllowReorder(false);
-    
+
 	parent->GetLeft()->SetWidth( 250 );
     
     Gwen::Controls::CollapsibleCategory* cat1 = pList->Add( "Laser Stats" );
     Gwen::Controls::CollapsibleCategory* cat2 = pList->Add( "Laser Output Settings" );
-    Gwen::Controls::CollapsibleCategory* cat4 = pList->Add( "Laser Colour Correction" );
     Gwen::Controls::CollapsibleCategory* cat3 = pList->Add( "Laser Preview Settings" );
+    Gwen::Controls::CollapsibleCategory* cat4 = pList->Add( "Laser Colour Correction" );
 
 //    cat1->get
     
