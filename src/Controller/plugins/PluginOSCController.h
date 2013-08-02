@@ -40,7 +40,8 @@ private:
         
     osc::Listener                         mOscListener;
     map<string, vector<BasePlugin*> >     mPluginsDirectory;
-	
+
+//    map<string, vector< map<>*> >     mPluginsDirectory;
 };
 
 

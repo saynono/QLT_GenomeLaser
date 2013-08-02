@@ -56,14 +56,15 @@ void PreviewWindow::Render( Skin::Base* skin )
 //    ColorA clr = cigwen::fromGwen( GetSkin()->Colors.Category. );
     
 //    gl::color( ci::Color( 0x26/255.f,0x27/255.f,0x26/255.f ) );
-    gl::color( ci::Color( 0,0,0 ) );
+//    gl::color( ci::Color( 0,0,0 ) );
+    gl::color( ci::Color( 0x13/255.0,0x14/255.0,0x13/255.0  ) );
 
     gl::drawSolidRect(Rectf(0,0,m_InnerBounds.w,m_InnerBounds.h));
     
     Vec2f offset(bounds.getWidth()-width,bounds.getHeight()-height);
 	gl::translate( offset/2.0 );
 
-    gl::color( ci::Color( 0,0,0 ) );
+    gl::color( ci::Color( 0x13/255.0,0x14/255.0,0x13/255.0  ) );
     gl::drawSolidRect(Rectf(0,0,width,height));
     
     if(bIldaFrameSet){

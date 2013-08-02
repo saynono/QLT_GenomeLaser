@@ -20,7 +20,25 @@ void BitsAndLinesPlugin::setup(){
     mLinePosition = Rand::randFloat(mLineHeight/2.0,1-mLineHeight/2.0);
     mLength = toRadians(Rand::randFloat(0.0,1.0)*180);
     
-    console() << "mLinePosition : " << mLinePosition << "    this: " << mLineHeight << "   mSpeed: " << mSpeed << std::endl;
+    
+//    enum OSCElementTypes {
+//        FLOAT,
+//        INTEGER,
+//        BANG
+//    };
+//    
+//    struct OSCElement{
+//        OSCElement(void* p, OSCElementTypes t){ pointer = p; type = t;};
+//        void*           pointer;
+//        OSCElementTypes type;
+//    };
+//
+    
+    
+    mOSCMap.insert( make_pair( "SPEED", OSCElement( &mSpeed, OSCElement::FLOAT )) );
+    mOSCMap.insert( make_pair( "LINE_HEIGHT", OSCElement( &mLineHeight, OSCElement::FLOAT )) );
+    mOSCMap.insert( make_pair( "LINE_POSITION", OSCElement( &mLinePosition, OSCElement::FLOAT )) );
+    mOSCMap.insert( make_pair( "LENGTH", OSCElement( &mLength, OSCElement::FLOAT )) );
     
 }
 
@@ -30,6 +48,11 @@ void BitsAndLinesPlugin::dispose(){
 
 //------------------------------------------------------------------------------------------------------
 
+const map<string, OSCElement>& BitsAndLinesPlugin::getOSCMapping() {
+    return mOSCMap;
+}
+
+//------------------------------------------------------------------------------------------------------
 
 void BitsAndLinesPlugin::processOSCMessage( const osc::Message& message ) {
     for (int i = 0; i < message.getNumArgs(); i++) {

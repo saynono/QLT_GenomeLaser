@@ -36,7 +36,8 @@ void CircularDataLayer::updateLayer(){
     gl::setViewport( mCircularDataFbo.getBounds() );
     gl::setMatricesWindow( mCircularDataFbo.getSize(), false ); // *NEW*
 //    gl::setMatricesWindow( Vec2f::one(), false ); // *NEW*
-	gl::clear( Color( 0,0,0 ) );
+//	gl::clear( Color( 0,0,0 ) );
+    gl::clear( Color( 0x13/255.0,0x14/255.0,0x13/255.0  ) );
     gl::color( Color( 1, 1, 1 ) );
     
     gl::draw( mCircularDataStructureFbo.getTexture() );
@@ -54,7 +55,7 @@ void CircularDataLayer::drawCircularDataStructure(int pos, int len){
     gl::setViewport( mCircularDataStructureFbo.getBounds() );
 //    gl::setMatricesWindow( mCircularDataFbo.getSize(), false ); // *NEW*
     gl::setMatricesWindow( Vec2f::one(), false ); // *NEW*
-	gl::clear( Color( 0,0,0 ) );
+	gl::clear( Color( 0x13/255.0,0x14/255.0,0x13/255.0  ) );
     gl::color( Color( 1, 1, 1 ) );
     
     gl::pushMatrices();

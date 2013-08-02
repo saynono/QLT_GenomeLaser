@@ -21,10 +21,27 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
+
+class OSCElement{
+
+public:
+    
+    enum OSCElementTypes {
+        FLOAT,
+        INTEGER,
+        BANG
+    };
+    
+    OSCElement( void* p, OSCElementTypes t ){ pointer = p; type = t;};
+    void*           pointer;
+    OSCElementTypes type;
+    
+};
+
 class BasePlugin{
 
 public:
-	
+    
     virtual ~BasePlugin(){};
 	virtual void setup(){};
     virtual void dispose(){};
@@ -33,6 +50,7 @@ public:
     virtual void onActivated(){};
     virtual void onDeActivated(){};
     
+    virtual const map<string, OSCElement>& getOSCMapping() {};
     virtual void processOSCMessage( const osc::Message& message ) {};
 
     const string pluginID() { return mPluginID;};

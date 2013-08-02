@@ -171,6 +171,7 @@
 		FF2FD43A1786268E00D19321 /* PreviewWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewWindow.h; sourceTree = "<group>"; };
 		FF2FD43B1786268E00D19321 /* WindowManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WindowManager.cpp; sourceTree = "<group>"; };
 		FF2FD43C1786268E00D19321 /* WindowManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowManager.h; sourceTree = "<group>"; };
+		FF31712617AB2DFF0099461F /* Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Colors.h; path = ../src/Views/Colors.h; sourceTree = "<group>"; };
 		FF3DA97B178CD3D000B6AF61 /* CinderGwen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CinderGwen.cpp; sourceTree = "<group>"; };
 		FF3DA97C178CD3D000B6AF61 /* CinderGwen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderGwen.h; sourceTree = "<group>"; };
 		FF3DA97D178CD3D000B6AF61 /* GwenInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GwenInput.cpp; sourceTree = "<group>"; };
@@ -540,6 +541,7 @@
 				FF045DDB178CA569005FE797 /* LaserPreview3D.h */,
 				FF53DBB8178F011D0057A39B /* POV.h */,
 				FF53DBB9178F018A0057A39B /* POV.cpp */,
+				FF31712617AB2DFF0099461F /* Colors.h */,
 			);
 			name = Views;
 			sourceTree = "<group>";

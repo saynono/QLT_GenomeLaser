@@ -99,6 +99,8 @@ void QLT_Main_App::keyDown( KeyEvent event )
         case 'f':
             mFullScreen = !mFullScreen;
             break;
+        default:
+            console() << "event.getCode() : " << event.getCode() << std::endl;
     }
 }
 

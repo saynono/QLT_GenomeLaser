@@ -51,7 +51,7 @@ void Preview3DWindow::Render( Skin::Base* skin )
 
     
     mFboTemp.bindFramebuffer();
-    gl::clear();
+    gl::clear( ci::Color( 0x13/255.0,0x14/255.0,0x13/255.0  ) );
     gl::color(1, 1, 1);
     gl::draw( mImageTemp );
     mFboTemp.unbindFramebuffer();

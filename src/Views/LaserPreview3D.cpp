@@ -52,7 +52,7 @@ void LaserPreview3D::draw(){
     gl::setViewport( mPreview3DFbo.getBounds() );
     gl::pushMatrices();
     gl::setMatricesWindow( mPreview3DFbo.getSize(), false );
-	gl::clear( Color( 0,0,0 ) );
+	gl::clear( Color( 0x13/255.0,0x14/255.0,0x13/255.0  ) );
     gl::color( Color( 1, 1, 1 ) );
     
     gl::pushMatrices();
