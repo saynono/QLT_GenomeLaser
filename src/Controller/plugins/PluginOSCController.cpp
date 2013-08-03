@@ -33,22 +33,21 @@ void PluginOSCController::update(){
 //------------------------------------------------------------------------------------------------------
 
 void PluginOSCController::processMessage( const osc::Message& message ){
-    string address = message.getAddress();
+    string address = boost::to_upper_copy(message.getAddress());
     
-//    console() << "New message received" << std::endl;
-//    console() << "Address: " << message.getAddress() << std::endl;
+    if( mPluginsOSCMapping.count(address) > 0 ){
+        processPluginMessageDirect( message, mPluginsOSCMapping[address] );
+        return;
+    }
+    
+    return;
+
+    // TODO fix the group function
     
     vector<string> tokens;
     boost::split(tokens,address,boost::is_any_of("/"));
     tokens.erase (tokens.begin(),tokens.begin()+1);
-    
-//    console() << "=========" << std::endl;
-//    for(int i=0;i<tokens.size();i++){
-//        console() << i << " => " << tokens[i] << std::endl;
-//    }
-//    console() << "=========" << std::endl;
-    
-    
+
     bool isPluginMessage = false;
     string sig = boost::to_upper_copy(tokens[0]);
     map<string, vector<BasePlugin*> >::const_iterator itr;
@@ -70,6 +69,42 @@ void PluginOSCController::processMessage( const osc::Message& message ){
 }
 
 //------------------------------------------------------------------------------------------------------
+
+void PluginOSCController::processPluginMessageDirect( const osc::Message& message, const OSCElement& oscElement ){
+    
+    cinder::osc::ArgType typeOsc = message.getArgType(0);
+    OSCElement::OSCElementTypes typeVar = oscElement.type;
+    
+    if( typeOsc == osc::TYPE_INT32 && typeVar == OSCElement::OSCElementTypes::INTEGER ) {
+        try {
+//            int val = message.getArgAsInt32(0);
+            int val = cinder::math<int>::clamp( message.getArgAsInt32(0), oscElement.minValue, oscElement.maxValue );
+            *static_cast<int*>(oscElement.pointer) = val;
+        }
+        catch (...) {
+            console() << "Exception reading argument as int32" << std::endl;
+        }
+    }
+    else if( typeOsc == osc::TYPE_FLOAT && typeVar == OSCElement::OSCElementTypes::FLOAT  ) {
+        try {
+//            float val = message.getArgAsFloat(0);
+            float val = cinder::math<float>::clamp( message.getArgAsFloat(0), oscElement.minValue, oscElement.maxValue );
+            *(static_cast<float*>(oscElement.pointer)) = val;
+        }
+        catch (...) {
+            console() << "Exception reading argument as float" << std::endl;
+        }
+    }
+//    else if( message.getArgType(i) == osc::TYPE_STRING) {
+//        try {
+//            message.getArgAsString(i);
+//        }
+//        catch (...) {
+//            console() << "Exception reading argument as string" << std::endl;
+//        }
+//    }
+    
+}
 
 void PluginOSCController::processPluginMessage( const osc::Message& message, vector<string> tokens ){
     
@@ -100,6 +135,8 @@ void PluginOSCController::processPluginMessageSingle( const osc::Message& messag
 
 
 void PluginOSCController::processInteralMessage( const osc::Message& message, vector<string> tokens ){
+    
+    return;
     
     console() << "========= INTERNAL MESSAGE ==========" << std::endl;
     console() << "Num Arg: " << message.getNumArgs() << std::endl;
@@ -139,6 +176,19 @@ void PluginOSCController::processInteralMessage( const osc::Message& message, ve
 
 
 void PluginOSCController::registerPlugin( BasePlugin* plugin ){
-    mPluginsDirectory[ boost::to_upper_copy(plugin->pluginID()) ].push_back( plugin );
+    const map<string, OSCElement> mapping = plugin->getOSCMapping();
+    string pluginName = boost::to_upper_copy(plugin->pluginID());
+    mPluginsDirectory[ pluginName ].push_back( plugin );
+
+    int size = static_cast<int>(mPluginsDirectory[ pluginName ].size());
+    string basePluginPath = "/"+pluginName+"/" + toString( size ) + "/" ;
+    map<string, OSCElement>::const_iterator itr;
+    itr = mapping.begin();
+    for( itr=mapping.begin(); itr!=mapping.end() ;++itr){
+        string oscPath = boost::to_upper_copy( basePluginPath + (*itr).first );
+        OSCElement e = (*itr).second;
+        mPluginsOSCMapping[oscPath] = e;//(*itr).second;
+        console() << "ADD => OSC_VAR : " << oscPath << "                 " << mPluginsOSCMapping[oscPath].plugin << "                 " << mPluginsOSCMapping[oscPath].plugin << std::endl;        
+    }
     
 }

@@ -10,13 +10,15 @@
 
 	
 void WindowManager::setup( MainController* mc, ViewManager* vm ){
-    mRenderDate = "BUILD " + toString(__DATE__) + " " + toString(__TIME__) + "  CINDER VERSION " + CINDER_VERSION_STR;
+    mRenderDate = "QLT_GENOME LASER v1.1   BUILD " + toString(__DATE__) + " " + toString(__TIME__) + "  CINDER VERSION " + CINDER_VERSION_STR;
     createMainControls();
     addSettingsList();
     addPreviewWindow();
     addPreview3DWindow();
 //    addColourCorrectionWindow();
     addCircularDataWindow();
+    addCrawlerPluginWindow();
+
     
     setMainController( mc );
     setViewManager( vm );
@@ -61,8 +63,6 @@ void WindowManager::createMainControls(){
 	mRenderer->Init();
     
 	Gwen::Skin::TexturedBase* skin = new Gwen::Skin::TexturedBase( mRenderer );
-//    skin->Init( "DefaultSkin.png" );
-//    skin->Init( "obscureskin.png" );
     skin->Init( "skins/GenomeLaserSkin.png" );
     
 	mCanvas = new Gwen::Controls::Canvas( skin );
@@ -83,7 +83,7 @@ void WindowManager::createMainControls(){
     Gwen::Controls::StatusBar* pStatus = new Gwen::Controls::StatusBar( mTotalWindowArea );
     pStatusBuildLabel = new Gwen::Controls::Label( pStatus );
     pStatusBuildLabel->SetText( mRenderDate );
-    pStatusBuildLabel->SetWidth(300);
+    pStatusBuildLabel->SetWidth(430);
     pStatusFPSLabel = new Gwen::Controls::Label( pStatus );
     pStatusFPSLabel->SetText( "000 FPS" );
     pStatusFPSLabel->SetWidth(300);
@@ -144,12 +144,21 @@ void WindowManager::setupMainArea(){
     }
     {
         Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
+        pButton->SetText( "Crawlers & Plugins" );
+        pButton->onPress.Add( this, &WindowManager::zoomToPanel );
+        pButton->AddAccelerator( "4" );
+        pStatus->AddControl( pButton, false );
+    }
+    {
+        Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
         pButton->SetText( "Show All Panels" );
         pButton->onPress.Add( this, &WindowManager::showAllPanels );
         pButton->AddAccelerator( "0" );
         pStatus->AddControl( pButton, true );
     }    
 }
+
+// ---------------------------------------------------------------------------------------------------
 
 void WindowManager::addSettingsList(){
         
@@ -182,13 +191,6 @@ void WindowManager::addPreviewWindow(){
     
     int panelId = 0;
     Gwen::Controls::Base* panel = m_Splitter->GetPanel(panelId);
-    
-//    Gwen::Controls::WindowControl* pWindow = new Gwen::Controls::WindowControl( panel );
-//    pWindow->SetTitle( "PREVIEW" );
-//    pWindow->SetSize( 200 + rand() % 100, 200 + rand() % 100 );
-//    pWindow->SetPos( rand() % 700, rand() % 400 );
-//    pWindow->SetDeleteOnClose( true );
-    
     
 	PreviewWindow *control = new PreviewWindow( panel );
     control->SetPadding(Gwen::Padding(0,0,0,0));
@@ -234,6 +236,27 @@ void WindowManager::addCircularDataWindow(){
     label->SetPos(10, 10);
 }
 
+void WindowManager::addCrawlerPluginWindow(){
+    
+    int panelId = 3;
+    Gwen::Controls::Base* panel = m_Splitter->GetPanel(panelId);
+    
+	CrawlerPluginsWindow *control = new CrawlerPluginsWindow( panel );
+    control->SetPadding(Gwen::Padding(0,0,0,0));
+	control->Dock( Gwen::Pos::Fill );
+    pCrawlerPluginWindow = control;
+    m_Splitter->SetPanel( panelId, control );
+    
+    Gwen::Controls::Label* label =  new Gwen::Controls::Label( control );
+    label->SetText( "CRAWLERS AND PLUGING" );
+    label->SetPos(10, 10);
+    label->SetSize(30, 500);
+}
+
+
+// ---------------------------------------------------------------------------------------------------
+
+
 void WindowManager::setPreviewFbo(ci::gl::Fbo* fbo){
     pPreview3DControl->setPreviewFbo(fbo);
 }
@@ -258,7 +281,12 @@ void WindowManager::setCircularDataLayer( CircularDataLayer* circularDataLaser )
 
 void WindowManager::setDataController(DataController* d){
     pCircularControl->setDataController( d );
+    pCrawlerPluginWindow->setDataController( d );
 }
+
+
+// ---------------------------------------------------------------------------------------------------
+
 
 void WindowManager::saveSettings(){
     
@@ -286,6 +314,10 @@ void WindowManager::zoomToPanel( Gwen::Event::Info info ){
     else if(name.compare("Data Layer") == 0){
         panelID = 2;
     }
+    else if(name.compare("Crawlers & Plugins") == 0){
+        panelID = 3;
+    }
+    
     m_Splitter->Zoom( panelID );
 }
 

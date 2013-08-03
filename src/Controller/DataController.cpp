@@ -9,22 +9,19 @@
 #include "DataController.h"
 
 	
-void DataController::setup(DataManager* dm){
+void DataController::setup(DataManager* dm, int amount){
 	mDataManager = dm;
-    
-    Rand rnd;
-    int amount = 5;
     
     for(int i=0;i<amount;i++){
         DataCrawler d;
-        d.density = rnd.nextFloat(150, 500);
-        d.length = toRadians( rnd.nextFloat(10, 50) );
-        d.pos = rnd.nextFloat(0, 1);
+        d.density = Rand::randFloat(150, 500);
+        d.length = toRadians( Rand::randFloat(10, 50) );
+        d.pos = Rand::randFloat(0, 1);
         mDataCrawler.push_back(d);
 //        timeline().apply( &mDataCrawler[mDataCrawler.size()-1].pos, rnd.nextFloat(0, 1), 10.0f, EaseOutSine() ).finishFn(std::bind( &DataController::resetCrawler , this ) );
 //        float::Tween<float>* tweentween;
 //        Tween<float>::Options tt;
-        TweenRef<float> tweenRef = timeline().apply( &mDataCrawler[mDataCrawler.size()-1].pos, rnd.nextFloat(0, 1), rnd.nextFloat(10, 100), EaseOutSine() );
+        TweenRef<float> tweenRef = timeline().apply( &mDataCrawler[mDataCrawler.size()-1].pos, Rand::randFloat(0, 1), Rand::randFloat(10, 100), EaseOutSine() );
         tweenRef->setFinishFn( std::bind( &DataController::resetCrawler, this) );
         tweenRef->setPingPong( true );
         tweenRef->setLoop();

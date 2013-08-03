@@ -9,22 +9,11 @@
 #include "PluginController.h"
 
 	
-void PluginController::setup(){
-    
+void PluginController::setup(int amount){
     mOscController.setup();
-    
-    mTempPlugin1.setup();
-    mTempPlugin2.setup();
-    mTempPlugin3.setup();
-    mTempPlugin4.setup();
-    mTempPlugin5.setup();
-
-    addPlugin(&mTempPlugin1);
-    addPlugin(&mTempPlugin2);
-    addPlugin(&mTempPlugin3);
-    addPlugin(&mTempPlugin4);
-    addPlugin(&mTempPlugin5);
-    
+    for(int i=0;i<amount;i++){
+        addPlugin( new BitsAndLinesPlugin() );
+    }
 }
 
 void PluginController::dispose(){
@@ -36,6 +25,7 @@ void PluginController::dispose(){
 }
 
 void PluginController::addPlugin( BasePlugin* plugin ){
+    plugin->setup();
 	mPlugins.push_back( plugin );
     mOscController.registerPlugin( plugin );
 }

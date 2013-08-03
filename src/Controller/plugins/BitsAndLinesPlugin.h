@@ -44,6 +44,9 @@ private:
     float               mLinePosition;
     float               mLength;
     
+    ColorAf             mClr1;
+    ColorAf             mClr2;
+    
     std::map<string, OSCElement> mOSCMap;
 
     

@@ -21,10 +21,6 @@
  Y --> T C (pyrimidine)    V --> G C A
  K --> G T (keto)          N --> A G C T (any)
  
- 
- 
- 
- 
  */
 
 

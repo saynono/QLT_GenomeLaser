@@ -24,7 +24,7 @@ class PluginController{
 
 public:
 	
-	void setup();
+	void setup(int amount);
     void dispose();
 	void update();
     void addPlugin( BasePlugin* plugin );
@@ -33,18 +33,13 @@ public:
 	
 private:
     
-    PluginOSCController         mOscController;
-    
-    
-    BitsAndLinesPlugin          mTempPlugin1;
-    BitsAndLinesPlugin          mTempPlugin2;
-    BitsAndLinesPlugin          mTempPlugin3;
-    BitsAndLinesPlugin          mTempPlugin4;
-    BitsAndLinesPlugin          mTempPlugin5;
+    template<typename T> BasePlugin* createInstance() { return new T; }
 
     vector<BasePlugin*>                 mPlugins;
     map<string, vector<BasePlugin*> >     mPluginsDirectory;
     
+    PluginOSCController         mOscController;
+
 };
 
 

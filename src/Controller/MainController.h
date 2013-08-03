@@ -60,6 +60,8 @@ private:
     ColouredShape2d             mCurrentShape;
     ciilda::Frame               mIldaFrame;
     
+    float                       mAmountCrawlers;
+    
 };
 
 

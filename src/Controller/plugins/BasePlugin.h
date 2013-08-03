@@ -21,20 +21,31 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
+// forward declaration of BasePlugin
+class BasePlugin;
 
 class OSCElement{
 
 public:
     
     enum OSCElementTypes {
-        FLOAT,
+        FLOAT = 0,
         INTEGER,
         BANG
     };
     
-    OSCElement( void* p, OSCElementTypes t ){ pointer = p; type = t;};
+    OSCElement(){};
+    OSCElement( BasePlugin* plug, void* p, OSCElementTypes t ){
+        plugin = plug; pointer = p; type = t; minValue = numeric_limits<float>::min(); maxValue = numeric_limits<float>::max();
+    };
+    OSCElement( BasePlugin* plug, void* p, OSCElementTypes t, float minVal, float maxVal) {
+        plugin = plug; pointer = p; type = t; minValue = minVal; maxValue = maxVal;
+    };
+    BasePlugin*     plugin;
     void*           pointer;
     OSCElementTypes type;
+    float           minValue;
+    float           maxValue;
     
 };
 

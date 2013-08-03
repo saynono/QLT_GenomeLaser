@@ -12,6 +12,8 @@
 #include <boost/algorithm/string.hpp>
 
 #include "cinder/app/AppBasic.h"
+#include "cinder/Utilities.h"
+
 #include "OscListener.h"
 #include "BasePlugin.h"
 
@@ -33,6 +35,7 @@ public:
 private:
 
     void        processMessage( const osc::Message& message );
+    void        processPluginMessageDirect( const osc::Message& message, const OSCElement& oscElement );
     void        processPluginMessage( const osc::Message& message, vector<string> tokens );
     void        processPluginMessageSingle( const osc::Message& message, BasePlugin* plugin );
     void        processPluginMessageGroup( const osc::Message& message, vector<BasePlugin*>* plugins );
@@ -41,7 +44,7 @@ private:
     osc::Listener                         mOscListener;
     map<string, vector<BasePlugin*> >     mPluginsDirectory;
 
-//    map<string, vector< map<>*> >     mPluginsDirectory;
+    map<string, OSCElement >       mPluginsOSCMapping;
 };
 
 

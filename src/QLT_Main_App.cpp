@@ -52,8 +52,8 @@ void QLT_Main_App::setup()
     gl::disableDepthWrite();
     gl::enableVerticalSync();
     
-    mFullScreen = true;
-    setFullScreen( mFullScreen );
+    mFullScreen = false;
+//    setFullScreen( mFullScreen );
     
 }
 
@@ -63,8 +63,7 @@ void QLT_Main_App::shutdown(){
 }
 
 
-void QLT_Main_App::update()
-{
+void QLT_Main_App::update(){
     
     mMainController.update();
     mViewManager.update();
@@ -75,7 +74,6 @@ void QLT_Main_App::update()
     
 	if ( mFullScreen != isFullScreen() ) {
 		setFullScreen( mFullScreen );
-//        if(mFullScreen) hideCursor();
 	}
 
 }
@@ -94,6 +92,7 @@ void QLT_Main_App::keyDown( KeyEvent event )
 {
     switch(event.getCode()){
         case 'q':
+        case 27:
             quit();
             break;
         case 'f':

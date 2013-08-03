@@ -20,25 +20,13 @@ void BitsAndLinesPlugin::setup(){
     mLinePosition = Rand::randFloat(mLineHeight/2.0,1-mLineHeight/2.0);
     mLength = toRadians(Rand::randFloat(0.0,1.0)*180);
     
+    mClr1 = ColorAf(Rand::randFloat(.01, .7),.7,Rand::randFloat(.0, .9),1);
+    mClr2 = ColorAf(Rand::randFloat(.3, .9),Rand::randFloat(.3, .9),Rand::randFloat(.3, .9),1);
     
-//    enum OSCElementTypes {
-//        FLOAT,
-//        INTEGER,
-//        BANG
-//    };
-//    
-//    struct OSCElement{
-//        OSCElement(void* p, OSCElementTypes t){ pointer = p; type = t;};
-//        void*           pointer;
-//        OSCElementTypes type;
-//    };
-//
-    
-    
-    mOSCMap.insert( make_pair( "SPEED", OSCElement( &mSpeed, OSCElement::FLOAT )) );
-    mOSCMap.insert( make_pair( "LINE_HEIGHT", OSCElement( &mLineHeight, OSCElement::FLOAT )) );
-    mOSCMap.insert( make_pair( "LINE_POSITION", OSCElement( &mLinePosition, OSCElement::FLOAT )) );
-    mOSCMap.insert( make_pair( "LENGTH", OSCElement( &mLength, OSCElement::FLOAT )) );
+    mOSCMap.insert( make_pair( "SPEED", OSCElement( this, &mSpeed, OSCElement::FLOAT )) );
+    mOSCMap.insert( make_pair( "LINE_HEIGHT", OSCElement( this, &mLineHeight, OSCElement::FLOAT, 0, .1 )) );
+    mOSCMap.insert( make_pair( "LINE_POSITION", OSCElement( this, &mLinePosition, OSCElement::FLOAT )) );
+    mOSCMap.insert( make_pair( "LENGTH", OSCElement( this, &mLength, OSCElement::FLOAT )) );
     
 }
 
@@ -171,7 +159,7 @@ void BitsAndLinesPlugin::convertBitChainToShape(const char* data, int len, float
 //------------------------------------------------------------------------------------------------------
 
 void BitsAndLinesPlugin::drawLine(ColouredShape2d* s, Vec2f p1, Vec2f p2){
-    s->color( lerp( ColorAf(1,.7,.1,1), ColorAf(.5,0,1,1), mLineCounter/100.0) );
+    s->color( lerp( mClr1, mClr2, mLineCounter/100.0) );
     if(mLineCounter%2==1){
         s->moveTo( p1 );
         s->lineTo( p2 );

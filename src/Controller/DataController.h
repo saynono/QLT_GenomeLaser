@@ -33,7 +33,7 @@ class DataController{
     
 public:
 	
-	void setup(DataManager* dm);
+	void setup(DataManager* dm, int amount);
 	void update();
 	vector<DataCrawler>* getCrawler();
     void resetCrawler();

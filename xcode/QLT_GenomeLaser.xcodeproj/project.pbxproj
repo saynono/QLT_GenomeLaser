@@ -20,6 +20,8 @@
 		FF0464EF178CCF30005FE797 /* etherdream.c in Sources */ = {isa = PBXBuildFile; fileRef = FF0461A5178CCF2F005FE797 /* etherdream.c */; };
 		FF04652E178CCF30005FE797 /* CinderEtherdream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF046200178CCF30005FE797 /* CinderEtherdream.cpp */; };
 		FF04652F178CCF30005FE797 /* CinderIldaFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF046203178CCF30005FE797 /* CinderIldaFrame.cpp */; };
+		FF1FB1C617AC66D400E9A912 /* CrawlerPluginsWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF1FB1C417AC66D400E9A912 /* CrawlerPluginsWindow.cpp */; };
+		FF1FB1CA17AC6DE900E9A912 /* CrawplContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF1FB1C817AC6DE900E9A912 /* CrawplContainer.cpp */; };
 		FF24954517A6F12D00F8B0C3 /* MainController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF24954317A6F12D00F8B0C3 /* MainController.cpp */; };
 		FF24954817A6F90C00F8B0C3 /* ViewManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF24954617A6F90B00F8B0C3 /* ViewManager.cpp */; };
 		FF24954B17A70B0F00F8B0C3 /* TexturedWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF24954917A70B0F00F8B0C3 /* TexturedWindow.cpp */; };
@@ -151,6 +153,10 @@
 		FF046204178CCF30005FE797 /* CinderIldaFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderIldaFrame.h; sourceTree = "<group>"; };
 		FF046205178CCF30005FE797 /* CinderIldaPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderIldaPoint.h; sourceTree = "<group>"; };
 		FF046207178CCF30005FE797 /* CinderLaserDac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderLaserDac.h; sourceTree = "<group>"; };
+		FF1FB1C417AC66D400E9A912 /* CrawlerPluginsWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CrawlerPluginsWindow.cpp; sourceTree = "<group>"; };
+		FF1FB1C517AC66D400E9A912 /* CrawlerPluginsWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrawlerPluginsWindow.h; sourceTree = "<group>"; };
+		FF1FB1C817AC6DE900E9A912 /* CrawplContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrawplContainer.cpp; path = CrawlersAndPlugins/CrawplContainer.cpp; sourceTree = "<group>"; };
+		FF1FB1C917AC6DE900E9A912 /* CrawplContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrawplContainer.h; path = CrawlersAndPlugins/CrawplContainer.h; sourceTree = "<group>"; };
 		FF24954317A6F12D00F8B0C3 /* MainController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainController.cpp; path = ../src/Controller/MainController.cpp; sourceTree = "<group>"; };
 		FF24954417A6F12D00F8B0C3 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainController.h; path = ../src/Controller/MainController.h; sourceTree = "<group>"; };
 		FF24954617A6F90B00F8B0C3 /* ViewManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ViewManager.cpp; path = ../src/Views/ViewManager.cpp; sourceTree = "<group>"; };
@@ -645,6 +651,15 @@
 			path = cilaserdac;
 			sourceTree = "<group>";
 		};
+		FF1FB1C717AC6DAB00E9A912 /* CrawlersAndPlugins */ = {
+			isa = PBXGroup;
+			children = (
+				FF1FB1C817AC6DE900E9A912 /* CrawplContainer.cpp */,
+				FF1FB1C917AC6DE900E9A912 /* CrawplContainer.h */,
+			);
+			name = CrawlersAndPlugins;
+			sourceTree = "<group>";
+		};
 		FF24954D17A7148100F8B0C3 /* plugins */ = {
 			isa = PBXGroup;
 			children = (
@@ -663,6 +678,7 @@
 		FF2FD4331786268E00D19321 /* WindowControls */ = {
 			isa = PBXGroup;
 			children = (
+				FF1FB1C717AC6DAB00E9A912 /* CrawlersAndPlugins */,
 				FF2FD43B1786268E00D19321 /* WindowManager.cpp */,
 				FF2FD43C1786268E00D19321 /* WindowManager.h */,
 				FF81B7A21798C3F6000F0D3C /* CircularDataWindow.cpp */,
@@ -677,6 +693,8 @@
 				FFB6C8291788787D00F41E8C /* SettingsPanel.h */,
 				FF24954917A70B0F00F8B0C3 /* TexturedWindow.cpp */,
 				FF24954A17A70B0F00F8B0C3 /* TexturedWindow.h */,
+				FF1FB1C417AC66D400E9A912 /* CrawlerPluginsWindow.cpp */,
+				FF1FB1C517AC66D400E9A912 /* CrawlerPluginsWindow.h */,
 			);
 			name = WindowControls;
 			path = ../src/WindowControls;
@@ -1306,6 +1324,8 @@
 				FFECD09117A9AD3200AB3B95 /* OscMessage.cpp in Sources */,
 				FFECD09217A9AD3200AB3B95 /* OscSender.cpp in Sources */,
 				FFECD0A117A9AD7300AB3B95 /* PluginOSCController.cpp in Sources */,
+				FF1FB1C617AC66D400E9A912 /* CrawlerPluginsWindow.cpp in Sources */,
+				FF1FB1CA17AC6DE900E9A912 /* CrawplContainer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
