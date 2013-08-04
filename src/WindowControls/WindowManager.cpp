@@ -30,6 +30,8 @@ void WindowManager::setMainController( MainController* mc ){
     mMainController = mc;
     setDataController( mMainController->getDataController() );
     setIldaFrameRef( mMainController->getFrameRef() );
+    pCrawlerPluginWindow->setMainController( mMainController );
+
 }
 
 void WindowManager::setViewManager( ViewManager* vm ){
@@ -281,7 +283,7 @@ void WindowManager::setCircularDataLayer( CircularDataLayer* circularDataLaser )
 
 void WindowManager::setDataController(DataController* d){
     pCircularControl->setDataController( d );
-    pCrawlerPluginWindow->setDataController( d );
+//    pCrawlerPluginWindow->setDataController( d );
 }
 
 

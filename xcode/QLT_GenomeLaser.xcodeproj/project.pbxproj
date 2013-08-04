@@ -108,7 +108,6 @@
 		FF81B7A41798C3FC000F0D3C /* CircularDataWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81B7A21798C3F6000F0D3C /* CircularDataWindow.cpp */; };
 		FF81DBFA178B5D10000566C1 /* Preview3DWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */; };
 		FF82DDC617A5CDE300631BF2 /* ColouredShape2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF82DDC417A5CDD100631BF2 /* ColouredShape2d.cpp */; };
-		FFA7ECC7179AD60300999CEF /* DataConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7ECC5179AD60300999CEF /* DataConverter.cpp */; };
 		FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */; };
 		FFECD08617A9AD3200AB3B95 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFECD05217A9AD3200AB3B95 /* IpEndpointName.cpp */; };
 		FFECD08717A9AD3200AB3B95 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFECD05717A9AD3200AB3B95 /* NetworkingUtils.cpp */; };
@@ -157,6 +156,7 @@
 		FF1FB1C517AC66D400E9A912 /* CrawlerPluginsWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrawlerPluginsWindow.h; sourceTree = "<group>"; };
 		FF1FB1C817AC6DE900E9A912 /* CrawplContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrawplContainer.cpp; path = CrawlersAndPlugins/CrawplContainer.cpp; sourceTree = "<group>"; };
 		FF1FB1C917AC6DE900E9A912 /* CrawplContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrawplContainer.h; path = CrawlersAndPlugins/CrawplContainer.h; sourceTree = "<group>"; };
+		FF1FB1CB17AD9A6C00E9A912 /* DataConverterUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DataConverterUtil.h; path = ../src/Utils/DataConverterUtil.h; sourceTree = "<group>"; };
 		FF24954317A6F12D00F8B0C3 /* MainController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainController.cpp; path = ../src/Controller/MainController.cpp; sourceTree = "<group>"; };
 		FF24954417A6F12D00F8B0C3 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainController.h; path = ../src/Controller/MainController.h; sourceTree = "<group>"; };
 		FF24954617A6F90B00F8B0C3 /* ViewManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ViewManager.cpp; path = ../src/Views/ViewManager.cpp; sourceTree = "<group>"; };
@@ -380,8 +380,6 @@
 		FF81DBF9178B5D10000566C1 /* Preview3DWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preview3DWindow.h; sourceTree = "<group>"; };
 		FF82DDC417A5CDD100631BF2 /* ColouredShape2d.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ColouredShape2d.cpp; sourceTree = "<group>"; };
 		FF82DDC517A5CDD100631BF2 /* ColouredShape2d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColouredShape2d.h; sourceTree = "<group>"; };
-		FFA7ECC5179AD60300999CEF /* DataConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataConverter.cpp; path = ../src/Data/DataConverter.cpp; sourceTree = "<group>"; };
-		FFA7ECC6179AD60300999CEF /* DataConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataConverter.h; path = ../src/Data/DataConverter.h; sourceTree = "<group>"; };
 		FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsPanel.cpp; sourceTree = "<group>"; };
 		FFB6C8291788787D00F41E8C /* SettingsPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsPanel.h; sourceTree = "<group>"; };
 		FFECD05217A9AD3200AB3B95 /* IpEndpointName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IpEndpointName.cpp; sourceTree = "<group>"; };
@@ -654,6 +652,8 @@
 		FF1FB1C717AC6DAB00E9A912 /* CrawlersAndPlugins */ = {
 			isa = PBXGroup;
 			children = (
+				FF1FB1C417AC66D400E9A912 /* CrawlerPluginsWindow.cpp */,
+				FF1FB1C517AC66D400E9A912 /* CrawlerPluginsWindow.h */,
 				FF1FB1C817AC6DE900E9A912 /* CrawplContainer.cpp */,
 				FF1FB1C917AC6DE900E9A912 /* CrawplContainer.h */,
 			);
@@ -693,8 +693,6 @@
 				FFB6C8291788787D00F41E8C /* SettingsPanel.h */,
 				FF24954917A70B0F00F8B0C3 /* TexturedWindow.cpp */,
 				FF24954A17A70B0F00F8B0C3 /* TexturedWindow.h */,
-				FF1FB1C417AC66D400E9A912 /* CrawlerPluginsWindow.cpp */,
-				FF1FB1C517AC66D400E9A912 /* CrawlerPluginsWindow.h */,
 			);
 			name = WindowControls;
 			path = ../src/WindowControls;
@@ -1057,8 +1055,6 @@
 				FFFD8A2C178F7DC100DA74A3 /* DataToShapeConverter.h */,
 				FF53DBBC178F02E90057A39B /* DataManager.cpp */,
 				FF53DBBD178F02E90057A39B /* DataManager.h */,
-				FFA7ECC5179AD60300999CEF /* DataConverter.cpp */,
-				FFA7ECC6179AD60300999CEF /* DataConverter.h */,
 				FFF16389179DEC2C0092398C /* DataCrawler.h */,
 				FF24954C17A7124300F8B0C3 /* GenomeData.h */,
 			);
@@ -1068,6 +1064,7 @@
 		FF82DDC017A5C39B00631BF2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				FF1FB1CB17AD9A6C00E9A912 /* DataConverterUtil.h */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1303,7 +1300,6 @@
 				FFFD8A2D178F7DC500DA74A3 /* DataToShapeConverter.cpp in Sources */,
 				FF81B7A11798C3DA000F0D3C /* CircularDataLayer.cpp in Sources */,
 				FF81B7A41798C3FC000F0D3C /* CircularDataWindow.cpp in Sources */,
-				FFA7ECC7179AD60300999CEF /* DataConverter.cpp in Sources */,
 				FFF16388179DE7330092398C /* DataController.cpp in Sources */,
 				FF82DDC617A5CDE300631BF2 /* ColouredShape2d.cpp in Sources */,
 				FF24954517A6F12D00F8B0C3 /* MainController.cpp in Sources */,

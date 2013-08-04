@@ -188,7 +188,7 @@ void PluginOSCController::registerPlugin( BasePlugin* plugin ){
         string oscPath = boost::to_upper_copy( basePluginPath + (*itr).first );
         OSCElement e = (*itr).second;
         mPluginsOSCMapping[oscPath] = e;//(*itr).second;
-        console() << "ADD => OSC_VAR : " << oscPath << "                 " << mPluginsOSCMapping[oscPath].plugin << "                 " << mPluginsOSCMapping[oscPath].plugin << std::endl;        
+//        console() << "ADD => OSC_VAR : " << oscPath << "                 " << mPluginsOSCMapping[oscPath].plugin << "                 " << mPluginsOSCMapping[oscPath].plugin << std::endl;        
     }
     
 }

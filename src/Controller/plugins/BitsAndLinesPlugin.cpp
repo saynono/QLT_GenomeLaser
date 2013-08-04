@@ -16,9 +16,12 @@ void BitsAndLinesPlugin::setup(){
     
     mStartAngle = Rand::randFloat(-M_PI,M_PI);
     mSpeed = Rand::randFloat(-M_PI,M_PI);
-    mLineHeight = Rand::randFloat(0.0,.4);
+    mLineHeight = Rand::randFloat(0.0,.3);
     mLinePosition = Rand::randFloat(mLineHeight/2.0,1-mLineHeight/2.0);
+//    mLinePosition = 1-mLineHeight/2.0;
     mLength = toRadians(Rand::randFloat(0.0,1.0)*180);
+    
+    mPairRadLength = toRadians( Rand::randFloat(0.1,5.0) );
     
     mClr1 = ColorAf(Rand::randFloat(.01, .7),.7,Rand::randFloat(.0, .9),1);
     mClr2 = ColorAf(Rand::randFloat(.3, .9),Rand::randFloat(.3, .9),Rand::randFloat(.3, .9),1);
@@ -83,13 +86,23 @@ const ColouredShape2d& BitsAndLinesPlugin::getShape( const GenomeData::BasePairD
 //    int len = 8*10;
 //    char dataBits[(int)ceil(len/4)];
 //    int dataOffset = 20000;//+getElapsedFrames();
-    float startAngle = toRadians(-(float)getElapsedFrames()*mSpeed) + mStartAngle;
-    convertBitChainToShape( dataSet.dataBits.c_str(), dataSet.basePairsCount, mLineHeight, startAngle, mLength, mLinePosition);
     
+//    float startAngle = toRadians(-(float)getElapsedFrames()*mSpeed) + mStartAngle;
+    
+    
+//    float rotStepPair = mLength / (float) (dataSet.basePairsCount);
+    
+    float p = dataSet.startPosition*mPairRadLength;
+//    console() << " offset: " << p << std::endl;
+//    console() << std::endl << "REAL " << dataSet.dataBitsString << std::endl;
+    
+    float startAngle = p;//toRadians(-(float)dataSet.startPosition)*mPairRadLength + mStartAngle;
+
+    convertBitChainToShape( dataSet.dataBitsString.c_str(), dataSet.basePairsCount, mLineHeight, startAngle, mPairRadLength, mLinePosition);
     return mShape;
 }
 
-void BitsAndLinesPlugin::convertBitChainToShape(const char* data, int len, float lineHeight, float circStartAngle, float circLength, float circDiameter){
+void BitsAndLinesPlugin::convertBitChainToShape(const char* data, int len, float lineHeight, float circStartAngle, float pairRadLength, float circDiameter){
     
     Vec2f p;
     Vec2f pNorm(0,.5);
@@ -97,10 +110,11 @@ void BitsAndLinesPlugin::convertBitChainToShape(const char* data, int len, float
     
     int basePairs = len;
     
-    float circDiaLong = circDiameter + lineHeight/2.0;
-    float circDiaShort = circDiameter - lineHeight/2.0;
+    float lineHeight2 = lineHeight/2.0;
+    float circDiaLong = circDiameter + lineHeight2;
+    float circDiaShort = circDiameter - lineHeight2;
     
-    float rotStepPair = circLength / (float) (basePairs);
+    float rotStepPair = pairRadLength;//circLength / (float) (basePairs);
     float rotStepPairDist = (rotStepPair*.5);
     float rotStepBit = (rotStepPair-rotStepPairDist)/2.0;
     
@@ -110,56 +124,55 @@ void BitsAndLinesPlugin::convertBitChainToShape(const char* data, int len, float
     char d;
     int basePairBit;
     int bitOffset;
+    float percent;
+//    float hPercent;
     
     mLineCounter = 0;
     
     mShape.clear();
     
-    for(int i=0;i<basePairs/4;i++){
+    for(int i=0;i<basePairs;i++){
         
-        d = data[i/4];
+        d = data[i];
+        percent = mLineCounter / static_cast<float>(basePairs);
         
-        
-        for(int j=0;j<4;j++){
-            
-            bitOffset = j*2;
-            
-            basePairBit = (d>>(bitOffset)) & 3;
-            
-            switch(basePairBit){
-                case 0:
-                    //                    console() << "A";
-                    break;
-                case 1:
-                    //                    console() << "C";
-                    break;
-                case 2:
-                    //                    console() << "G";
-                    break;
-                case 3:
-                    //                    console() << "T";
-                    break;
-            }
-            
-            if( (basePairBit & 1) == 1) drawLine( &mShape, p*circDiaShort+pOffset, p*circDiaLong+pOffset );
-            //            drawLine( &s, p*circDiaShort+pOffset, p*circDiaLong+pOffset );
-            p.rotate(rotStepBit);
-            
-            if( (basePairBit & 2) == 2) drawLine( &mShape, p*circDiaShort+pOffset, p*circDiaLong+pOffset );
-            //            drawLine( &s, p*circDiaShort+pOffset, p*circDiaLong+pOffset );
-            p.rotate(rotStepBit);
-            
-            p.rotate(rotStepPairDist);
-            
+        switch(d){
+            case 'A':
+                basePairBit = 0;
+                break;
+            case 'C':
+                basePairBit = 1;
+                break;
+            case 'G':
+                basePairBit = 2;
+                break;
+            case 'T':
+                basePairBit = 3;
+                break;
         }
-        
+        if( (basePairBit & 1) == 1) drawLine( &mShape, p*circDiaShort+pOffset, p*circDiaLong+pOffset, percent );
+            //            drawLine( &s, p*circDiaShort+pOffset, p*circDiaLong+pOffset );
+        p.rotate(rotStepBit);
+            
+        if( (basePairBit & 2) == 2) drawLine( &mShape, p*circDiaShort+pOffset, p*circDiaLong+pOffset, percent );
+        //            drawLine( &s, p*circDiaShort+pOffset, p*circDiaLong+pOffset );
+        p.rotate(rotStepBit);
+            
+        p.rotate(rotStepPairDist);
+            
     }
+    
+
+//    console() << "CALC " << dataBitsString << std::endl;
+    
 }
 
 //------------------------------------------------------------------------------------------------------
 
-void BitsAndLinesPlugin::drawLine(ColouredShape2d* s, Vec2f p1, Vec2f p2){
-    s->color( lerp( mClr1, mClr2, mLineCounter/100.0) );
+void BitsAndLinesPlugin::drawLine(ColouredShape2d* s, Vec2f p1, Vec2f p2, float percent){
+    
+    s->color( lerp( mClr1, mClr2, percent) * max(0.0,sin(percent*M_PI)) );
+    
     if(mLineCounter%2==1){
         s->moveTo( p1 );
         s->lineTo( p2 );

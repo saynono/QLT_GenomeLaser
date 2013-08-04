@@ -9,23 +9,35 @@
 #ifndef QLT_GenomeLaser_DataCrawler_h
 #define QLT_GenomeLaser_DataCrawler_h
 
-#include "cinder/Timeline.h"
 
+#include "cinder/Timeline.h"
+#include "GenomeData.h"
 
 class DataCrawler{
 
 public:
+    
+    int     crawlerID;
     // dataset id
     int     chromosomeID;
     // position in 0.0-1.0
-    Anim<float>   pos;
-    //      in radians
-    float   length;
-    //      density of data
-    float   density;
+    cinder::Anim<int>   pos;
+    
+    double lastUpdate;
+    // in ticks per second
+    float  speed;
+    // in basePairs
+    int    length;
+    // density of data
+    float  density;
     // active
-    bool    isActive;
-
+    bool   isActive;
+    // actual data
+    GenomeData::BasePairDataSet dataSet;
+    
+    GenomeData::ROIDataSet roiDataSet;
+    
+    int     roiDataSetID;
     
 };
 

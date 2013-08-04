@@ -22,28 +22,34 @@ using namespace ci::app;
 using namespace std;
 
 class DataController{
-    
-    
-    struct Say { // Simple functor to print stuff to the console
-        Say( std::string message ) : mMessage( message ) {}
-        void operator()(){ app::console() << mMessage << std::endl; }
-            
-            std::string mMessage;
-            };
+        
+//    struct Say { // Simple functor to print stuff to the console
+//        Say( std::string message ) : mMessage( message ) {}
+//        void operator()(){ app::console() << mMessage << std::endl; }
+//            
+//            std::string mMessage;
+//            };
     
 public:
 	
 	void setup(DataManager* dm, int amount);
 	void update();
+    void updateDataCrawler(DataCrawler* dataCrawler);
 	vector<DataCrawler>* getCrawler();
-    void resetCrawler();
+    void reset();
+    void resetCrawler(DataCrawler* crawler);
+    DataManager* getDataManager();
 
 private:
+            
+    void                    addCrawler(GenomeData::ChromosomeDataSet* cds);
     
     DataManager*            mDataManager;
     
     vector<DataCrawler>     mDataCrawler;
-	
+    map<int,int>            mRoiMapVisited;
+    int                     mTick;
+    float                   mTickFrequency;
 };
 
 

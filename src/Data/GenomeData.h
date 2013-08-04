@@ -13,16 +13,26 @@
 namespace GenomeData{
 
     struct ChromosomeDataSet{
+        std::string chromosomeDescription;
         int chromosomeID;
         int basePairsCount;
     };
     
+    struct ROIDataSet{
+        int roiId;
+        std::string roiDescription;
+        int startPosition;
+        int endPosition;
+        int basePairsCount;
+        ChromosomeDataSet chromosomeData;
+    };
 
     struct BasePairDataSet{
         int startPosition;
         int basePairsCount;
         ChromosomeDataSet chromosomeData;
         std::string dataBits;
+        std::string dataBitsString;
     };
     
 }

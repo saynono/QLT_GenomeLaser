@@ -28,6 +28,7 @@ void PluginController::addPlugin( BasePlugin* plugin ){
     plugin->setup();
 	mPlugins.push_back( plugin );
     mOscController.registerPlugin( plugin );
+    mPluginsDirectory[ plugin->pluginID() ].push_back( plugin );
 }
 
 void PluginController::update(){
@@ -37,4 +38,8 @@ void PluginController::update(){
 const ColouredShape2d& PluginController::getShape( int crawlerID, const GenomeData::BasePairDataSet& dataSet ){
     // TODO this is not nice!
     return mPlugins[crawlerID%mPlugins.size()]->getShape(dataSet);
+}
+
+map<string, vector<BasePlugin*> > PluginController::getPluginsDirectory(){
+    return mPluginsDirectory;
 }

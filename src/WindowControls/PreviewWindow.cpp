@@ -41,8 +41,6 @@ void PreviewWindow::Render( Skin::Base* skin )
     
     float width = bounds.getWidth();
     float height = bounds.getHeight();
-    float width2 = width/2.0;
-    float height2 = height/2.0;
     
     if(aspect > 1){
         width /= aspect;

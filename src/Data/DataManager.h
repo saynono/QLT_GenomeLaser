@@ -30,12 +30,14 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <boost/algorithm/string.hpp>
 
 #include "cinder/app/AppBasic.h"
 #include "cinder/Buffer.h"
+#include "cinder/Utilities.h"
 
 #include "GenomeData.h"
-
+#include "DataCrawler.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -58,73 +60,35 @@ class DataManager{
 //    T --> thymidine           1000
 #define BASE_T                  3;
     
-////    R --> G A (purine)        0101
-//#define BASEGA                  5
-//#define AG                      5
-//    
-////    Y --> T C (pyrimidine)    1010
-//#define TC                      10
-//#define CT                      10
-//    
-////    K --> G T (keto)
-//#define GT                      12
-//#define TG                      12
-//
-////    M --> A C (amino)
-//#define AC                      3
-//#define CA                      3
-//    
-////    S --> G C (strong)
-//#define GT                      6
-//#define TG                      6
-//    
-////    W --> A T (weak)
-//#define AT                      9
-//#define TA                      9
-//
-//    
     
 public:
-    
-    typedef struct{
-        string destription;
-        string data;
-    } fastaSequence;
-
-    typedef struct{
-        string destription;
-        char* data;
-        int length;
-    } fastaSequenceBits;
 
 	void setup();
-    void loadData(string file);
     
-    void loadExomeData(cinder::fs::path path);
-    void loadChromosomeData(cinder::fs::path path);
-
-    void addSequence( string descript, string data );
-    fastaSequenceBits convertSequenceToBit(const fastaSequence& seq);
-	void update();
-    void draw();
-
+    
+    void loadChromosome(int chromsomeID);
+    
+    GenomeData::ChromosomeDataSet getChromosomeDataSet();
+    const vector<GenomeData::ROIDataSet>& getRoiMap();
+    GenomeData::ROIDataSet getRoiByID(int roiID);
     Buffer* getDataBuffer();
-//    vector<string> getData(int pos, int len);
-    char getNextData();
-    const GenomeData::BasePairDataSet createBasePairDataSet(int pos, int len);
-    void createBitChain(int pos, int len, char* data);
+    
+    void updateDataCrawler( DataCrawler* dataCrawler );
+    
+//    void createBasePairDataSet(int pos, int len, GenomeData::BasePairDataSet* dataSet);
+//    void createBitChain(int pos, int len, char* data);
 
 private:
-
-    cinder::fs::path            mFilename;
-    cinder::fs::path            mFilenameExome;
-    vector<fastaSequence>       mFastaData;
-    vector<fastaSequenceBits>   mFastaDataBits;
-    Buffer                      mDataBuffer;
     
-    int                         mCurrentSequence;
-    int                         mCurrentDataPosition;
-    int                         mDataBufferOffset;
+    void            generateChromosomeMap(Buffer* b);
+    void            loadDataSet(cinder::fs::path pathData, cinder::fs::path pathMap);
+    void            addRoi(char* datas, int len);
+    
+
+    Buffer                              mDataBuffer;
+    GenomeData::ChromosomeDataSet       mCurrentDataSet;
+    vector<GenomeData::ROIDataSet>     mRoiMap;
+    map<int, const GenomeData::ROIDataSet&>    mRoiIdMap;
 };
 
 

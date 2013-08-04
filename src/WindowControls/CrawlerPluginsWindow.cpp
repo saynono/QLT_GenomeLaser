@@ -52,16 +52,11 @@ void CrawlerPluginsWindow::Render( Gwen::Skin::Base* skin )
     gl::color( ci::Color( 0x13/255.0,0x14/255.0,0x13/255.0  ) );
     gl::drawSolidRect(Rectf(0,0,m_InnerBounds.w,m_InnerBounds.h));
     
-    if(mCrawplContainer.size() > 2){
-        float h = ((sin(getElapsedSeconds())+1) * 20) + 20;
-        mCrawplContainer[1]->SetSize(900, h);
-    }
-    
-    float y = 0;
+    float y = 30;
     vector<CrawplContainer*>::iterator itr;
     for(itr=mCrawplContainer.begin();itr!=mCrawplContainer.end();++itr){
         (*itr)->SetPos(0,y);
-        y += (*itr)->GetSize().y;
+        y += (*itr)->getHeight();
     }
     pTestArea->SetSize(900,y);
     
@@ -131,8 +126,34 @@ void CrawlerPluginsWindow::setDataController(DataController* d){
         CrawplContainer* cr = new CrawplContainer( pTestArea );
         cr->setName( "Crawler Container => "  + toString(i) );
         cr->SetSize( 900, 100 );
-        cr->SetPos( 0, i*100 ); 
+        cr->SetPos( 0, i*100 );
+        cr->setCrawler( &mDataController->getCrawler()->at(i) );
         mCrawplContainer.push_back( cr );
     }
+}
 
+void CrawlerPluginsWindow::setMainController( MainController* mc ){
+    mMainController = mc;
+    mDataController = mMainController->getDataController();
+    mPluginController = mMainController->getPluginController();
+    bDataControllerSet = true;
+    
+    map< string, vector<BasePlugin*> > pmap = mPluginController->getPluginsDirectory();
+    map< string, vector<BasePlugin*> >::iterator it;
+//    for(it=pmap.begin();it!=pmap.end();++it){
+//        console() << "PLUGIN " << (*it).first << "  => " << (*it).second.size() << std::endl;
+//    }
+    
+    int amountCrawler = mDataController->getCrawler()->size();
+    for(int i=0;i<amountCrawler;i++){
+        CrawplContainer* cr = new CrawplContainer( pTestArea );
+        cr->setName( "Crawler Container => "  + toString(i) );
+        cr->SetSize( 900, 100 );
+        cr->SetPos( 0, i*100 );
+        cr->setCrawler( &mDataController->getCrawler()->at(i) );
+        for(it=pmap.begin();it!=pmap.end();++it){
+            cr->addPlugin( (*it).second.at(i) );
+        }
+        mCrawplContainer.push_back( cr );
+    }
 }

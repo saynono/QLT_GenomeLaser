@@ -29,13 +29,13 @@ public:
 	void update();
     void addPlugin( BasePlugin* plugin );
     const ColouredShape2d& getShape( int crawlerID, const GenomeData::BasePairDataSet& dataSet );
-
+    map<string, vector<BasePlugin*> > getPluginsDirectory();
 	
 private:
     
     template<typename T> BasePlugin* createInstance() { return new T; }
 
-    vector<BasePlugin*>                 mPlugins;
+    vector<BasePlugin*>                   mPlugins;
     map<string, vector<BasePlugin*> >     mPluginsDirectory;
     
     PluginOSCController         mOscController;

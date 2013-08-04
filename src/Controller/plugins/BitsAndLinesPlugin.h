@@ -12,7 +12,7 @@
 #include "cinder/app/AppBasic.h"
 
 #include "BasePlugin.h"
-
+#include "DataConverterUtil.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -33,7 +33,7 @@ public:
 private:
 
     void    convertBitChainToShape(const char* data, int len, float lineHeight, float circStartAngle, float circLength, float circDiameter);
-    void    drawLine(ColouredShape2d* s, Vec2f p1, Vec2f p2);
+    void    drawLine(ColouredShape2d* s, Vec2f p1, Vec2f p2, float percent);
     
     ColouredShape2d     mShape;
     int                 mLineCounter;
@@ -43,6 +43,7 @@ private:
     float               mLineHeight;
     float               mLinePosition;
     float               mLength;
+    float               mPairRadLength;
     
     ColorAf             mClr1;
     ColorAf             mClr2;

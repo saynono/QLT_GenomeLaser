@@ -15,7 +15,9 @@
 #include "Gwen/Controls/Base.h"
 #include "Gwen/Controls/Label.h"
 
+#include "MainController.h"
 #include "DataController.h"
+#include "PluginController.h"
 #include "CrawplContainer.h"
 
 using namespace ci;
@@ -34,6 +36,7 @@ public:
     
     void update();
     
+    void setMainController( MainController* mc );
     void setDataController( DataController* d );
 
 private:
@@ -41,6 +44,8 @@ private:
     bool                        bLayerSet;
     bool                        bDataControllerSet;
     DataController*             mDataController;
+    MainController*             mMainController;
+    PluginController*           mPluginController;
     
     vector<CrawplContainer*>    mCrawplContainer;
     Gwen::Controls::Base*       pTestArea;

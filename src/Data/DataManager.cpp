@@ -13,127 +13,197 @@
 
 void DataManager::setup(){
     
-    mCurrentDataPosition = 0;
-    mCurrentSequence = 0;
+//    fs::path path1 = getAssetPath("data/genome/CM000663.1| Homo sapiens chromoso _ part.fasta");
+//    fs::path path2 = getAssetPath("data/genome/CCDS_exons.current.txt");
     
-//    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205");
-//    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205_short");
-//    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205_short2");
-//    mFilename = getAssetPath("data/genome/fasta.19621_homo_sapiens.205_shorter");
-    
-    fs::path path1 = getAssetPath("data/genome/CM000663.1| Homo sapiens chromoso _ part.fasta");
-    fs::path path2 = getAssetPath("data/genome/CCDS_exons.current.txt");
-    
-    loadChromosomeData(path1);
-    loadExomeData(path2);
-    
+    loadChromosome( 4 );
 }
 
-void DataManager::loadChromosomeData(cinder::fs::path path){
-    mFilename = path;
-    Buffer b = Buffer( loadFile( mFilename ) );
+
+// ------------------------------------------------------------------------------------------------------------------------
+
+void DataManager::loadChromosome(int chromsomeID){
+    
+    fs::path pathData = getAssetPath("data/new/exon.y.bin");
+    fs::path pathMap = getAssetPath("data/new/exon.y.locations");
+    
+    loadDataSet(pathData,pathMap);
+
+}
+
+void DataManager::loadDataSet(cinder::fs::path pathData, cinder::fs::path pathMap){
+
+
+    Buffer b = Buffer( loadFile( pathData ) );
     size_t size = b.getDataSize();
-
-    bool descriptionStarts = false;
-    
-    char* datas = (char*)b.getData();
-    string seqDescription = "";
-    string seqData = "";
-    
-    mDataBufferOffset = 0;
-    
-    if(*(datas) == '>'){
-        for(int i=0;i<10000;i++){
-            if(*(datas+i) == 10){
-                mDataBufferOffset = i+1;
-                break;
-            }
-        }
-    }
-    
-    for(int i=0;i<10000;i++){
-        
-        char d = *(datas+i);
-        if(d=='>'){
-            addSequence(seqDescription,seqData);
-            descriptionStarts = true;
-            seqDescription = "";
-            seqData = "";
-        }else if(d==10){
-            descriptionStarts = false;
-        }
-        
-        if(d != 10){
-            if(descriptionStarts){
-                seqDescription += d;
-            }else{
-                seqData += d;
-            }
-        }
-    }
-    
     mDataBuffer = b;
+
+    mCurrentDataSet.basePairsCount = size;
+    mCurrentDataSet.chromosomeDescription = "Dummy Chromosome 18";
+    mCurrentDataSet.chromosomeID = 18;
+
+    Buffer bmap = Buffer( loadFile( pathMap ) );
+    generateChromosomeMap( &bmap );
     
-//    int len = 10;
-//    char dataBits[len/2];
-//    createBitChain(20000,len,dataBits);
-
 }
 
-void DataManager::loadExomeData(cinder::fs::path path){
-    mFilenameExome = path;
-}
+// ------------------------------------------------------------------------------------------------------------------------
 
-
-
-
-
-
-void DataManager::addSequence( string descript, string data ){
-    if(data.size() > 0 && descript.size() > 0){
-        fastaSequence seq;
-        seq.destription = descript;
-        seq.data = data;
-        mFastaData.push_back(seq);
+void DataManager::generateChromosomeMap(Buffer* b){
+    
+    size_t size = b->getDataSize();
+    char* datas = (char*)b->getData();
+    
+    int cnt = 0;
+    int lineStart = 0;
+//    char d;
+//    string line;
+    while(cnt<size){
+//        d = *(datas+i);
+        if(*(datas+cnt) == '\n'){
+            addRoi( (datas+lineStart), cnt-lineStart );
+            lineStart = cnt+1;
+        }
+        ++cnt;
     }
-}
-
-//fastaSequenceBits DataManager::convertSequenceToBit(const fastaSequence& seq){
-//    fastaSequenceBits b;
-//    return b;
-//}
-
-void DataManager::update(){
-	
-}
-
-void DataManager::draw(){
-	
-}
-
-void DataManager::loadData(string file){
     
+//  ROIDataSet
+    
+    console() << "DataManager::generateChromosomeMap : done"<< std::endl;
+    
+}
+
+void DataManager::addRoi(char* datas, int len){
+    string line;
+    for(int i=0;i<len;++i){
+        line += *(datas+i);
+    }
+    vector<string> tokens;
+    boost::split(tokens,line,boost::is_any_of(","));
+
+    int pairs = stoi(tokens[1]);
+    int start = stoi(tokens[0]);
+    int end = start+pairs;
+    
+    GenomeData::ROIDataSet roi;
+    roi.chromosomeData = mCurrentDataSet;
+    roi.basePairsCount = pairs;
+    roi.startPosition = start;
+    roi.endPosition = end;
+    roi.roiId = mRoiMap.size();
+    roi.roiDescription = "ROI Element ID_" + toString(roi.roiId);
+    mRoiMap.push_back(roi);
+//    mRoiIdMap[roi.roiId] = roi;
+    
+}
+
+// ------------------------------------------------------------------------------------------------------------------------
+
+GenomeData::ChromosomeDataSet DataManager::getChromosomeDataSet(){
+    return mCurrentDataSet;
+}
+
+const vector<GenomeData::ROIDataSet>& DataManager::getRoiMap(){
+    return mRoiMap;
+}
+
+GenomeData::ROIDataSet DataManager::getRoiByID(int roiID){
+    return mRoiMap[roiID];
 }
 
 Buffer* DataManager::getDataBuffer(){
     return &mDataBuffer;
 }
 
-const GenomeData::BasePairDataSet DataManager::createBasePairDataSet(int pos, int len){
-    GenomeData::BasePairDataSet dataSet;
-    // Be sure that all the data is set to zero!
-    char rawData[(int)ceil(len/4)];
-    memset(rawData, 0, len/4);
-    dataSet.dataBits = rawData;
+
+// ------------------------------------------------------------------------------------------------------------------------
+
+
+void DataManager::updateDataCrawler( DataCrawler* dataCrawler ){
+    
+    if(dataCrawler->length == 0) return;
+    
+    double time = getElapsedSeconds();
+    double diff = time - dataCrawler->lastUpdate;
+
+    int pos = dataCrawler->roiDataSet.startPosition + (diff * (float)dataCrawler->speed);
+    dataCrawler->pos = pos;
+    dataCrawler->length = max(0, min(dataCrawler->length, dataCrawler->roiDataSet.endPosition-pos) );
+    int len = dataCrawler->length;
+    
+//    console() << dataCrawler->crawlerID << " >> " << dataCrawler->pos << " : " << dataCrawler->roiDataSet.endPosition << "      len: " << dataCrawler->roiDataSet.basePairsCount << std::endl;
+    
+//    if( dataCrawler->roiDataSet.endPosition-pos < 0 ){
+//        console() << " CRAWLER REQUESTS NEW ROI! -> " << dataCrawler->crawlerID << "      pointer: " << dataCrawler << std::endl;
+//    }
     
     char* datas = (char*)mDataBuffer.getData();
     
-    int start = pos + mDataBufferOffset;
+    int start = pos;
+    int end = start+len;
+    char d;
+    int cnt = 0;
+//    int dataCharPos = 0;
+//    int dataBitPos = 0;
+    string dataString = "";
+    
+    for(int i=start;i<end;i++){
+        
+        d = *(datas+i);
+        
+        dataString += d;
+//        dataCharPos = (int)(cnt / 4);
+//        dataBitPos = ((cnt%4)) * 2;
+        
+        // seems to be the fastest way to do it like this according to:
+        // http://stackoverflow.com/questions/6860525/c-what-is-faster-lookup-in-hashmap-or-switch-statement
+        //
+        switch(d){
+            case 'A':
+//                rawData[dataCharPos] |= 0 << dataBitPos;
+//                dataString += "A";
+                break;
+            case 'C':
+//                rawData[dataCharPos] |= 1 << dataBitPos;
+//                dataString += "C";
+                break;
+            case 'G':
+//                rawData[dataCharPos] |= 2 << dataBitPos;
+//                dataString += "G";
+                break;
+            case 'T':
+//                dataString += "T";
+//                rawData[dataCharPos] |= 3 << dataBitPos;
+                break;
+                
+        }
+        cnt++;
+    }
+//    dataCrawler->dataSet.dataBits = rawData;
+    dataCrawler->dataSet.dataBitsString = dataString;
+    dataCrawler->dataSet.startPosition = pos;
+    dataCrawler->dataSet.basePairsCount = len;
+    dataCrawler->dataSet.chromosomeData = mCurrentDataSet;
+    
+}
+
+/*
+void DataManager::createBasePairDataSet(int pos, int len, GenomeData::BasePairDataSet* dataSet){
+    // Be sure that all the data is set to zero!
+    char rawData[(int)ceil(len/4)];
+    memset(rawData, 0, len/4);
+    dataSet->dataBits = rawData;
+    
+    char* datas = (char*)mDataBuffer.getData();
+    
+    int start = pos;
     int end = start+len;
     char d;
     int cnt = 0;
     int dataCharPos = 0;
     int dataBitPos = 0;
+    
+    console() << "start : " << start << "   end: "<< end << std::endl;
     
     for(int i=start;i<end;i++){
         
@@ -146,26 +216,25 @@ const GenomeData::BasePairDataSet DataManager::createBasePairDataSet(int pos, in
         //
         switch(d){
             case 'A':
-                dataSet.dataBits[dataCharPos] |= 0 << dataBitPos;
+                dataSet->dataBits[dataCharPos] |= 0 << dataBitPos;
                 break;
             case 'C':
-                dataSet.dataBits[dataCharPos] |= 1 << dataBitPos;
+                dataSet->dataBits[dataCharPos] |= 1 << dataBitPos;
                 break;
             case 'G':
-                dataSet.dataBits[dataCharPos] |= 2 << dataBitPos;
+                dataSet->dataBits[dataCharPos] |= 2 << dataBitPos;
                 break;
             case 'T':
-                dataSet.dataBits[dataCharPos] |= 3 << dataBitPos;
+                dataSet->dataBits[dataCharPos] |= 3 << dataBitPos;
                 break;
                 
         }
         cnt++;
     }
 
-    dataSet.startPosition = pos;
-    dataSet.basePairsCount = len;
+    dataSet->startPosition = pos;
+    dataSet->basePairsCount = len;
     
-    return dataSet;
 }
 
 void DataManager::createBitChain(int pos, int len, char* data){
@@ -175,7 +244,7 @@ void DataManager::createBitChain(int pos, int len, char* data){
     
     char* datas = (char*)mDataBuffer.getData();
     
-    int start = pos + mDataBufferOffset;
+    int start = pos;
     int end = start+len;
     char d;
     int cnt = 0;
@@ -239,22 +308,6 @@ void DataManager::createBitChain(int pos, int len, char* data){
 //    std::cout << std::endl;    
 
 }
+ 
+ */
 
-
-char DataManager::getNextData(){
-    
-    if(mFastaData.size() == 0) return 'n';
-    
-    mCurrentDataPosition ++;
-    
-    if(mCurrentDataPosition >= mFastaData[mCurrentSequence].data.size()){
-        mCurrentSequence ++;
-        mCurrentSequence %= mFastaData.size();
-        mCurrentDataPosition = 0;
-        console() << "NEXT SEQUENCE : " << mFastaData[mCurrentSequence].destription << std::endl;
-    }
-    
-    return mFastaData[mCurrentSequence].data.at(mCurrentDataPosition);
-//    mDataPos ++;
-//    mSeqPos ++;
-}

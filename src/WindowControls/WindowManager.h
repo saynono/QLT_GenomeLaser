@@ -46,6 +46,7 @@
 
 #include "MainController.h"
 #include "ViewManager.h"
+#include "PluginController.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -71,6 +72,7 @@ public:
     void setLaserPreview3d( LaserPreview3D* laserPreview3D );
     void setCircularDataLayer( CircularDataLayer* circularDataLaser );
     void setDataController(DataController* d);
+    void setPluginController(PluginController* d);
     
 private:
     

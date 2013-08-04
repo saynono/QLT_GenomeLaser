@@ -15,7 +15,6 @@
 #include "CinderIldaFrame.h"
 #include "DataManager.h"
 #include "DataController.h"
-#include "DataConverter.h"
 #include "DataToShapeConverter.h"
 
 #include "ColouredShape2d.h"
@@ -34,6 +33,7 @@ public:
 	void setup();
 	void update();
     
+    PluginController* getPluginController();
     DataController* getDataController();
     DataManager* getDataManager();
     
@@ -51,7 +51,6 @@ private:
     
     DataManager                 mDataManager;
     DataToShapeConverter        mShapeConverter;
-    DataConverter               mDataConverter;
     DataController              mDataController;
     PluginController            mPluginController;
     

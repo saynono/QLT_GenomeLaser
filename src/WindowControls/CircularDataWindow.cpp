@@ -71,6 +71,8 @@ void CircularDataWindow::Render( Gwen::Skin::Base* skin )
         
         vector<DataCrawler>* crawler = mDataController->getCrawler();
         float dia;
+        float pos;
+        float len;
         Vec2f center(width/2,height/2);
         float h;
         float dist;
@@ -78,22 +80,29 @@ void CircularDataWindow::Render( Gwen::Skin::Base* skin )
         float angle;
         float angleOffset;
         int amount = crawler->size();
+
+        
+        
         for(int i=0;i<amount;i++){
+            
             h = 60 + i*50;
-            dia = lerp(width * .45 * .5, width * .45, crawler->at(i).pos);
+            pos = crawler->at(i).pos/(float)crawler->at(i).dataSet.chromosomeData.basePairsCount;
+            len = crawler->at(i).length/(float)crawler->at(i).dataSet.chromosomeData.basePairsCount;
+            dia = lerp(width * .45 * .5, width * .45, pos);
             vec = center - Vec2f(0,h);
             dist = vec.length();
             angle = M_PI * .2;
-            angleOffset = crawler->at(i).pos * M_PI * 10.0f;
+            angleOffset = pos * M_PI * 10.0f;
             gl::color( ci::Color( 1,1,1 ) );
             gl::drawStrokedCircle( center, dia );
             gl::drawLine(Vec2f(-100,h), Vec2f(0,h) );
             gl::drawLine(Vec2f(0,h), Vec2f(0,h) + vec * (1.0-dia/dist)  );
             
-            gl::lineWidth(4);
-            drawArc( center, dia, angleOffset, angleOffset + crawler->at(i).length );
+            gl::lineWidth(10);
+            drawArc( center, dia, angleOffset, angleOffset + len );
             gl::lineWidth(1);
         }
+        
         
         for(int i=0;i<mCrawlerLabels.size();i++){
             

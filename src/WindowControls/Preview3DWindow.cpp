@@ -60,20 +60,30 @@ void Preview3DWindow::Render( Skin::Base* skin )
     Vec2f pos( cigwen::fromGwen( LocalPosToCanvas() ) );
 	ci::Rectf bounds( cigwen::fromGwen( GetBounds() ) );
 	float aspect = (float)m_InnerBounds.w / (float)m_InnerBounds.h;
+	float aspectImage = (float)mPreview3DFbo->getWidth() / (float)mPreview3DFbo->getHeight();
     
     gl::pushMatrices();
     
-    float width = min( (float)mPreview3DFbo->getWidth(), bounds.getWidth());
-    float height = min( (float)mPreview3DFbo->getHeight(), bounds.getHeight());
+//    float width = mPreview3DFbo->getWidth();//min( (float)mPreview3DFbo->getWidth(), bounds.getWidth());
+//    float height = mPreview3DFbo->getHeight();//min( (float)mPreview3DFbo->getHeight(), bounds.getHeight());
+//    
+//    if(aspect < 1){
+//        width /= aspect;
+//    }else{
+//        height *= aspect;
+//    }
+    float width = min(bounds.getWidth(),(float)mPreview3DFbo->getWidth());
+    float height = min(bounds.getHeight(),(float)mPreview3DFbo->getHeight());
     
-    if(aspect < 1){
+    aspect = (float)width / (float)height;
+    if(aspect > 1){
         width /= aspect;
     }else{
         height *= aspect;
     }
     
 	gl::translate( pos );
-    gl::color( ci::Color( 0,0,0 ) );
+    gl::color( ci::Color( 0x13/255.0,0x14/255.0,0x13/255.0  ) );
     gl::drawSolidRect(Rectf(0,0,m_InnerBounds.w,m_InnerBounds.h));
     
     Vec2f offset(bounds.getWidth()-width,bounds.getHeight()-height);
