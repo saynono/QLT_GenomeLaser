@@ -22,11 +22,11 @@ CrawplContainer::CrawplContainer( Gwen::Controls::Base *parent )
     mName = "Crawler Dummy";
     Gwen::Controls::Label* label =  new Gwen::Controls::Label( this );
     label->SetText( mName );
-    label->SetPos(10, 10);
+    label->SetPos(10, 0);
     label->SetSize(500, 30);
     mLabel = label;
     bIsSmall = true;
-    mHeightSmall = 30;
+    mHeightSmall = 50;
     mHeightLarge = 550;
     mHeightCurrent = mHeightSmall;
     mWidth = 900;
@@ -34,13 +34,21 @@ CrawplContainer::CrawplContainer( Gwen::Controls::Base *parent )
 
     label =  new Gwen::Controls::Label( this );
     label->SetText( mName );
-    label->SetPos(10, 20);
-    label->SetSize(900, 30);
+    label->SetPos(400, 0);
+    label->SetSize(400, 30);
     mLabelBasePairs = label;
+
+    label =  new Gwen::Controls::Label( this );
+    label->SetText( "-" );
+    label->SetPos(100, 0);
+    label->SetSize(300, 30);
+    mLabelDescription = label;
     
-    Gwen::Controls::PropertyTree* ptree = new Gwen::Controls::PropertyTree( this );
-    ptree->SetBounds( 20, 20, 300, 500 );
-    mProperties = ptree;
+    Gwen::Controls::Properties* props = new Gwen::Controls::Properties( this );
+    props->SetBounds( 10, 10, 500, 300 );
+    
+    mProperties = props;
+
 
 }
 
@@ -54,8 +62,7 @@ void CrawplContainer::Render( Gwen::Skin::Base* skin )
 	float aspect = (float)m_InnerBounds.w / (float)m_InnerBounds.h;
     gl::pushMatrices();
     
-    
-    mLabel->SetText( mName + "   POS : " + toString(mDataCrawler->dataSet.startPosition) + "    " + mDataCrawler->roiDataSet.roiDescription);
+    mLabelDescription->SetText( "ROI:" + mDataCrawler->roiDataSet.roiDescription + " OFFSET:" + toString(mDataCrawler->pos) );
     mLabelBasePairs->SetText( mDataCrawler->dataSet.dataBitsString );
     float width = bounds.getWidth();
     float height = bounds.getHeight();
@@ -96,24 +103,25 @@ void CrawplContainer::setCrawler(DataCrawler* crawler){
 void CrawplContainer::addPlugin( BasePlugin* plugin){
     mPlugins.push_back( plugin );
     
-    Gwen::Controls::Properties* props = mProperties->Add( plugin->pluginID() );
-    props->SetSize(300, 200);
+//    Gwen::Controls::Properties* props = mProperties->Add( plugin->pluginID() );
+//    props->SetSize(300, 200);
     int h = 0;
-    map<string, OSCElement> valMap = plugin->getOSCMapping();
-    map<string, OSCElement>::iterator it;
+    float val;
+    OSCElement* element;
+    map<string, OSCElement*> valMap = plugin->getOSCMapping();
+    map<string, OSCElement*>::iterator it;
     for( it=valMap.begin(); it!=valMap.end(); ++it){
+        element = (*it).second;
+        val = *(static_cast<float*>(element->pointer));
+        Gwen::Controls::Base* b = mProperties->Add( (*it).first );
+        Gwen::Controls::PropertyControlSlider* pRow = static_cast<Gwen::Controls::PropertyControlSlider*> (b);
+        pRow->SetSize(400, 20);
+        pRow->AddSlider(val,element->minValue,element->maxValue);
+        pRow->GetSlider()->onValueChanged.Add( this, &CrawplContainer::onSliderChange );
         
-//        Gwen::Controls::HorizontalSlider* pSlider = new Gwen::Controls::HorizontalSlider( props );
-//        pSlider->SetPos( px, py );
-//        pSlider->SetSize( w, 20 );
-//        pSlider->SetRange( valueMin, valueMax );
-//        pSlider->SetFloatValue( value );
-
-        props->Add( (*it).first );//, new Gwen::Controls::HorizontalSlider( props ), 50.0f );
-//        props->Add( L"ColorSelector", new Gwen::Controls::Property::ColorSelector( props ), L"255 0 0" );
-        h += 20;
+        console() << "minVal : " << element->minValue << "     maxVal : " << element->maxValue << std::endl;
+        mValueMap[pRow->GetSlider()] = (*it).second;
     }
-//    props->SetSize(300, h);
 }
 
 float CrawplContainer::getHeight(){
@@ -134,7 +142,15 @@ void CrawplContainer::resize(bool doSmall){
 
 
 void CrawplContainer::update(){
-	
+    map<Gwen::Controls::Slider*, OSCElement*>::iterator it;
+    float val;
+    for( it=mValueMap.begin();it!=mValueMap.end();++it ){
+        val = *(static_cast<float*>((*it).second->pointer));
+        if( val != (*it).first->GetFloatValue() ){
+            (*it).first->SetValue( toString(val) );
+        }
+    }
+
 }
 
 
@@ -151,3 +167,13 @@ void CrawplContainer::OnMouseClickLeft( int x, int y, bool bDown ) {
     }
 }
 
+void CrawplContainer::onSliderChange( Gwen::Controls::Base* pControl ){
+
+    Gwen::Controls::Slider* pSlider = ( Gwen::Controls::Slider* ) pControl;
+    float val = pSlider->GetFloatValue();
+    
+    OSCElement* element = mValueMap[pSlider];
+    *(static_cast<float*>(element->pointer)) = val;
+    
+//    console()<< "element->pointer : " << element->pointer << std::endl;
+}

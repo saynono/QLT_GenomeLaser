@@ -30,6 +30,13 @@ CrawlerPluginsWindow::~CrawlerPluginsWindow(){
     
 }
 
+void CrawlerPluginsWindow::update(){
+    vector<CrawplContainer*>::iterator itr;
+    for(itr=mCrawplContainer.begin();itr!=mCrawplContainer.end();++itr){
+        (*itr)->update();
+    }
+}
+
 void CrawlerPluginsWindow::Render( Gwen::Skin::Base* skin )
 {
     
@@ -147,7 +154,7 @@ void CrawlerPluginsWindow::setMainController( MainController* mc ){
     int amountCrawler = mDataController->getCrawler()->size();
     for(int i=0;i<amountCrawler;i++){
         CrawplContainer* cr = new CrawplContainer( pTestArea );
-        cr->setName( "Crawler Container => "  + toString(i) );
+        cr->setName( "CRAWLER #"  + toString(i) );
         cr->SetSize( 900, 100 );
         cr->SetPos( 0, i*100 );
         cr->setCrawler( &mDataController->getCrawler()->at(i) );

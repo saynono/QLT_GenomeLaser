@@ -29,11 +29,8 @@ Preview3DWindow::Preview3DWindow( Gwen::Controls::Base *parent )
     bPreviewFboSet = false;
     mImageTemp = gl::Texture( loadImage( loadAsset( "images/logo_outline_white.png" ) ) );
     gl::Fbo::Format format;
-//    format.enableDepthBuffer(false);
     mFboTemp = gl::Fbo(mImageTemp.getWidth(),mImageTemp.getHeight(),format);
     mFboTemp.getTexture().setFlipped(true);    
-//    this->onPress.Add( this, &Preview3DWindow::onMousePress );
-//    this->onPress.Add( this, &Preview3DWindow::onMousePressP );
 }
 
 Preview3DWindow::~Preview3DWindow()

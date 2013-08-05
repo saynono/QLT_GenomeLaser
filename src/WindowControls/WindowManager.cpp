@@ -49,6 +49,7 @@ void WindowManager::update(){
 	mSettingsControl->update();
     pPreview3DControl->update();
     pStatusFPSLabel->SetText( toString((int)getFrameRate()) + " FPS        ");
+    pCrawlerPluginWindow->update();
 }
 
 void WindowManager::draw(){

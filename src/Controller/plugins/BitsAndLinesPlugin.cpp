@@ -26,10 +26,16 @@ void BitsAndLinesPlugin::setup(){
     mClr1 = ColorAf(Rand::randFloat(.01, .7),.7,Rand::randFloat(.0, .9),1);
     mClr2 = ColorAf(Rand::randFloat(.3, .9),Rand::randFloat(.3, .9),Rand::randFloat(.3, .9),1);
     
-    mOSCMap.insert( make_pair( "SPEED", OSCElement( this, &mSpeed, OSCElement::FLOAT )) );
-    mOSCMap.insert( make_pair( "LINE_HEIGHT", OSCElement( this, &mLineHeight, OSCElement::FLOAT, 0, .1 )) );
-    mOSCMap.insert( make_pair( "LINE_POSITION", OSCElement( this, &mLinePosition, OSCElement::FLOAT )) );
-    mOSCMap.insert( make_pair( "LENGTH", OSCElement( this, &mLength, OSCElement::FLOAT )) );
+    mOSCMap.insert( make_pair( "SPEED", new OSCElement( this, &mSpeed, OSCElement::FLOAT, 1, 10  )) );
+    mOSCMap.insert( make_pair( "LINE_HEIGHT", new OSCElement( this, &mLineHeight, OSCElement::FLOAT, 0, .1 )) );
+    mOSCMap.insert( make_pair( "LINE_POSITION", new OSCElement( this, &mLinePosition, OSCElement::FLOAT, 0, 1  )) );
+    mOSCMap.insert( make_pair( "LENGTH", new OSCElement( this, &mLength, OSCElement::FLOAT, 0, .4 )) );
+    
+    
+    console() << " SPEED  element->pointer : " << &mSpeed << std::endl;
+    console() << " LINE_HEIGHT  element->pointer : " << &mLineHeight << std::endl;
+    console() << " LINE_POSITION  element->pointer : " << &mLinePosition << std::endl;
+    console() << " LENGTH  element->pointer : " << &mLength << std::endl;
     
 }
 
@@ -39,7 +45,7 @@ void BitsAndLinesPlugin::dispose(){
 
 //------------------------------------------------------------------------------------------------------
 
-const map<string, OSCElement>& BitsAndLinesPlugin::getOSCMapping() {
+const map<string, OSCElement*>& BitsAndLinesPlugin::getOSCMapping() {
     return mOSCMap;
 }
 

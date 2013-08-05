@@ -70,16 +70,16 @@ void PluginOSCController::processMessage( const osc::Message& message ){
 
 //------------------------------------------------------------------------------------------------------
 
-void PluginOSCController::processPluginMessageDirect( const osc::Message& message, const OSCElement& oscElement ){
+void PluginOSCController::processPluginMessageDirect( const osc::Message& message, OSCElement* oscElement ){
     
     cinder::osc::ArgType typeOsc = message.getArgType(0);
-    OSCElement::OSCElementTypes typeVar = oscElement.type;
+    OSCElement::OSCElementTypes typeVar = oscElement->type;
     
     if( typeOsc == osc::TYPE_INT32 && typeVar == OSCElement::OSCElementTypes::INTEGER ) {
         try {
 //            int val = message.getArgAsInt32(0);
-            int val = cinder::math<int>::clamp( message.getArgAsInt32(0), oscElement.minValue, oscElement.maxValue );
-            *static_cast<int*>(oscElement.pointer) = val;
+            int val = cinder::math<int>::clamp( message.getArgAsInt32(0), oscElement->minValue, oscElement->maxValue );
+            *static_cast<int*>(oscElement->pointer) = val;
         }
         catch (...) {
             console() << "Exception reading argument as int32" << std::endl;
@@ -88,8 +88,8 @@ void PluginOSCController::processPluginMessageDirect( const osc::Message& messag
     else if( typeOsc == osc::TYPE_FLOAT && typeVar == OSCElement::OSCElementTypes::FLOAT  ) {
         try {
 //            float val = message.getArgAsFloat(0);
-            float val = cinder::math<float>::clamp( message.getArgAsFloat(0), oscElement.minValue, oscElement.maxValue );
-            *(static_cast<float*>(oscElement.pointer)) = val;
+            float val = cinder::math<float>::clamp( message.getArgAsFloat(0), oscElement->minValue, oscElement->maxValue );
+            *(static_cast<float*>(oscElement->pointer)) = val;
         }
         catch (...) {
             console() << "Exception reading argument as float" << std::endl;
@@ -176,17 +176,17 @@ void PluginOSCController::processInteralMessage( const osc::Message& message, ve
 
 
 void PluginOSCController::registerPlugin( BasePlugin* plugin ){
-    const map<string, OSCElement> mapping = plugin->getOSCMapping();
+    const map<string, OSCElement*> mapping = plugin->getOSCMapping();
     string pluginName = boost::to_upper_copy(plugin->pluginID());
     mPluginsDirectory[ pluginName ].push_back( plugin );
 
     int size = static_cast<int>(mPluginsDirectory[ pluginName ].size());
     string basePluginPath = "/"+pluginName+"/" + toString( size ) + "/" ;
-    map<string, OSCElement>::const_iterator itr;
+    map<string, OSCElement*>::const_iterator itr;
     itr = mapping.begin();
     for( itr=mapping.begin(); itr!=mapping.end() ;++itr){
         string oscPath = boost::to_upper_copy( basePluginPath + (*itr).first );
-        OSCElement e = (*itr).second;
+        OSCElement* e = (*itr).second;
         mPluginsOSCMapping[oscPath] = e;//(*itr).second;
 //        console() << "ADD => OSC_VAR : " << oscPath << "                 " << mPluginsOSCMapping[oscPath].plugin << "                 " << mPluginsOSCMapping[oscPath].plugin << std::endl;        
     }

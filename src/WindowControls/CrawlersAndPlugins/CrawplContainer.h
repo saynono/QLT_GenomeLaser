@@ -13,6 +13,7 @@
 #include "Gwen/Controls/GroupBox.h"
 #include "Gwen/Controls/PropertyTree.h"
 #include "Gwen/Controls/HorizontalSlider.h"
+#include "PropertyControlSlider.h"
 
 #include "cinder/gl/Fbo.h"
 #include "cinder/Timeline.h"
@@ -43,7 +44,7 @@ public:
 
     
     virtual void OnMouseClickLeft( int x, int y, bool bDown );
-    
+    void onSliderChange( Gwen::Controls::Base* pControl );
     
 public:
     
@@ -53,7 +54,8 @@ private:
     
     Gwen::Controls::Label*          mLabel;
     Gwen::Controls::Label*          mLabelBasePairs;
-    Gwen::Controls::PropertyTree*   mProperties;
+    Gwen::Controls::Label*          mLabelDescription;
+    Gwen::Controls::Properties*     mProperties;
     
     bool                            bIsSmall;
     
@@ -64,6 +66,7 @@ private:
     string                          mName;
     DataCrawler*                    mDataCrawler;
 	vector<BasePlugin*>             mPlugins;
+    map<Gwen::Controls::Slider*, OSCElement*> mValueMap;
 };
 
 

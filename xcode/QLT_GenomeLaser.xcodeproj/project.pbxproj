@@ -28,6 +28,7 @@
 		FF24955017A714A400F8B0C3 /* PluginController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF24954E17A714A400F8B0C3 /* PluginController.cpp */; };
 		FF24955617A714D300F8B0C3 /* BasePlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF24955417A714D300F8B0C3 /* BasePlugin.cpp */; };
 		FF24955917A7174200F8B0C3 /* BitsAndLinesPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF24955717A7174100F8B0C3 /* BitsAndLinesPlugin.cpp */; };
+		FF29444917B02F230001B188 /* PropertyControlSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF29444717B02F230001B188 /* PropertyControlSlider.cpp */; };
 		FF2FD43E1786268E00D19321 /* QLT_Main_App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */; };
 		FF2FD43F1786268E00D19321 /* ColourCorrectionWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4341786268E00D19321 /* ColourCorrectionWindow.cpp */; };
 		FF2FD4411786268E00D19321 /* PreviewWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2FD4391786268E00D19321 /* PreviewWindow.cpp */; };
@@ -170,6 +171,8 @@
 		FF24955517A714D300F8B0C3 /* BasePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasePlugin.h; path = ../src/Controller/plugins/BasePlugin.h; sourceTree = "<group>"; };
 		FF24955717A7174100F8B0C3 /* BitsAndLinesPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BitsAndLinesPlugin.cpp; path = ../src/Controller/plugins/BitsAndLinesPlugin.cpp; sourceTree = "<group>"; };
 		FF24955817A7174100F8B0C3 /* BitsAndLinesPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitsAndLinesPlugin.h; path = ../src/Controller/plugins/BitsAndLinesPlugin.h; sourceTree = "<group>"; };
+		FF29444717B02F230001B188 /* PropertyControlSlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyControlSlider.cpp; sourceTree = "<group>"; };
+		FF29444817B02F230001B188 /* PropertyControlSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyControlSlider.h; sourceTree = "<group>"; };
 		FF2FD4321786268E00D19321 /* QLT_Main_App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = QLT_Main_App.cpp; path = ../src/QLT_Main_App.cpp; sourceTree = "<group>"; };
 		FF2FD4341786268E00D19321 /* ColourCorrectionWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColourCorrectionWindow.cpp; sourceTree = "<group>"; };
 		FF2FD4351786268E00D19321 /* ColourCorrectionWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColourCorrectionWindow.h; sourceTree = "<group>"; };
@@ -656,6 +659,8 @@
 				FF1FB1C517AC66D400E9A912 /* CrawlerPluginsWindow.h */,
 				FF1FB1C817AC6DE900E9A912 /* CrawplContainer.cpp */,
 				FF1FB1C917AC6DE900E9A912 /* CrawplContainer.h */,
+				FF29444717B02F230001B188 /* PropertyControlSlider.cpp */,
+				FF29444817B02F230001B188 /* PropertyControlSlider.h */,
 			);
 			name = CrawlersAndPlugins;
 			sourceTree = "<group>";
@@ -1322,6 +1327,7 @@
 				FFECD0A117A9AD7300AB3B95 /* PluginOSCController.cpp in Sources */,
 				FF1FB1C617AC66D400E9A912 /* CrawlerPluginsWindow.cpp in Sources */,
 				FF1FB1CA17AC6DE900E9A912 /* CrawplContainer.cpp in Sources */,
+				FF29444917B02F230001B188 /* PropertyControlSlider.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
