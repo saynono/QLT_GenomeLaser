@@ -11,7 +11,7 @@
 	
 void MainController::setup(){
     
-    mAmountCrawlers = 5;
+    mAmountCrawlers = 2;
     
     mDataManager.setup();
     mDataController.setup(&mDataManager, mAmountCrawlers);

@@ -33,7 +33,7 @@
 
 namespace itg
 {
-    Particle::Particle() : pos(.5, .5), vel(Vec2f::zero())
+    Particle::Particle() : pos(.5, .5), vel(Vec2f::zero()), lastUpdate(0)
     {
     }
     
