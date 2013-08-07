@@ -7,12 +7,13 @@
 //
 
 #include "PluginController.h"
+#include "ParticlePlugin.h"
 
-	
 void PluginController::setup(int amount){
     mOscController.setup();
     for(int i=0;i<amount;i++){
-        addPlugin( new BitsAndLinesPlugin() );
+        //addPlugin( new BitsAndLinesPlugin() );
+        addPlugin(new ParticlePlugin());
     }
 }
 

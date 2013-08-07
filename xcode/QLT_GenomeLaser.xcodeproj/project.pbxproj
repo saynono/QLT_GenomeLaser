@@ -12,6 +12,8 @@
 		00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */; };
 		00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
 		00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
+		2800006F17B2930B00D3FA7F /* ParticlePlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2800006D17B2930B00D3FA7F /* ParticlePlugin.cpp */; };
+		2800007217B2968300D3FA7F /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2800007017B2968300D3FA7F /* Particle.cpp */; };
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		8CAD261B3F44420299720856 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 829936C27E0D49088EED4802 /* CinderApp.icns */; };
@@ -133,6 +135,10 @@
 		00B784B10FF439BC000DE1D7 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		00B784B20FF439BC000DE1D7 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		2800006D17B2930B00D3FA7F /* ParticlePlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePlugin.cpp; path = ../src/Controller/plugins/ParticlePlugin.cpp; sourceTree = "<group>"; };
+		2800006E17B2930B00D3FA7F /* ParticlePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePlugin.h; path = ../src/Controller/plugins/ParticlePlugin.h; sourceTree = "<group>"; };
+		2800007017B2968300D3FA7F /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Particle.cpp; path = ../src/Controller/plugins/Particle.cpp; sourceTree = "<group>"; };
+		2800007117B2968300D3FA7F /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Particle.h; path = ../src/Controller/plugins/Particle.h; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
@@ -676,6 +682,10 @@
 				FF24955517A714D300F8B0C3 /* BasePlugin.h */,
 				FF24955717A7174100F8B0C3 /* BitsAndLinesPlugin.cpp */,
 				FF24955817A7174100F8B0C3 /* BitsAndLinesPlugin.h */,
+				2800006D17B2930B00D3FA7F /* ParticlePlugin.cpp */,
+				2800006E17B2930B00D3FA7F /* ParticlePlugin.h */,
+				2800007017B2968300D3FA7F /* Particle.cpp */,
+				2800007117B2968300D3FA7F /* Particle.h */,
 			);
 			name = plugins;
 			sourceTree = "<group>";
@@ -1328,6 +1338,8 @@
 				FF1FB1C617AC66D400E9A912 /* CrawlerPluginsWindow.cpp in Sources */,
 				FF1FB1CA17AC6DE900E9A912 /* CrawplContainer.cpp in Sources */,
 				FF29444917B02F230001B188 /* PropertyControlSlider.cpp in Sources */,
+				2800006F17B2930B00D3FA7F /* ParticlePlugin.cpp in Sources */,
+				2800007217B2968300D3FA7F /* Particle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1348,12 +1360,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = QLT_GenomeLaser_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(CINDER_PATH)/blocks/Cinder-Gwen/lib/gwen/gwen/lib\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
 				PRODUCT_NAME = QLT_GenomeLaser;
 				SYMROOT = ./build;
@@ -1376,12 +1390,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = QLT_GenomeLaser_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(CINDER_PATH)/blocks/Cinder-Gwen/lib/gwen/gwen/lib\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
 				PRODUCT_NAME = QLT_GenomeLaser;
 				STRIP_INSTALLED_PRODUCT = YES;
