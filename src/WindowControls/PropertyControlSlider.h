@@ -14,6 +14,9 @@
 #include "Gwen/Controls/Property/Text.h"
 #include "Gwen/Controls/SplitterBar.h"
 #include "Gwen/Controls/HorizontalSlider.h"
+#include "Gwen/Controls/Button.h"
+#include "Gwen/Controls/Checkbox.h"
+
 #include "Gwen/Gwen.h"
 #include "Gwen/Skin.h"
 
@@ -62,7 +65,9 @@ class GWEN_EXPORT PropertyControlSlider : public Base {
         Label*			m_Label;
         Label*			m_LabelValue;
         Controls::HorizontalSlider*	m_Property;
-        
+        Controls::CheckBox* m_ListenCheckbox;
+        Controls::Button* m_ListenButton;
+    
         bool			m_bLastEditing;
         bool			m_bLastHover;
         

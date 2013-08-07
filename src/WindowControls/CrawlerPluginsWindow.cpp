@@ -23,6 +23,11 @@ CrawlerPluginsWindow::CrawlerPluginsWindow( Gwen::Controls::Base *parent )
     
     pTestArea = new Controls::Base( this );
     pTestArea->SetBounds( 0, 0, 900, 600 );
+    pTestArea->Dock( Gwen::Pos::Fill );
+    
+    Gwen::Controls::PropertyTree* ptree = new Gwen::Controls::PropertyTree( pTestArea );
+    ptree->SetBounds( 10, 28, 650, 600 );
+    mPropTree = ptree;
 
 }
 
@@ -59,15 +64,13 @@ void CrawlerPluginsWindow::Render( Gwen::Skin::Base* skin )
     gl::color( ci::Color( 0x13/255.0,0x14/255.0,0x13/255.0  ) );
     gl::drawSolidRect(Rectf(0,0,m_InnerBounds.w,m_InnerBounds.h));
     
-    float y = 30;
-    vector<CrawplContainer*>::iterator itr;
-    for(itr=mCrawplContainer.begin();itr!=mCrawplContainer.end();++itr){
-        (*itr)->SetPos(0,y);
-        y += (*itr)->getHeight();
-    }
-    pTestArea->SetSize(900,y);
-    
-    
+    float y = 40;
+//    vector<CrawplContainer*>::iterator itr;
+//    for(itr=mCrawplContainer.begin();itr!=mCrawplContainer.end();++itr){
+//        (*itr)->SetPos(0,y);
+//        y += (*itr)->getHeight();
+//    }
+//    mPropTree->SetSize(900,y);
     
 //    Vec2f offset(bounds.getWidth()-width,bounds.getHeight()-height);
 //    gl::translate( offset/2.0 );
@@ -124,20 +127,20 @@ void CrawlerPluginsWindow::Render( Gwen::Skin::Base* skin )
     
 }
 
-void CrawlerPluginsWindow::setDataController(DataController* d){
-    mDataController = d;
-    bDataControllerSet = true;
-    
-    int amountCrawler = mDataController->getCrawler()->size();
-    for(int i=0;i<amountCrawler;i++){
-        CrawplContainer* cr = new CrawplContainer( pTestArea );
-        cr->setName( "Crawler Container => "  + toString(i) );
-        cr->SetSize( 900, 100 );
-        cr->SetPos( 0, i*100 );
-        cr->setCrawler( &mDataController->getCrawler()->at(i) );
-        mCrawplContainer.push_back( cr );
-    }
-}
+//void CrawlerPluginsWindow::setDataController(DataController* d){
+//    mDataController = d;
+//    bDataControllerSet = true;
+//    
+//    int amountCrawler = mDataController->getCrawler()->size();
+//    for(int i=0;i<amountCrawler;i++){
+//        CrawplContainer* cr = new CrawplContainer( mPropTree );
+//        cr->setName( "Crawler Container => "  + toString(i) );
+////        cr->SetSize( 900, 100 );
+//        cr->SetPos( 0, i*100 );
+//        cr->setCrawler( &mDataController->getCrawler()->at(i) );
+//        mCrawplContainer.push_back( cr );
+//    }
+//}
 
 void CrawlerPluginsWindow::setMainController( MainController* mc ){
     mMainController = mc;
@@ -153,14 +156,15 @@ void CrawlerPluginsWindow::setMainController( MainController* mc ){
     
     int amountCrawler = mDataController->getCrawler()->size();
     for(int i=0;i<amountCrawler;i++){
-        CrawplContainer* cr = new CrawplContainer( pTestArea );
+        CrawplContainer* cr = new CrawplContainer( mPropTree );
         cr->setName( "CRAWLER #"  + toString(i) );
-        cr->SetSize( 900, 100 );
-        cr->SetPos( 0, i*100 );
         cr->setCrawler( &mDataController->getCrawler()->at(i) );
         for(it=pmap.begin();it!=pmap.end();++it){
             cr->addPlugin( (*it).second.at(i) );
         }
         mCrawplContainer.push_back( cr );
     }
+    
+    mPropTree->ExpandAll();
+    
 }

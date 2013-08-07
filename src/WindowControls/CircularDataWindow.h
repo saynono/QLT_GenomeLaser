@@ -35,6 +35,7 @@ public:
     void setDataController( DataController* d );
     
     void drawArc( Vec2f center, float dia, float angleStart, float angleEnd );
+    void drawPerdArcLine( Vec2f center, float angleStart, float diaMin, float diaMax );
     
 public:
     

@@ -12,6 +12,7 @@
 #include "Gwen/Controls/Label.h"
 #include "Gwen/Controls/GroupBox.h"
 #include "Gwen/Controls/PropertyTree.h"
+//#include "Gwen/Controls/PropertyNode.h"
 #include "Gwen/Controls/HorizontalSlider.h"
 #include "PropertyControlSlider.h"
 
@@ -22,26 +23,25 @@
 #include "DataController.h"
 #include "BasePlugin.h"
 #include "DataCrawler.h"
+#include "Gwen/Controls/Properties.h"
+#include "Gwen/Utility.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-class CrawplContainer : public Gwen::Controls::GroupBox {
+class CrawplContainer: public Gwen::Controls::Base{
 
 public:
 	
-    CrawplContainer( Gwen::Controls::Base *parent );
+    CrawplContainer( Gwen::Controls::PropertyTree* parent );
     virtual ~CrawplContainer();
     virtual void Render( Gwen::Skin::Base* skin );
     void setName(string name);
     void setCrawler(DataCrawler* crawler);
 //    void setPlugins(vector<BasePlugin*> plugins);
     void addPlugin( BasePlugin* plugin );
-    void resize(bool doSmall);
 	void update();
-    float getHeight();
-
     
     virtual void OnMouseClickLeft( int x, int y, bool bDown );
     void onSliderChange( Gwen::Controls::Base* pControl );
@@ -55,14 +55,10 @@ private:
     Gwen::Controls::Label*          mLabel;
     Gwen::Controls::Label*          mLabelBasePairs;
     Gwen::Controls::Label*          mLabelDescription;
-    Gwen::Controls::Properties*     mProperties;
+    Gwen::Controls::Properties*     mPropertiesPlugin;
+    Gwen::Controls::PropertyTree*   mPropTree;
+    Gwen::Controls::PropertyTreeNode*   mPropNode;
     
-    bool                            bIsSmall;
-    
-    int                             mHeightSmall;
-    int                             mHeightLarge;
-    Anim<float>                     mHeightCurrent;
-    int                             mWidth;
     string                          mName;
     DataCrawler*                    mDataCrawler;
 	vector<BasePlugin*>             mPlugins;
