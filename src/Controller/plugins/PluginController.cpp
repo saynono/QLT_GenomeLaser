@@ -13,7 +13,7 @@ void PluginController::setup(int amount){
     mOscController.setup();
     for(int i=0;i<amount;i++){
         addPlugin( new BitsAndLinesPlugin() );
-        addPlugin(new ParticlePlugin());
+        addPlugin( new ParticlePlugin() );
     }
 }
 

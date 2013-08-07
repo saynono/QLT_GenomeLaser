@@ -148,11 +148,11 @@ void CrawplContainer::update(){
     float val;
     for( it=mValueMap.begin();it!=mValueMap.end();++it ){
         val = *(static_cast<float*>((*it).second->pointer));
-        console() << (*it).first->GetFloatValue() << " => " << val << "     " << std::endl;
-        console()<<  "<>>><< pRow->GetSlider() : " << (*it).first << std::endl;
-        if( val != (*it).first->GetFloatValue() ){
-            (*it).first->SetValue( toString(val) );
-        }
+//        console()<<  "<>>><< pRow->GetSlider() : " << (*it).first << std::endl;
+//        if( val != (*it).first->GetFloatValue() ){
+            (*it).first->SetFloatValue( val );
+            console() << (*it).first->GetFloatValue() << " => " << val << "     " << std::endl;
+//        }
     }
 //    console() << "------------------------------------------" << std::endl;
 }

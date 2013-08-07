@@ -32,6 +32,7 @@
 #pragma once
 
 #include "cinder/app/AppBasic.h"
+#include "cinder/Utilities.h"
 
 #include "BasePlugin.h"
 #include "DataConverterUtil.h"
