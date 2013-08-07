@@ -31,7 +31,8 @@
 #include "Gwen/Controls/Layout/Position.h"
 #include "Gwen/Controls/WindowControl.h"
 
-#include "cinderSyphon.h"
+
+//#include "cinderSyphon.h"
 
 #include "ColourCorrectionWindow.h"
 #include "PreviewWindow.h"
@@ -120,7 +121,7 @@ private:
     string                      mRenderDate;
     
     
-    syphonServer                mSyphonClient;
+//    syphonServer                mSyphonClient;
 
 };
 
