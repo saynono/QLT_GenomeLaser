@@ -36,6 +36,7 @@
 namespace itg
 {
     using namespace cinder;
+    using namespace app;
     
     class Particle
     {
