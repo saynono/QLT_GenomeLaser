@@ -31,6 +31,8 @@
 #include "Gwen/Controls/Layout/Position.h"
 #include "Gwen/Controls/WindowControl.h"
 
+#include "cinderSyphon.h"
+
 #include "ColourCorrectionWindow.h"
 #include "PreviewWindow.h"
 #include "Preview3DWindow.h"
@@ -73,6 +75,8 @@ public:
     void setCircularDataLayer( CircularDataLayer* circularDataLaser );
     void setDataController(DataController* d);
     void setPluginController(PluginController* d);
+    LaserPreview3D* getLaserPreview3d();
+    void reloadSkin();
     
 private:
     
@@ -116,7 +120,8 @@ private:
     string                      mRenderDate;
     
     
-    
+    syphonServer                mSyphonClient;
+
 };
 
 

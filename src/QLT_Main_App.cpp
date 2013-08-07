@@ -91,7 +91,12 @@ void QLT_Main_App::draw()
 void QLT_Main_App::keyDown( KeyEvent event )
 {
     switch(event.getCode()){
+//        case 'l':
+//            mWindowManager.reloadSkin();
+//            break;
         case 'q':
+            quit();
+            break;
         case 27:
             quit();
             break;

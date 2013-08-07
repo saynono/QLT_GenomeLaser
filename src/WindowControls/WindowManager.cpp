@@ -22,6 +22,9 @@ void WindowManager::setup( MainController* mc, ViewManager* vm ){
     
     setMainController( mc );
     setViewManager( vm );
+    
+    mSyphonClient.setName("QLT Genome Laser Preview3D");
+
 }
 
 //---------------------------------------------------------------------------------------------------------
@@ -50,6 +53,7 @@ void WindowManager::update(){
     pPreview3DControl->update();
     pStatusFPSLabel->SetText( toString((int)getFrameRate()) + " FPS        ");
     pCrawlerPluginWindow->update();
+    mSyphonClient.publishTexture(&pPreview3DControl->getLaserPreview3d()->getTexture()->getTexture(0));
 }
 
 void WindowManager::draw(){
@@ -290,6 +294,12 @@ void WindowManager::setDataController(DataController* d){
 
 // ---------------------------------------------------------------------------------------------------
 
+void WindowManager::reloadSkin(){
+    Gwen::Skin::TexturedBase* skin = new Gwen::Skin::TexturedBase( mRenderer );
+    skin->Init( "skins/GenomeLaserSkin.png" );
+    mCanvas->SetSkin( skin );
+    console() << "reloadskin"<< std::endl;
+}
 
 void WindowManager::saveSettings(){
     

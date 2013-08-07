@@ -98,8 +98,14 @@ void CircularDataWindow::Render( Gwen::Skin::Base* skin )
             gl::drawLine(Vec2f(-100,h), Vec2f(0,h) );
             gl::drawLine(Vec2f(0,h), Vec2f(0,h) + vec * (1.0-dia/dist)  );
             
-            gl::lineWidth(10);
-            drawArc( center, dia, angleOffset, angleOffset + len );
+            
+            Vec2f p;
+            p.x = sin(angleOffset)*dia;
+            p.y = cos(angleOffset)*dia;
+            gl::lineWidth(2);
+            gl::drawStrokedCircle( p + center, 5 );
+//            drawPerdArcLine(center, angleOffset, dia-10, dia+10 );
+//            drawArc( center, dia, angleOffset, angleOffset + len );
             gl::lineWidth(1);
         }
         
@@ -136,6 +142,22 @@ void CircularDataWindow::drawArc( Vec2f center, float dia, float angleStart, flo
     gl::vertex( p + center );
     gl::end();
 }
+
+void CircularDataWindow::drawPerdArcLine( Vec2f center, float angleStart, float diaMin, float diaMax ){
+    
+    Vec2f p;
+    float a = angleStart;
+    gl::begin(GL_LINE_STRIP);
+    p.x = sin(a)*diaMin;
+    p.y = cos(a)*diaMin;
+    gl::vertex( p + center );
+    p.x = sin(a)*diaMax;
+    p.y = cos(a)*diaMax;
+    gl::vertex( p + center );
+    gl::end();
+}
+
+
 
 
 void CircularDataWindow::setCircularDataLayer( CircularDataLayer* layer ){

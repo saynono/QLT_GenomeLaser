@@ -35,6 +35,7 @@ public:
     
     void setPreviewFbo(ci::gl::Fbo* fbo);
     void setLaserPreview3d( LaserPreview3D* laserPreview3D );
+    LaserPreview3D* getLaserPreview3d();
     
     virtual void OnMouseMoved( int x, int y, int deltaX, int deltaY );
     virtual void OnMouseClickLeft( int x, int y, bool bDown );

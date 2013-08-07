@@ -113,6 +113,10 @@ void Preview3DWindow::setLaserPreview3d( LaserPreview3D* laserPreview3D ){
     mLaserPreview3D = laserPreview3D;
 }
 
+LaserPreview3D* Preview3DWindow::getLaserPreview3d(){
+    return mLaserPreview3D;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Preview3DWindow::update(){

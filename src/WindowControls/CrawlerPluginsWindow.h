@@ -14,6 +14,11 @@
 #include "Gwen/Controls/ScrollControl.h"
 #include "Gwen/Controls/Base.h"
 #include "Gwen/Controls/Label.h"
+#include "Gwen/Controls/PropertyTree.h"
+#include "Gwen/Controls/Property/ColorSelector.h"
+#include "Gwen/Controls/Property/Checkbox.h"
+#include "Gwen/Controls/Property/ComboBox.h"
+//#include "MultiPropertyBox.h"
 
 #include "MainController.h"
 #include "DataController.h"
@@ -37,7 +42,7 @@ public:
     void update();
     
     void setMainController( MainController* mc );
-    void setDataController( DataController* d );
+//    void setDataController( DataController* d );
 
 private:
     
@@ -46,6 +51,7 @@ private:
     DataController*             mDataController;
     MainController*             mMainController;
     PluginController*           mPluginController;
+    Gwen::Controls::PropertyTree*   mPropTree;
     
     vector<CrawplContainer*>    mCrawplContainer;
     Gwen::Controls::Base*       pTestArea;

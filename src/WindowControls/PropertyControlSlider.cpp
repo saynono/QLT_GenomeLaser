@@ -53,12 +53,13 @@ protected:
 
 GWEN_CONTROL_CONSTRUCTOR( PropertyControlSlider )
 {
+    
 	m_Property = NULL;
 	PropertyRowSliderLabel* pLabel = new PropertyRowSliderLabel( this );
 	pLabel->SetPropertyRow( this );
 	pLabel->Dock( Pos::Left );
 	pLabel->SetAlignment( Pos::Left | Pos::Top );
-	pLabel->SetMargin( Margin( 2, 2, 0, 0 ) );
+//	pLabel->SetMargin( Margin( 2, 2, 0, 0 ) );
 	m_Label = pLabel;
     
 }
@@ -97,25 +98,44 @@ void PropertyControlSlider::Layout( Gwen::Skin::Base* /*skin*/ )
 }
 
 void PropertyControlSlider::AddSlider(float val, float minVal, float maxVal){
+    
+    val = Clamp(val, minVal, maxVal);
     Gwen::Controls::HorizontalSlider* pSlider = new Gwen::Controls::HorizontalSlider( this );
-    pSlider->SetPos( 60, 0 );
-    pSlider->SetSize( 100, 20 );
+//    pSlider->SetPos( 70, 0 );
+    pSlider->SetSize( 200, 30 );
     pSlider->SetRange( minVal, maxVal );
     pSlider->SetFloatValue( val );
     pSlider->SetName("SLIDER YEAH");
+//    pSlider->SetPadding( Padding( 10, 2, 10, 0 ) );
     //        pSlider->SetParent( this );
-    pSlider->Dock( Gwen::Pos::Fill );
+    pSlider->Dock( Gwen::Pos::Left );
+    pSlider->SetMargin( Margin( 10, 0, 0, 0 ) );
     m_Property = pSlider;
 
     
     PropertyRowSliderLabel* pLabel = new PropertyRowSliderLabel( this );
 	pLabel->SetPropertyRow( this );
-	pLabel->Dock( Pos::Right );
+    pLabel->SetSize(100, 30);
+	pLabel->Dock( Pos::Left );
 	pLabel->SetAlignment( Pos::Right | Pos::Top );
-	pLabel->SetMargin( Margin( 2, 2, 0, 0 ) );
+	pLabel->SetMargin( Margin( 10, 0, 0, 0 ) );
+    //	pLabel->SetMargin( Margin( 2, 2, 0, 0 ) );
     pLabel->SetValue( toString(val) );
 	m_LabelValue = pLabel;
     
+    
+    Gwen::Controls::CheckBox* pCheck = new Gwen::Controls::CheckBox( this );
+	pCheck->Dock( Pos::Left );
+	pCheck->SetAlignment( Pos::Right | Pos::Top );
+	pCheck->SetMargin( Margin( 10, 0, 0, 0 ) );
+    
+    Gwen::Controls::Button* pButton = new Gwen::Controls::Button( this );
+	pButton->Dock( Pos::Left );
+    pButton->SetText( "INPUT" );
+	pButton->SetAlignment( Pos::Right | Pos::Top );
+	pButton->SetMargin( Margin( 10, 0, 0, 0 ) );
+    m_ListenButton = pButton;
+
 
     pSlider->onValueChanged.Add( this, &PropertyControlSlider::OnValueChanged );
 
