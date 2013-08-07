@@ -123,12 +123,6 @@
 		FFECD09217A9AD3200AB3B95 /* OscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFECD07217A9AD3200AB3B95 /* OscSender.cpp */; };
 		FFECD0A117A9AD7300AB3B95 /* PluginOSCController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFECD09F17A9AD7300AB3B95 /* PluginOSCController.cpp */; };
 		FFF16388179DE7330092398C /* DataController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFF16386179DE7330092398C /* DataController.cpp */; };
-		FFFD33CB17B17C630082BA9C /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFFD339F17B17C630082BA9C /* Syphon.framework */; };
-		FFFD33CC17B17C640082BA9C /* SyphonNameboundClient.m in Sources */ = {isa = PBXBuildFile; fileRef = FFFD33A117B17C630082BA9C /* SyphonNameboundClient.m */; };
-		FFFD33CD17B17C640082BA9C /* README in Resources */ = {isa = PBXBuildFile; fileRef = FFFD33A217B17C630082BA9C /* README */; };
-		FFFD33CE17B17C640082BA9C /* syphonClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = FFFD33A617B17C630082BA9C /* syphonClient.mm */; };
-		FFFD33CF17B17C640082BA9C /* syphonServer.mm in Sources */ = {isa = PBXBuildFile; fileRef = FFFD33A817B17C630082BA9C /* syphonServer.mm */; };
-		FFFD33D617B180E10082BA9C /* Syphon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FFFD339F17B17C630082BA9C /* Syphon.framework */; };
 		FFFD8A2D178F7DC500DA74A3 /* DataToShapeConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFFD8A2B178F7DC100DA74A3 /* DataToShapeConverter.cpp */; };
 /* End PBXBuildFile section */
 
@@ -139,7 +133,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FFFD33D617B180E10082BA9C /* Syphon.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,15 +431,6 @@
 		FFF16386179DE7330092398C /* DataController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataController.cpp; path = ../src/Controller/DataController.cpp; sourceTree = "<group>"; };
 		FFF16387179DE7330092398C /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataController.h; path = ../src/Controller/DataController.h; sourceTree = "<group>"; };
 		FFF16389179DEC2C0092398C /* DataCrawler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DataCrawler.h; path = ../src/Data/DataCrawler.h; sourceTree = "<group>"; };
-		FFFD339F17B17C630082BA9C /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Syphon.framework; sourceTree = "<group>"; };
-		FFFD33A017B17C630082BA9C /* SyphonNameboundClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyphonNameboundClient.h; sourceTree = "<group>"; };
-		FFFD33A117B17C630082BA9C /* SyphonNameboundClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyphonNameboundClient.m; sourceTree = "<group>"; };
-		FFFD33A217B17C630082BA9C /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
-		FFFD33A417B17C630082BA9C /* cinderSyphon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cinderSyphon.h; sourceTree = "<group>"; };
-		FFFD33A517B17C630082BA9C /* syphonClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = syphonClient.h; sourceTree = "<group>"; };
-		FFFD33A617B17C630082BA9C /* syphonClient.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = syphonClient.mm; sourceTree = "<group>"; };
-		FFFD33A717B17C630082BA9C /* syphonServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = syphonServer.h; sourceTree = "<group>"; };
-		FFFD33A817B17C630082BA9C /* syphonServer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = syphonServer.mm; sourceTree = "<group>"; };
 		FFFD8A2B178F7DC100DA74A3 /* DataToShapeConverter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DataToShapeConverter.cpp; path = ../src/Data/DataToShapeConverter.cpp; sourceTree = "<group>"; };
 		FFFD8A2C178F7DC100DA74A3 /* DataToShapeConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DataToShapeConverter.h; path = ../src/Data/DataToShapeConverter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -464,7 +448,6 @@
 				00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */,
 				00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */,
 				00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */,
-				FFFD33CB17B17C630082BA9C /* Syphon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,7 +457,6 @@
 		01B97315FEAEA392516A2CEA /* Blocks */ = {
 			isa = PBXGroup;
 			children = (
-				FFFD336B17B17C630082BA9C /* Cinder-Syphon */,
 				FFECD01C17A9AD2F00AB3B95 /* OSC */,
 				FF3DA5CF178CD3C900B6AF61 /* Cinder-Gwen */,
 				FF04618F178CCF2F005FE797 /* Cinder-Ilda */,
@@ -1185,39 +1167,6 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
-		FFFD336B17B17C630082BA9C /* Cinder-Syphon */ = {
-			isa = PBXGroup;
-			children = (
-				FFFD339E17B17C630082BA9C /* lib */,
-				FFFD33A217B17C630082BA9C /* README */,
-				FFFD33A317B17C630082BA9C /* src */,
-			);
-			name = "Cinder-Syphon";
-			path = "../../../../../../Cinder_0.8.5/Cinder-Syphon";
-			sourceTree = "<group>";
-		};
-		FFFD339E17B17C630082BA9C /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				FFFD339F17B17C630082BA9C /* Syphon.framework */,
-				FFFD33A017B17C630082BA9C /* SyphonNameboundClient.h */,
-				FFFD33A117B17C630082BA9C /* SyphonNameboundClient.m */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		FFFD33A317B17C630082BA9C /* src */ = {
-			isa = PBXGroup;
-			children = (
-				FFFD33A417B17C630082BA9C /* cinderSyphon.h */,
-				FFFD33A517B17C630082BA9C /* syphonClient.h */,
-				FFFD33A617B17C630082BA9C /* syphonClient.mm */,
-				FFFD33A717B17C630082BA9C /* syphonServer.h */,
-				FFFD33A817B17C630082BA9C /* syphonServer.mm */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1274,7 +1223,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CAD261B3F44420299720856 /* CinderApp.icns in Resources */,
-				FFFD33CD17B17C640082BA9C /* README in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1393,9 +1341,6 @@
 				FF1FB1C617AC66D400E9A912 /* CrawlerPluginsWindow.cpp in Sources */,
 				FF1FB1CA17AC6DE900E9A912 /* CrawplContainer.cpp in Sources */,
 				FF29444917B02F230001B188 /* PropertyControlSlider.cpp in Sources */,
-				FFFD33CC17B17C640082BA9C /* SyphonNameboundClient.m in Sources */,
-				FFFD33CE17B17C640082BA9C /* syphonClient.mm in Sources */,
-				FFFD33CF17B17C640082BA9C /* syphonServer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
