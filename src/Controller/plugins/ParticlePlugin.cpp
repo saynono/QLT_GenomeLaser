@@ -139,6 +139,7 @@ const ColouredShape2d& ParticlePlugin::getShape( const GenomeData::BasePairDataS
     if (!trail.empty()) mShape.moveTo(trail[0]);
     for (unsigned i = 0; i < trail.size(); ++i)
     {
+        mShape.color(hsvToRGB(Vec3f(i / (float)trail.size(), 1.f, 1.f)));
         mShape.lineTo(trail[i]);
     }
     
