@@ -34,18 +34,31 @@ public:
         BANG
     };
     
-    OSCElement(){};
+//    OSCElement(){};
     OSCElement( BasePlugin* plug, void* p, OSCElementTypes t ){
-        plugin = plug; pointer = p; type = t; minValue = numeric_limits<float>::min(); maxValue = numeric_limits<float>::max();
+        plugin = plug;
+        pointer = p;
+        type = t;
+        minValue = numeric_limits<float>::min();
+        maxValue = numeric_limits<float>::max();
+        listeningToEvents = true;
     };
     OSCElement( BasePlugin* plug, void* p, OSCElementTypes t, float minVal, float maxVal) {
-        plugin = plug; pointer = p; type = t; minValue = minVal; maxValue = maxVal;
+        plugin = plug;
+        pointer = p;
+        type = t;
+        minValue = minVal;
+        maxValue = maxVal;
+        listeningToEvents = true;
     };
     BasePlugin*     plugin;
     void*           pointer;
     OSCElementTypes type;
     float           minValue;
     float           maxValue;
+    bool            listeningToEvents;
+    string          oscVariable;
+    string          midiVariable;
     
 };
 
@@ -56,13 +69,13 @@ public:
     virtual ~BasePlugin(){};
 	virtual void setup(){};
     virtual void dispose(){};
-    virtual const ColouredShape2d& getShape(const GenomeData::BasePairDataSet& dataSet) {return ColouredShape2d(); };
+    virtual const ColouredShape2d& getShape(const GenomeData::BasePairDataSet& dataSet) = 0;
 	
     virtual void onActivated(){};
     virtual void onDeActivated(){};
     
-    virtual const map<string, OSCElement*>& getOSCMapping() {};
-    virtual void processOSCMessage( const osc::Message& message ) {};
+    virtual const map<string, OSCElement*>& getOSCMapping() = 0;
+    virtual void processOSCMessage( const osc::Message& message ) = 0;
 
     const string pluginID() { return mPluginID;};
 

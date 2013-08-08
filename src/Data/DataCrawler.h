@@ -38,6 +38,7 @@ public:
     GenomeData::ROIDataSet roiDataSet;
     
     int     roiDataSetID;
+//    bool    isVisible;
     
 };
 

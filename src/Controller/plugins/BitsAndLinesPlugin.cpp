@@ -9,7 +9,6 @@
 #include "BitsAndLinesPlugin.h"
 
 BitsAndLinesPlugin::BitsAndLinesPlugin(): BasePlugin( "BitsAndLinesPlugin" ){
-    
 }
 	
 void BitsAndLinesPlugin::setup(){

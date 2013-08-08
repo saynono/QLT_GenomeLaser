@@ -103,6 +103,12 @@ void QLT_Main_App::keyDown( KeyEvent event )
         case 'f':
             mFullScreen = !mFullScreen;
             break;
+        case 282:
+        case 283:
+        case 284:
+        case 285:
+            mMainController.getDataController()->toggleCrawlerActivity(event.getCode()-282);
+            break;
         default:
             console() << "event.getCode() : " << event.getCode() << std::endl;
     }

@@ -11,12 +11,12 @@
 	
 void MainController::setup(){
     
-    mAmountCrawlers = 5;
+    mAmountCrawlers = 4;
     
     mDataManager.setup();
     mDataController.setup(&mDataManager, mAmountCrawlers);
     mShapeConverter.setup();
-    mPluginController.setup(mAmountCrawlers);
+    mPluginController.setup( 5 );
     
 }
 	
@@ -66,16 +66,13 @@ void MainController::createShapes(){
 
 
 void MainController::createTempDataBits(){
-        
+    int cnt = 0;
     for(int i=0;i<mAmountCrawlers;i++){
-        
-        // TODO check if plugin is visible and only then render shape
-        
-        const ColouredShape2d s = mPluginController.getShape(i, mDataController.getCrawler()->at(i).dataSet);
-        mCurrentShape.appendColouredShape2d(s);
-        
+        if(mDataController.getCrawler()->at(i).isActive){
+            mCurrentShape.appendColouredShape2d( mPluginController.getShape( &mDataController.getCrawler()->at(i) ) );
+            cnt++;
+        }
     }
-    
 }
 
 //void MainController::displayLetters(){

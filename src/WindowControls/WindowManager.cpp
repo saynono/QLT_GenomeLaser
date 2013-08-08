@@ -252,12 +252,7 @@ void WindowManager::addCrawlerPluginWindow(){
     control->SetPadding(Gwen::Padding(0,0,0,0));
 	control->Dock( Gwen::Pos::Fill );
     pCrawlerPluginWindow = control;
-    m_Splitter->SetPanel( panelId, control );
-    
-    Gwen::Controls::Label* label =  new Gwen::Controls::Label( control );
-    label->SetText( "CRAWLERS AND PLUGING" );
-    label->SetPos(10, 10);
-    label->SetSize(30, 500);
+    m_Splitter->SetPanel( panelId, control );    
 }
 
 

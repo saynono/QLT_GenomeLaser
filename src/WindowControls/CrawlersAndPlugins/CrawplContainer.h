@@ -15,6 +15,8 @@
 //#include "Gwen/Controls/PropertyNode.h"
 #include "Gwen/Controls/HorizontalSlider.h"
 #include "Gwen/Controls/ListBox.h"
+#include "Gwen/Controls/CollapsibleCategory.h"
+#include "Gwen/Controls/ComboBox.h"
 #include "PropertyControlSlider.h"
 
 #include "cinder/gl/Fbo.h"
@@ -35,7 +37,7 @@ class CrawplContainer: public Gwen::Controls::Base{
 
 public:
 	
-    CrawplContainer( Gwen::Controls::Base* parent );
+    CrawplContainer( Gwen::Controls::CollapsibleCategory* parent );
     virtual ~CrawplContainer();
     virtual void Render( Gwen::Skin::Base* skin );
     void setName(string name);
@@ -50,6 +52,8 @@ public:
     virtual void OnMouseClickLeft( int x, int y, bool bDown );
     void onSliderChange( Gwen::Controls::Base* pControl );
     void onRowSelected();
+    void onOnOffClick( Gwen::Controls::Base* pControl );
+    void onPluginComboClick( Gwen::Controls::Base* pControl );
     
 public:
     
@@ -57,11 +61,16 @@ public:
 
 private:
     
+    Gwen::Controls::CollapsibleCategory* mParentCat;
     Gwen::Controls::Label*          mLabel;
     Gwen::Controls::Label*          mLabelBasePairs;
     Gwen::Controls::Label*          mLabelDescription;
     Gwen::Controls::ListBox*        mPluginList;
     Gwen::Controls::ListBox*        mValueList;
+    Gwen::Controls::Base*           mTopBar;
+    Gwen::Controls::Button*         mOnOffButton;
+    Gwen::Controls::ComboBox*       mPluginComboList;
+
     
     string                          mName;
     DataCrawler*                    mDataCrawler;

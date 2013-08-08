@@ -11,6 +11,7 @@
 
 #include "cinder/app/AppBasic.h"
 #include "GenomeData.h"
+#include "DataCrawler.h"
 #include "BasePlugin.h"
 #include "BitsAndLinesPlugin.h"
 #include "PluginOSCController.h"
@@ -28,7 +29,7 @@ public:
     void dispose();
 	void update();
     void addPlugin( BasePlugin* plugin );
-    const ColouredShape2d& getShape( int crawlerID, const GenomeData::BasePairDataSet& dataSet );
+    const ColouredShape2d& getShape( DataCrawler* crawler );
     map<string, vector<BasePlugin*> > getPluginsDirectory();
 	
 private:
@@ -39,6 +40,9 @@ private:
     map<string, vector<BasePlugin*> >     mPluginsDirectory;
     
     PluginOSCController         mOscController;
+    int                         mAmountCrawlers;
+    ColouredShape2d             mEmptyShape;
+
 
 };
 

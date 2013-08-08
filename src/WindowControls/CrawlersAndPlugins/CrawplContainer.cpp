@@ -10,9 +10,11 @@
 #include "cinder/app/AppNative.h"
 #include "CinderGwen.h"
 
-CrawplContainer::CrawplContainer( Gwen::Controls::Base* parent )
+CrawplContainer::CrawplContainer( Gwen::Controls::CollapsibleCategory* parent )
 : Gwen::Controls::Base( parent, "Yes" )
 {
+    
+    mParentCat = parent;
     Dock( Gwen::Pos::Top );
     SetSize( 800, 300);
 //    Gwen::Controls::Properties* props = mPropTree->Add( "PluginSetting " + plugin->pluginID() );
@@ -22,9 +24,24 @@ CrawplContainer::CrawplContainer( Gwen::Controls::Base* parent )
 //    ptree->SetBounds( 10, 28, 650, 300 );
 //    mPropTree = ptree;
     
-    
+    mTopBar = new Gwen::Controls::Base(this);
+    mTopBar->SetSize(500, 30);
+    mTopBar->SetPos(10, 5);
+    Gwen::Controls::Button* btn = new Gwen::Controls::Button(mTopBar);
+    btn->SetSize( 140, 20 );
+    btn->SetText( "ON" );
+    btn->onPress.Add( this, &CrawplContainer::onOnOffClick );
+    mOnOffButton = btn;
+
+    Gwen::Controls::ComboBox* combo = new Gwen::Controls::ComboBox( this );
+    combo->SetPos( 160, 00 );
+    combo->SetWidth( 200 );
+    combo->onSelection.Add( this, &CrawplContainer::onPluginComboClick );
+    mPluginComboList = combo;
+    mPluginComboList->SetHidden( true );
+
     mPluginList = new Gwen::Controls::ListBox( this );
-    mPluginList->SetBounds( 10, 10, 150, 200 );
+    mPluginList->SetBounds( 10, 30, 150, 200 );
     mPluginList->SelectByString( "Bl*", true );
     mPluginList->SetAllowMultiSelect( true );
     mPluginList->SetKeyboardInputEnabled( true );    
@@ -138,7 +155,6 @@ void CrawplContainer::Render( Gwen::Skin::Base* skin )
 
 void CrawplContainer::setName(string name){
     mName = name;
-//    mLabel->SetText( name );
 }
 
 void CrawplContainer::setCrawler(DataCrawler* crawler){
@@ -147,33 +163,33 @@ void CrawplContainer::setCrawler(DataCrawler* crawler){
 
 void CrawplContainer::addPlugin( BasePlugin* plugin){
     mPlugins.push_back( plugin );
-    Gwen::Controls::Layout::TableRow* row = mPluginList->AddItem( plugin->pluginID() );
+
+    const string pluginId = plugin->pluginID();
+    Gwen::Controls::Layout::TableRow* row = mPluginList->AddItem( pluginId );
     mPluginsRowMap[row] = plugin;
     createPluginSettings( plugin );
     mValueList = mPluginsListBoxMap[plugin];
-    
     mPluginList->SetSize( mPluginList->GetSize().x, mPluginsRowMap.size() * 20 + 10);
 //    displayPluginSettings( plugin );
     
     SetHeight( mPluginList->GetSize().y + 60 );
-    
+    Gwen::UnicodeString pluginIdUni = Gwen::Utility::StringToUnicode( pluginId );
+    mPluginComboList->AddItem( pluginIdUni, pluginId );
+    mPluginComboList->SetHidden( false );
 }
 
 void CrawplContainer::displayPluginSettings( BasePlugin* plugin){
-    
     mValueList->SetHidden( true );
     mValueList = mPluginsListBoxMap[plugin];
     mValueList->SetHidden( false );
-    
-    SetHeight( min( mPluginList->GetSize().y, mValueList->GetSize().y) + 60 );
-    
+    SetHeight( min( mPluginList->GetSize().y, mValueList->GetPos().y + mValueList->GetSize().y) + 60 );
 }
 
 
 void CrawplContainer::createPluginSettings( BasePlugin* plugin){
 
     Gwen::Controls::ListBox* ctrl = new Gwen::Controls::ListBox( this );
-    ctrl->SetBounds( 160, 10, 600, 200 );
+    ctrl->SetBounds( 160, 30, 600, 200 );
 //    ctrl->SetWidth( 600 );
     ctrl->SetColumnCount( 6 );
     ctrl->SetAllowMultiSelect( true );
@@ -215,25 +231,35 @@ void CrawplContainer::createPluginSettings( BasePlugin* plugin){
         cnt++;
     }
     
-//    if(valMap.size() > 0)
-//    console() << " ----> height : " << cnt*20 << std::endl;
-    
     ctrl->SetSize(ctrl->GetSize().x, cnt*20+20);
     ctrl->SetHidden( true );
 }
+
 
 void CrawplContainer::update(){
     map<Gwen::Controls::Slider*, OSCElement*>::iterator it;
     float val;
     for( it=mValueMap.begin();it!=mValueMap.end();++it ){
-        val = *(static_cast<float*>((*it).second->pointer));
-//        console()<<  "<>>><< pRow->GetSlider() : " << (*it).first << std::endl;
-//        if( val != (*it).first->GetFloatValue() ){
-            (*it).first->SetFloatValue( val );
-//            console() << (*it).first->GetFloatValue() << " => " << val << "     " << std::endl;
-//        }
+        if((*it).second->listeningToEvents){
+            val = *(static_cast<float*>((*it).second->pointer));
+            if( val != (*it).first->GetFloatValue() ){
+                (*it).first->SetFloatValue( val );
+            }
+        }
     }
     
+    string str;
+    if(mDataCrawler->isActive){
+        str = "ON";
+        mParentCat->SetText("Crawler #" + toString(mDataCrawler->crawlerID) + "   ( " + mPluginComboList->GetSelectedItem()->GetName() + " )");
+    }
+    else{
+        str = "OFF";
+        mParentCat->SetText("Crawler #" + toString(mDataCrawler->crawlerID) + "   ( " + str + " )");
+    }
+    
+    mOnOffButton->SetText( str );
+
 //    float yMax = 0;
 //    yMax = max( (float)(*it).first->GetBounds().y , yMax);
 //    float yMax = mPropertiesPlugin->GetBounds().y + mPropertiesPlugin->GetBounds().h;
@@ -269,4 +295,21 @@ void CrawplContainer::onSliderChange( Gwen::Controls::Base* pControl ){
     *(static_cast<float*>(element->pointer)) = val;
     
 //    console()<< "element->pointer : " << element->pointer << std::endl;
+}
+
+void CrawplContainer::onOnOffClick( Gwen::Controls::Base* pControl ){
+    mDataCrawler->isActive = !mDataCrawler->isActive;
+    console() << " mDataCrawler->isActive : " << mDataCrawler->isActive << std::endl;
+}
+
+void CrawplContainer::onPluginComboClick( Gwen::Controls::Base* pControl ){
+    console() << " =====> " << mPluginComboList->GetSelectedItem()->GetName() << std::endl;
+    vector<BasePlugin*>::iterator it;
+    for(it=mPlugins.begin();it!=mPlugins.end();++it){
+        if( (*it)->pluginID().compare( mPluginComboList->GetSelectedItem()->GetName() ) == 0 ){
+            (*it)->activate(true);
+        }else{
+            (*it)->activate(false);
+        }
+    }
 }

@@ -39,6 +39,7 @@ public:
     void reset();
     void resetCrawler(DataCrawler* crawler);
     DataManager* getDataManager();
+    void toggleCrawlerActivity(int id);
 
 private:
             

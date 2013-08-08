@@ -27,7 +27,6 @@ void DataController::setup(DataManager* dm, int amount){
         
 //        Tween<float> tweentween1 = ;
 //        .finishFn( Say("Hallo") );
-        
     }
     
     mTick = 0;
@@ -44,6 +43,8 @@ void DataController::addCrawler(GenomeData::ChromosomeDataSet* cds){
     d.pos = 0;
     d.speed = Rand::randInt(1, 100);
     d.crawlerID = mDataCrawler.size();
+    // only set the first one true
+    d.isActive = mDataCrawler.size() == 0;
     mDataCrawler.push_back(d);
 }
 
@@ -115,4 +116,9 @@ DataManager* DataController::getDataManager(){
 
 vector<DataCrawler>* DataController::getCrawler(){
     return &mDataCrawler;
+}
+
+void DataController::toggleCrawlerActivity(int id){
+    if(id > mDataCrawler.size() || id < 0) return;
+    mDataCrawler.at(id).isActive = !mDataCrawler.at(id).isActive;
 }
