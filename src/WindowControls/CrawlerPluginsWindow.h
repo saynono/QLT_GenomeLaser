@@ -18,6 +18,15 @@
 #include "Gwen/Controls/Property/ColorSelector.h"
 #include "Gwen/Controls/Property/Checkbox.h"
 #include "Gwen/Controls/Property/ComboBox.h"
+#include "Gwen/Controls/DockBase.h"
+#include "Gwen/Controls/ComboBox.h"
+#include "Gwen/Controls/TabControl.h"
+#include "Gwen/Controls/CollapsibleList.h"
+#include "Gwen/Controls/CollapsibleCategory.h"
+#include "Gwen/Controls/RadioButtonController.h"
+#include "Gwen/Controls/VerticalSlider.h"
+#include "Gwen/Controls/HorizontalSlider.h"
+#include "Gwen/Controls/CheckBox.h"
 //#include "MultiPropertyBox.h"
 
 #include "MainController.h"
@@ -52,6 +61,7 @@ private:
     MainController*             mMainController;
     PluginController*           mPluginController;
     Gwen::Controls::PropertyTree*   mPropTree;
+    Gwen::Controls::CollapsibleList*  mCrawlerList;
     
     vector<CrawplContainer*>    mCrawplContainer;
     Gwen::Controls::Base*       pTestArea;

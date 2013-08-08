@@ -10,18 +10,51 @@
 #include "cinder/app/AppNative.h"
 #include "CinderGwen.h"
 
-CrawplContainer::CrawplContainer( Gwen::Controls::PropertyTree* parent )
+CrawplContainer::CrawplContainer( Gwen::Controls::Base* parent )
 : Gwen::Controls::Base( parent, "Yes" )
 {
-    
-    
+    Dock( Gwen::Pos::Top );
+    SetSize( 800, 300);
 //    Gwen::Controls::Properties* props = mPropTree->Add( "PluginSetting " + plugin->pluginID() );
 
-//    Gwen::Controls::PropertyTree* ptree = mPropTree->Add( "Crawler ", new Gwen::Controls::PropertyTree( parent ) );;
-//    ptree->SetBounds( 10, 28, 650, 600 );
-    
 
-    mPropTree = parent;
+//    Gwen::Controls::PropertyTree* ptree = new Gwen::Controls::PropertyTree( this );
+//    ptree->SetBounds( 10, 28, 650, 300 );
+//    mPropTree = ptree;
+    
+    
+    mPluginList = new Gwen::Controls::ListBox( this );
+    mPluginList->SetBounds( 10, 10, 150, 200 );
+    mPluginList->SelectByString( "Bl*", true );
+    mPluginList->SetAllowMultiSelect( true );
+    mPluginList->SetKeyboardInputEnabled( true );    
+    mPluginList->onRowSelected.Add( this, &CrawplContainer::onRowSelected );
+
+    
+    
+//    Gwen::Controls::ListBox* ctrl = new Gwen::Controls::ListBox( this );
+//    ctrl->SetBounds( 120, 10, 600, 400 );
+//    ctrl->SetColumnCount( 6 );
+//    ctrl->SetAllowMultiSelect( true );
+////    ctrl->onRowSelected.Add( this, &ThisClass::RowSelected );
+//    {
+//        Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem( L"Baked Beans" );
+//        pRow->SetCellText( 1, L"Heinz" );
+//        pRow->SetCellText( 2, "£3.50" );
+//    }
+//    {
+//        Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem( L"Bananas" );
+//        pRow->SetCellText( 1, L"Trees" );
+//        pRow->SetCellText( 2, L"$1.27" );
+//    }
+//    {
+//        Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem( L"Chicken" );
+//        pRow->SetCellText( 1, L"\u5355\u5143\u6D4B\u8BD5" );
+//        pRow->SetCellText( 2, L"\u20AC8.95" );
+//    }
+    
+//    mValueList = ctrl;
+
 
 //    Gwen::Controls::PropertyTreeNode* node = new Gwen::Controls::PropertyTreeNode( mPropTree );
 //    node->SetText( "HELLO!" );
@@ -114,33 +147,79 @@ void CrawplContainer::setCrawler(DataCrawler* crawler){
 
 void CrawplContainer::addPlugin( BasePlugin* plugin){
     mPlugins.push_back( plugin );
+    Gwen::Controls::Layout::TableRow* row = mPluginList->AddItem( plugin->pluginID() );
+    mPluginsRowMap[row] = plugin;
+    createPluginSettings( plugin );
+    mValueList = mPluginsListBoxMap[plugin];
     
-//    Gwen::Controls::Properties* props = mProperties->Add( plugin->pluginID() );
-//    props->SetSize(300, 200);
-//    int h = 0;
+    mPluginList->SetSize( mPluginList->GetSize().x, mPluginsRowMap.size() * 20 + 10);
+//    displayPluginSettings( plugin );
+    
+    SetHeight( mPluginList->GetSize().y + 60 );
+    
+}
+
+void CrawplContainer::displayPluginSettings( BasePlugin* plugin){
+    
+    mValueList->SetHidden( true );
+    mValueList = mPluginsListBoxMap[plugin];
+    mValueList->SetHidden( false );
+    
+    SetHeight( min( mPluginList->GetSize().y, mValueList->GetSize().y) + 60 );
+    
+}
+
+
+void CrawplContainer::createPluginSettings( BasePlugin* plugin){
+
+    Gwen::Controls::ListBox* ctrl = new Gwen::Controls::ListBox( this );
+    ctrl->SetBounds( 160, 10, 600, 200 );
+//    ctrl->SetWidth( 600 );
+    ctrl->SetColumnCount( 6 );
+    ctrl->SetAllowMultiSelect( true );
+    ctrl->SetColumnWidth(0,100);
+    ctrl->SetColumnWidth(1,320);
+    ctrl->SetColumnWidth(2,100);
+
+    mPluginsListBoxMap[plugin] = ctrl;
+    
     float val;
-    int cnt;
+    int cnt = 0;
     OSCElement* element;
+    Gwen::Controls::Layout::TableRow* pRow;
     map<string, OSCElement*> valMap = plugin->getOSCMapping();
     map<string, OSCElement*>::iterator it;
-//    Gwen::Controls::Properties* props = new Gwen::Controls::Properties( mPropTree );
-    Gwen::Controls::Properties* props = mPropTree->Add( "PluginSetting " + plugin->pluginID() );
-//    props->SetMargin( Gwen::Margin( 2, 10, 2 , 10 ) );
-    mPropertiesPlugin = props;
-    mPropertiesPlugin->SetName( mName );
+
     for( it=valMap.begin(); it!=valMap.end(); ++it){
+        
         element = (*it).second;
         val = *(static_cast<float*>(element->pointer));
-        Gwen::Controls::Base* b = mPropertiesPlugin->Add( (*it).first );
-        Gwen::Controls::PropertyControlSlider* pRow = static_cast<Gwen::Controls::PropertyControlSlider*> (b);
-//        pRow->SetMargin( Gwen::Margin( 0, 4, 2 , 0 ) );
-        pRow->AddSlider(val,element->minValue,element->maxValue);
-        pRow->GetSlider()->onValueChanged.Add( this, &CrawplContainer::onSliderChange );
-        console() << "<<<<<< pRow->GetSlider() : " << pRow->GetSlider() << std::endl;
-        mValueMap[pRow->GetSlider()] = (*it).second;
+        
+        pRow = ctrl->AddItem( (*it).first );
+        pRow->SetHeight( 20 );
+        
+        
+        Gwen::Controls::HorizontalSlider* pSlider = new Gwen::Controls::HorizontalSlider( this );
+//        pSlider->SetSize( 200, 30 );
+        pSlider->SetRange( element->minValue, element->maxValue );
+        pSlider->SetFloatValue( val );
+        pSlider->SetName("SLIDER YEAH");
+        pSlider->onValueChanged.Add( this, &CrawplContainer::onSliderChange );
+        pSlider->SetHeight( 20 );
+        pSlider->SetWidth( 300 );
+
+        pRow->SetCellContents( 1, pSlider  );
+        pRow->SetCellText( 2, "£3.50" );
+        
+        mValueMap[pSlider] = element;
         cnt++;
     }
-    props->SetSize(600, cnt*20);
+    
+//    if(valMap.size() > 0)
+//    console() << " ----> height : " << cnt*20 << std::endl;
+    
+    ctrl->SetSize(ctrl->GetSize().x, cnt*20+20);
+    ctrl->SetHidden( true );
 }
 
 void CrawplContainer::update(){
@@ -151,15 +230,25 @@ void CrawplContainer::update(){
 //        console()<<  "<>>><< pRow->GetSlider() : " << (*it).first << std::endl;
 //        if( val != (*it).first->GetFloatValue() ){
             (*it).first->SetFloatValue( val );
-            console() << (*it).first->GetFloatValue() << " => " << val << "     " << std::endl;
+//            console() << (*it).first->GetFloatValue() << " => " << val << "     " << std::endl;
 //        }
     }
-//    console() << "------------------------------------------" << std::endl;
+    
+//    float yMax = 0;
+//    yMax = max( (float)(*it).first->GetBounds().y , yMax);
+//    float yMax = mPropertiesPlugin->GetBounds().y + mPropertiesPlugin->GetBounds().h;
+//    console() << "h : " << yMax << std::endl;
+//    SetSize(GetSize().x, yMax + 20 );
+    
 }
 
 
 // ----------------------------------------------------------------------------------------
 
+void CrawplContainer::onRowSelected(){
+    console() << "LOG : " << mPluginsRowMap[mPluginList->GetSelectedRow()]->pluginID() << std::endl;
+    displayPluginSettings( mPluginsRowMap[mPluginList->GetSelectedRow()] );
+}
 
 void CrawplContainer::OnMouseClickLeft( int x, int y, bool bDown ) {
 

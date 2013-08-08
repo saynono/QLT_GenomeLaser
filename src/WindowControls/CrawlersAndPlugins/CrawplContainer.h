@@ -14,6 +14,7 @@
 #include "Gwen/Controls/PropertyTree.h"
 //#include "Gwen/Controls/PropertyNode.h"
 #include "Gwen/Controls/HorizontalSlider.h"
+#include "Gwen/Controls/ListBox.h"
 #include "PropertyControlSlider.h"
 
 #include "cinder/gl/Fbo.h"
@@ -34,7 +35,7 @@ class CrawplContainer: public Gwen::Controls::Base{
 
 public:
 	
-    CrawplContainer( Gwen::Controls::PropertyTree* parent );
+    CrawplContainer( Gwen::Controls::Base* parent );
     virtual ~CrawplContainer();
     virtual void Render( Gwen::Skin::Base* skin );
     void setName(string name);
@@ -43,8 +44,12 @@ public:
     void addPlugin( BasePlugin* plugin );
 	void update();
     
+    void displayPluginSettings( BasePlugin* plugin);
+    void createPluginSettings( BasePlugin* plugin);
+    
     virtual void OnMouseClickLeft( int x, int y, bool bDown );
     void onSliderChange( Gwen::Controls::Base* pControl );
+    void onRowSelected();
     
 public:
     
@@ -55,14 +60,15 @@ private:
     Gwen::Controls::Label*          mLabel;
     Gwen::Controls::Label*          mLabelBasePairs;
     Gwen::Controls::Label*          mLabelDescription;
-    Gwen::Controls::Properties*     mPropertiesPlugin;
-    Gwen::Controls::PropertyTree*   mPropTree;
-    Gwen::Controls::PropertyTreeNode*   mPropNode;
+    Gwen::Controls::ListBox*        mPluginList;
+    Gwen::Controls::ListBox*        mValueList;
     
     string                          mName;
     DataCrawler*                    mDataCrawler;
 	vector<BasePlugin*>             mPlugins;
     map<Gwen::Controls::Slider*, OSCElement*> mValueMap;
+    map<Gwen::Controls::Layout::TableRow*, BasePlugin*> mPluginsRowMap;
+    map<BasePlugin*, Gwen::Controls::ListBox*> mPluginsListBoxMap;
 };
 
 

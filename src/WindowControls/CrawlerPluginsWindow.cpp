@@ -25,10 +25,17 @@ CrawlerPluginsWindow::CrawlerPluginsWindow( Gwen::Controls::Base *parent )
     pTestArea->SetBounds( 0, 0, 900, 600 );
     pTestArea->Dock( Gwen::Pos::Fill );
     
-    Gwen::Controls::PropertyTree* ptree = new Gwen::Controls::PropertyTree( pTestArea );
-    ptree->SetBounds( 10, 28, 650, 600 );
-    mPropTree = ptree;
-
+//    Gwen::Controls::PropertyTree* ptree = new Gwen::Controls::PropertyTree( pTestArea );
+//    ptree->SetBounds( 10, 28, 650, 600 );
+//    mPropTree = ptree;
+    
+    
+//    Gwen::Controls::TabControl* tabControl = parent->GetLeft()->GetTabControl();
+    Gwen::Controls::CollapsibleList* pList = new Gwen::Controls::CollapsibleList( pTestArea );
+    mCrawlerList = pList;
+    mCrawlerList->Dock( Gwen::Pos::Fill );
+    mCrawlerList->SetMargin( Margin(10,20,10,10) );
+    
 }
 
 CrawlerPluginsWindow::~CrawlerPluginsWindow(){
@@ -156,15 +163,20 @@ void CrawlerPluginsWindow::setMainController( MainController* mc ){
     
     int amountCrawler = mDataController->getCrawler()->size();
     for(int i=0;i<amountCrawler;i++){
-        CrawplContainer* cr = new CrawplContainer( mPropTree );
+        
+        Gwen::Controls::CollapsibleCategory* cat1 = mCrawlerList->Add( "CRAWLER #"  + toString(i) );
+
+        
+        CrawplContainer* cr = new CrawplContainer( cat1 );
         cr->setName( "CRAWLER #"  + toString(i) );
         cr->setCrawler( &mDataController->getCrawler()->at(i) );
         for(it=pmap.begin();it!=pmap.end();++it){
             cr->addPlugin( (*it).second.at(i) );
         }
+//        cr->displayPluginSettings( (*pmap.begin()).second.at(0) );
         mCrawplContainer.push_back( cr );
     }
     
-    mPropTree->ExpandAll();
+//    mPropTree->ExpandAll();
     
 }
