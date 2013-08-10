@@ -16,14 +16,8 @@ CrawplContainer::CrawplContainer( Gwen::Controls::CollapsibleCategory* parent )
     
     mParentCat = parent;
     Dock( Gwen::Pos::Top );
-    SetSize( 800, 300);
-//    Gwen::Controls::Properties* props = mPropTree->Add( "PluginSetting " + plugin->pluginID() );
+//    SetSize( 800, 300);
 
-
-//    Gwen::Controls::PropertyTree* ptree = new Gwen::Controls::PropertyTree( this );
-//    ptree->SetBounds( 10, 28, 650, 300 );
-//    mPropTree = ptree;
-    
     mTopBar = new Gwen::Controls::Base(this);
     mTopBar->SetSize(500, 30);
     mTopBar->SetPos(10, 5);
@@ -34,7 +28,7 @@ CrawplContainer::CrawplContainer( Gwen::Controls::CollapsibleCategory* parent )
     mOnOffButton = btn;
 
     Gwen::Controls::ComboBox* combo = new Gwen::Controls::ComboBox( this );
-    combo->SetPos( 160, 00 );
+    combo->SetPos( 160, 5 );
     combo->SetWidth( 200 );
     combo->onSelection.Add( this, &CrawplContainer::onPluginComboClick );
     mPluginComboList = combo;
@@ -47,106 +41,13 @@ CrawplContainer::CrawplContainer( Gwen::Controls::CollapsibleCategory* parent )
     mPluginList->SetKeyboardInputEnabled( true );    
     mPluginList->onRowSelected.Add( this, &CrawplContainer::onRowSelected );
 
-    
-    
-//    Gwen::Controls::ListBox* ctrl = new Gwen::Controls::ListBox( this );
-//    ctrl->SetBounds( 120, 10, 600, 400 );
-//    ctrl->SetColumnCount( 6 );
-//    ctrl->SetAllowMultiSelect( true );
-////    ctrl->onRowSelected.Add( this, &ThisClass::RowSelected );
-//    {
-//        Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem( L"Baked Beans" );
-//        pRow->SetCellText( 1, L"Heinz" );
-//        pRow->SetCellText( 2, "£3.50" );
-//    }
-//    {
-//        Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem( L"Bananas" );
-//        pRow->SetCellText( 1, L"Trees" );
-//        pRow->SetCellText( 2, L"$1.27" );
-//    }
-//    {
-//        Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem( L"Chicken" );
-//        pRow->SetCellText( 1, L"\u5355\u5143\u6D4B\u8BD5" );
-//        pRow->SetCellText( 2, L"\u20AC8.95" );
-//    }
-    
-//    mValueList = ctrl;
-
-
-//    Gwen::Controls::PropertyTreeNode* node = new Gwen::Controls::PropertyTreeNode( mPropTree );
-//    node->SetText( "HELLO!" );
-//    node->Dock( Gwen::Pos::Top );
-//    
-//    mPropNode = node;
-
-//    mPropTree = parent;
-    
-//    mName = "Crawler Dummy";
-//    Gwen::Controls::Label* label =  new Gwen::Controls::Label( this );
-//    label->SetText( mName );
-//    label->SetPos(10, 0);
-//    label->SetSize(870, 30);
-//    mLabel = label;
-//    bIsSmall = true;
-//    mHeightSmall = 30;
-//    mHeightLarge = 250;
-//    mHeightCurrent = mHeightSmall;
-//    mWidth = 900;
-//    SetSize(mWidth,mHeightSmall);
-//
-//    label =  new Gwen::Controls::Label( this );
-//    label->SetText( mName );
-//    label->SetPos(400, 0);
-//    label->SetSize(400, 30);
-//    mLabelBasePairs = label;
-//
-//    label =  new Gwen::Controls::Label( this );
-//    label->SetText( "-" );
-//    label->SetPos(100, 0);
-//    label->SetSize(600, 30);
-//    mLabelDescription = label;
-//    
-//    
-//    Gwen::Controls::PropertyTree* ptree = new Gwen::Controls::PropertyTree( this );
-//    ptree->SetBounds( 100, 28, 650, 300 );
-//    
-//    mPropTree = ptree;
-//
-//    resize(true);
-
 }
 
 CrawplContainer::~CrawplContainer(){};
 
 void CrawplContainer::Render( Gwen::Skin::Base* skin )
 {
-//    
-//	Vec2f pos( cigwen::fromGwen( LocalPosToCanvas() ) );
-//	ci::Rectf bounds( cigwen::fromGwen( GetBounds() ) );
-//	float aspect = (float)m_InnerBounds.w / (float)m_InnerBounds.h;
-//    gl::pushMatrices();
-//    
-//    mLabelDescription->SetText( "ROI:" + mDataCrawler->roiDataSet.roiDescription + " OFFSET:" + toString(mDataCrawler->pos) );
-//    mLabelBasePairs->SetText( mDataCrawler->dataSet.dataBitsString );
-//    float width = bounds.getWidth();
-//    float height = bounds.getHeight();
-//    
-//    if(aspect > 1){
-//        width /= aspect;
-//    }else{
-//        height *= aspect;
-//    }
-//    
-//	gl::translate( pos );
-//    gl::color( ci::Color( 0x13/255.0,0x14/255.0,0x13/255.0  ) );
-//    gl::drawSolidRect(Rectf(0,0,m_InnerBounds.w,m_InnerBounds.h));
-//    
-//    Vec2f offset(bounds.getWidth()-width,bounds.getHeight()-height);
-//	gl::translate( offset/2.0 );
-//    
-//
-//    
-//    gl::popMatrices();    
+
 }
 
 
@@ -212,8 +113,8 @@ void CrawplContainer::createPluginSettings( BasePlugin* plugin){
         val = *(static_cast<float*>(element->pointer));
         
         pRow = ctrl->AddItem( (*it).first );
+//        pRow->Dock( Gwen::Pos::Fill );
         pRow->SetHeight( 20 );
-        
         
         Gwen::Controls::HorizontalSlider* pSlider = new Gwen::Controls::HorizontalSlider( this );
 //        pSlider->SetSize( 200, 30 );
@@ -222,10 +123,20 @@ void CrawplContainer::createPluginSettings( BasePlugin* plugin){
         pSlider->SetName("SLIDER YEAH");
         pSlider->onValueChanged.Add( this, &CrawplContainer::onSliderChange );
         pSlider->SetHeight( 20 );
-        pSlider->SetWidth( 300 );
+        pSlider->SetWidth( 250 );
 
         pRow->SetCellContents( 1, pSlider  );
-        pRow->SetCellText( 2, "£3.50" );
+        pRow->SetCellText( 2, toString(val) );
+        
+        Gwen::Controls::CheckBox* cb = new Gwen::Controls::CheckBox( this );
+//        cb->SetValue( element->name );
+        cb->SetName( element->name );
+        cb->onCheckChanged.Add( this, &CrawplContainer::OnCheckChanged );
+        pRow->SetCellContents( 3, cb );
+        
+//        mOscCheckBoxMap[labeled] = element;
+        
+        mSliderLabelMap[pSlider] = pRow->GetCellContents(2);
         
         mValueMap[pSlider] = element;
         cnt++;
@@ -237,17 +148,22 @@ void CrawplContainer::createPluginSettings( BasePlugin* plugin){
 
 
 void CrawplContainer::update(){
-    map<Gwen::Controls::Slider*, OSCElement*>::iterator it;
     float val;
+    map<Gwen::Controls::Slider*, OSCElement*>::iterator it;
     for( it=mValueMap.begin();it!=mValueMap.end();++it ){
         if((*it).second->listeningToEvents){
+            (*it).first->SetDisabled( true );
             val = *(static_cast<float*>((*it).second->pointer));
             if( val != (*it).first->GetFloatValue() ){
                 (*it).first->SetFloatValue( val );
+                mSliderLabelMap[(*it).first]->SetValue( toString(val) );
+//                Gwen::Controls::PropertyControlSlider* ps = static_cast<Gwen::Controls::PropertyControlSlider*>(&(*it).first->GetParent());
+//                ps->S
             }
+        }else{
+            (*it).first->SetDisabled( false );
         }
     }
-    
     string str;
     if(mDataCrawler->isActive){
         str = "ON";
@@ -257,49 +173,54 @@ void CrawplContainer::update(){
         str = "OFF";
         mParentCat->SetText("Crawler #" + toString(mDataCrawler->crawlerID) + "   ( " + str + " )");
     }
-    
     mOnOffButton->SetText( str );
-
-//    float yMax = 0;
-//    yMax = max( (float)(*it).first->GetBounds().y , yMax);
-//    float yMax = mPropertiesPlugin->GetBounds().y + mPropertiesPlugin->GetBounds().h;
-//    console() << "h : " << yMax << std::endl;
-//    SetSize(GetSize().x, yMax + 20 );
-    
 }
 
+// ----------------------------------------------------------------------------------------
+
+//void CrawplContainer::getRowValue( Gwen::Controls::Layout::TableRow* row ){
+//
+//}
 
 // ----------------------------------------------------------------------------------------
 
 void CrawplContainer::onRowSelected(){
-    console() << "LOG : " << mPluginsRowMap[mPluginList->GetSelectedRow()]->pluginID() << std::endl;
     displayPluginSettings( mPluginsRowMap[mPluginList->GetSelectedRow()] );
 }
 
 void CrawplContainer::OnMouseClickLeft( int x, int y, bool bDown ) {
-
-//    y -= cigwen::fromGwen( LocalPosToCanvas() ).y;
-//    if(!bDown){
-//        if(y<30){
-//            resize(!bIsSmall);
-//        }
-//    }
 }
 
 void CrawplContainer::onSliderChange( Gwen::Controls::Base* pControl ){
-
-    Gwen::Controls::Slider* pSlider = ( Gwen::Controls::Slider* ) pControl;
+    Gwen::Controls::Slider* pSlider = static_cast<Gwen::Controls::Slider*> (pControl);
     float val = pSlider->GetFloatValue();
-    
     OSCElement* element = mValueMap[pSlider];
     *(static_cast<float*>(element->pointer)) = val;
-    
-//    console()<< "element->pointer : " << element->pointer << std::endl;
+    mSliderLabelMap[pSlider]->SetValue( toString(val) );
 }
 
 void CrawplContainer::onOnOffClick( Gwen::Controls::Base* pControl ){
     mDataCrawler->isActive = !mDataCrawler->isActive;
-    console() << " mDataCrawler->isActive : " << mDataCrawler->isActive << std::endl;
+}
+
+void CrawplContainer::OnCheckChanged( Gwen::Controls::Base* b ){
+    Gwen::Controls::CheckBox* box = static_cast<Gwen::Controls::CheckBox*> (b);
+    map<Gwen::Controls::Slider*, OSCElement*>::iterator it;
+    for(it=mValueMap.begin();it!=mValueMap.end();++it){
+//        console() << " (*it).second->name " << (*it).second->name << std::endl;
+        if( (*it).second->name.compare( box->GetName()) ){
+            console() << "(*it).second->listeningToEvents : " << (*it).second->listeningToEvents << std::endl;
+            (*it).second->listeningToEvents = box->IsChecked();
+//            (*it).first->SetDisabled( box->IsChecked() );
+        }
+    }
+    
+//    if(mOscCheckBoxMap.count(box) > 0){
+//        mOscCheckBoxMap[box]->listeningToEvents = box->IsChecked();
+////        mOscCheckBoxMap[b]->listeningToEvents = !mOscCheckBoxMap[b]->listeningToEvents;
+////        if( mOscCheckBoxMap[b]->listeningToEvents ){
+////        }
+//    }
 }
 
 void CrawplContainer::onPluginComboClick( Gwen::Controls::Base* pControl ){

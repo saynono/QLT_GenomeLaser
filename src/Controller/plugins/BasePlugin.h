@@ -35,7 +35,8 @@ public:
     };
     
 //    OSCElement(){};
-    OSCElement( BasePlugin* plug, void* p, OSCElementTypes t ){
+    OSCElement( string n, BasePlugin* plug, void* p, OSCElementTypes t ){
+        name = n;
         plugin = plug;
         pointer = p;
         type = t;
@@ -43,7 +44,8 @@ public:
         maxValue = numeric_limits<float>::max();
         listeningToEvents = true;
     };
-    OSCElement( BasePlugin* plug, void* p, OSCElementTypes t, float minVal, float maxVal) {
+    OSCElement( string n, BasePlugin* plug, void* p, OSCElementTypes t, float minVal, float maxVal) {
+        name = n;
         plugin = plug;
         pointer = p;
         type = t;
@@ -52,6 +54,7 @@ public:
         listeningToEvents = true;
     };
     BasePlugin*     plugin;
+    string          name;
     void*           pointer;
     OSCElementTypes type;
     float           minValue;

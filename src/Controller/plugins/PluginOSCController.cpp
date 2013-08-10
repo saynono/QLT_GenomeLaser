@@ -87,10 +87,8 @@ void PluginOSCController::processPluginMessageDirect( const osc::Message& messag
     }
     else if( typeOsc == osc::TYPE_FLOAT && typeVar == OSCElement::OSCElementTypes::FLOAT  ) {
         try {
-//            float val = message.getArgAsFloat(0);
             float val = cinder::math<float>::clamp( message.getArgAsFloat(0), oscElement->minValue, oscElement->maxValue );
             *(static_cast<float*>(oscElement->pointer)) = val;
-            console() << message.getAddress() << "   " << val << " ----< " << (*(static_cast<float*>(oscElement->pointer))) << std::endl;
         }
         catch (...) {
             console() << "Exception reading argument as float" << std::endl;

@@ -163,3 +163,13 @@ void PropertyControlSlider::OnHoverChanged()
 void PropertyControlSlider::OnMouseClickLeft( int x, int y, bool bDown ){
     console() << "Click!" << std::endl;
 }
+
+void PropertyControlSlider::setFloatValue( float val ){
+    m_Property->SetFloatValue( val );
+    
+}
+
+float PropertyControlSlider::getFloatValue(){
+    
+}
+

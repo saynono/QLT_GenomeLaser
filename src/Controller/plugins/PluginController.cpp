@@ -9,12 +9,12 @@
 #include "PluginController.h"
 #include "ParticlePlugin.h"
 
-void PluginController::setup(int amount){
-    mAmountCrawlers = amount;
+void PluginController::setup( vector<DataCrawler>* crawlers ){
+    mAmountCrawlers = crawlers->size();
     mOscController.setup();
-    for(int i=0;i<amount;i++){
-        addPlugin( new BitsAndLinesPlugin() );
-        addPlugin( new ParticlePlugin() );
+    for(int i=0;i<crawlers->size()  ;i++){
+        addPlugin( &crawlers->at(i), new BitsAndLinesPlugin() );
+        addPlugin( &crawlers->at(i), new ParticlePlugin() );
     }
 }
 
@@ -26,12 +26,14 @@ void PluginController::dispose(){
     mOscController.dispose();
 }
 
-void PluginController::addPlugin( BasePlugin* plugin ){
+void PluginController::addPlugin( DataCrawler* crawler, BasePlugin* plugin ){
     plugin->setup();
-    plugin->activate(mPluginsDirectory[ plugin->pluginID() ].size() == 0);
+    plugin->activate(mPluginsDirectory[ crawler->crawlerID ].size() == 0);
 	mPlugins.push_back( plugin );
     mOscController.registerPlugin( plugin );
-    mPluginsDirectory[ plugin->pluginID() ].push_back( plugin );
+//    mPluginsDirectory[ plugin->pluginID() ].push_back( plugin );
+    mPluginsDirectory[ crawler->crawlerID ].push_back( plugin );
+    
 }
 
 void PluginController::update(){
@@ -40,13 +42,16 @@ void PluginController::update(){
 
 const ColouredShape2d& PluginController::getShape( DataCrawler* crawler ){
     mEmptyShape.clear();
-    map<string, vector<BasePlugin*> >::iterator it ;
-    for(it=mPluginsDirectory.begin();it!=mPluginsDirectory.end();++it){
-        if( (*it).second[crawler->crawlerID]->isActivated() ) mEmptyShape.appendColouredShape2d( mPlugins[crawler->crawlerID]->getShape( crawler->dataSet ) );
+    vector<BasePlugin*> v = mPluginsDirectory[crawler->crawlerID];
+    vector<BasePlugin*>::iterator it ;
+    for(it=v.begin();it!=v.end();++it){
+        if( (*it)->isActivated() ){
+            mEmptyShape.appendColouredShape2d( (*it)->getShape( crawler->dataSet ) );
+        }
     }
     return mEmptyShape;
 }
 
-map<string, vector<BasePlugin*> > PluginController::getPluginsDirectory(){
+map<int, vector<BasePlugin*> > PluginController::getPluginsDirectory(){
     return mPluginsDirectory;
 }

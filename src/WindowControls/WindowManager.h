@@ -93,6 +93,7 @@ private:
 //    void ZoomTest( Gwen::Controls::Base* pFromPanel );
     void showAllPanels( Gwen::Controls::Base* pFromPanel );
 //    void CenterPanels( Gwen::Controls::Base* pFromPanel );
+    void toggleFullscreen( Gwen::Controls::Base* b );
     
     void zoomToPanel( Gwen::Event::Info info );
     
@@ -119,6 +120,7 @@ private:
     
     ci::gl::Fbo*                mPreviewFbo;
     string                      mRenderDate;
+    bool                        mFullScreen;
     
     
 //    syphonServer                mSyphonClient;

@@ -16,7 +16,7 @@ void MainController::setup(){
     mDataManager.setup();
     mDataController.setup(&mDataManager, mAmountCrawlers);
     mShapeConverter.setup();
-    mPluginController.setup( 5 );
+    mPluginController.setup( mDataController.getCrawler() );
     
 }
 	

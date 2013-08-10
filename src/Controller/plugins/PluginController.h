@@ -25,19 +25,21 @@ class PluginController{
 
 public:
 	
-	void setup(int amount);
+	void setup( vector<DataCrawler>* crawlers);
     void dispose();
 	void update();
-    void addPlugin( BasePlugin* plugin );
+    
+    void addPlugin( DataCrawler* crawler, BasePlugin* plugin );
     const ColouredShape2d& getShape( DataCrawler* crawler );
-    map<string, vector<BasePlugin*> > getPluginsDirectory();
+    map<int, vector<BasePlugin*> > getPluginsDirectory();
 	
 private:
     
     template<typename T> BasePlugin* createInstance() { return new T; }
 
     vector<BasePlugin*>                   mPlugins;
-    map<string, vector<BasePlugin*> >     mPluginsDirectory;
+//    map< string, vector<BasePlugin*> >     mPluginsDirectory;
+    map< int, vector<BasePlugin*> >     mPluginsDirectory;
     
     PluginOSCController         mOscController;
     int                         mAmountCrawlers;

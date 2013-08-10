@@ -54,6 +54,7 @@ public:
     void onRowSelected();
     void onOnOffClick( Gwen::Controls::Base* pControl );
     void onPluginComboClick( Gwen::Controls::Base* pControl );
+    void OnCheckChanged( Gwen::Controls::Base* pControl );
     
 public:
     
@@ -71,13 +72,15 @@ private:
     Gwen::Controls::Button*         mOnOffButton;
     Gwen::Controls::ComboBox*       mPluginComboList;
 
-    
     string                          mName;
     DataCrawler*                    mDataCrawler;
 	vector<BasePlugin*>             mPlugins;
     map<Gwen::Controls::Slider*, OSCElement*> mValueMap;
+    map<Gwen::Controls::Slider*, Gwen::Controls::Label*> mSliderLabelMap;
     map<Gwen::Controls::Layout::TableRow*, BasePlugin*> mPluginsRowMap;
     map<BasePlugin*, Gwen::Controls::ListBox*> mPluginsListBoxMap;
+//    map<Gwen::Controls::Base*, OSCElement*> mOscCheckBoxMap;
+    
 };
 
 

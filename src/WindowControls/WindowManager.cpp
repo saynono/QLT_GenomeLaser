@@ -23,6 +23,7 @@ void WindowManager::setup( MainController* mc, ViewManager* vm ){
     setMainController( mc );
     setViewManager( vm );
     
+    mFullScreen = false;
 //    mSyphonClient.setName("QLT Genome Laser Preview3D");
 
 }
@@ -54,6 +55,9 @@ void WindowManager::update(){
     pStatusFPSLabel->SetText( toString((int)getFrameRate()) + " FPS        ");
     pCrawlerPluginWindow->update();
 //    mSyphonClient.publishTexture(&pPreview3DControl->getLaserPreview3d()->getTexture()->getTexture(0));
+    if ( mFullScreen != isFullScreen() ) {
+		setFullScreen( mFullScreen );
+	}
 }
 
 void WindowManager::draw(){
@@ -163,6 +167,13 @@ void WindowManager::setupMainArea(){
         pButton->AddAccelerator( "0" );
         pStatus->AddControl( pButton, true );
     }    
+    {
+        Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
+        pButton->SetText( "Fullscreen" );
+        pButton->onPress.Add( this, &WindowManager::toggleFullscreen );
+        pButton->AddAccelerator( "f" );
+        pStatus->AddControl( pButton, true );
+    }
 }
 
 // ---------------------------------------------------------------------------------------------------
@@ -307,6 +318,11 @@ ColourCorrectionWindow* WindowManager::getColorValueController(){
 void WindowManager::showAllPanels( Gwen::Controls::Base* pFromPanel )
 {
     m_Splitter->UnZoom();
+}
+
+void WindowManager::toggleFullscreen( Gwen::Controls::Base* b )
+{
+    mFullScreen = !mFullScreen;
 }
 
 void WindowManager::zoomToPanel( Gwen::Event::Info info ){

@@ -30,7 +30,6 @@ private:
     MainController              mMainController;
     ViewManager                 mViewManager;
     WindowManager               mWindowManager;
-    bool                        mFullScreen;
     
 };
 
@@ -51,10 +50,7 @@ void QLT_Main_App::setup()
     gl::disableDepthRead();
     gl::disableDepthWrite();
     gl::enableVerticalSync();
-    
-    mFullScreen = false;
-//    setFullScreen( mFullScreen );
-    
+        
 }
 
 
@@ -71,11 +67,6 @@ void QLT_Main_App::update(){
 
     mLaserController->setPoints( mMainController.getFrame() );
     mLaserController->send();
-    
-	if ( mFullScreen != isFullScreen() ) {
-		setFullScreen( mFullScreen );
-	}
-
 }
 
 void QLT_Main_App::draw()
@@ -99,9 +90,6 @@ void QLT_Main_App::keyDown( KeyEvent event )
             break;
         case 27:
             quit();
-            break;
-        case 'f':
-            mFullScreen = !mFullScreen;
             break;
         case 282:
         case 283:

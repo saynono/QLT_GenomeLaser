@@ -155,8 +155,8 @@ void CrawlerPluginsWindow::setMainController( MainController* mc ){
     mPluginController = mMainController->getPluginController();
     bDataControllerSet = true;
     
-    map< string, vector<BasePlugin*> > pmap = mPluginController->getPluginsDirectory();
-    map< string, vector<BasePlugin*> >::iterator it;
+    map< int, vector<BasePlugin*> > pmap = mPluginController->getPluginsDirectory();
+    vector<BasePlugin*>::iterator it;
 //    for(it=pmap.begin();it!=pmap.end();++it){
 //        console() << "PLUGIN " << (*it).first << "  => " << (*it).second.size() << std::endl;
 //    }
@@ -167,8 +167,8 @@ void CrawlerPluginsWindow::setMainController( MainController* mc ){
         CrawplContainer* cr = new CrawplContainer( cat1 );
         cr->setName( "CRAWLER #" + toString(i) );
         cr->setCrawler( &mDataController->getCrawler()->at(i) );
-        for(it=pmap.begin();it!=pmap.end();++it){
-            cr->addPlugin( (*it).second.at(i) );
+        for(it=pmap[i].begin();it!=pmap[i].end();++it){
+            cr->addPlugin( (*it) );
         }
 //        cr->displayPluginSettings( (*pmap.begin()).second.at(0) );
         mCrawplContainer.push_back( cr );

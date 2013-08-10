@@ -55,6 +55,9 @@ class GWEN_EXPORT PropertyControlSlider : public Base {
     
         Gwen::Controls::HorizontalSlider* GetSlider(){ return m_Property; };
     
+        void setFloatValue( float val );
+        float getFloatValue();
+    
 //        Gwen::Event::Caller	onChange;
 //        Gwen::Event::Caller	onPress;
     
