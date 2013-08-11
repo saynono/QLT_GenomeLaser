@@ -19,6 +19,7 @@
 
 #include "ColouredShape2d.h"
 #include "PluginController.h"
+#include "DataSaver.h"
 
 
 
@@ -36,6 +37,7 @@ public:
     PluginController* getPluginController();
     DataController* getDataController();
     DataManager* getDataManager();
+    DataSaver* getDataSaver();
     
 	void createShapes();
 
@@ -47,12 +49,15 @@ private:
     
     
     void                createTempDataBits();
+    map<string,string>  gatherApplicationData();
+//    int  gatherApplicationData();
     
     
     DataManager                 mDataManager;
     DataToShapeConverter        mShapeConverter;
     DataController              mDataController;
     PluginController            mPluginController;
+    DataSaver                   mDataSaver;
     
     
     

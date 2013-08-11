@@ -170,10 +170,16 @@ void CrawlerPluginsWindow::setMainController( MainController* mc ){
         for(it=pmap[i].begin();it!=pmap[i].end();++it){
             cr->addPlugin( (*it) );
         }
+        
+        cr->sOpenOscSettingsWindow.connect( boost::bind(&CrawlerPluginsWindow::onOpenOscSettings, this, boost::arg<1>::arg() ) );
+
 //        cr->displayPluginSettings( (*pmap.begin()).second.at(0) );
         mCrawplContainer.push_back( cr );
     }
-    
 //    mPropTree->ExpandAll();
-    
+}
+
+void CrawlerPluginsWindow::onOpenOscSettings( OSCElement* element ){
+    PluginOscSettings* pWindow = new PluginOscSettings( this );
+    pWindow->setup( element );
 }

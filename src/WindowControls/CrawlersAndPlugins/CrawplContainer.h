@@ -54,11 +54,12 @@ public:
     void onRowSelected();
     void onOnOffClick( Gwen::Controls::Base* pControl );
     void onPluginComboClick( Gwen::Controls::Base* pControl );
-    void OnCheckChanged( Gwen::Controls::Base* pControl );
+    void onOscClick( Gwen::Controls::Base* pControl );
     
 public:
     
     Gwen::Event::Caller	onPress;
+    boost::signals2::signal<void(OSCElement*)> sOpenOscSettingsWindow;
 
 private:
     
@@ -71,6 +72,7 @@ private:
     Gwen::Controls::Base*           mTopBar;
     Gwen::Controls::Button*         mOnOffButton;
     Gwen::Controls::ComboBox*       mPluginComboList;
+    Gwen::Controls::Button*         mOscButton;
 
     string                          mName;
     DataCrawler*                    mDataCrawler;
@@ -79,7 +81,7 @@ private:
     map<Gwen::Controls::Slider*, Gwen::Controls::Label*> mSliderLabelMap;
     map<Gwen::Controls::Layout::TableRow*, BasePlugin*> mPluginsRowMap;
     map<BasePlugin*, Gwen::Controls::ListBox*> mPluginsListBoxMap;
-//    map<Gwen::Controls::Base*, OSCElement*> mOscCheckBoxMap;
+    map<Gwen::Controls::Base*, OSCElement*> mOscButtonMap;
     
 };
 

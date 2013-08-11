@@ -53,6 +53,7 @@ public:
         maxValue = maxVal;
         listeningToEvents = true;
     };
+    
     BasePlugin*     plugin;
     string          name;
     void*           pointer;
@@ -62,6 +63,8 @@ public:
     bool            listeningToEvents;
     string          oscVariable;
     string          midiVariable;
+    boost::signals2::signal<void(OSCElement*)> sOscSettingsChanged;
+
     
 };
 

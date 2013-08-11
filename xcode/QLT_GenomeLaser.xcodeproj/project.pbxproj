@@ -111,6 +111,9 @@
 		FF81B7A41798C3FC000F0D3C /* CircularDataWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81B7A21798C3F6000F0D3C /* CircularDataWindow.cpp */; };
 		FF81DBFA178B5D10000566C1 /* Preview3DWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */; };
 		FF82DDC617A5CDE300631BF2 /* ColouredShape2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF82DDC417A5CDD100631BF2 /* ColouredShape2d.cpp */; };
+		FFA7A57B17B66991000E8662 /* PluginOscSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A57917B66990000E8662 /* PluginOscSettings.cpp */; };
+		FFA7A60217B6D231000E8662 /* DataSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A60017B6D231000E8662 /* DataSaver.cpp */; };
+		FFA7A60517B6DB82000E8662 /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A60317B6DB81000E8662 /* MainMenu.cpp */; };
 		FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */; };
 		FFECD08617A9AD3200AB3B95 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFECD05217A9AD3200AB3B95 /* IpEndpointName.cpp */; };
 		FFECD08717A9AD3200AB3B95 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFECD05717A9AD3200AB3B95 /* NetworkingUtils.cpp */; };
@@ -401,6 +404,12 @@
 		FF81DBF9178B5D10000566C1 /* Preview3DWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preview3DWindow.h; sourceTree = "<group>"; };
 		FF82DDC417A5CDD100631BF2 /* ColouredShape2d.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ColouredShape2d.cpp; sourceTree = "<group>"; };
 		FF82DDC517A5CDD100631BF2 /* ColouredShape2d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColouredShape2d.h; sourceTree = "<group>"; };
+		FFA7A57917B66990000E8662 /* PluginOscSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PluginOscSettings.cpp; path = CrawlersAndPlugins/PluginOscSettings.cpp; sourceTree = "<group>"; };
+		FFA7A57A17B66990000E8662 /* PluginOscSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PluginOscSettings.h; path = CrawlersAndPlugins/PluginOscSettings.h; sourceTree = "<group>"; };
+		FFA7A60017B6D231000E8662 /* DataSaver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataSaver.cpp; path = ../src/Data/DataSaver.cpp; sourceTree = "<group>"; };
+		FFA7A60117B6D231000E8662 /* DataSaver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataSaver.h; path = ../src/Data/DataSaver.h; sourceTree = "<group>"; };
+		FFA7A60317B6DB81000E8662 /* MainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainMenu.cpp; sourceTree = "<group>"; };
+		FFA7A60417B6DB81000E8662 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenu.h; sourceTree = "<group>"; };
 		FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsPanel.cpp; sourceTree = "<group>"; };
 		FFB6C8291788787D00F41E8C /* SettingsPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsPanel.h; sourceTree = "<group>"; };
 		FFECD05217A9AD3200AB3B95 /* IpEndpointName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IpEndpointName.cpp; sourceTree = "<group>"; };
@@ -679,6 +688,8 @@
 				FF1FB1C917AC6DE900E9A912 /* CrawplContainer.h */,
 				FF29444717B02F230001B188 /* PropertyControlSlider.cpp */,
 				FF29444817B02F230001B188 /* PropertyControlSlider.h */,
+				FFA7A57917B66990000E8662 /* PluginOscSettings.cpp */,
+				FFA7A57A17B66990000E8662 /* PluginOscSettings.h */,
 			);
 			name = CrawlersAndPlugins;
 			sourceTree = "<group>";
@@ -708,6 +719,8 @@
 				FF1FB1C717AC6DAB00E9A912 /* CrawlersAndPlugins */,
 				FF2FD43B1786268E00D19321 /* WindowManager.cpp */,
 				FF2FD43C1786268E00D19321 /* WindowManager.h */,
+				FFA7A60317B6DB81000E8662 /* MainMenu.cpp */,
+				FFA7A60417B6DB81000E8662 /* MainMenu.h */,
 				FF81B7A21798C3F6000F0D3C /* CircularDataWindow.cpp */,
 				FF81B7A31798C3F6000F0D3C /* CircularDataWindow.h */,
 				FF2FD4341786268E00D19321 /* ColourCorrectionWindow.cpp */,
@@ -1084,6 +1097,8 @@
 				FF53DBBD178F02E90057A39B /* DataManager.h */,
 				FFF16389179DEC2C0092398C /* DataCrawler.h */,
 				FF24954C17A7124300F8B0C3 /* GenomeData.h */,
+				FFA7A60017B6D231000E8662 /* DataSaver.cpp */,
+				FFA7A60117B6D231000E8662 /* DataSaver.h */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -1353,9 +1368,9 @@
 				FF29444917B02F230001B188 /* PropertyControlSlider.cpp in Sources */,
 				2800006F17B2930B00D3FA7F /* ParticlePlugin.cpp in Sources */,
 				2800007217B2968300D3FA7F /* Particle.cpp in Sources */,
-				FFFD33CC17B17C640082BA9C /* SyphonNameboundClient.m in Sources */,
-				FFFD33CE17B17C640082BA9C /* syphonClient.mm in Sources */,
-				FFFD33CF17B17C640082BA9C /* syphonServer.mm in Sources */,
+				FFA7A57B17B66991000E8662 /* PluginOscSettings.cpp in Sources */,
+				FFA7A60217B6D231000E8662 /* DataSaver.cpp in Sources */,
+				FFA7A60517B6DB82000E8662 /* MainMenu.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

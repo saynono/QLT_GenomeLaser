@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<QLT_Settings>
+	<IldaFrame.params.draw.lines>1</IldaFrame.params.draw.lines>
+	<IldaFrame.params.draw.points>1</IldaFrame.params.draw.points>
+	<IldaFrame.params.output.blankCount>3</IldaFrame.params.output.blankCount>
+	<IldaFrame.params.output.endCount>1</IldaFrame.params.output.endCount>
+	<IldaFrame.params.output.targetPointCount>600</IldaFrame.params.output.targetPointCount>
+	<IldaFrame.params.output.transform.scale.x>1</IldaFrame.params.output.transform.scale.x>
+	<IldaFrame.params.output.transform.scale.y>1</IldaFrame.params.output.transform.scale.y>
+	<LaserPreview3D.paramsView.showFrame>1</LaserPreview3D.paramsView.showFrame>
+	<id>name</id>
+</QLT_Settings>
+

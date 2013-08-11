@@ -83,7 +83,7 @@ void CrawplContainer::displayPluginSettings( BasePlugin* plugin){
     mValueList->SetHidden( true );
     mValueList = mPluginsListBoxMap[plugin];
     mValueList->SetHidden( false );
-    SetHeight( min( mPluginList->GetSize().y, mValueList->GetPos().y + mValueList->GetSize().y) + 60 );
+    SetHeight( min( mPluginList->GetSize().y, mValueList->GetPos().y + mValueList->GetSize().y) + 80 );
 }
 
 
@@ -92,12 +92,13 @@ void CrawplContainer::createPluginSettings( BasePlugin* plugin){
     Gwen::Controls::ListBox* ctrl = new Gwen::Controls::ListBox( this );
     ctrl->SetBounds( 160, 30, 600, 200 );
 //    ctrl->SetWidth( 600 );
-    ctrl->SetColumnCount( 6 );
+    ctrl->SetColumnCount( 4 );
     ctrl->SetAllowMultiSelect( true );
     ctrl->SetColumnWidth(0,100);
-    ctrl->SetColumnWidth(1,320);
+    ctrl->SetColumnWidth(1,240);
     ctrl->SetColumnWidth(2,100);
-
+    ctrl->SetColumnWidth(3,80);
+    
     mPluginsListBoxMap[plugin] = ctrl;
     
     float val;
@@ -123,22 +124,22 @@ void CrawplContainer::createPluginSettings( BasePlugin* plugin){
         pSlider->SetName("SLIDER YEAH");
         pSlider->onValueChanged.Add( this, &CrawplContainer::onSliderChange );
         pSlider->SetHeight( 20 );
-        pSlider->SetWidth( 250 );
+        pSlider->SetWidth( 220 );
 
         pRow->SetCellContents( 1, pSlider  );
         pRow->SetCellText( 2, toString(val) );
         
-        Gwen::Controls::CheckBox* cb = new Gwen::Controls::CheckBox( this );
-//        cb->SetValue( element->name );
-        cb->SetName( element->name );
-        cb->onCheckChanged.Add( this, &CrawplContainer::OnCheckChanged );
-        pRow->SetCellContents( 3, cb );
+        Gwen::Controls::Button* btn = new Gwen::Controls::Button( this );
+        pRow->SetCellContents( 3, btn );
+        btn->onPress.Add( this, &CrawplContainer::onOscClick );
+        btn->SetText( "OSC" );
+        btn->SetWidth( 60 );
+        mOscButton = btn;
         
-//        mOscCheckBoxMap[labeled] = element;
-        
+        mOscButtonMap[mOscButton] = element;
         mSliderLabelMap[pSlider] = pRow->GetCellContents(2);
-        
         mValueMap[pSlider] = element;
+        
         cnt++;
     }
     
@@ -203,28 +204,14 @@ void CrawplContainer::onOnOffClick( Gwen::Controls::Base* pControl ){
     mDataCrawler->isActive = !mDataCrawler->isActive;
 }
 
-void CrawplContainer::OnCheckChanged( Gwen::Controls::Base* b ){
-    Gwen::Controls::CheckBox* box = static_cast<Gwen::Controls::CheckBox*> (b);
-    map<Gwen::Controls::Slider*, OSCElement*>::iterator it;
-    for(it=mValueMap.begin();it!=mValueMap.end();++it){
-//        console() << " (*it).second->name " << (*it).second->name << std::endl;
-        if( (*it).second->name.compare( box->GetName()) ){
-            console() << "(*it).second->listeningToEvents : " << (*it).second->listeningToEvents << std::endl;
-            (*it).second->listeningToEvents = box->IsChecked();
-//            (*it).first->SetDisabled( box->IsChecked() );
-        }
-    }
-    
-//    if(mOscCheckBoxMap.count(box) > 0){
-//        mOscCheckBoxMap[box]->listeningToEvents = box->IsChecked();
-////        mOscCheckBoxMap[b]->listeningToEvents = !mOscCheckBoxMap[b]->listeningToEvents;
-////        if( mOscCheckBoxMap[b]->listeningToEvents ){
-////        }
-//    }
+void CrawplContainer::onOscClick( Gwen::Controls::Base* b ){
+//    console() << " -----> " << mOscButtonMap[b]->name << std::endl;
+//    mOscButtonMap[b]->sOscSettingsChanged( mOscButtonMap[b] );
+    sOpenOscSettingsWindow( mOscButtonMap[b] );
 }
 
 void CrawplContainer::onPluginComboClick( Gwen::Controls::Base* pControl ){
-    console() << " =====> " << mPluginComboList->GetSelectedItem()->GetName() << std::endl;
+//    console() << " =====> " << mPluginComboList->GetSelectedItem()->GetName() << std::endl;
     vector<BasePlugin*>::iterator it;
     for(it=mPlugins.begin();it!=mPlugins.end();++it){
         if( (*it)->pluginID().compare( mPluginComboList->GetSelectedItem()->GetName() ) == 0 ){

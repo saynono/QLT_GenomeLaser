@@ -31,6 +31,7 @@ public:
 	void update();
 	void draw();
     void registerPlugin( BasePlugin* bp );
+    void onOscSettingsChange(OSCElement* element);
     
 private:
 
@@ -44,7 +45,7 @@ private:
     osc::Listener                         mOscListener;
     map<string, vector<BasePlugin*> >     mPluginsDirectory;
 
-    map<string, OSCElement* >       mPluginsOSCMapping;
+    map<string, OSCElement* >           mPluginsOSCMapping;
 };
 
 

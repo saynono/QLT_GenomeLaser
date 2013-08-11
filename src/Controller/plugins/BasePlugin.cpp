@@ -12,7 +12,7 @@
 BasePlugin::BasePlugin(string name){
     bIsActive = true;
     mPluginID = name;
-    console() << "New Plugin : " << name << std::endl;
+//    console() << "New Plugin : " << name << std::endl;
 }
 //
 //void BasePlugin::dispose(){

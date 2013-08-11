@@ -39,6 +39,7 @@
 #include "Preview3DWindow.h"
 #include "CircularDataWindow.h"
 #include "CrawlerPluginsWindow.h"
+#include "MainMenu.h"
 
 #include "SettingsPanel.h"
 #include "LaserPreview3D.h"
@@ -88,6 +89,7 @@ private:
     void addSettingsList();
     void addColourCorrectionWindow();
     void addCrawlerPluginWindow();
+    void addMainMenu();
     void createMainControls();
     
 //    void ZoomTest( Gwen::Controls::Base* pFromPanel );

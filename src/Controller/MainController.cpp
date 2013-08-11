@@ -18,11 +18,19 @@ void MainController::setup(){
     mShapeConverter.setup();
     mPluginController.setup( mDataController.getCrawler() );
     
+    mDataSaver.sGetApplicationData.connect( boost::bind(&MainController::gatherApplicationData, this ) );
+    mDataSaver.setup();
+    
+    console() << "====================== MainController::setup =====================" << std::endl;
+    console() << " ====> " << &mDataSaver << std::endl;
+
+    
 }
 	
 void MainController::update(){
     mDataController.update();
     mPluginController.update();
+    mDataSaver.update();
     createShapes();
 }
 
@@ -53,6 +61,12 @@ PluginController* MainController::getPluginController(){
     return &mPluginController;
 }
 
+DataSaver* MainController::getDataSaver(){
+    console() << "====================== MainController::getDataSaver =====================" << std::endl;
+    console() << " ====> " << &mDataSaver << std::endl;
+    return &mDataSaver;
+}
+
 //-----------------------------------------------------------------------------------------------------
 
 void MainController::createShapes(){
@@ -73,6 +87,41 @@ void MainController::createTempDataBits(){
             cnt++;
         }
     }
+}
+
+//int MainController::gatherApplicationData(){
+map<string,string> MainController::gatherApplicationData(){
+    console() << " MainController::gatherApplicationData " << std::endl;
+    map<string,string> result;
+    result["id"] = "name";
+    
+    
+//    void SettingsPanel::onSliderLaserOutput( Gwen::Controls::Base* pControl ){
+//        Gwen::Controls::Label* label = mLabelsMap[pControl];
+//        Gwen::Controls::Slider* pSlider = ( Gwen::Controls::Slider* ) pControl;
+//        label->SetValue( toString(( int ) pSlider->GetFloatValue()));
+//        
+    result["IldaFrame.params.output.targetPointCount"] = toString(mIldaFrame.params.output.targetPointCount);
+    result["IldaFrame.params.output.blankCount"] = toString(mIldaFrame.params.output.blankCount);
+    result["IldaFrame.params.output.endCount"] = toString(mIldaFrame.params.output.endCount);
+//    result["LaserController.setPPS(( int ) pSlider->GetFloatValue());
+//    result["LaserPreview3D.setLaserAngle( ( int ) pSlider->GetFloatValue() );
+//        float scale = pSlider->GetFloatValue()/100.0f;
+    result["IldaFrame.params.output.transform.scale.x"] = toString(mIldaFrame.params.output.transform.scale.x);
+    result["IldaFrame.params.output.transform.scale.y"] = toString(mIldaFrame.params.output.transform.scale.y);
+//    result["LaserPreview3D.paramsView.fansIntensity"] = mLaserPreview3D.paramsView.fansIntensity;
+    
+    result["IldaFrame.params.draw.lines"] = toString(mIldaFrame.params.draw.lines);
+    result["IldaFrame.params.draw.points"] = toString(mIldaFrame.params.draw.points);
+    result["LaserPreview3D.paramsView.showFrame"] = toString(mIldaFrame.params.draw.lines);
+//    result["LaserPreview3D.paramsView.showDotsOnGauze"] = mLaserPreview3D.paramsView.showDotsOnGauze;
+//    result["LaserPreview3D.paramsView.showLinesOnGauze"] = mLaserPreview3D.paramsView.showLinesOnGauze;
+//    result["LaserPreview3D.paramsView.showRays"] = mLaserPreview3D.paramsView.showRays;
+//    result["LaserPreview3D.paramsView.showFans"] = mLaserPreview3D.paramsView.showFans;
+
+    
+    
+    return result;
 }
 
 //void MainController::displayLetters(){

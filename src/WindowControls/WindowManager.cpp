@@ -18,7 +18,7 @@ void WindowManager::setup( MainController* mc, ViewManager* vm ){
 //    addColourCorrectionWindow();
     addCircularDataWindow();
     addCrawlerPluginWindow();
-
+    addMainMenu();
     
     setMainController( mc );
     setViewManager( vm );
@@ -104,6 +104,17 @@ void WindowManager::createMainControls(){
     pStatus->SetPadding( Gwen::Padding( 10,5,10,5 ));
     pStatus->AddControl( pStatusFPSLabel, true );
     pStatus->SendToBack();
+}
+
+void WindowManager::addMainMenu(){
+    
+    console() << "====================== addMainMenu =====================" << std::endl;
+    console() << " ====> " << mMainController->getDataSaver() << std::endl;
+    MainMenu* menu = new MainMenu( mCanvas );
+    menu->sOnSaveAppSettings.connect( boost::bind(&DataSaver::saveAppSettings, mMainController->getDataSaver(), boost::arg<1>::arg() ) );
+    menu->sOnLoadAppSettings.connect( boost::bind(&DataSaver::loadAppSettings, mMainController->getDataSaver(), boost::arg<1>::arg() ) );
+    menu->sOnSavePlugSettings.connect( boost::bind(&DataSaver::savePluginSettings, mMainController->getDataSaver(), boost::arg<1>::arg() ) );
+    menu->sOnLoadPlugSettings.connect( boost::bind(&DataSaver::loadPluginSettings, mMainController->getDataSaver(), boost::arg<1>::arg() ) );
 }
 
 void WindowManager::setupMainArea(){

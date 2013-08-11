@@ -29,13 +29,7 @@ void BitsAndLinesPlugin::setup(){
     mOSCMap.insert( make_pair( "LINE_HEIGHT", new OSCElement( "LINE_HEIGHT", this, &mLineHeight, OSCElement::FLOAT, 0, .3 )) );
     mOSCMap.insert( make_pair( "LINE_POSITION", new OSCElement( "LINE_POSITION", this, &mLinePosition, OSCElement::FLOAT, 0, 1  )) );
     mOSCMap.insert( make_pair( "LENGTH", new OSCElement( "LENGTH", this, &mLength, OSCElement::FLOAT, 0, .4 )) );
-    
-    
-    console() << " SPEED  element->pointer : " << &mSpeed << std::endl;
-    console() << " LINE_HEIGHT  element->pointer : " << &mLineHeight << std::endl;
-    console() << " LINE_POSITION  element->pointer : " << &mLinePosition << std::endl;
-    console() << " LENGTH  element->pointer : " << &mLength << std::endl;
-    
+
 }
 
 void BitsAndLinesPlugin::dispose(){

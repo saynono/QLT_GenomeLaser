@@ -27,12 +27,14 @@
 #include "Gwen/Controls/VerticalSlider.h"
 #include "Gwen/Controls/HorizontalSlider.h"
 #include "Gwen/Controls/CheckBox.h"
+#include "Gwen/Controls/WindowControl.h"
 //#include "MultiPropertyBox.h"
 
 #include "MainController.h"
 #include "DataController.h"
 #include "PluginController.h"
 #include "CrawplContainer.h"
+#include "PluginOscSettings.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -51,6 +53,7 @@ public:
     void update();
     
     void setMainController( MainController* mc );
+    void onOpenOscSettings( OSCElement* element);
 //    void setDataController( DataController* d );
 
 private:
