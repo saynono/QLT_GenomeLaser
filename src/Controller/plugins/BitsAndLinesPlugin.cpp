@@ -44,57 +44,9 @@ const map<string, OSCElement*>& BitsAndLinesPlugin::getOSCMapping() {
 
 //------------------------------------------------------------------------------------------------------
 
-void BitsAndLinesPlugin::processOSCMessage( const osc::Message& message ) {
-    for (int i = 0; i < message.getNumArgs(); i++) {
-        if( message.getArgType(i) == osc::TYPE_INT32 ) {
-            try {
-                message.getArgAsInt32(i);
-            }
-            catch (...) {
-                console() << "Exception reading argument as int32" << std::endl;
-            }
-        }
-        else if( message.getArgType(i) == osc::TYPE_FLOAT ) {
-            try {
-                float val = message.getArgAsFloat(i);
-                mLength = toRadians( val*360 );
-                mLinePosition = val;
-            }
-            catch (...) {
-                console() << "Exception reading argument as float" << std::endl;
-            }
-        }
-        else if( message.getArgType(i) == osc::TYPE_STRING) {
-            try {
-                message.getArgAsString(i);
-            }
-            catch (...) {
-                console() << "Exception reading argument as string" << std::endl;
-            }
-        }
-    }
-    
-}
-
-
-//------------------------------------------------------------------------------------------------------
-
 const ColouredShape2d& BitsAndLinesPlugin::getShape( const GenomeData::BasePairDataSet& dataSet ){
 
-    
-//    int len = 8*10;
-//    char dataBits[(int)ceil(len/4)];
-//    int dataOffset = 20000;//+getElapsedFrames();
-    
-//    float startAngle = toRadians(-(float)getElapsedFrames()*mSpeed) + mStartAngle;
-    
-    
-//    float rotStepPair = mLength / (float) (dataSet.basePairsCount);
-    
     float p = dataSet.startPosition*mPairRadLength;
-//    console() << " offset: " << p << std::endl;
-//    console() << std::endl << "REAL " << dataSet.dataBitsString << std::endl;
-    
     float startAngle = p;//toRadians(-(float)dataSet.startPosition)*mPairRadLength + mStartAngle;
 
     convertBitChainToShape( dataSet.dataBitsString.c_str(), dataSet.basePairsCount, mLineHeight, startAngle, mPairRadLength, mLinePosition);
@@ -160,9 +112,6 @@ void BitsAndLinesPlugin::convertBitChainToShape(const char* data, int len, float
         p.rotate(rotStepPairDist);
             
     }
-    
-
-//    console() << "CALC " << dataBitsString << std::endl;
     
 }
 

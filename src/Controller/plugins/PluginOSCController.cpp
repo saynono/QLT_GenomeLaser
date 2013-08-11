@@ -127,7 +127,7 @@ void PluginOSCController::processPluginMessageGroup( const osc::Message& message
 }
 
 void PluginOSCController::processPluginMessageSingle( const osc::Message& message, BasePlugin* plugin ){
-    plugin->processOSCMessage( message );
+//    plugin->processOSCMessage( message );
 }
 
 

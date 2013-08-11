@@ -114,6 +114,7 @@
 		FFA7A57B17B66991000E8662 /* PluginOscSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A57917B66990000E8662 /* PluginOscSettings.cpp */; };
 		FFA7A60217B6D231000E8662 /* DataSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A60017B6D231000E8662 /* DataSaver.cpp */; };
 		FFA7A60517B6DB82000E8662 /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A60317B6DB81000E8662 /* MainMenu.cpp */; };
+		FFA7A60917B7FBC7000E8662 /* WebsPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A60717B7FBC7000E8662 /* WebsPlugin.cpp */; };
 		FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */; };
 		FFECD08617A9AD3200AB3B95 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFECD05217A9AD3200AB3B95 /* IpEndpointName.cpp */; };
 		FFECD08717A9AD3200AB3B95 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFECD05717A9AD3200AB3B95 /* NetworkingUtils.cpp */; };
@@ -410,6 +411,8 @@
 		FFA7A60117B6D231000E8662 /* DataSaver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataSaver.h; path = ../src/Data/DataSaver.h; sourceTree = "<group>"; };
 		FFA7A60317B6DB81000E8662 /* MainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainMenu.cpp; sourceTree = "<group>"; };
 		FFA7A60417B6DB81000E8662 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenu.h; sourceTree = "<group>"; };
+		FFA7A60717B7FBC7000E8662 /* WebsPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WebsPlugin.cpp; path = ../src/Controller/plugins/Webs/WebsPlugin.cpp; sourceTree = "<group>"; };
+		FFA7A60817B7FBC7000E8662 /* WebsPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebsPlugin.h; path = ../src/Controller/plugins/Webs/WebsPlugin.h; sourceTree = "<group>"; };
 		FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsPanel.cpp; sourceTree = "<group>"; };
 		FFB6C8291788787D00F41E8C /* SettingsPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsPanel.h; sourceTree = "<group>"; };
 		FFECD05217A9AD3200AB3B95 /* IpEndpointName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IpEndpointName.cpp; sourceTree = "<group>"; };
@@ -697,6 +700,7 @@
 		FF24954D17A7148100F8B0C3 /* plugins */ = {
 			isa = PBXGroup;
 			children = (
+				FFA7A60617B7FB94000E8662 /* Webs */,
 				FF24954E17A714A400F8B0C3 /* PluginController.cpp */,
 				FF24954F17A714A400F8B0C3 /* PluginController.h */,
 				FFECD09F17A9AD7300AB3B95 /* PluginOSCController.cpp */,
@@ -1111,6 +1115,15 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
+		FFA7A60617B7FB94000E8662 /* Webs */ = {
+			isa = PBXGroup;
+			children = (
+				FFA7A60717B7FBC7000E8662 /* WebsPlugin.cpp */,
+				FFA7A60817B7FBC7000E8662 /* WebsPlugin.h */,
+			);
+			name = Webs;
+			sourceTree = "<group>";
+		};
 		FFECD01C17A9AD2F00AB3B95 /* OSC */ = {
 			isa = PBXGroup;
 			children = (
@@ -1371,6 +1384,7 @@
 				FFA7A57B17B66991000E8662 /* PluginOscSettings.cpp in Sources */,
 				FFA7A60217B6D231000E8662 /* DataSaver.cpp in Sources */,
 				FFA7A60517B6DB82000E8662 /* MainMenu.cpp in Sources */,
+				FFA7A60917B7FBC7000E8662 /* WebsPlugin.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -27,7 +27,6 @@ public:
     virtual const string pluginID() { return "BitsAndLinesPlugin";};
     virtual void dispose();
     virtual const map<string, OSCElement*>& getOSCMapping();
-    virtual void processOSCMessage( const osc::Message& message );
     virtual const ColouredShape2d& getShape( const GenomeData::BasePairDataSet& dataSet );
     
 private:

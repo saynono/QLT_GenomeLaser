@@ -83,7 +83,6 @@ public:
     virtual void onDeActivated(){};
     
     virtual const map<string, OSCElement*>& getOSCMapping() = 0;
-    virtual void processOSCMessage( const osc::Message& message ) = 0;
 
     const string pluginID() { return mPluginID;};
 

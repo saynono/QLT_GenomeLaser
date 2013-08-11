@@ -56,7 +56,6 @@ public:
     virtual const string pluginID() { return "ParticlePlugin";};
     virtual void dispose();
     virtual const map<string, OSCElement*>& getOSCMapping();
-    virtual void processOSCMessage( const osc::Message& message );
     virtual const ColouredShape2d& getShape( const GenomeData::BasePairDataSet& dataSet );
     
 private:
@@ -65,22 +64,5 @@ private:
     itg::Particle particle;
     deque<Vec2f> trail;
     
-    /*void    convertBitChainToShape(const char* data, int len, float lineHeight, float circStartAngle, float circLength, float circDiameter);
-    void    drawLine(ColouredShape2d* s, Vec2f p1, Vec2f p2, float percent);
-    
-    int                 mLineCounter;
-    
-    float               mStartAngle;
-    float               mSpeed;
-    float               mLineHeight;
-    float               mLinePosition;
-    float               mLength;
-    float               mPairRadLength;
-    
-    ColorAf             mClr1;
-    ColorAf             mClr2;
-    
-    
-    */
 };
 
