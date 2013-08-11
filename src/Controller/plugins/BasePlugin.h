@@ -43,6 +43,7 @@ public:
         minValue = numeric_limits<float>::min();
         maxValue = numeric_limits<float>::max();
         listeningToEvents = true;
+        oscVariable = "";
     };
     OSCElement( string n, BasePlugin* plug, void* p, OSCElementTypes t, float minVal, float maxVal) {
         name = n;
@@ -52,6 +53,7 @@ public:
         minValue = minVal;
         maxValue = maxVal;
         listeningToEvents = true;
+        oscVariable = "";
     };
     
     BasePlugin*     plugin;

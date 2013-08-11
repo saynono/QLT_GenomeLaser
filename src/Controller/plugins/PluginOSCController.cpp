@@ -9,16 +9,13 @@
 #include "PluginOSCController.h"
 
 	
-void PluginOSCController::setup(){
+void PluginOSCController::setup( DataSaver* dataSaver ){
+    mDataSaver = dataSaver;
     mOscListener.setup( 1977 );
+    mDataSaver->sOnLoadedSettings.connect( boost::bind(&PluginOSCController::updateValues,this) );
 }
 
 void PluginOSCController::dispose(){
-//    map<string, vector<BasePlugin*> >::const_iterator itr;
-//    for(itr = mPluginsDirectory.begin(); itr != mPluginsDirectory.end(); ++itr){
-////        ????
-//        (*itr).second.clear();
-//    }
     mPluginsDirectory.clear();
 }
 	
@@ -34,8 +31,6 @@ void PluginOSCController::update(){
 
 void PluginOSCController::processMessage( const osc::Message& message ){
     string address = boost::to_upper_copy(message.getAddress());
-//    if(address.at(0) == '/') address.erase(0,1);
-//    console() << "ADDR : " << address << "      " << mPluginsOSCMapping.count(address) << std::endl;
     if( mPluginsOSCMapping.count(address) > 0 ){
         processPluginMessageDirect( message, mPluginsOSCMapping[address] );
         return;
@@ -80,7 +75,7 @@ void PluginOSCController::processPluginMessageDirect( const osc::Message& messag
         try {
 //            int val = message.getArgAsInt32(0);
             float val = cinder::math<float>::clamp( message.getArgAsFloat(0), 0.0f, 1.0f );
-            val = lerp( val, oscElement->minValue, oscElement->maxValue );
+            val = lerp( oscElement->minValue, oscElement->maxValue, val );
             *static_cast<int*>(oscElement->pointer) = val;
         }
         catch (...) {
@@ -90,8 +85,7 @@ void PluginOSCController::processPluginMessageDirect( const osc::Message& messag
     else if( typeOsc == osc::TYPE_FLOAT && typeVar == OSCElement::OSCElementTypes::FLOAT  ) {
         try {
             float val = cinder::math<float>::clamp( message.getArgAsFloat(0), 0.0f, 1.0f );
-            val = lerp( val, oscElement->minValue, oscElement->maxValue );
-//            float val = cinder::math<float>::clamp( message.getArgAsFloat(0), oscElement->minValue, oscElement->maxValue );
+            val = lerp( oscElement->minValue, oscElement->maxValue, val );
             *(static_cast<float*>(oscElement->pointer)) = val;
         }
         catch (...) {
@@ -174,6 +168,9 @@ void PluginOSCController::processInteralMessage( const osc::Message& message, ve
     
 }
 
+//------------------------------------------------------------------------------------------------------
+
+
 
 //------------------------------------------------------------------------------------------------------
 
@@ -186,17 +183,44 @@ void PluginOSCController::registerPlugin( BasePlugin* plugin ){
     int size = static_cast<int>(mPluginsDirectory[ pluginName ].size());
     string basePluginPath = "/"+pluginName+"/" + toString( size ) + "/" ;
     map<string, OSCElement*>::const_iterator itr;
-    itr = mapping.begin();
+
     for( itr=mapping.begin(); itr!=mapping.end() ;++itr){
         string oscPath = boost::to_upper_copy( basePluginPath + (*itr).first );
         OSCElement* e = (*itr).second;
-        mPluginsOSCMapping[oscPath] = e;//(*itr).second;
+        mOscElements.push_back( e );
+//        mPluginsOSCMapping[oscPath] = e;//(*itr).second;
+        
         e->sOscSettingsChanged.connect( boost::bind(&PluginOSCController::onOscSettingsChange, this, boost::arg<1>::arg() ) );
+        
+        string name = "plugin"+oscPath;
+//        if(name.at(0) == '/') name.erase(0,1);
+        DataElement::VarTypes type;
+        if(e->type == OSCElement::OSCElementTypes::FLOAT) type = DataElement::VarTypes::FLOAT;
+        if(e->type == OSCElement::OSCElementTypes::INTEGER) type = DataElement::VarTypes::INTEGER;
+        DataElement dataElement(name,e->pointer,type);
+        mDataSaver->registerVariable(dataElement);
+        
+        name = name+".osc";
+        DataElement dataElementOsc(name,&e->oscVariable,DataElement::VarTypes::STRING);
+        mDataSaver->registerVariable(dataElementOsc);
     }
+    updateValues();
 }
 
 void PluginOSCController::onOscSettingsChange(OSCElement* element){
-    string address = boost::to_upper_copy(element->oscVariable);
-    if(address.at(0) != '/') address = '/' + address;
-    mPluginsOSCMapping[address] = element;    
+    updateValues();
+}
+
+void PluginOSCController::updateValues(){
+    
+    mPluginsOSCMapping.clear();
+    vector<OSCElement*>::iterator it;
+    for(it=mOscElements.begin();it!=mOscElements.end();++it){
+        OSCElement* element = (*it);
+        if( element->oscVariable.size() > 0 ){
+            string address = boost::to_upper_copy(element->oscVariable);
+            if(address.at(0) != '/') address = '/' + address;
+            mPluginsOSCMapping[address] = element;
+        }
+    }
 }

@@ -29,13 +29,13 @@ public:
     
 	void onSaveAppSettings( Base* pControl );
     void onLoadAppSettings( Base* pControl );
-    void onSavePluginSettings( Base* pControl );
-    void onLoadPluginSettings( Base* pControl );
+//    void onSavePluginSettings( Base* pControl );
+//    void onLoadPluginSettings( Base* pControl );
 
     boost::signals2::signal<void(string)> sOnLoadAppSettings;
     boost::signals2::signal<void(string)> sOnSaveAppSettings;
-    boost::signals2::signal<void(string)> sOnLoadPlugSettings;
-    boost::signals2::signal<void(string)> sOnSavePlugSettings;
+//    boost::signals2::signal<void(string)> sOnLoadPlugSettings;
+//    boost::signals2::signal<void(string)> sOnSavePlugSettings;
     
 };
 

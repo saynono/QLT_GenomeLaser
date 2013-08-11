@@ -20,6 +20,7 @@ class QLT_Main_App : public AppNative {
   public:
 	void setup();
     void shutdown();
+    void saveApplicationSettings();
 	void update();
 	void draw();
     void keyDown( KeyEvent event );
@@ -47,6 +48,8 @@ void QLT_Main_App::setup()
     mViewManager.setup( &mMainController );
     mWindowManager.setup( &mMainController, &mViewManager );
     
+    mMainController.getDataSaver()->loadAppSettings("");
+    
     gl::disableDepthRead();
     gl::disableDepthWrite();
     gl::enableVerticalSync();
@@ -58,6 +61,9 @@ void QLT_Main_App::shutdown(){
     console() << "Exit. ByeBye..." << std::endl;
 }
 
+void QLT_Main_App::saveApplicationSettings(){
+    
+}
 
 void QLT_Main_App::update(){
     

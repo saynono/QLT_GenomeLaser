@@ -10,12 +10,6 @@
 
 	
 void DataSaver::setup(){
-    bDoSaveAppSettings = false;
-    saveAppSettings("QLT_Settings.xml");
-    
-    console() << "====================== new datasaver =====================" << std::endl;
-    console() << " ====> " << this << std::endl;
-    //    gatherAppSettings();
 }
 
 void DataSaver::update(){
@@ -25,18 +19,46 @@ void DataSaver::update(){
 
 // ------------------------------------------------------------------------------------
 
-void DataSaver::saveAppSettings(string path){
+void DataSaver::saveAppSettings( string path ){
     console() << "saveAppSettings : " << path << std::endl;
     console() << "save ====> " << this << std::endl;
-    XmlTree data;
-    data.setTag("QLT_Settings");
-    gatherAppSettings(&data);
-    DataTargetPathRef f = writeFile( getAssetPath( "QLT_Settings.xml" ), true );
-    data.write( f );
+    XmlTree dataTree;
+    dataTree.setTag("QLT_Settings");    
+    map<string, DataElement>::iterator it;
+    for(it=mDataElements.begin();it!=mDataElements.end();++it){
+        string val;
+        string type;
+        DataElement::VarTypes t = (*it).second.type;
+        void* p = (*it).second.pointer;
+        if( t == DataElement::VarTypes::FLOAT){
+            val = toString( *static_cast<float*>(p) );
+            type = "FLOAT";
+        }
+        if( t == DataElement::VarTypes::INTEGER){
+            val = toString( *static_cast<int*>(p) );
+            type = "INTEGER";
+        }
+        if( t == DataElement::VarTypes::STRING){
+            val = *static_cast<string*>(p);
+            type = "STRING";
+        }
+        if( t == DataElement::VarTypes::BOOLEAN){
+            val = toString( *static_cast<bool*>(p) );
+            type = "BOOLEAN";
+        }
+        XmlTree tree( (*it).first, val );
+        tree.setAttribute("type", type);
+        dataTree.push_back( tree );
+    }
+    
+    DataTargetPathRef f = writeFile( getAssetPath( path ), true );
+    dataTree.write( f );
 }
+
 
 void DataSaver::loadAppSettings(string path){
     try {
+        path = "QLT_Settings.xml";
         DataSourceRef pathRef = loadAsset(path);
         XmlTree data( pathRef );
         parseAppSettings(data);
@@ -47,82 +69,68 @@ void DataSaver::loadAppSettings(string path){
 }
 
 void DataSaver::parseAppSettings(XmlTree data){
+    mXmlSettings = data.getChild( "QLT_Settings" );
+    for( XmlTree::ConstIter varIt = mXmlSettings.begin(); varIt != mXmlSettings.end(); ++varIt ) {
+        string tag = varIt->getTag();
+        if( mDataElements.count(tag) ){
+            string type = varIt->getAttribute("type").getValue();
+            if(type.compare("FLOAT")==0){
+                 *(static_cast<float*>(mDataElements[tag].pointer)) = getSettingFloat(tag);
+            }
+            if(type.compare("INTEGER")==0){
+                 *(static_cast<int*>(mDataElements[tag].pointer)) = getSettingInteger(tag);
+            }
+            if(type.compare("BOOLEAN")==0){
+                 *(static_cast<bool*>(mDataElements[tag].pointer)) = getSettingBoolean(tag);
+            }
+            if(type.compare("STRING")==0){
+                 *(static_cast<string*>(mDataElements[tag].pointer)) = getSettingString(tag);
+            }
+        }
+    }
+    
+    sOnLoadedSettings();
     
 }
 
-void DataSaver::gatherAppSettings(XmlTree* data){
-    console() << "DataSaver::gatherAppSettings "<< std::endl;
-//    boost::optional<int> result = sGetApplicationData();
-    boost::optional< map<string,string> > res = sGetApplicationData();
-    map<string,string> result = res.get();
-//    console() <<  " result :: " << result.get() << std::endl;
-    map<string,string>::iterator it;
-    for(it=result.begin();it!=result.end();++it){
-        data->push_back( XmlTree( (*it).first, (*it).second ) );
-        console() << "GATHERING     " << (*it).first << "   => " << (*it).second << std::endl;
-    }
-//    return result;
-    
-/*
- 
- 
-    void SettingsPanel::onSliderLaserOutput( Gwen::Controls::Base* pControl ){
-        Gwen::Controls::Label* label = mLabelsMap[pControl];
-        Gwen::Controls::Slider* pSlider = ( Gwen::Controls::Slider* ) pControl;
-        label->SetValue( toString(( int ) pSlider->GetFloatValue()));
-        
-            mIldaFrame->params.output.targetPointCount = ( int ) pSlider->GetFloatValue();
-            mIldaFrame->params.output.blankCount = ( int ) pSlider->GetFloatValue();
-            mIldaFrame->params.output.endCount = ( int ) pSlider->GetFloatValue();
-            mLaserController->setPPS(( int ) pSlider->GetFloatValue());
-            mLaserPreview3D->setLaserAngle( ( int ) pSlider->GetFloatValue() );
-            float scale = pSlider->GetFloatValue()/100.0f;
-            mIldaFrame->params.output.transform.scale.x = scale;
-            mIldaFrame->params.output.transform.scale.y = scale;
-            mLaserPreview3D->paramsView.fansIntensity = ( float ) pSlider->GetFloatValue() / 100.0;
-        
-    }
-    
-    void SettingsPanel::onCheckBoxLaserOutput( Gwen::Controls::Base* pControl ){
-        
-        Gwen::Controls::CheckBox* pCheckBox = ( Gwen::Controls::CheckBox* ) pControl;
-        string controlName = pControl->GetName().c_str();
-        console() << controlName << " : " << pCheckBox->GetValue().c_str() << std::endl;
-        if (controlName.compare("Draw Lines") == 0){
-            mIldaFrame->params.draw.lines = pCheckBox->IsChecked() == 1;
-            mLaserPreview3D->paramsView.showFrame = pCheckBox->IsChecked() == 1;
-            mIldaFrame->params.draw.points = pCheckBox->IsChecked() == 1;
-            mLaserPreview3D->paramsView.showDotsOnGauze = pCheckBox->IsChecked() == 1;
-            mLaserPreview3D->paramsView.showLinesOnGauze = pCheckBox->IsChecked() == 1;
-            mLaserPreview3D->paramsView.showRays = pCheckBox->IsChecked() == 1;
-            mLaserPreview3D->paramsView.showFans = pCheckBox->IsChecked() == 1;
-*/
-}
 
 // ------------------------------------------------------------------------------------
 
 
-void DataSaver::savePluginSettings(string path){
-    XmlTree data;
-    data.setTag("Hallo!");
-    data.setValue("und guten Abend!");
-    DataTargetPathRef f = writeFile( getAssetPath( path ), true );
-    data.write( f );
-}
-
-void DataSaver::loadPluginSettings(string path){
-    try {
-        DataSourceRef pathRef = loadAsset(path);
-        XmlTree data( pathRef );
-        parseAppSettings(data);
-    } catch (AssetLoadExc exc) {
-        console() << "PATH NOT FOUND: " << path << std::endl;
-        return;
-    }
+void DataSaver::registerVariable(DataElement data){
+    string name = boost::to_upper_copy(data.name);
+    boost::replace_all(name, "/", ".");
+    mDataElements[ name ] = data;
 }
 
 
+// ------------------------------------------------------------------------------------
 
+
+int DataSaver::getSettingInteger(string id){
+    return atoi(getSetting(id).c_str());
+}
+
+float DataSaver::getSettingFloat(string id, float default_val){
+    string ret = getSetting(id);
+    if(ret.compare("0") == 0) return default_val;
+    return atof(ret.c_str());
+}
+
+string DataSaver::getSettingString(string id){
+    return getSetting(id);
+}
+
+bool DataSaver::getSettingBoolean(string id, bool default_val){
+    string ret = getSetting(id);
+    if(ret.compare("0") == 0) return default_val;
+    return !(atoi(ret.c_str()) == 0);
+}
+
+string DataSaver::getSetting(string id){
+    if(!mXmlSettings.hasChild(id)) return "0";
+    return mXmlSettings.getChild( id ).getValue();
+}
 
 
 

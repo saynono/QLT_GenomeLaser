@@ -134,21 +134,6 @@ void CrawlerPluginsWindow::Render( Gwen::Skin::Base* skin )
     
 }
 
-//void CrawlerPluginsWindow::setDataController(DataController* d){
-//    mDataController = d;
-//    bDataControllerSet = true;
-//    
-//    int amountCrawler = mDataController->getCrawler()->size();
-//    for(int i=0;i<amountCrawler;i++){
-//        CrawplContainer* cr = new CrawplContainer( mPropTree );
-//        cr->setName( "Crawler Container => "  + toString(i) );
-////        cr->SetSize( 900, 100 );
-//        cr->SetPos( 0, i*100 );
-//        cr->setCrawler( &mDataController->getCrawler()->at(i) );
-//        mCrawplContainer.push_back( cr );
-//    }
-//}
-
 void CrawlerPluginsWindow::setMainController( MainController* mc ){
     mMainController = mc;
     mDataController = mMainController->getDataController();
@@ -157,9 +142,6 @@ void CrawlerPluginsWindow::setMainController( MainController* mc ){
     
     map< int, vector<BasePlugin*> > pmap = mPluginController->getPluginsDirectory();
     vector<BasePlugin*>::iterator it;
-//    for(it=pmap.begin();it!=pmap.end();++it){
-//        console() << "PLUGIN " << (*it).first << "  => " << (*it).second.size() << std::endl;
-//    }
     
     int amountCrawler = mDataController->getCrawler()->size();
     for(int i=0;i<amountCrawler;i++){
@@ -171,12 +153,11 @@ void CrawlerPluginsWindow::setMainController( MainController* mc ){
             cr->addPlugin( (*it) );
         }
         
+        mMainController->getDataSaver()->sOnLoadedSettings.connect(  boost::bind(&CrawplContainer::updateValues, cr) );
         cr->sOpenOscSettingsWindow.connect( boost::bind(&CrawlerPluginsWindow::onOpenOscSettings, this, boost::arg<1>::arg() ) );
 
-//        cr->displayPluginSettings( (*pmap.begin()).second.at(0) );
         mCrawplContainer.push_back( cr );
     }
-//    mPropTree->ExpandAll();
 }
 
 void CrawlerPluginsWindow::onOpenOscSettings( OSCElement* element ){

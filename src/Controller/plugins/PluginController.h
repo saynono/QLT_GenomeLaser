@@ -12,6 +12,7 @@
 #include "cinder/app/AppBasic.h"
 #include "GenomeData.h"
 #include "DataCrawler.h"
+#include "DataSaver.h"
 #include "BasePlugin.h"
 #include "BitsAndLinesPlugin.h"
 #include "PluginOSCController.h"
@@ -25,7 +26,7 @@ class PluginController{
 
 public:
 	
-	void setup( vector<DataCrawler>* crawlers);
+	void setup( vector<DataCrawler>* crawlers, DataSaver* dataSaver);
     void dispose();
 	void update();
     

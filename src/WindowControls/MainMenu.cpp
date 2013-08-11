@@ -23,11 +23,11 @@ void MainMenu::setup(){
         pRoot->GetMenu()->AddItem( L"Save Settings", "", "CTRL+S" )->SetAction( this, &MainMenu::onSaveAppSettings );
         pRoot->GetMenu()->AddItem( L"Quit", "", "Ctrl+Q" )->SetAction( this, &MainMenu::onQuitApp );
     }
-    {
-        Gwen::Controls::MenuItem* pRoot = this->AddItem( L"Plugins" );
-        pRoot->GetMenu()->AddItem( L"Load Settings" )->SetAction( this, &MainMenu::onLoadPluginSettings );
-        pRoot->GetMenu()->AddItem( L"Save Settings" )->SetAction( this, &MainMenu::onSavePluginSettings );
-    }
+//    {
+//        Gwen::Controls::MenuItem* pRoot = this->AddItem( L"Plugins" );
+//        pRoot->GetMenu()->AddItem( L"Load Settings" )->SetAction( this, &MainMenu::onLoadPluginSettings );
+//        pRoot->GetMenu()->AddItem( L"Save Settings" )->SetAction( this, &MainMenu::onSavePluginSettings );
+//    }
 }
 
 void MainMenu::onSaveAppSettings( Base* pControl ){
@@ -36,12 +36,12 @@ void MainMenu::onSaveAppSettings( Base* pControl ){
 void MainMenu::onLoadAppSettings( Base* pControl ){
     sOnLoadAppSettings("QLT_Settings.xml");
 }
-void MainMenu::onSavePluginSettings( Base* pControl ){
-    sOnSavePlugSettings("QLT_Plugin_Settings.xml");
-}
-void MainMenu::onLoadPluginSettings( Base* pControl ){
-    sOnLoadPlugSettings("QLT_Plugin_Settings.xml");
-}
+//void MainMenu::onSavePluginSettings( Base* pControl ){
+//    sOnSavePlugSettings("QLT_Plugin_Settings.xml");
+//}
+//void MainMenu::onLoadPluginSettings( Base* pControl ){
+//    sOnLoadPlugSettings("QLT_Plugin_Settings.xml");
+//}
 
 void MainMenu::onQuitApp( Base* pControl )
 {

@@ -18,6 +18,22 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
+class DataElement{
+    
+public:
+    enum VarTypes {
+        FLOAT = 0,
+        INTEGER,
+        STRING,
+        BOOLEAN
+    };
+    DataElement(){};
+    DataElement(string n, void* p, VarTypes t){ name=n;pointer=p;type=t; };
+    string          name;
+    void*           pointer;
+    VarTypes        type;
+};
+
 class DataSaver{
 
 public:
@@ -27,22 +43,23 @@ public:
     void loadAppSettings(string path);
     void saveAppSettings(string path);
     void parseAppSettings(XmlTree data);
-    void gatherAppSettings(XmlTree* data);
     
-    void loadPluginSettings(string path);
-    void savePluginSettings(string path);
-	
-//    boost::signals2::signal<void(OSCElement*)> sSave;
-//    boost::signals2::signal<vector<float>(void)> sSaveAppSettings;
+    void registerVariable(DataElement data);
     
-    boost::signals2::signal< map<string, string>(void)> sGetApplicationData;
-//    boost::signals2::signal< int(void)> sGetApplicationData;
+    map<string, DataElement> mDataElements;
     
+    boost::signals2::signal<void(void)> sOnLoadedSettings;
     
 private:
     
-    bool        bDoSaveAppSettings;
+    
+    int getSettingInteger(string id);
+    float getSettingFloat(string id, float default_val=0.f);
+    string getSettingString(string id);
+    bool getSettingBoolean(string id, bool default_val=false);
+    string getSetting(string id);
 
+    XmlTree     mXmlSettings;
 };
 
 

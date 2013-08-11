@@ -38,7 +38,8 @@ public:
     DataController* getDataController();
     DataManager* getDataManager();
     DataSaver* getDataSaver();
-    
+    void  gatherApplicationData( map<string, string>* data );
+
 	void createShapes();
 
     ciilda::Frame* getFrameRef();
@@ -49,8 +50,6 @@ private:
     
     
     void                createTempDataBits();
-    map<string,string>  gatherApplicationData();
-//    int  gatherApplicationData();
     
     
     DataManager                 mDataManager;

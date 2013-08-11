@@ -45,6 +45,7 @@ public:
 //    void setPlugins(vector<BasePlugin*> plugins);
     void addPlugin( BasePlugin* plugin );
 	void update();
+    void updateValues();
     
     void displayPluginSettings( BasePlugin* plugin);
     void createPluginSettings( BasePlugin* plugin);

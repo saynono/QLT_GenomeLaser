@@ -16,6 +16,7 @@
 
 #include "OscListener.h"
 #include "BasePlugin.h"
+#include "DataSaver.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -26,9 +27,10 @@ class PluginOSCController{
 
 public:
 	
-	void setup();
+	void setup( DataSaver* dataSaver );
     void dispose();
 	void update();
+    void updateValues();
 	void draw();
     void registerPlugin( BasePlugin* bp );
     void onOscSettingsChange(OSCElement* element);
@@ -41,11 +43,12 @@ private:
     void        processPluginMessageSingle( const osc::Message& message, BasePlugin* plugin );
     void        processPluginMessageGroup( const osc::Message& message, vector<BasePlugin*>* plugins );
     void        processInteralMessage( const osc::Message& message, vector<string> tokens );
-        
+    
+    DataSaver*                            mDataSaver;
     osc::Listener                         mOscListener;
     map<string, vector<BasePlugin*> >     mPluginsDirectory;
-
-    map<string, OSCElement* >           mPluginsOSCMapping;
+    map<string, OSCElement* >             mPluginsOSCMapping;
+    vector<OSCElement* >                  mOscElements;
 };
 
 

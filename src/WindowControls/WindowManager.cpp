@@ -24,6 +24,9 @@ void WindowManager::setup( MainController* mc, ViewManager* vm ){
     setViewManager( vm );
     
     mFullScreen = false;
+    
+    mMainController->getDataSaver()->sOnLoadedSettings.connect(  boost::bind(&SettingsPanel::updateValues, mSettingsControl) );
+
 //    mSyphonClient.setName("QLT Genome Laser Preview3D");
 
 }
@@ -35,7 +38,6 @@ void WindowManager::setMainController( MainController* mc ){
     setDataController( mMainController->getDataController() );
     setIldaFrameRef( mMainController->getFrameRef() );
     pCrawlerPluginWindow->setMainController( mMainController );
-
 }
 
 void WindowManager::setViewManager( ViewManager* vm ){
@@ -108,13 +110,11 @@ void WindowManager::createMainControls(){
 
 void WindowManager::addMainMenu(){
     
-    console() << "====================== addMainMenu =====================" << std::endl;
-    console() << " ====> " << mMainController->getDataSaver() << std::endl;
     MainMenu* menu = new MainMenu( mCanvas );
-    menu->sOnSaveAppSettings.connect( boost::bind(&DataSaver::saveAppSettings, mMainController->getDataSaver(), boost::arg<1>::arg() ) );
-    menu->sOnLoadAppSettings.connect( boost::bind(&DataSaver::loadAppSettings, mMainController->getDataSaver(), boost::arg<1>::arg() ) );
-    menu->sOnSavePlugSettings.connect( boost::bind(&DataSaver::savePluginSettings, mMainController->getDataSaver(), boost::arg<1>::arg() ) );
-    menu->sOnLoadPlugSettings.connect( boost::bind(&DataSaver::loadPluginSettings, mMainController->getDataSaver(), boost::arg<1>::arg() ) );
+    mMainMenu = menu;
+    menu->sOnSaveAppSettings.connect( boost::bind(&WindowManager::saveSettings, this, boost::arg<1>::arg() ) );
+    menu->sOnLoadAppSettings.connect( boost::bind(&WindowManager::loadSettings, this, boost::arg<1>::arg() ) );
+    
 }
 
 void WindowManager::setupMainArea(){
@@ -147,42 +147,42 @@ void WindowManager::setupMainArea(){
 //        packet.String = "Hallosolo";
         pButton->SetText( "Preview" );
         pButton->onPress.Add( this, &WindowManager::zoomToPanel, packet );
-        pButton->AddAccelerator( "1" );
+//        pButton->AddAccelerator( "1" );
         pStatus->AddControl( pButton, false );
     }
     {
         Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
         pButton->SetText( "Preview3D" );
         pButton->onPress.Add( this, &WindowManager::zoomToPanel );
-        pButton->AddAccelerator( "2" );
+//        pButton->AddAccelerator( "2" );
         pStatus->AddControl( pButton, false );
     }
     {
         Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
         pButton->SetText( "Data Layer" );
         pButton->onPress.Add( this, &WindowManager::zoomToPanel );
-        pButton->AddAccelerator( "3" );
+//        pButton->AddAccelerator( "3" );
         pStatus->AddControl( pButton, false );
     }
     {
         Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
         pButton->SetText( "Crawlers & Plugins" );
         pButton->onPress.Add( this, &WindowManager::zoomToPanel );
-        pButton->AddAccelerator( "4" );
+//        pButton->AddAccelerator( "4" );
         pStatus->AddControl( pButton, false );
     }
     {
         Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
         pButton->SetText( "Show All Panels" );
         pButton->onPress.Add( this, &WindowManager::showAllPanels );
-        pButton->AddAccelerator( "0" );
+//        pButton->AddAccelerator( "0" );
         pStatus->AddControl( pButton, true );
     }    
     {
         Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
         pButton->SetText( "Fullscreen" );
         pButton->onPress.Add( this, &WindowManager::toggleFullscreen );
-        pButton->AddAccelerator( "f" );
+//        pButton->AddAccelerator( "f" );
         pStatus->AddControl( pButton, true );
     }
 }
@@ -190,10 +190,8 @@ void WindowManager::setupMainArea(){
 // ---------------------------------------------------------------------------------------------------
 
 void WindowManager::addSettingsList(){
-        
     mSettingsControl = new SettingsPanel();
     mSettingsControl->setup( mTotalWindowArea  );
-
 }
 
 void WindowManager::addColourCorrectionWindow(){
@@ -290,9 +288,9 @@ void WindowManager::setIldaFrameRef( ciilda::Frame* frame ){
     mSettingsControl->setIldaFrame( frame );
 }
 
-void WindowManager::setLaserController(ciilda::LaserController* controller){
-    mSettingsControl->setLaserController(controller);
-}
+//void WindowManager::setLaserController(ciilda::LaserController* controller){
+//    mSettingsControl->setLaserController(controller);
+//}
 
 void WindowManager::setLaserPreview3d( LaserPreview3D* laserPreview3D ){
     mSettingsControl->setLaserPreview3d( laserPreview3D );
@@ -318,9 +316,15 @@ void WindowManager::reloadSkin(){
     console() << "reloadskin"<< std::endl;
 }
 
-void WindowManager::saveSettings(){
-    
+void WindowManager::saveSettings(string path){
+    mMainController->getDataSaver()->saveAppSettings(path);
 }
+
+void WindowManager::loadSettings(string path){
+    mMainController->getDataSaver()->loadAppSettings(path);
+}
+
+// ---------------------------------------------------------------------------------------------------
 
 ColourCorrectionWindow* WindowManager::getColorValueController(){
     return pColourControl;

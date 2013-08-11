@@ -9,9 +9,9 @@
 #include "PluginController.h"
 #include "ParticlePlugin.h"
 
-void PluginController::setup( vector<DataCrawler>* crawlers ){
+void PluginController::setup( vector<DataCrawler>* crawlers, DataSaver* dataSaver ){
     mAmountCrawlers = crawlers->size();
-    mOscController.setup();
+    mOscController.setup( dataSaver );
     for(int i=0;i<crawlers->size()  ;i++){
         addPlugin( &crawlers->at(i), new BitsAndLinesPlugin() );
         addPlugin( &crawlers->at(i), new ParticlePlugin() );

@@ -66,19 +66,22 @@ public:
 	void update();
 	void draw();
     
-    void saveSettings();
+    void saveSettings(string path);
+    void loadSettings(string path);
     
     ColourCorrectionWindow* getColorValueController();
 
     void setPreviewFbo( ci::gl::Fbo* fbo );
     void setIldaFrameRef( ciilda::Frame* frame );
-    void setLaserController(ciilda::LaserController* controller);
+//    void setLaserController(ciilda::LaserController* controller);
     void setLaserPreview3d( LaserPreview3D* laserPreview3D );
     void setCircularDataLayer( CircularDataLayer* circularDataLaser );
     void setDataController(DataController* d);
     void setPluginController(PluginController* d);
     LaserPreview3D* getLaserPreview3d();
     void reloadSkin();
+    
+    MainMenu* getMainMenu();
     
 private:
     
@@ -105,6 +108,7 @@ private:
     Gwen::Controls::Base*       mMainArea;
     Gwen::Controls::DockBase*   mTotalWindowArea;
     Gwen::Controls::CrossSplitter* m_Splitter;
+    MainMenu*                   mMainMenu;
     
     MainController*             mMainController;
     ViewManager*                mViewManager;

@@ -177,6 +177,8 @@ void CrawplContainer::update(){
     mOnOffButton->SetText( str );
 }
 
+void CrawplContainer::updateValues(){
+}
 // ----------------------------------------------------------------------------------------
 
 //void CrawplContainer::getRowValue( Gwen::Controls::Layout::TableRow* row ){
@@ -205,8 +207,6 @@ void CrawplContainer::onOnOffClick( Gwen::Controls::Base* pControl ){
 }
 
 void CrawplContainer::onOscClick( Gwen::Controls::Base* b ){
-//    console() << " -----> " << mOscButtonMap[b]->name << std::endl;
-//    mOscButtonMap[b]->sOscSettingsChanged( mOscButtonMap[b] );
     sOpenOscSettingsWindow( mOscButtonMap[b] );
 }
 
