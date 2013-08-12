@@ -111,14 +111,19 @@ void CrawplContainer::createPluginSettings( BasePlugin* plugin){
     for( it=valMap.begin(); it!=valMap.end(); ++it){
         
         element = (*it).second;
-        val = *(static_cast<float*>(element->pointer));
+        
+        if(element->type == OSCElement::OSCElementTypes::INTEGER){
+            val = *(static_cast<int*>(element->pointer));
+        }else{
+            val = *(static_cast<float*>(element->pointer));
+        }
+        
         
         pRow = ctrl->AddItem( (*it).first );
 //        pRow->Dock( Gwen::Pos::Fill );
         pRow->SetHeight( 20 );
         
         Gwen::Controls::HorizontalSlider* pSlider = new Gwen::Controls::HorizontalSlider( this );
-//        pSlider->SetSize( 200, 30 );
         pSlider->SetRange( element->minValue, element->maxValue );
         pSlider->SetFloatValue( val );
         pSlider->SetName("SLIDER YEAH");
@@ -154,12 +159,12 @@ void CrawplContainer::update(){
     for( it=mValueMap.begin();it!=mValueMap.end();++it ){
         if((*it).second->listeningToEvents){
             (*it).first->SetDisabled( true );
-            val = *(static_cast<float*>((*it).second->pointer));
+            OSCElement* element = (*it).second;
+            if(element->type == OSCElement::OSCElementTypes::INTEGER) val = *(static_cast<int*>(element->pointer));
+            else val = *(static_cast<float*>(element->pointer));
             if( val != (*it).first->GetFloatValue() ){
                 (*it).first->SetFloatValue( val );
                 mSliderLabelMap[(*it).first]->SetValue( toString(val) );
-//                Gwen::Controls::PropertyControlSlider* ps = static_cast<Gwen::Controls::PropertyControlSlider*>(&(*it).first->GetParent());
-//                ps->S
             }
         }else{
             (*it).first->SetDisabled( false );
@@ -198,7 +203,8 @@ void CrawplContainer::onSliderChange( Gwen::Controls::Base* pControl ){
     Gwen::Controls::Slider* pSlider = static_cast<Gwen::Controls::Slider*> (pControl);
     float val = pSlider->GetFloatValue();
     OSCElement* element = mValueMap[pSlider];
-    *(static_cast<float*>(element->pointer)) = val;
+    if(element->type == OSCElement::OSCElementTypes::INTEGER) *(static_cast<int*>(element->pointer)) = (int)val;
+    else *(static_cast<float*>(element->pointer)) = val;
     mSliderLabelMap[pSlider]->SetValue( toString(val) );
 }
 

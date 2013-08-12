@@ -41,7 +41,7 @@ void DataController::addCrawler(GenomeData::ChromosomeDataSet* cds){
 //    d.density = Rand::randFloat(150, 500);
     d.length = Rand::randInt(30, 100);
     d.pos = 0;
-    d.speed = Rand::randInt(1, 100);
+    d.speed = 0;//Rand::randInt(1, 100);
     d.crawlerID = mDataCrawler.size();
     // only set the first one true
     d.isActive = mDataCrawler.size() == 0;

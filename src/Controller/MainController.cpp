@@ -11,6 +11,9 @@
 	
 void MainController::setup(){
     
+    mIldaFrame.params.output.doCapX = true;
+    mIldaFrame.params.output.doCapY = true;
+    
     mAmountCrawlers = 4;
     
     mDataSaver.setup();

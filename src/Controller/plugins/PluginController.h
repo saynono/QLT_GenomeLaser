@@ -15,6 +15,7 @@
 #include "DataSaver.h"
 #include "BasePlugin.h"
 #include "BitsAndLinesPlugin.h"
+#include "WebsPlugin.h"
 #include "PluginOSCController.h"
 
 

@@ -28,10 +28,23 @@ public:
     virtual const ColouredShape2d& getShape( const GenomeData::BasePairDataSet& dataSet );
 
 private:
+
+    void addSpotShape( ColouredShape2d* s, Vec2f center, float size );
+    void drawWorm( float wormStart, float wormLength, int pos, int offset, Vec2f p, Vec2f pPrev);
     
     std::map<string, OSCElement*>   mOSCMap;
     ColouredShape2d                 mShape;
+    
+    float                           mRadBasePair;
+    int                             mAmountBasePair;
+    float                           mSpotSize;
+    float                           mCircDiameter;
+    float                           mLineHeight;
 
+    
+    ColorAf                         mColorDark;
+    ColorAf                         mColorBright;
+    float                           mCounter;
 };
 
 
