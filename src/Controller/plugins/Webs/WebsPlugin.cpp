@@ -20,13 +20,17 @@ void WebsPlugin::setup(){
     
     mCircDiameter = .5;
     mLineHeight = .4;
+    mWormLength = 4.0f;
+    mWormSpeed = .03;
 
 
-    mOSCMap.insert( make_pair( "RAD_PER_BASEPAIR", new OSCElement( "RAD_PER_BASEPAIR", this, &mRadBasePair, OSCElement::FLOAT, toRadians(0.1f), toRadians(10.0f)  )) );
-    mOSCMap.insert( make_pair( "AMOUNT_BASEPAIRS", new OSCElement( "AMOUNT_BASEPAIRS", this, &mAmountBasePair, OSCElement::INTEGER, 1, 50 )) );
+    mOSCMap.insert( make_pair( "RAD_PER_BASEPAIR", new OSCElement( "RAD_PER_BASEPAIR", this, &mRadBasePair, OSCElement::FLOAT, toRadians(0.1f), toRadians(60.0f)  )) );
+    mOSCMap.insert( make_pair( "AMOUNT_BASEPAIRS_PERCENT", new OSCElement( "AMOUNT_BASEPAIRS_PERCENT", this, &mAmountBasePair, OSCElement::INTEGER, 1, 50 )) );
     mOSCMap.insert( make_pair( "SPOT_SIZE", new OSCElement( "SPOT_SIZE", this, &mSpotSize, OSCElement::FLOAT, 0.001f, .1f )) );
     mOSCMap.insert( make_pair( "CIRC_DIAMETER", new OSCElement( "SPOT_SIZE", this, &mCircDiameter, OSCElement::FLOAT, 0.0f, 1.0f )) );
     mOSCMap.insert( make_pair( "LINE_HEIGHT", new OSCElement( "SPOT_SIZE", this, &mLineHeight, OSCElement::FLOAT, 0.0f, 1.0f )) );
+    mOSCMap.insert( make_pair( "WORM_LENGTH", new OSCElement( "WORM_LENGTH", this, &mWormLength, OSCElement::FLOAT, 0.1f, 20.0f )) );
+    mOSCMap.insert( make_pair( "WORM_SPEED", new OSCElement( "WORM_SPEED", this, &mWormSpeed, OSCElement::FLOAT, -2.f, 2.0f )) );
     
     
     mColorDark = ColorAf(.3,0,0,1);
@@ -48,13 +52,14 @@ const map<string, OSCElement*>& WebsPlugin::getOSCMapping() {
 // ------------------------------------------------------------------------------------------------------
 
 const ColouredShape2d& WebsPlugin::getShape( const GenomeData::BasePairDataSet& dataSet ){
+    
     mShape.clear();
     
     Vec2f p,pStart,pPrev;
     Vec2f pNorm(0,.5);
     Vec2f pOffset(.5,.5);
     
-    int basePairs = min(mAmountBasePair,dataSet.basePairsCount);
+    int basePairs = dataSet.basePairsCount;
         
     float circDiameter = mCircDiameter;
     float lineHeight = mLineHeight;
@@ -64,11 +69,11 @@ const ColouredShape2d& WebsPlugin::getShape( const GenomeData::BasePairDataSet& 
     
     float rotStepPair = mRadBasePair;
     
+    mCounter+=mWormSpeed;
+    while(mCounter > 50) mCounter -= 50;
     
-    float wormLength = 0.3f;
+    float wormLength = mWormLength;
     float wormStart = mCounter;
-    
-    console() << "----------------------------------------------"<< std::endl;
     
     pNorm.rotate(dataSet.startPosition*rotStepPair);
     p = pNorm;
@@ -77,9 +82,7 @@ const ColouredShape2d& WebsPlugin::getShape( const GenomeData::BasePairDataSet& 
     int basePairBit;
     int bitOffset;
     float percent;
-    mCounter+=.01;
-    while(mCounter > 50) mCounter -= 50;
-        
+    
     for(int i=0;i<basePairs;i++){
         
         d = dataSet.dataBitsString[i];
@@ -105,132 +108,101 @@ const ColouredShape2d& WebsPlugin::getShape( const GenomeData::BasePairDataSet& 
         p *= lerp(circDiaShort,circDiaLong,basePairBit/3.0f);
         p += pOffset;
         
-//        drawWorm(wormStart,wormLength,i,dataSet.startPosition,p,pPrev);
-        
-        
-        mShape.color( mColorDark );
         if(i==0){
             pStart = p;
-            mShape.moveTo( p );
-        }else{
-            mShape.lineTo( p );
+            mShape.color( ColorAf(0,0,0,0) );
+            mShape.moveTo( pStart );
         }
         
-        mShape.color( mColorDark );
+        drawWorm(wormStart,wormLength,i,dataSet.startPosition,p,pPrev);
+        
+//        mShape.color( mColorDark );
         mShape.moveTo( p );
-        mShape.color( ColorAf(1,1,1,1) );
-        addSpotShape( &mShape, p, mSpotSize );
-        mShape.color( mColorDark );
-        mShape.moveTo( p );
+//        mShape.color( ColorAf(1,1,1,1) );
+//        addSpotShape( &mShape, p, mSpotSize );
+//        mShape.color( mColorDark );
+//        mShape.moveTo( p );
         
         pPrev = p;
         
-//        if( (basePairBit & 1) == 1) drawLine( &mShape, p*circDiaShort+pOffset, p*circDiaLong+pOffset, percent );
-//        //            drawLine( &s, p*circDiaShort+pOffset, p*circDiaLong+pOffset );
-//        p.rotate(rotStepBit);
-//        
-//        if( (basePairBit & 2) == 2) drawLine( &mShape, p*circDiaShort+pOffset, p*circDiaLong+pOffset, percent );
-//        //            drawLine( &s, p*circDiaShort+pOffset, p*circDiaLong+pOffset );
-//        p.rotate(rotStepBit);
-//        
-//        p.rotate(rotStepPairDist);
-        
     }
+
     if(basePairs > 0){
-        mShape.color( ColorAf(0,0,0,0) );
-        mShape.lineTo( pStart );
-        mShape.moveTo( pStart );
-        
-        
+//        mShape.color( ColorAf(0,0,0,0) );
+//        mShape.lineTo( pStart );
+//        mShape.moveTo( pStart );
     }
-    
-    
     
     return mShape;
 
-    
 }
 
 // ------------------------------------------------------------------------------------------------------
 
 void WebsPlugin::drawWorm( float wormStart, float wormLength, int pos, int offset, Vec2f p, Vec2f pPrev){
     
-    if(pos == 0){
-        mShape.color( mColorDark );
-        mShape.moveTo( p );
+//    if(pos == 0){
+//        mShape.color( mColorDark );
+//        mShape.moveTo( p );
+//        return;
+//    }
+
+    if(pos==0){
         return;
     }
-    offset = 0;
-    float wormEnd = wormStart+wormLength;
-    Vec2f pStep;
-    float dist = (wormStart-((pos+offset)%50));
     
-    float relationalStart = wormStart-(pos-1);
-    float relationalEnd = relationalStart+wormLength;
-
-    mShape.color( mColorDark );
+    float distStart = wormStart - (pos-1);
+    float distEnd = (wormStart-wormLength) - (pos-1);
     
-//    float percentage = 
-    
-    
-    bool isStart = false;
-    bool isEnd = false;
-    
-    if(relationalStart > 0 && relationalStart < 1){
-        isStart = true;
-    }
-    if(relationalEnd > 0 && relationalEnd < 1){
-        isEnd = true;
+    if(distEnd > 1){
+        
+//        mShape.color(mColorDark);
+//        mShape.moveTo(pPrev);
+//        mShape.lineTo(p);
+        
+        return;
+    }else if(distStart < 0){
+        
+//        mShape.color(mColorDark);
+//        mShape.moveTo(pPrev);
+//        mShape.lineTo(p);
+        
+        return;
     }
     
+    float percentStart = distStart/wormLength;
+    float percentEnd = distEnd/wormLength;
     
-//    if(isStart==0&&isEnd==0){
-//        
-//    }else if(isStart){
-//        
-//    }else if(isEnd){
-//        
-//    }else if()
+    float percentLineStart = ci::math<float>::clamp(distStart);
+    float percentLineEnd = ci::math<float>::clamp(distEnd);
+    
+    float percentMixStart = (distStart-percentLineStart) / wormLength;
+    float percentMixEnd = (distStart-percentLineEnd) / wormLength;
     
     
-    mShape.lineTo(p);
-
-    if( dist < 0 ){
-        mShape.color( mColorDark );
-        mShape.lineTo(p);
-    }else if( dist < 1 ){
-        
-        pStep = lerp(pPrev,p,dist);
-        mShape.color( mColorDark );
-        mShape.lineTo(pStep);
-        mShape.color( mColorBright );
-        addSpotShape( &mShape,pStep,.02);
-        mShape.color( mColorDark );
-        mShape.lineTo(p);
-
-//        pStep = lerp(pPrev,p,dist);
-//        mShape.color( mColorDark );
-//        mShape.lineTo(pStep);
-//        for(float i=dist;i<min(1.0f,wormEnd);i+=.02){
-//            pStep = lerp(pPrev,p,i);
-//            mShape.color( mColorBright );
-//            mShape.lineTo(pStep);
-//        }
-    }else if( (dist+1) < wormEnd ){
-        for(float i=0;i<min(1.0f,wormEnd-dist);i+=.02){
-            pStep = lerp(pPrev,p,i);
-            mShape.color( mColorBright );
-            mShape.lineTo(pStep);
-        }
-        
-        
-    }else{
-        mShape.color( mColorDark );
-        mShape.lineTo( p );
+    Vec2f pCompStart = lerp(pPrev,p, percentLineStart );
+    Vec2f pCompEnd = lerp(pPrev,p, percentLineEnd );
+    Vec2f pComp;
+    
+    ColorA clrStart = lerp( mColorBright, mColorDark, percentMixStart );
+    ColorA clrEnd = lerp( mColorBright, mColorDark, percentMixEnd );
+    ColorA clr;
+    
+    float clrMixValue;
+    
+    mShape.color(clrStart);
+    mShape.moveTo(pCompStart);
+    mShape.lineTo(pCompStart);
+    for(float i=percentLineEnd;i<percentLineStart;i+=.02){
+        clrMixValue = ci::math<float>::clamp((i-percentLineStart)/(percentLineEnd-percentLineStart));
+        clr = lerp( clrStart, clrEnd, clrMixValue );
+        pComp = lerp( pPrev, p, i );
+        mShape.color(clr);
+        mShape.lineTo(pComp);
     }
-    mShape.color( mColorDark );
-//    if( (int)(mCounter-i) % 9 == 5) mShape.color( mColorBright );
-//    else mShape.color( mColorDark );
+    mShape.color(clrEnd);
+    mShape.lineTo(pCompEnd);
+
 }
 
 void WebsPlugin::addSpotShape( ColouredShape2d* s, Vec2f center, float size ){

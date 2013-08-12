@@ -78,7 +78,7 @@ void DataController::resetCrawler(DataCrawler* crawler){
     crawler->length = Rand::randInt(30, 100);
     crawler->speed = Rand::randInt(1,10);
     //TODO: remove
-//    crawler->speed = 1;
+    crawler->speed = 0;
 //    console() << "RESET : crawler->roiDataSetID " << crawler->roiDataSetID << " >>>> start: " << crawler->roiDataSet.startPosition << "->" << crawler->roiDataSet.endPosition << "      len: " << crawler->roiDataSet.basePairsCount << std::endl;
 }
 

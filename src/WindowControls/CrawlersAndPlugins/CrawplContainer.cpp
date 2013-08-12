@@ -83,7 +83,7 @@ void CrawplContainer::displayPluginSettings( BasePlugin* plugin){
     mValueList->SetHidden( true );
     mValueList = mPluginsListBoxMap[plugin];
     mValueList->SetHidden( false );
-    SetHeight( min( mPluginList->GetSize().y, mValueList->GetPos().y + mValueList->GetSize().y) + 80 );
+    SetHeight( max( mPluginList->GetSize().y+mPluginList->GetPos().y, mValueList->GetPos().y + mValueList->GetSize().y) + 10 );
 }
 
 

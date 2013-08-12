@@ -40,6 +40,8 @@ private:
     float                           mSpotSize;
     float                           mCircDiameter;
     float                           mLineHeight;
+    float                           mWormLength;
+    float                           mWormSpeed;
 
     
     ColorAf                         mColorDark;
