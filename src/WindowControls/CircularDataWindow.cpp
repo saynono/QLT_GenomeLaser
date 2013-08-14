@@ -19,9 +19,10 @@ CircularDataWindow::CircularDataWindow( Gwen::Controls::Base *parent )
     bLayerSet = false;
     bDataControllerSet = false;
     
-    for(int i=0;i<10;i++){
+    for(int i=0;i<4;i++){
         Gwen::Controls::Label* label =  new Gwen::Controls::Label( this );
-        label->SetText( "CRAWLER #" + to_string(i) );
+        label->SetText( "CRAWLER " + to_string(i) );
+        label->SetWidth(400);
         mCrawlerLabels.push_back( label );
     }
 
@@ -53,8 +54,8 @@ void CircularDataWindow::Render( Gwen::Skin::Base* skin )
     gl::color( ci::Color( 0x13/255.0,0x14/255.0,0x13/255.0  ) );
     gl::drawSolidRect(Rectf(0,0,m_InnerBounds.w,m_InnerBounds.h));
     
-    Vec2f offset(bounds.getWidth()-width,bounds.getHeight()-height);
-	gl::translate( offset/2.0 );
+    Vec2f offset(bounds.getWidth()-width, (bounds.getHeight()-height)/2.0 );
+	gl::translate( offset );
     
     gl::color( ci::Color( 0,0,0 ) );
     gl::drawSolidRect(Rectf(0,0,width,height));
@@ -95,7 +96,7 @@ void CircularDataWindow::Render( Gwen::Skin::Base* skin )
             angleOffset = pos * M_PI * 10.0f;
             gl::color( ci::Color( 1,1,1 ) );
             gl::drawStrokedCircle( center, dia );
-            gl::drawLine(Vec2f(-100,h), Vec2f(0,h) );
+            gl::drawLine(Vec2f(-offset.x+10,h), Vec2f(0,h) );
             gl::drawLine(Vec2f(0,h), Vec2f(0,h) + vec * (1.0-dia/dist)  );
             
             
@@ -109,12 +110,13 @@ void CircularDataWindow::Render( Gwen::Skin::Base* skin )
             gl::lineWidth(1);
         }
         
-        
-        for(int i=0;i<mCrawlerLabels.size();i++){
-            
+        Gwen::Controls::Label* label;
+        for(int i=0;i<amount;i++){
             if(i>=amount) h = 2000;
             else h = 45 + i*50;
-            mCrawlerLabels[i]->SetPos(offset.x/2 - 100, h);
+            label = mCrawlerLabels[i];
+            label->SetPos(offset.x/2 - 100, h);
+            label->SetText( "CRAWLER:" + toString(i+1) + " EXON:" + toString(crawler->at(i).roiDataSetID) + " P:" + toString(crawler->at(i).dataSet.startPosition));
         }
         
     }
@@ -168,5 +170,21 @@ void CircularDataWindow::setCircularDataLayer( CircularDataLayer* layer ){
 void CircularDataWindow::setDataController(DataController* d){
     mDataController = d;
     bDataControllerSet = true;
+    
+    Gwen::Controls::ComboBox* combo = new Gwen::Controls::ComboBox( this );
+    combo->SetPos(10, 10);
+    combo->onSelection.Add( this, &CircularDataWindow::onDataSelect );
+    combo->SetHeight(20);
+    vector<DataManager::GenomeDataStructure> structure = mDataController->getDataManager()->getDataStructure();
+    vector<DataManager::GenomeDataStructure>::iterator it;
+    for( it=structure.begin();it!=structure.end();++it){
+        combo->AddItem( Gwen::Utility::StringToUnicode( (*it).name ), (*it).name );
+    }
+    sOnDataStructureSelect.connect(  boost::bind( &DataManager::selectDataStructure, mDataController->getDataManager(), boost::arg<1>::arg()) );
+    
 }
 
+void CircularDataWindow::onDataSelect( Gwen::Controls::Base* b ){
+    Gwen::Controls::ComboBox* combo = static_cast<Gwen::Controls::ComboBox*>( b );
+    sOnDataStructureSelect( combo->GetSelectedItem()->GetName() );
+}

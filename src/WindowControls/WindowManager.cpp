@@ -258,9 +258,6 @@ void WindowManager::addCircularDataWindow(){
     pCircularControl = control;
     m_Splitter->SetPanel( panelId, control );
     
-    Gwen::Controls::Label* label =  new Gwen::Controls::Label( control );
-    label->SetText( "DATA LAYER" );
-    label->SetPos(10, 10);
 }
 
 void WindowManager::addCrawlerPluginWindow(){

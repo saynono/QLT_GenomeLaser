@@ -11,6 +11,8 @@
 
 #include "Gwen/Controls/Base.h"
 #include "Gwen/Controls/Label.h"
+#include "Gwen/Controls/Button.h"
+#include "Gwen/Controls/ComboBox.h"
 #include "cinder/gl/Fbo.h"
 
 #include "CircularDataLayer.h"
@@ -39,13 +41,18 @@ public:
     
 public:
     
+    boost::signals2::signal<void(string)> sOnDataStructureSelect;
     Gwen::Event::Caller	onPress;
 
 private:
+
+    void        onDataSelect( Gwen::Controls::Base* b );
+    
     
     bool                        bLayerSet;
     bool                        bDataControllerSet;
     DataController*             mDataController;
+    Gwen::Controls::Base*       mButtons;
 
     CircularDataLayer*                  mDataLayer;
     vector<Gwen::Controls::Label*>      mCrawlerLabels;

@@ -33,6 +33,7 @@ namespace GenomeData{
         ChromosomeDataSet chromosomeData;
         std::string dataBits;
         std::string dataBitsString;
+        ROIDataSet roi;
     };
     
 }

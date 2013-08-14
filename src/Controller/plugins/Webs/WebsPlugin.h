@@ -30,7 +30,7 @@ public:
 private:
 
     void addSpotShape( ColouredShape2d* s, Vec2f center, float size );
-    void drawWorm( float wormStart, float wormLength, int pos, int offset, Vec2f p, Vec2f pPrev);
+    void drawWorm( float wormStart, float wormLength, int pos, Vec2f p, Vec2f pPrev);
     
     std::map<string, OSCElement*>   mOSCMap;
     ColouredShape2d                 mShape;
@@ -42,6 +42,7 @@ private:
     float                           mLineHeight;
     float                           mWormLength;
     float                           mWormSpeed;
+    int                             mWormSpaceLength;
 
     
     ColorAf                         mColorDark;

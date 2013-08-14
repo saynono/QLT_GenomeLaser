@@ -13,38 +13,103 @@
 
 void DataManager::setup(){
     
-//    fs::path path1 = getAssetPath("data/genome/CM000663.1| Homo sapiens chromoso _ part.fasta");
-//    fs::path path2 = getAssetPath("data/genome/CCDS_exons.current.txt");
+    loadDataFile( "QLT_Genome_Data.xml" );
+    selectDataStructureById( 4 );
     
-    loadChromosome( 4 );
 }
 
 
 // ------------------------------------------------------------------------------------------------------------------------
 
-void DataManager::loadChromosome(int chromsomeID){
-    
-    fs::path pathData = getAssetPath("data/new/exon.y.bin");
-    fs::path pathMap = getAssetPath("data/new/exon.y.locations");
-    
-    loadDataSet(pathData,pathMap);
-
+void DataManager::loadDataFile( string path ){
+    XmlTree doc( loadFile( getAssetPath(path) ) );
+    DataSourceRef pathRef = loadAsset(path);
+    XmlTree data( pathRef );
+    parseData(data);
 }
 
-void DataManager::loadDataSet(cinder::fs::path pathData, cinder::fs::path pathMap){
+void DataManager::parseData( XmlTree d ){
+    XmlTree data  = d.getChild( "QLT_Genome_Data" );
+    string dataPath = data.getChild( "datapath" ).getValue();
+    XmlTree sets = data.getChild( "datasets");
+    for( XmlTree::Iter dataset = sets.begin(); dataset != sets.end(); ++dataset ){
+        GenomeDataStructure gds;
+        gds.id = dataset->getAttributeValue<int>("id");
+        gds.name = dataset->getChild("title").getValue();
+        gds.pathMap = dataPath+dataset->getChild("map").getValue();
+        gds.pathBases = dataPath+dataset->getChild("bases").getValue();
+        mDataStructure.push_back( gds );
+        console() << " GenomeDataStructure : " << gds.name << "         " << gds.pathMap << "   " << gds.pathBases << std::endl;
+    }
+}
 
+void DataManager::generateXmlFile(){
+    XmlTree dataTree;
+    dataTree.setTag("QLT_Genome_Data");
 
-    Buffer b = Buffer( loadFile( pathData ) );
+    dataTree.push_back(XmlTree("datapath","./data/exons/"));
+    
+    XmlTree datas("datasets","");
+    for(int i=0;i<23;i++){
+        XmlTree dataset("dataset","");
+        dataset.setAttribute("id", i);
+        dataset.push_back( XmlTree("title","Chromosome "+toString(i+1)) );
+        dataset.push_back( XmlTree("map","exons."+toString(i+1)+".locations") );
+        dataset.push_back( XmlTree("bases","exons."+toString(i+1)+".bases") );
+        datas.push_back( dataset );
+    }
+    dataTree.push_back( datas );
+
+    DataTargetPathRef f = writeFile( getAssetPath( "QLT_Genome_Data.xml" ), true );
+    dataTree.write( f );
+    
+}
+
+//void DataManager::loadChromosome(int chromsomeID){
+//    
+//    fs::path pathData = getAssetPath("data/new/exon.y.bin");
+//    fs::path pathMap = getAssetPath("data/new/exon.y.locations");
+//    
+//    loadDataSet(pathData,pathMap);
+//
+//}
+
+void DataManager::loadDataSet( GenomeDataStructure ds ){
+    console() <<"ds.pathBases: "<< ds.pathBases << "        " << ds.pathMap << std::endl;
+    
+    Buffer b = Buffer( loadFile( getAssetPath(ds.pathBases) ) );
     size_t size = b.getDataSize();
     mDataBuffer = b;
 
     mCurrentDataSet.basePairsCount = size;
-    mCurrentDataSet.chromosomeDescription = "Dummy Chromosome 18";
-    mCurrentDataSet.chromosomeID = 18;
+    mCurrentDataSet.chromosomeDescription = ds.name;
+    mCurrentDataSet.chromosomeID = ds.id;
 
-    Buffer bmap = Buffer( loadFile( pathMap ) );
+    Buffer bmap = Buffer( loadFile( getAssetPath(ds.pathMap) ) );
     generateChromosomeMap( &bmap );
-    
+    sOnDataStructureChange();
+}
+
+void DataManager::selectDataStructureById( int id ){
+    vector<GenomeDataStructure>::iterator it;
+    for(it=mDataStructure.begin();it!=mDataStructure.end();++it){
+        if( (*it).id == id ){
+            loadDataSet( (*it) );
+            return;
+        }
+    }
+    console() << "ERROR : DataManager::selectDataStructureById " << id << " not found!"<< std::endl;
+}
+
+void DataManager::selectDataStructure( string name ){
+    vector<GenomeDataStructure>::iterator it;
+    for(it=mDataStructure.begin();it!=mDataStructure.end();++it){
+        if((*it).name.compare(name)==0){
+            loadDataSet( (*it) );
+            return;
+        }
+    }
+    console() << "ERROR : DataManager::selectDataStructure " << name << " not found!"<< std::endl;
 }
 
 // ------------------------------------------------------------------------------------------------------------------------
@@ -99,6 +164,10 @@ void DataManager::addRoi(char* datas, int len){
 
 // ------------------------------------------------------------------------------------------------------------------------
 
+const vector<DataManager::GenomeDataStructure>& DataManager::getDataStructure(){
+    return mDataStructure;
+}
+
 GenomeData::ChromosomeDataSet DataManager::getChromosomeDataSet(){
     return mCurrentDataSet;
 }
@@ -138,6 +207,7 @@ void DataManager::updateDataCrawler( DataCrawler* dataCrawler ){
 //    }
     
     char* datas = (char*)mDataBuffer.getData();
+    int size = mDataBuffer.getDataSize();
     
     int start = pos;
     int end = start+len;
@@ -149,7 +219,7 @@ void DataManager::updateDataCrawler( DataCrawler* dataCrawler ){
     
     for(int i=start;i<end;i++){
         
-        d = *(datas+i);
+        d = *(datas+min(i,size-1));
         
         dataString += d;
 //        dataCharPos = (int)(cnt / 4);
@@ -184,6 +254,7 @@ void DataManager::updateDataCrawler( DataCrawler* dataCrawler ){
     dataCrawler->dataSet.startPosition = pos;
     dataCrawler->dataSet.basePairsCount = len;
     dataCrawler->dataSet.chromosomeData = mCurrentDataSet;
+    dataCrawler->dataSet.roi = dataCrawler->roiDataSet;
     
 }
 

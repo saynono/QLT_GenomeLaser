@@ -22,6 +22,8 @@ void WebsPlugin::setup(){
     mLineHeight = .4;
     mWormLength = 4.0f;
     mWormSpeed = .03;
+    
+    mWormSpaceLength = 20;
 
 
     mOSCMap.insert( make_pair( "RAD_PER_BASEPAIR", new OSCElement( "RAD_PER_BASEPAIR", this, &mRadBasePair, OSCElement::FLOAT, toRadians(0.1f), toRadians(60.0f)  )) );
@@ -69,11 +71,25 @@ const ColouredShape2d& WebsPlugin::getShape( const GenomeData::BasePairDataSet& 
     
     float rotStepPair = mRadBasePair;
     
+//    mWormSpaceLength = 100;
     mCounter+=mWormSpeed;
-    while(mCounter > 50) mCounter -= 50;
+//    mCounter += mWormSpaceLength;
+//    while(mCounter > mWormSpaceLength) mCounter -= mWormSpaceLength;
     
+    int pos;
+    pos = dataSet.startPosition - dataSet.roi.startPosition;
     float wormLength = mWormLength;
     float wormStart = mCounter;
+    
+//    console() << " wormStart : " << wormStart << "          pos : " << pos << " (l:"<<basePairs<<")         [ " << dataSet.roi.startPosition << " - " << (dataSet.roi.endPosition) << " ]" << std::endl;
+    if(mWormSpeed < 0){
+        if( wormStart < pos - mWormLength) mCounter = pos + basePairs;
+    }else{
+        if( wormStart > pos + basePairs + mWormLength) console() << " ----> wormStart : " << wormStart << "          mWormLength : " << mWormLength << std::endl;
+        if( wormStart > pos + basePairs + mWormLength) mCounter = pos - mWormLength;
+    }
+    
+    
     
     pNorm.rotate(dataSet.startPosition*rotStepPair);
     p = pNorm;
@@ -112,16 +128,18 @@ const ColouredShape2d& WebsPlugin::getShape( const GenomeData::BasePairDataSet& 
             pStart = p;
             mShape.color( ColorAf(0,0,0,0) );
             mShape.moveTo( pStart );
+        }else{
+            pos = dataSet.startPosition - dataSet.roi.startPosition + i;
+            drawWorm(wormStart,wormLength,pos,p,pPrev);            
         }
         
-        drawWorm(wormStart,wormLength,i,dataSet.startPosition,p,pPrev);
         
 //        mShape.color( mColorDark );
         mShape.moveTo( p );
-//        mShape.color( ColorAf(1,1,1,1) );
-//        addSpotShape( &mShape, p, mSpotSize );
-//        mShape.color( mColorDark );
-//        mShape.moveTo( p );
+        mShape.color( ColorAf(1,1,1,1) );
+        addSpotShape( &mShape, p, mSpotSize );
+        mShape.color( mColorDark );
+        mShape.moveTo( p );
         
         pPrev = p;
         
@@ -139,8 +157,8 @@ const ColouredShape2d& WebsPlugin::getShape( const GenomeData::BasePairDataSet& 
 
 // ------------------------------------------------------------------------------------------------------
 
-void WebsPlugin::drawWorm( float wormStart, float wormLength, int pos, int offset, Vec2f p, Vec2f pPrev){
-    
+void WebsPlugin::drawWorm( float wormStart, float wormLength, int pos, Vec2f p, Vec2f pPrev){
+
 //    if(pos == 0){
 //        mShape.color( mColorDark );
 //        mShape.moveTo( p );
@@ -150,6 +168,9 @@ void WebsPlugin::drawWorm( float wormStart, float wormLength, int pos, int offse
     if(pos==0){
         return;
     }
+    
+//    pos += offset;
+//    pos +=
     
     float distStart = wormStart - (pos-1);
     float distEnd = (wormStart-wormLength) - (pos-1);

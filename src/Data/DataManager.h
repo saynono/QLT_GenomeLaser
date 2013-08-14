@@ -35,6 +35,7 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/Buffer.h"
 #include "cinder/Utilities.h"
+#include "cinder/Xml.h"
 
 #include "GenomeData.h"
 #include "DataCrawler.h"
@@ -44,7 +45,16 @@ using namespace ci::app;
 using namespace std;
 
 class DataManager{
-
+    
+    
+public:
+    
+    struct GenomeDataStructure{
+        int id;
+        string name;
+        string pathMap;
+        string pathBases;
+    };
     
 //    CG
 //    AT
@@ -65,9 +75,13 @@ public:
 
 	void setup();
     
+    void loadDataFile( string path );
+    void parseData( XmlTree data );
+    void generateXmlFile();
     
-    void loadChromosome(int chromsomeID);
+//    void loadChromosome(int chromsomeID);
     
+    const vector<GenomeDataStructure>& getDataStructure();
     GenomeData::ChromosomeDataSet getChromosomeDataSet();
     const vector<GenomeData::ROIDataSet>& getRoiMap();
     GenomeData::ROIDataSet getRoiByID(int roiID);
@@ -75,20 +89,25 @@ public:
     
     void updateDataCrawler( DataCrawler* dataCrawler );
     
-//    void createBasePairDataSet(int pos, int len, GenomeData::BasePairDataSet* dataSet);
-//    void createBitChain(int pos, int len, char* data);
+    void selectDataStructureById( int id );
+    void selectDataStructure( string name );
+    
+    boost::signals2::signal<void(void)> sOnDataStructureChange;
 
+    
 private:
     
     void            generateChromosomeMap(Buffer* b);
-    void            loadDataSet(cinder::fs::path pathData, cinder::fs::path pathMap);
+    void            loadDataSet( GenomeDataStructure ds );
     void            addRoi(char* datas, int len);
     
 
     Buffer                              mDataBuffer;
     GenomeData::ChromosomeDataSet       mCurrentDataSet;
-    vector<GenomeData::ROIDataSet>     mRoiMap;
+    vector<GenomeData::ROIDataSet>      mRoiMap;
     map<int, const GenomeData::ROIDataSet&>    mRoiIdMap;
+    vector<GenomeDataStructure>         mDataStructure;
+    
 };
 
 

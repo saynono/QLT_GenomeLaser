@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<QLT_Genome_Data>
+	<datapath>./data/exons/</datapath>
+	<datasets>
+		<dataset id="0">
+			<title>Chromosome 1</title>
+			<map>exons.1.locations</map>
+			<bases>exons.1.bases</bases>
+		</dataset>
+		<dataset id="1">
+			<title>Chromosome 2</title>
+			<map>exons.2.locations</map>
+			<bases>exons.2.bases</bases>
+		</dataset>
+		<dataset id="2">
+			<title>Chromosome 3</title>
+			<map>exons.3.locations</map>
+			<bases>exons.3.bases</bases>
+		</dataset>
+		<dataset id="3">
+			<title>Chromosome 4</title>
+			<map>exons.4.locations</map>
+			<bases>exons.4.bases</bases>
+		</dataset>
+		<dataset id="4">
+			<title>Chromosome 5</title>
+			<map>exons.5.locations</map>
+			<bases>exons.5.bases</bases>
+		</dataset>
+		<dataset id="5">
+			<title>Chromosome 6</title>
+			<map>exons.6.locations</map>
+			<bases>exons.6.bases</bases>
+		</dataset>
+		<dataset id="6">
+			<title>Chromosome 7</title>
+			<map>exons.7.locations</map>
+			<bases>exons.7.bases</bases>
+		</dataset>
+		<dataset id="7">
+			<title>Chromosome 8</title>
+			<map>exons.8.locations</map>
+			<bases>exons.8.bases</bases>
+		</dataset>
+		<dataset id="8">
+			<title>Chromosome 9</title>
+			<map>exons.9.locations</map>
+			<bases>exons.9.bases</bases>
+		</dataset>
+		<dataset id="9">
+			<title>Chromosome 10</title>
+			<map>exons.10.locations</map>
+			<bases>exons.10.bases</bases>
+		</dataset>
+		<dataset id="10">
+			<title>Chromosome 11</title>
+			<map>exons.11.locations</map>
+			<bases>exons.11.bases</bases>
+		</dataset>
+		<dataset id="11">
+			<title>Chromosome 12</title>
+			<map>exons.12.locations</map>
+			<bases>exons.12.bases</bases>
+		</dataset>
+		<dataset id="12">
+			<title>Chromosome 13</title>
+			<map>exons.13.locations</map>
+			<bases>exons.13.bases</bases>
+		</dataset>
+		<dataset id="13">
+			<title>Chromosome 14</title>
+			<map>exons.14.locations</map>
+			<bases>exons.14.bases</bases>
+		</dataset>
+		<dataset id="14">
+			<title>Chromosome 15</title>
+			<map>exons.15.locations</map>
+			<bases>exons.15.bases</bases>
+		</dataset>
+		<dataset id="15">
+			<title>Chromosome 16</title>
+			<map>exons.16.locations</map>
+			<bases>exons.16.bases</bases>
+		</dataset>
+		<dataset id="16">
+			<title>Chromosome 17</title>
+			<map>exons.17.locations</map>
+			<bases>exons.17.bases</bases>
+		</dataset>
+		<dataset id="17">
+			<title>Chromosome 18</title>
+			<map>exons.18.locations</map>
+			<bases>exons.18.bases</bases>
+		</dataset>
+		<dataset id="18">
+			<title>Chromosome 19</title>
+			<map>exons.19.locations</map>
+			<bases>exons.19.bases</bases>
+		</dataset>
+		<dataset id="19">
+			<title>Chromosome 20</title>
+			<map>exons.20.locations</map>
+			<bases>exons.20.bases</bases>
+		</dataset>
+		<dataset id="20">
+			<title>Chromosome 21</title>
+			<map>exons.21.locations</map>
+			<bases>exons.21.bases</bases>
+		</dataset>
+		<dataset id="21">
+			<title>Chromosome 22</title>
+			<map>exons.22.locations</map>
+			<bases>exons.22.bases</bases>
+		</dataset>
+		<dataset id="22">
+			<title>Chromosome X</title>
+			<map>exons.x.locations</map>
+			<bases>exons.x.bases</bases>
+		</dataset>
+		<dataset id="23">
+			<title>Chromosome Y</title>
+			<map>exons.y.locations</map>
+			<bases>exons.y.bases</bases>
+		</dataset>
+	</datasets>
+</QLT_Genome_Data>
+

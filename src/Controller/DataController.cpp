@@ -11,6 +11,7 @@
 	
 void DataController::setup(DataManager* dm, int amount){
 	mDataManager = dm;
+    mDataManager->sOnDataStructureChange.connect(  boost::bind( &DataController::onDataStructureChange, this ) );
     
     GenomeData::ChromosomeDataSet cds = mDataManager->getChromosomeDataSet();
     
@@ -77,9 +78,9 @@ void DataController::resetCrawler(DataCrawler* crawler){
     crawler->lastUpdate = getElapsedSeconds();
     crawler->length = Rand::randInt(30, 100);
     crawler->speed = Rand::randInt(1,10);
-    //TODO: remove
-    crawler->speed = 0;
-//    console() << "RESET : crawler->roiDataSetID " << crawler->roiDataSetID << " >>>> start: " << crawler->roiDataSet.startPosition << "->" << crawler->roiDataSet.endPosition << "      len: " << crawler->roiDataSet.basePairsCount << std::endl;
+    // TODO: remove
+    crawler->speed = 1;
+    console() << "Reseted Crawler : " << crawler->crawlerID << std::endl;
 }
 
 // ------------------------------------------------------------------------------------------------------------------
@@ -122,3 +123,13 @@ void DataController::toggleCrawlerActivity(int id){
     if(id > mDataCrawler.size() || id < 0) return;
     mDataCrawler.at(id).isActive = !mDataCrawler.at(id).isActive;
 }
+
+void DataController::onDataStructureChange(){
+    console() << "DataController::onDataStructureChange " << std::endl;;
+    reset();
+}
+
+
+
+// ------------------------------------------------------------------------------------------------------------------
+

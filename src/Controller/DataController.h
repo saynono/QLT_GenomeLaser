@@ -40,6 +40,7 @@ public:
     void resetCrawler(DataCrawler* crawler);
     DataManager* getDataManager();
     void toggleCrawlerActivity(int id);
+    void onDataStructureChange();
 
 private:
             
