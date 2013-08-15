@@ -50,8 +50,6 @@ private:
     
     vector<DataCrawler>     mDataCrawler;
     map<int,int>            mRoiMapVisited;
-    int                     mTick;
-    float                   mTickFrequency;
 };
 
 

@@ -17,21 +17,7 @@ void DataController::setup(DataManager* dm, int amount){
     
     for(int i=0;i<amount;i++){
         addCrawler(&cds);
-//        timeline().apply( &mDataCrawler[mDataCrawler.size()-1].pos, rnd.nextFloat(0, 1), 10.0f, EaseOutSine() ).finishFn(std::bind( &DataController::resetCrawler , this ) );
-//        float::Tween<float>* tweentween;
-//        Tween<float>::Options tt;
-        
-//        TweenRef<int> tweenRef = timeline().apply( &mDataCrawler[mDataCrawler.size()-1].pos, Rand::randInt(0, cds.basePairsCount-1), Rand::randFloat(10, 100), EaseOutSine() );
-//        tweenRef->setFinishFn( std::bind( &DataController::resetCrawler, this) );
-//        tweenRef->setPingPong( true );
-//        tweenRef->setLoop();
-        
-//        Tween<float> tweentween1 = ;
-//        .finishFn( Say("Hallo") );
     }
-    
-    mTick = 0;
-    mTickFrequency = 30;
     
     reset();
 
@@ -53,6 +39,8 @@ void DataController::addCrawler(GenomeData::ChromosomeDataSet* cds){
 
 
 void DataController::reset(){
+    
+    console() << "DataController::reset()" << std::endl;
     
     const vector<GenomeData::ROIDataSet> roiMap = mDataManager->getRoiMap();
     mRoiMapVisited.clear();
@@ -76,23 +64,15 @@ void DataController::resetCrawler(DataCrawler* crawler){
     crawler->roiDataSet = mDataManager->getRoiByID(roiId);
     crawler->pos = crawler->roiDataSet.startPosition;
     crawler->lastUpdate = getElapsedSeconds();
-    crawler->length = Rand::randInt(30, 100);
+    crawler->length = Rand::randInt(60, 100);
     crawler->speed = Rand::randInt(1,10);
     // TODO: remove
-    crawler->speed = 1;
-    console() << "Reseted Crawler : " << crawler->crawlerID << std::endl;
+    crawler->speed = 2;    
 }
 
 // ------------------------------------------------------------------------------------------------------------------
 
 void DataController::update(){
-    
-    int tick = (getElapsedSeconds()*mTickFrequency);
-    if(tick != mTick){
-//        console() << "TICK : " << tick << "     diff: " << (tick-mTick) << std::endl;
-        mTick = tick;
-    }
-    
 	vector<DataCrawler>::iterator it;
     for(it=mDataCrawler.begin();it!=mDataCrawler.end();++it){
         updateDataCrawler( &(*it) );

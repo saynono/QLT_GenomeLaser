@@ -13,6 +13,7 @@
 #include "cinder/Rand.h"
 
 #include "OscMessage.h"
+#include "PluginUtils.h"
 
 #include "GenomeData.h"
 #include "ColouredShape2d.h"
@@ -31,7 +32,8 @@ public:
     enum OSCElementTypes {
         FLOAT = 0,
         INTEGER,
-        BANG
+        BANG,
+        COLOR
     };
     
 //    OSCElement(){};
@@ -77,6 +79,7 @@ public:
     virtual ~BasePlugin(){};
 	virtual void setup(){};
     virtual void dispose(){};
+
     virtual const ColouredShape2d& getShape(const GenomeData::BasePairDataSet& dataSet) = 0;
 	
     virtual void onActivated(){};

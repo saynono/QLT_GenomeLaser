@@ -16,6 +16,7 @@
 #include "BasePlugin.h"
 #include "BitsAndLinesPlugin.h"
 #include "WebsPlugin.h"
+#include "BitsPlugin.h"
 #include "PluginOSCController.h"
 
 

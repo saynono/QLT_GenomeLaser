@@ -78,6 +78,8 @@ const ColouredShape2d& ParticlePlugin::getShape( const GenomeData::BasePairDataS
    
     particle.zeroForce();
     
+    Vec2f pCenter(.5,.5);
+    
     switch(dataSet.dataBitsString[0])
     {
         case 'A':
@@ -103,11 +105,11 @@ const ColouredShape2d& ParticlePlugin::getShape( const GenomeData::BasePairDataS
     
     if (trail.size() > 1)
     {
-        mShape.moveTo(trail[0]);
+        mShape.moveTo( PluginUtils::harshMaxDiameter(trail[0],pCenter,.5f) );
         for (unsigned i = 1; i < trail.size(); ++i)
         {
             mShape.color(hsvToRGB(Vec3f(i / (float)trail.size(), 1.f, 1.f)));
-            mShape.lineTo(trail[i]);
+            mShape.lineTo( PluginUtils::harshMaxDiameter(trail[i],pCenter,.5f) );
         }
     }
     return mShape;

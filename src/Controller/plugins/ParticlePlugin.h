@@ -34,6 +34,7 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/Utilities.h"
 
+#include "PluginUtils.h"
 #include "BasePlugin.h"
 #include "DataConverterUtil.h"
 #include "Particle.h"

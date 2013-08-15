@@ -13,8 +13,10 @@ void MainController::setup(){
     
     mIldaFrame.params.output.doCapX = true;
     mIldaFrame.params.output.doCapY = true;
-    
+ 
+    // TODO: remove
     mAmountCrawlers = 4;
+//    mAmountCrawlers = 1;
     
     mDataSaver.setup();
     mDataManager.setup();

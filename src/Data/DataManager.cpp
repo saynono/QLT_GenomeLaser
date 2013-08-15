@@ -75,8 +75,6 @@ void DataManager::generateXmlFile(){
 //}
 
 void DataManager::loadDataSet( GenomeDataStructure ds ){
-    console() <<"ds.pathBases: "<< ds.pathBases << "        " << ds.pathMap << std::endl;
-    
     Buffer b = Buffer( loadFile( getAssetPath(ds.pathBases) ) );
     size_t size = b.getDataSize();
     mDataBuffer = b;
@@ -87,6 +85,13 @@ void DataManager::loadDataSet( GenomeDataStructure ds ){
 
     Buffer bmap = Buffer( loadFile( getAssetPath(ds.pathMap) ) );
     generateChromosomeMap( &bmap );
+    
+    vector<GenomeData::ROIDataSet>::const_iterator it;
+    for(it=mRoiMap.begin();it!=mRoiMap.end();++it){
+        int roiID = (*it).roiId;
+        mRoiMapVisited[roiID] = roiID;
+//        XXX
+    }
     sOnDataStructureChange();
 }
 
@@ -158,8 +163,19 @@ void DataManager::addRoi(char* datas, int len){
     roi.roiId = mRoiMap.size();
     roi.roiDescription = "ROI Element ID_" + toString(roi.roiId);
     mRoiMap.push_back(roi);
-//    mRoiIdMap[roi.roiId] = roi;
-    
+    mRoiIdMap[roi.roiId] = roi;
+}
+
+GenomeData::ROIDataSet DataManager::getNextRoi( DataCrawler* dataCrawler ){
+
+    map<int, GenomeData::ROIDataSet>::iterator it;
+    it = mRoiIdMap.find(dataCrawler->roiDataSet.roiId);
+    if(it != mRoiIdMap.end()){
+        it++;
+        return (*it).second;
+    }
+    console() << "DataManager::getNextRoi :: NO NEXT ROI!!!" << std::endl;
+    return dataCrawler->roiDataSet;
 }
 
 // ------------------------------------------------------------------------------------------------------------------------
@@ -195,67 +211,67 @@ void DataManager::updateDataCrawler( DataCrawler* dataCrawler ){
     double time = getElapsedSeconds();
     double diff = time - dataCrawler->lastUpdate;
 
-    int pos = dataCrawler->roiDataSet.startPosition + (diff * (float)dataCrawler->speed);
+    float pos = dataCrawler->roiDataSet.startPosition + (diff * (float)dataCrawler->speed);
     dataCrawler->pos = pos;
-    dataCrawler->length = max(0, min(dataCrawler->length, dataCrawler->roiDataSet.endPosition-pos) );
-    int len = dataCrawler->length;
-    
-//    console() << dataCrawler->crawlerID << " >> " << dataCrawler->pos << " : " << dataCrawler->roiDataSet.endPosition << "      len: " << dataCrawler->roiDataSet.basePairsCount << std::endl;
-    
-//    if( dataCrawler->roiDataSet.endPosition-pos < 0 ){
-//        console() << " CRAWLER REQUESTS NEW ROI! -> " << dataCrawler->crawlerID << "      pointer: " << dataCrawler << std::endl;
-//    }
-    
+    if( dataCrawler->roiDataSet.endPosition <= pos ){
+        dataCrawler->roiDataSet = getNextRoi(dataCrawler);
+        dataCrawler->roiDataSetID = dataCrawler->roiDataSet.roiId;
+        dataCrawler->lastUpdate = getElapsedSeconds();
+        dataCrawler->pos = dataCrawler->roiDataSet.startPosition;
+        sOnRoiChange();
+    }
+//    int len = dataCrawler->length;
+    int len = dataCrawler->roiDataSet.basePairsCount;
+        
     char* datas = (char*)mDataBuffer.getData();
     int size = mDataBuffer.getDataSize();
     
-    int start = pos;
-    int end = start+len;
     char d;
-    int cnt = 0;
-//    int dataCharPos = 0;
-//    int dataBitPos = 0;
     string dataString = "";
-    
-    for(int i=start;i<end;i++){
-        
-        d = *(datas+min(i,size-1));
-        
+    for(int i=dataCrawler->roiDataSet.startPosition;i<dataCrawler->roiDataSet.startPosition+len;i++){
+        d = *(datas+min(i,size-1));        
         dataString += d;
-//        dataCharPos = (int)(cnt / 4);
-//        dataBitPos = ((cnt%4)) * 2;
-        
-        // seems to be the fastest way to do it like this according to:
-        // http://stackoverflow.com/questions/6860525/c-what-is-faster-lookup-in-hashmap-or-switch-statement
-        //
-        switch(d){
-            case 'A':
-//                rawData[dataCharPos] |= 0 << dataBitPos;
-//                dataString += "A";
-                break;
-            case 'C':
-//                rawData[dataCharPos] |= 1 << dataBitPos;
-//                dataString += "C";
-                break;
-            case 'G':
-//                rawData[dataCharPos] |= 2 << dataBitPos;
-//                dataString += "G";
-                break;
-            case 'T':
-//                dataString += "T";
-//                rawData[dataCharPos] |= 3 << dataBitPos;
-                break;
-                
-        }
-        cnt++;
     }
-//    dataCrawler->dataSet.dataBits = rawData;
+//    for(int i=start;i<end;i++){
+//        
+//        d = *(datas+min(i,size-1));
+//        
+//        dataString += d;
+////        dataCharPos = (int)(cnt / 4);
+////        dataBitPos = ((cnt%4)) * 2;
+//        
+//        // seems to be the fastest way to do it like this according to:
+//        // http://stackoverflow.com/questions/6860525/c-what-is-faster-lookup-in-hashmap-or-switch-statement
+//        //
+//        switch(d){
+//            case 'A':
+////                rawData[dataCharPos] |= 0 << dataBitPos;
+////                dataString += "A";
+//                break;
+//            case 'C':
+////                rawData[dataCharPos] |= 1 << dataBitPos;
+////                dataString += "C";
+//                break;
+//            case 'G':
+////                rawData[dataCharPos] |= 2 << dataBitPos;
+////                dataString += "G";
+//                break;
+//            case 'T':
+////                dataString += "T";
+////                rawData[dataCharPos] |= 3 << dataBitPos;
+//                break;
+//                
+//        }
+//        cnt++;
+//    }
+    
     dataCrawler->dataSet.dataBitsString = dataString;
     dataCrawler->dataSet.startPosition = pos;
     dataCrawler->dataSet.basePairsCount = len;
     dataCrawler->dataSet.chromosomeData = mCurrentDataSet;
     dataCrawler->dataSet.roi = dataCrawler->roiDataSet;
-    
+    dataCrawler->dataSet.percent = (dataCrawler->pos-dataCrawler->roiDataSet.startPosition) / (float)dataCrawler->roiDataSet.basePairsCount;
+
 }
 
 /*

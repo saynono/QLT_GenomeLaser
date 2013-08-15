@@ -12,7 +12,7 @@
 #include "Gwen/Controls/Label.h"
 #include "Gwen/Controls/GroupBox.h"
 #include "Gwen/Controls/PropertyTree.h"
-//#include "Gwen/Controls/PropertyNode.h"
+#include "Gwen/Controls/Property/ColorSelector.h"
 #include "Gwen/Controls/HorizontalSlider.h"
 #include "Gwen/Controls/ListBox.h"
 #include "Gwen/Controls/CollapsibleCategory.h"
@@ -56,6 +56,7 @@ public:
     void onOnOffClick( Gwen::Controls::Base* pControl );
     void onPluginComboClick( Gwen::Controls::Base* pControl );
     void onOscClick( Gwen::Controls::Base* pControl );
+    void onColorChange( Gwen::Controls::Base* b );
     
 public:
     
@@ -83,6 +84,7 @@ private:
     map<Gwen::Controls::Layout::TableRow*, BasePlugin*> mPluginsRowMap;
     map<BasePlugin*, Gwen::Controls::ListBox*> mPluginsListBoxMap;
     map<Gwen::Controls::Base*, OSCElement*> mOscButtonMap;
+    map<Gwen::Controls::Base*, OSCElement*> mClrValueMap;
     
 };
 

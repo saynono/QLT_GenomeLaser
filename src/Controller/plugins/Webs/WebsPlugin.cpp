@@ -33,7 +33,8 @@ void WebsPlugin::setup(){
     mOSCMap.insert( make_pair( "LINE_HEIGHT", new OSCElement( "SPOT_SIZE", this, &mLineHeight, OSCElement::FLOAT, 0.0f, 1.0f )) );
     mOSCMap.insert( make_pair( "WORM_LENGTH", new OSCElement( "WORM_LENGTH", this, &mWormLength, OSCElement::FLOAT, 0.1f, 20.0f )) );
     mOSCMap.insert( make_pair( "WORM_SPEED", new OSCElement( "WORM_SPEED", this, &mWormSpeed, OSCElement::FLOAT, -2.f, 2.0f )) );
-    
+    mOSCMap.insert( make_pair( "WORM_COLOR", new OSCElement( "WORM_COLOR", this, &mColorDark, OSCElement::COLOR )) );
+//    mOSCMap.insert( make_pair( "WORM_SPEED", new OSCElement( "WORM_SPEED", this, &mWormSpeed, OSCElement::COLOR, -2.f, 2.0f )) );
     
     mColorDark = ColorAf(.3,0,0,1);
     mColorBright = ColorAf(0,.8,1,1);
@@ -124,6 +125,8 @@ const ColouredShape2d& WebsPlugin::getShape( const GenomeData::BasePairDataSet& 
         p *= lerp(circDiaShort,circDiaLong,basePairBit/3.0f);
         p += pOffset;
         
+        p = PluginUtils::harshMaxDiameter(p,pOffset,.5f);
+
         if(i==0){
             pStart = p;
             mShape.color( ColorAf(0,0,0,0) );
@@ -201,8 +204,12 @@ void WebsPlugin::drawWorm( float wormStart, float wormLength, int pos, Vec2f p, 
     float percentMixEnd = (distStart-percentLineEnd) / wormLength;
     
     
-    Vec2f pCompStart = lerp(pPrev,p, percentLineStart );
-    Vec2f pCompEnd = lerp(pPrev,p, percentLineEnd );
+    Vec2f center(.5,.5);
+    
+    Vec2f pCompStart = PluginUtils::lerpLineDistorted(pPrev,p,center,percentLineStart);
+    Vec2f pCompEnd = PluginUtils::lerpLineDistorted(pPrev,p,center,percentLineEnd);
+//    Vec2f pCompStart = lerp(pPrev,p, percentLineStart );
+//    Vec2f pCompEnd = lerp(pPrev,p, percentLineEnd );
     Vec2f pComp;
     
     ColorA clrStart = lerp( mColorBright, mColorDark, percentMixStart );
@@ -214,10 +221,12 @@ void WebsPlugin::drawWorm( float wormStart, float wormLength, int pos, Vec2f p, 
     mShape.color(clrStart);
     mShape.moveTo(pCompStart);
     mShape.lineTo(pCompStart);
-    for(float i=percentLineEnd;i<percentLineStart;i+=.02){
+//    for(float i=percentLineEnd;i<percentLineStart;i+=.02){
+    for(float i=percentLineStart;i<percentLineEnd;i+=.02){
         clrMixValue = ci::math<float>::clamp((i-percentLineStart)/(percentLineEnd-percentLineStart));
         clr = lerp( clrStart, clrEnd, clrMixValue );
-        pComp = lerp( pPrev, p, i );
+//        pComp = lerp( pPrev, p, i );
+        pComp = PluginUtils::lerpLineDistorted(pPrev,p,center,i);
         mShape.color(clr);
         mShape.lineTo(pComp);
     }
@@ -225,6 +234,8 @@ void WebsPlugin::drawWorm( float wormStart, float wormLength, int pos, Vec2f p, 
     mShape.lineTo(pCompEnd);
 
 }
+
+
 
 void WebsPlugin::addSpotShape( ColouredShape2d* s, Vec2f center, float size ){
     float size2 = size/2.0f;

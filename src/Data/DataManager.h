@@ -85,6 +85,8 @@ public:
     GenomeData::ChromosomeDataSet getChromosomeDataSet();
     const vector<GenomeData::ROIDataSet>& getRoiMap();
     GenomeData::ROIDataSet getRoiByID(int roiID);
+    GenomeData::ROIDataSet getNextRoi( DataCrawler* dataCrawler );
+    
     Buffer* getDataBuffer();
     
     void updateDataCrawler( DataCrawler* dataCrawler );
@@ -93,6 +95,7 @@ public:
     void selectDataStructure( string name );
     
     boost::signals2::signal<void(void)> sOnDataStructureChange;
+    boost::signals2::signal<void(void)> sOnRoiChange;
 
     
 private:
@@ -105,8 +108,10 @@ private:
     Buffer                              mDataBuffer;
     GenomeData::ChromosomeDataSet       mCurrentDataSet;
     vector<GenomeData::ROIDataSet>      mRoiMap;
-    map<int, const GenomeData::ROIDataSet&>    mRoiIdMap;
+    map<int, GenomeData::ROIDataSet>    mRoiIdMap;
     vector<GenomeDataStructure>         mDataStructure;
+    map<int,int>                        mRoiMapVisited;
+
     
 };
 

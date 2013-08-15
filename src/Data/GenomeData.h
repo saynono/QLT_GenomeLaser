@@ -34,6 +34,7 @@ namespace GenomeData{
         std::string dataBits;
         std::string dataBitsString;
         ROIDataSet roi;
+        float percent;
     };
     
 }

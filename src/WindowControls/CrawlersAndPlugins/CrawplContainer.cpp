@@ -103,6 +103,8 @@ void CrawplContainer::createPluginSettings( BasePlugin* plugin){
     
     float val;
     int cnt = 0;
+    ColorAf clr;
+    bool isColor = false;
     OSCElement* element;
     Gwen::Controls::Layout::TableRow* pRow;
     map<string, OSCElement*> valMap = plugin->getOSCMapping();
@@ -112,8 +114,12 @@ void CrawplContainer::createPluginSettings( BasePlugin* plugin){
         
         element = (*it).second;
         
+        isColor = false;
         if(element->type == OSCElement::OSCElementTypes::INTEGER){
             val = *(static_cast<int*>(element->pointer));
+        }else if(element->type == OSCElement::OSCElementTypes::COLOR){
+            clr = *(static_cast<ColorAf*>(element->pointer));
+            isColor = true;
         }else{
             val = *(static_cast<float*>(element->pointer));
         }
@@ -123,17 +129,30 @@ void CrawplContainer::createPluginSettings( BasePlugin* plugin){
 //        pRow->Dock( Gwen::Pos::Fill );
         pRow->SetHeight( 20 );
         
-        Gwen::Controls::HorizontalSlider* pSlider = new Gwen::Controls::HorizontalSlider( this );
-        pSlider->SetRange( element->minValue, element->maxValue );
-        pSlider->SetFloatValue( val );
-        pSlider->SetName("SLIDER YEAH");
-        pSlider->onValueChanged.Add( this, &CrawplContainer::onSliderChange );
-        pSlider->SetHeight( 20 );
-        pSlider->SetWidth( 220 );
-
-        pRow->SetCellContents( 1, pSlider  );
-        pRow->SetCellText( 2, toString(val) );
-        
+        if( isColor ){
+            Gwen::Controls::Property::ColorSelector* clrs = new Gwen::Controls::Property::ColorSelector( this );
+            clrs->onChange.Add( this, &CrawplContainer::onColorChange );
+            clrs->SetWidth(100);
+//            L"ColorSelector", new Gwen::Controls::Property::ColorSelector( props ), L"255 0 0"
+            const string clrStr = toString((int)clr.r*255)+" "+toString((int)clr.b*255)+" "+toString((int)clr.b * 255);
+            pRow->SetCellContents( 1, clrs );
+            pRow->SetCellText( 2, "WORM COLOR" );
+            mClrValueMap[clrs] = element;
+            
+        }else{
+            Gwen::Controls::HorizontalSlider* pSlider = new Gwen::Controls::HorizontalSlider( this );
+            pSlider->SetRange( element->minValue, element->maxValue );
+            pSlider->SetFloatValue( val );
+            pSlider->SetName("SLIDER YEAH");
+            pSlider->onValueChanged.Add( this, &CrawplContainer::onSliderChange );
+            pSlider->SetHeight( 20 );
+            pSlider->SetWidth( 220 );
+            pRow->SetCellContents( 1, pSlider  );
+            pRow->SetCellText( 2, toString(val) );
+            mSliderLabelMap[pSlider] = pRow->GetCellContents(2);
+            mValueMap[pSlider] = element;
+        }
+    
         Gwen::Controls::Button* btn = new Gwen::Controls::Button( this );
         pRow->SetCellContents( 3, btn );
         btn->onPress.Add( this, &CrawplContainer::onOscClick );
@@ -142,8 +161,6 @@ void CrawplContainer::createPluginSettings( BasePlugin* plugin){
         mOscButton = btn;
         
         mOscButtonMap[mOscButton] = element;
-        mSliderLabelMap[pSlider] = pRow->GetCellContents(2);
-        mValueMap[pSlider] = element;
         
         cnt++;
     }
@@ -214,6 +231,22 @@ void CrawplContainer::onOnOffClick( Gwen::Controls::Base* pControl ){
 
 void CrawplContainer::onOscClick( Gwen::Controls::Base* b ){
     sOpenOscSettingsWindow( mOscButtonMap[b] );
+}
+
+void CrawplContainer::onColorChange( Gwen::Controls::Base* b ){
+    Gwen::Controls::Property::ColorSelector* clrs = static_cast<Gwen::Controls::Property::ColorSelector*>(b);
+    string val = clrs->Gwen::Controls::Property::Text::GetPropertyValue().Get();
+    console() << " CrawplContainer::onColorChange : " << val << std::endl;
+    
+    vector<string> tokens;
+    boost::split(tokens,val,boost::is_any_of(" "));
+    
+    OSCElement* element = mClrValueMap[b];
+    ColorAf* clr = static_cast<ColorAf*> (element->pointer);
+    clr->r = stoi(tokens[0]) / 255.0f;
+    clr->g = stoi(tokens[1]) / 255.0f;
+    clr->b = stoi(tokens[2]) / 255.0f;
+
 }
 
 void CrawplContainer::onPluginComboClick( Gwen::Controls::Base* pControl ){
