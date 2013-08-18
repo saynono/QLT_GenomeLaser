@@ -56,7 +56,7 @@ public:
     virtual ~BasePlugin(){};
 	virtual void setup(){};
     virtual void dispose(){};
-    virtual const ColouredShape2d& getShape(const GenomeData::BasePairDataSet& dataSet) {return ColouredShape2d(); };
+    virtual const ColouredShape2d& getShape(const GenomeData::BasePairDataSet& dataSet) = 0;//{return ColouredShape2d(); };
 	
     virtual void onActivated(){};
     virtual void onDeActivated(){};

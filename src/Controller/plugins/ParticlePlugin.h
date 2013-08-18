@@ -44,10 +44,11 @@ using namespace std;
 class ParticlePlugin: public BasePlugin
 {    
 public:
+    static const Vec2f CENTRE;
+    
     struct Particle
     {
         Vec2f vel;
-        
     };
 	
     ParticlePlugin();
