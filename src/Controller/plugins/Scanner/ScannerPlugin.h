@@ -10,6 +10,7 @@
 
 #include "cinder/app/AppBasic.h"
 #include "cinder/Timeline.h"
+#include "cinder/CinderMath.h"
 #include "BasePlugin.h"
 
 
@@ -34,6 +35,7 @@ private:
     Vec2f lerpLineDistorted( Vec2f p1, Vec2f p2, Vec2f center, float val );
     void addSpotShape( ColouredShape2d* s, Vec2f center, float size );
     void drawWorm( float wormStart, float wormLength, int pos, Vec2f p, Vec2f pPrev);
+    int getBasePairBit(char d);
     
     std::map<string, OSCElement*>   mOSCMap;
     ColouredShape2d                 mShape;
@@ -54,6 +56,7 @@ private:
     int                             mLastDataSetID;
     Anim<float>                     mRotCounter;
     
+    map<int,Vec2f>                  mStarIdPositions;
     
 };
 

@@ -22,8 +22,8 @@ void ScannerPlugin::setup(){
     mAmountBasePair = 10;
     mSpotSize = .01;
     
-    mCircDiameter = .5;
-    mLineHeight = .4;
+    mCircDiameter = .4;
+    mLineHeight = .3;
     mWormLength = 8.0f;
     mWormSpeed = .01;
     mSphereRotSpeed = .1;
@@ -83,7 +83,11 @@ const ColouredShape2d& ScannerPlugin::getShape( const GenomeData::BasePairDataSe
     int basePairs = dataSet.roi.basePairsCount;
     
     float circDiameter = mCircDiameter;
-        
+    float lineHeight2 = mLineHeight/2.0;
+    float circDiaLong = .4;
+    float circDiaShort = .1;
+    float rotStepPair = toRadians(360.0f/(float)basePairs);
+                        
     int pos;
     pos = dataSet.percent ;
     
@@ -91,30 +95,46 @@ const ColouredShape2d& ScannerPlugin::getShape( const GenomeData::BasePairDataSe
     mTimeStamp = getElapsedSeconds();
     
     pStart = Vec2f( 0,-circDiameter );
-    pCenter = Vec2f( lerp(-circDiameter,circDiameter, (float)sin(dataSet.percent*M_PI)), 0 );
+    pCenter = Vec2f( lerp(-circDiameter,circDiameter, (math<float>::sin(dataSet.percent*M_PI*2)+1.0f)/2.0f), 0 );
     pEnd = Vec2f( 0, circDiameter );
-    
-//    pStart.rotate( toRadians(mRotCounter) );
-//    pCenter.rotate( toRadians(mRotCounter) );
-//    pEnd.rotate( toRadians(mRotCounter) );
     
     mShape.color(mColorStart);
     mShape.moveTo( pStart );
     int detail = 20;
     for(int i=0;i<detail;i++){
         percent = (i/(float)detail);
-        p = PluginUtils::lerpLineDistortedCorrect(pStart,pCenter,Vec2f::zero(), percent );
+        p = PluginUtils::lerpLineDistortedCorrect(pStart,pCenter,Vec2f::zero(), percent, circDiameter );
         mShape.color( lerp(mColorStart,mColorEnd,percent/2.0) );
         mShape.lineTo( p );
     }
-//    mShape.lineTo( pCenter );
     for(int i=0;i<=detail;i++){
         percent = (i/(float)detail);
-        p = PluginUtils::lerpLineDistortedCorrect(pCenter,pEnd,Vec2f::zero(), percent );
+        p = PluginUtils::lerpLineDistortedCorrect(pCenter,pEnd,Vec2f::zero(), percent, circDiameter );
         mShape.color( lerp(mColorStart,mColorEnd,percent/2.0+.5) );
         mShape.lineTo( p );
     }
     
+    int dir = math<float>::fmod(dataSet.percent + .25f, 1.f) > .5 ? 1 : -1;
+    
+    char d;
+    int basePairBit;
+    int cnt = 0;
+    for(int i=0;i<basePairs;i++){
+        d = dataSet.dataBitsString[i];
+        pNorm.rotate( rotStepPair );
+        p = pNorm;
+        p.normalize();
+        basePairBit = getBasePairBit(d);
+        p *= lerp(circDiaShort,circDiaLong,basePairBit/3.0f);
+//        console() << i << " => " << p.x << "  " << p.y << "     rotStepPair : "  << toDegrees(rotStepPair) << std::endl;
+        
+//        if(){
+//            mStarIds
+//            addSpotShape(&mShape, p, .01);
+//        }
+        
+        cnt++;
+    }
     
     
     mShape.color(mColorEnd);
@@ -261,6 +281,24 @@ void ScannerPlugin::drawWorm( float wormStart, float wormLength, int pos, Vec2f 
     
 }
 
+int ScannerPlugin::getBasePairBit(char d){
+    int basePairBit = 0;
+    switch(d){
+        case 'A':
+            basePairBit = 0;
+            break;
+        case 'C':
+            basePairBit = 1;
+            break;
+        case 'G':
+            basePairBit = 2;
+            break;
+        case 'T':
+            basePairBit = 3;
+            break;
+    }
+    return basePairBit;
+}
 
 
 void ScannerPlugin::addSpotShape( ColouredShape2d* s, Vec2f center, float size ){
@@ -268,6 +306,7 @@ void ScannerPlugin::addSpotShape( ColouredShape2d* s, Vec2f center, float size )
     Vec2f p;
     p.x = -size2;
     p.y = -size2;
+    s->moveTo( center + p );
     s->lineTo( center + p );
     p.x = size2;
     s->lineTo( center + p );
@@ -277,4 +316,5 @@ void ScannerPlugin::addSpotShape( ColouredShape2d* s, Vec2f center, float size )
     s->lineTo( center + p );
     p.y = -size2;
     s->lineTo( center + p );
+    s->moveTo( center + p );
 }

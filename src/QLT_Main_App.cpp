@@ -92,10 +92,10 @@ void QLT_Main_App::keyDown( KeyEvent event )
 //            mWindowManager.reloadSkin();
 //            break;
         case 'q':
-            quit();
+//            quit();
             break;
         case 27:
-            quit();
+//            quit();
             break;
         case 282:
         case 283:

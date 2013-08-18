@@ -56,14 +56,14 @@ private:
     void onSliderLaserOutput( Gwen::Controls::Base* pControl );
     void onCheckBoxLaserOutput( Gwen::Controls::Base* pControl );
     Gwen::Controls::Base* addCheckBox( Gwen::Controls::Base* pControl , Rectf bounds, string name, bool selected);
-    Gwen::Controls::Base* addSlider( Gwen::Controls::Base* pControl , Rectf bounds, string name, int value, int valueMin, int valueMax);
+    Gwen::Controls::Base* addSlider( Gwen::Controls::Base* pControl , Rectf bounds, string name, float value, float valueMin, float valueMax);
     Gwen::Controls::Base* addProperty( Gwen::Controls::Base* pControl , Rectf bounds, string name, int val);
     Rectf getBounds(const vector<Gwen::Controls::Base*>& vec);
     
     void updateValue(string str, float value);
     void updateValue(string str, bool value);
     void updateValue(string str, int value);
-
+    void updateValue(string str, string value);
     
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

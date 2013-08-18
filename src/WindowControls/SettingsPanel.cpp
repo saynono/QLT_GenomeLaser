@@ -73,8 +73,13 @@ void SettingsPanel::setIldaFrame(ciilda::Frame* frame){
     Gwen::Controls::Base* pCheckBox;
     Gwen::Controls::Base* pLabel;
 
-    pSlider = addSlider(mLaserCat, getBounds(mLaserCatElements), "Scaling", mIldaFrame->params.output.transform.scale.x*100, 5, 100 );
-    mLaserCatElements.push_back(pSlider);
+    
+    pLabel = addProperty(mLaserCat, getBounds(mLaserCatElements), "Scanner Angle Total", mIldaFrame->params.output.scannerAngleX);
+    mLaserCatElements.push_back(pLabel);
+
+    float val = mIldaFrame->params.output.transform.scale.x * mIldaFrame->params.output.scannerAngleX ;
+    pLabel = addProperty(mLaserCat, getBounds(mLaserCatElements), "Scanner Angle Max Input", val);
+    mLaserCatElements.push_back(pLabel);
 
     
     pSlider = addSlider(mLaserCat, getBounds(mLaserCatElements), "Target Points Count", mIldaFrame->params.output.targetPointCount, 1, 3000 );
@@ -184,11 +189,14 @@ void SettingsPanel::setLaserPreview3d( LaserPreview3D* laserPreview3D ){
 
 Gwen::Controls::Base* SettingsPanel::addCheckBox( Gwen::Controls::Base* pControl , Rectf bounds, string name, bool selected){
     Gwen::Controls::CheckBoxWithLabel* labeled = new Gwen::Controls::CheckBoxWithLabel( pControl );
-    int px = bounds.getX1();
-    int py = bounds.getY1();
-    int w = bounds.getWidth();
+//    int px = bounds.getX1();
+//    int py = bounds.getY1();
+//    int w = bounds.getWidth();
 //    labeled->SetName( name );
-    labeled->SetPos( px, py );
+//    labeled->SetPos( px, py );
+    labeled->Dock( Gwen::Pos::Top );
+    labeled->SetMargin( Gwen::Margin(5,7,5,7) );
+    labeled->SetHeight( 20 );
     labeled->Label()->SetText( name );
 //    labeled->Label()->SetName( name );
     labeled->Checkbox()->SetChecked(selected);
@@ -198,51 +206,69 @@ Gwen::Controls::Base* SettingsPanel::addCheckBox( Gwen::Controls::Base* pControl
     return labeled;
 }
 
-Gwen::Controls::Base* SettingsPanel::addSlider( Gwen::Controls::Base* pControl , Rectf bounds, string name, int value, int valueMin, int valueMax){
+Gwen::Controls::Base* SettingsPanel::addSlider( Gwen::Controls::Base* pControl , Rectf bounds, string name, float value, float valueMin, float valueMax){
     
-    int px = bounds.getX1();
-    int py = bounds.getY1();
+    
+    Gwen::Controls::Base* cont = new Gwen::Controls::Base( pControl );
+    cont->Dock( Gwen::Pos::Top );
+    cont->SetMargin( Gwen::Margin(5,7,5,7) );
+    cont->SetHeight( 38 );
+
+    int px = 0;//bounds.getX1();
+    int py = 0;//bounds.getY1();
     int w = bounds.getWidth();
     
-    Gwen::Controls::Label* label = new Gwen::Controls::Label( pControl );
+    Gwen::Controls::Base* lbls = new Gwen::Controls::Base( cont );
+    lbls->Dock( Gwen::Pos::Top );
+    lbls->SetHeight( 20 );
+    
+    Gwen::Controls::Label* label = new Gwen::Controls::Label( lbls );
+    label->Dock( Gwen::Pos::Left );
     label->SetText( name );
     label->SizeToContents();
-    label->SetPos( px, py );
+//    label->SetPos( px, py );
     
-    Gwen::Controls::Label* labelValue = new Gwen::Controls::Label( pControl );
+    
+    Gwen::Controls::Label* labelValue = new Gwen::Controls::Label( lbls );
 //    labelValue->SizeToContents();
+    labelValue->Dock( Gwen::Pos::Right );
     labelValue->SetWidth(w);
     labelValue->SetAlignment(Gwen::Pos::Right);
-    labelValue->SetPos( px, py );
-    labelValue->SetText( toString((int)value) );
-    py += 10;
-    Gwen::Controls::HorizontalSlider* pSlider = new Gwen::Controls::HorizontalSlider( pControl );
-    pSlider->SetPos( px, py );
+//    labelValue->SetPos( px, py );
+    labelValue->SetText( toString(value) );
+    
+    Gwen::Controls::HorizontalSlider* pSlider = new Gwen::Controls::HorizontalSlider( cont );
+    labelValue->Dock( Gwen::Pos::Top );
+    pSlider->SetPos( px, py + 17 );
     pSlider->SetSize( w, 20 );
+    pSlider->SetClampToNotches(false);
+    pSlider->SetNotchCount( (valueMax-valueMin)/10 );
     pSlider->SetRange( valueMin, valueMax );
     pSlider->SetFloatValue( value );
     pSlider->SetName(name);
     pSlider->onValueChanged.Add( this, &SettingsPanel::onSliderLaserOutput );
-    
+        
     mLabelsMap[pSlider] = labelValue;
     mSliderValueMap[name] = pSlider;
     return pSlider;
 }
 
 Gwen::Controls::Base* SettingsPanel::addProperty( Gwen::Controls::Base* pControl , Rectf bounds, string name, int val){
-    Gwen::Controls::Label* pLabelName = new Gwen::Controls::Label( pControl );
-    Gwen::Controls::Label* pLabelValue = new Gwen::Controls::Label( pControl );
-    int px = bounds.getX1();
-    int py = bounds.getY1();
-    int w = bounds.getWidth();
-    //    labeled->SetName( name );
-    pLabelName->SetPos( px, py );
+    
+    Gwen::Controls::Base* cont = new Gwen::Controls::Base( pControl );
+    Gwen::Controls::Label* pLabelName = new Gwen::Controls::Label( cont );
+    Gwen::Controls::Label* pLabelValue = new Gwen::Controls::Label( cont );
+    
+    cont->Dock( Gwen::Pos::Top );
+    cont->SetMargin( Gwen::Margin(5,7,5,7) );
+    cont->SetHeight( 20 );
     pLabelName->SetText( name );
     pLabelName->SetAlignment(Gwen::Pos::Left );
-//    pLabelName->SetName( name );
+    pLabelName->Dock( Gwen::Pos::Left );
+    pLabelName->SizeToContents();
 
-    pLabelValue->SetPos( px, py );
-    pLabelValue->SetWidth( w );
+    pLabelValue->Dock( Gwen::Pos::Right );
+    pLabelValue->SetWidth( 300 );
     pLabelValue->SetText( toString(val) );
     pLabelValue->SetAlignment( Gwen::Pos::Right );
     pLabelValue->SetName( name );
@@ -293,8 +319,9 @@ void SettingsPanel::onSliderLaserOutput( Gwen::Controls::Base* pControl ){
     else if (controlName.compare("Laser Angle") == 0){
         mLaserPreview3D->setLaserAngle( ( int ) pSlider->GetFloatValue() );
     }
-    else if (controlName.compare("Scaling") == 0){
-        float scale = pSlider->GetFloatValue()/100.0f;
+    else if (controlName.compare("Scanner Angle Max Input") == 0){
+        float scale = pSlider->GetFloatValue()/(mIldaFrame->params.output.scannerAngleX);
+//        float val = mIldaFrame->params.output.transform.scale.x * mIldaFrame->params.output.scannerAngleX * 100;
         mIldaFrame->params.output.transform.scale.x = scale;
         mIldaFrame->params.output.transform.scale.y = scale;
     }
@@ -348,9 +375,10 @@ void SettingsPanel::updateValues(){
     updateValue("End Count",mIldaFrame->params.output.endCount);
 //    updateValue("Laser pps",mIldaFrame->params.output.blankCount);
     updateValue("Laser Angle",mLaserPreview3D->getLaserAngle());
-    updateValue("Scaling",mIldaFrame->params.output.transform.scale.x*100.0f);
+    float val = mIldaFrame->params.output.transform.scale.x * mIldaFrame->params.output.scannerAngleX;
+    updateValue("Scanner Angle Max Input", toString(val) );
     updateValue("Fans Intensity",mLaserPreview3D->paramsView.fansIntensity*100.0f);
-
+        
 }
 
 void SettingsPanel::updateValue(string str, bool value){
@@ -369,6 +397,11 @@ void SettingsPanel::updateValue(string str, int value){
         static_cast<Gwen::Controls::HorizontalSlider*>(mSliderValueMap[str])->SetFloatValue( value );
         mLabelsMap[ mSliderValueMap[str] ]->SetText( toString( value ) );
     }
-
 }
+void SettingsPanel::updateValue(string str, string value){
+    if(mLabelsValueMap.count(str)>0){
+        mLabelsValueMap[ str ]->SetText( value );
+    }
+}
+
 

@@ -62,6 +62,9 @@ void LaserPreview3D::draw(){
 
     gl::translate( -centerOfSpace );
     
+    float scale = 1.45f;
+    gl::scale( scale,scale,scale );
+    
     gl::enableAlphaBlending();
 
     if(paramsView.showFrame){
@@ -214,12 +217,13 @@ void LaserPreview3D::drawLaserFans(float alpha){
 
 void LaserPreview3D::calculateDotsOnGauze( ciilda::Frame* frame){
     
-    float scale = 1.0/(float)kIldaMaxPoint;
+    float scale = 1.0/((float)kIldaMaxPoint*frame->params.output.transform.scale.x);
     float clrScale = 1.0/(float)kIldaMaxIntensity;
     Vec3f pointRay( 0,0,-1 );
     Vec3f point3d;
     Vec3f pointScale3d;
     Vec3f pNow,pBefore;
+    float px,py;
     ColorA clr;
     vector<ciilda::Point> points = frame->getPoints();
     int l = points.size();
@@ -229,9 +233,11 @@ void LaserPreview3D::calculateDotsOnGauze( ciilda::Frame* frame){
     mGauzeDots.clear();
 
     for(int i=0;i<l-1;i++){
+        px = points[i].x;
+        py = points[i].y;
         clr = ColorAf( points[i].r*clrScale, points[i].g*clrScale, points[i].b*clrScale, points[i].a*clrScale );
-        a1 = toRadians((Vec2f(points[i].x,points[i].y)*angleProj).length()*90);
-        a2 = atan2(points[i].x,points[i].y);
+        a1 = toRadians((Vec2f(px,py)*angleProj).length()*90);
+        a2 = atan2(px,py);
         point3d = pointRay;
         point3d.rotateY(a1);
         point3d.rotateZ(a2);
