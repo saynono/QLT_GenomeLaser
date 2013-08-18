@@ -23,5 +23,7 @@ public:
         static int getBasePair(string data, int basePairPos){
             return 3;
         }
+    
+    
 
 };

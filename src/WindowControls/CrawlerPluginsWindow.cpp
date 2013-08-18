@@ -22,13 +22,20 @@ CrawlerPluginsWindow::CrawlerPluginsWindow( Gwen::Controls::Base *parent )
     bDataControllerSet = false;
     
     pTestArea = new Controls::Base( this );
-    pTestArea->SetBounds( 0, 0, 900, 600 );
+//    pTestArea->SetBounds( 0, 0, 900, 600 );
     pTestArea->Dock( Gwen::Pos::Fill );
     
-    Gwen::Controls::PropertyTree* ptree = new Gwen::Controls::PropertyTree( pTestArea );
-    ptree->SetBounds( 10, 28, 650, 600 );
-    mPropTree = ptree;
-
+//    Gwen::Controls::PropertyTree* ptree = new Gwen::Controls::PropertyTree( pTestArea );
+//    ptree->SetBounds( 10, 28, 650, 600 );
+//    mPropTree = ptree;
+    
+    
+//    Gwen::Controls::TabControl* tabControl = parent->GetLeft()->GetTabControl();
+    Gwen::Controls::CollapsibleList* pList = new Gwen::Controls::CollapsibleList( pTestArea );
+    mCrawlerList = pList;
+    mCrawlerList->Dock( Gwen::Pos::Fill );
+    mCrawlerList->SetMargin( Margin(0,1,0,1) );
+    
 }
 
 CrawlerPluginsWindow::~CrawlerPluginsWindow(){
@@ -127,44 +134,33 @@ void CrawlerPluginsWindow::Render( Gwen::Skin::Base* skin )
     
 }
 
-//void CrawlerPluginsWindow::setDataController(DataController* d){
-//    mDataController = d;
-//    bDataControllerSet = true;
-//    
-//    int amountCrawler = mDataController->getCrawler()->size();
-//    for(int i=0;i<amountCrawler;i++){
-//        CrawplContainer* cr = new CrawplContainer( mPropTree );
-//        cr->setName( "Crawler Container => "  + toString(i) );
-////        cr->SetSize( 900, 100 );
-//        cr->SetPos( 0, i*100 );
-//        cr->setCrawler( &mDataController->getCrawler()->at(i) );
-//        mCrawplContainer.push_back( cr );
-//    }
-//}
-
 void CrawlerPluginsWindow::setMainController( MainController* mc ){
     mMainController = mc;
     mDataController = mMainController->getDataController();
     mPluginController = mMainController->getPluginController();
     bDataControllerSet = true;
     
-    map< string, vector<BasePlugin*> > pmap = mPluginController->getPluginsDirectory();
-    map< string, vector<BasePlugin*> >::iterator it;
-//    for(it=pmap.begin();it!=pmap.end();++it){
-//        console() << "PLUGIN " << (*it).first << "  => " << (*it).second.size() << std::endl;
-//    }
+    map< int, vector<BasePlugin*> > pmap = mPluginController->getPluginsDirectory();
+    vector<BasePlugin*>::iterator it;
     
     int amountCrawler = mDataController->getCrawler()->size();
     for(int i=0;i<amountCrawler;i++){
-        CrawplContainer* cr = new CrawplContainer( mPropTree );
-        cr->setName( "CRAWLER #"  + toString(i) );
+        Gwen::Controls::CollapsibleCategory* cat1 = mCrawlerList->Add( "CRAWLER #"  + toString(i) );
+        CrawplContainer* cr = new CrawplContainer( cat1 );
+        cr->setName( "CRAWLER #" + toString(i) );
         cr->setCrawler( &mDataController->getCrawler()->at(i) );
-        for(it=pmap.begin();it!=pmap.end();++it){
-            cr->addPlugin( (*it).second.at(i) );
+        for(it=pmap[i].begin();it!=pmap[i].end();++it){
+            cr->addPlugin( (*it) );
         }
+        
+        mMainController->getDataSaver()->sOnLoadedSettings.connect(  boost::bind(&CrawplContainer::updateValues, cr) );
+        cr->sOpenOscSettingsWindow.connect( boost::bind(&CrawlerPluginsWindow::onOpenOscSettings, this, boost::arg<1>::arg() ) );
+
         mCrawplContainer.push_back( cr );
     }
-    
-    mPropTree->ExpandAll();
-    
+}
+
+void CrawlerPluginsWindow::onOpenOscSettings( OSCElement* element ){
+    PluginOscSettings* pWindow = new PluginOscSettings( this );
+    pWindow->setup( element );
 }

@@ -19,6 +19,7 @@
 
 #include "ColouredShape2d.h"
 #include "PluginController.h"
+#include "DataSaver.h"
 
 
 
@@ -36,7 +37,9 @@ public:
     PluginController* getPluginController();
     DataController* getDataController();
     DataManager* getDataManager();
-    
+    DataSaver* getDataSaver();
+    void  gatherApplicationData( map<string, string>* data );
+
 	void createShapes();
 
     ciilda::Frame* getFrameRef();
@@ -53,6 +56,7 @@ private:
     DataToShapeConverter        mShapeConverter;
     DataController              mDataController;
     PluginController            mPluginController;
+    DataSaver                   mDataSaver;
     
     
     

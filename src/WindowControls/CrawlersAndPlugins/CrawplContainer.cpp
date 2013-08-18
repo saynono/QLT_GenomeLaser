@@ -10,59 +10,36 @@
 #include "cinder/app/AppNative.h"
 #include "CinderGwen.h"
 
-CrawplContainer::CrawplContainer( Gwen::Controls::PropertyTree* parent )
+CrawplContainer::CrawplContainer( Gwen::Controls::CollapsibleCategory* parent )
 : Gwen::Controls::Base( parent, "Yes" )
 {
     
-    
-//    Gwen::Controls::Properties* props = mPropTree->Add( "PluginSetting " + plugin->pluginID() );
+    mParentCat = parent;
+    Dock( Gwen::Pos::Top );
+//    SetSize( 800, 300);
 
-//    Gwen::Controls::PropertyTree* ptree = mPropTree->Add( "Crawler ", new Gwen::Controls::PropertyTree( parent ) );;
-//    ptree->SetBounds( 10, 28, 650, 600 );
-    
+    mTopBar = new Gwen::Controls::Base(this);
+    mTopBar->SetSize(500, 30);
+    mTopBar->SetPos(10, 5);
+    Gwen::Controls::Button* btn = new Gwen::Controls::Button(mTopBar);
+    btn->SetSize( 140, 20 );
+    btn->SetText( "ON" );
+    btn->onPress.Add( this, &CrawplContainer::onOnOffClick );
+    mOnOffButton = btn;
 
-    mPropTree = parent;
+    Gwen::Controls::ComboBox* combo = new Gwen::Controls::ComboBox( this );
+    combo->SetPos( 160, 5 );
+    combo->SetWidth( 200 );
+    combo->onSelection.Add( this, &CrawplContainer::onPluginComboClick );
+    mPluginComboList = combo;
+    mPluginComboList->SetHidden( true );
 
-//    Gwen::Controls::PropertyTreeNode* node = new Gwen::Controls::PropertyTreeNode( mPropTree );
-//    node->SetText( "HELLO!" );
-//    node->Dock( Gwen::Pos::Top );
-//    
-//    mPropNode = node;
-
-//    mPropTree = parent;
-    
-//    mName = "Crawler Dummy";
-//    Gwen::Controls::Label* label =  new Gwen::Controls::Label( this );
-//    label->SetText( mName );
-//    label->SetPos(10, 0);
-//    label->SetSize(870, 30);
-//    mLabel = label;
-//    bIsSmall = true;
-//    mHeightSmall = 30;
-//    mHeightLarge = 250;
-//    mHeightCurrent = mHeightSmall;
-//    mWidth = 900;
-//    SetSize(mWidth,mHeightSmall);
-//
-//    label =  new Gwen::Controls::Label( this );
-//    label->SetText( mName );
-//    label->SetPos(400, 0);
-//    label->SetSize(400, 30);
-//    mLabelBasePairs = label;
-//
-//    label =  new Gwen::Controls::Label( this );
-//    label->SetText( "-" );
-//    label->SetPos(100, 0);
-//    label->SetSize(600, 30);
-//    mLabelDescription = label;
-//    
-//    
-//    Gwen::Controls::PropertyTree* ptree = new Gwen::Controls::PropertyTree( this );
-//    ptree->SetBounds( 100, 28, 650, 300 );
-//    
-//    mPropTree = ptree;
-//
-//    resize(true);
+    mPluginList = new Gwen::Controls::ListBox( this );
+    mPluginList->SetBounds( 10, 30, 150, 200 );
+    mPluginList->SelectByString( "Bl*", true );
+    mPluginList->SetAllowMultiSelect( true );
+    mPluginList->SetKeyboardInputEnabled( true );    
+    mPluginList->onRowSelected.Add( this, &CrawplContainer::onRowSelected );
 
 }
 
@@ -70,33 +47,7 @@ CrawplContainer::~CrawplContainer(){};
 
 void CrawplContainer::Render( Gwen::Skin::Base* skin )
 {
-//    
-//	Vec2f pos( cigwen::fromGwen( LocalPosToCanvas() ) );
-//	ci::Rectf bounds( cigwen::fromGwen( GetBounds() ) );
-//	float aspect = (float)m_InnerBounds.w / (float)m_InnerBounds.h;
-//    gl::pushMatrices();
-//    
-//    mLabelDescription->SetText( "ROI:" + mDataCrawler->roiDataSet.roiDescription + " OFFSET:" + toString(mDataCrawler->pos) );
-//    mLabelBasePairs->SetText( mDataCrawler->dataSet.dataBitsString );
-//    float width = bounds.getWidth();
-//    float height = bounds.getHeight();
-//    
-//    if(aspect > 1){
-//        width /= aspect;
-//    }else{
-//        height *= aspect;
-//    }
-//    
-//	gl::translate( pos );
-//    gl::color( ci::Color( 0x13/255.0,0x14/255.0,0x13/255.0  ) );
-//    gl::drawSolidRect(Rectf(0,0,m_InnerBounds.w,m_InnerBounds.h));
-//    
-//    Vec2f offset(bounds.getWidth()-width,bounds.getHeight()-height);
-//	gl::translate( offset/2.0 );
-//    
-//
-//    
-//    gl::popMatrices();    
+
 }
 
 
@@ -105,7 +56,6 @@ void CrawplContainer::Render( Gwen::Skin::Base* skin )
 
 void CrawplContainer::setName(string name){
     mName = name;
-//    mLabel->SetText( name );
 }
 
 void CrawplContainer::setCrawler(DataCrawler* crawler){
@@ -114,70 +64,199 @@ void CrawplContainer::setCrawler(DataCrawler* crawler){
 
 void CrawplContainer::addPlugin( BasePlugin* plugin){
     mPlugins.push_back( plugin );
+
+    const string pluginId = plugin->pluginID();
+    Gwen::Controls::Layout::TableRow* row = mPluginList->AddItem( pluginId );
+    mPluginsRowMap[row] = plugin;
+    createPluginSettings( plugin );
+    mValueList = mPluginsListBoxMap[plugin];
+    mPluginList->SetSize( mPluginList->GetSize().x, mPluginsRowMap.size() * 20 + 10);
+//    displayPluginSettings( plugin );
     
-//    Gwen::Controls::Properties* props = mProperties->Add( plugin->pluginID() );
-//    props->SetSize(300, 200);
-//    int h = 0;
+    SetHeight( mPluginList->GetSize().y + 60 );
+    Gwen::UnicodeString pluginIdUni = Gwen::Utility::StringToUnicode( pluginId );
+    mPluginComboList->AddItem( pluginIdUni, pluginId );
+    mPluginComboList->SetHidden( false );
+}
+
+void CrawplContainer::displayPluginSettings( BasePlugin* plugin){
+    mValueList->SetHidden( true );
+    mValueList = mPluginsListBoxMap[plugin];
+    mValueList->SetHidden( false );
+    SetHeight( max( mPluginList->GetSize().y+mPluginList->GetPos().y, mValueList->GetPos().y + mValueList->GetSize().y) + 10 );
+}
+
+
+void CrawplContainer::createPluginSettings( BasePlugin* plugin){
+
+    Gwen::Controls::ListBox* ctrl = new Gwen::Controls::ListBox( this );
+    ctrl->SetBounds( 160, 30, 600, 200 );
+//    ctrl->SetWidth( 600 );
+    ctrl->SetColumnCount( 4 );
+    ctrl->SetAllowMultiSelect( true );
+    ctrl->SetColumnWidth(0,100);
+    ctrl->SetColumnWidth(1,240);
+    ctrl->SetColumnWidth(2,100);
+    ctrl->SetColumnWidth(3,80);
+    
+    mPluginsListBoxMap[plugin] = ctrl;
+    
     float val;
-    int cnt;
+    int cnt = 0;
+    ColorAf clr;
+    bool isColor = false;
     OSCElement* element;
+    Gwen::Controls::Layout::TableRow* pRow;
     map<string, OSCElement*> valMap = plugin->getOSCMapping();
     map<string, OSCElement*>::iterator it;
-//    Gwen::Controls::Properties* props = new Gwen::Controls::Properties( mPropTree );
-    Gwen::Controls::Properties* props = mPropTree->Add( "PluginSetting " + plugin->pluginID() );
-//    props->SetMargin( Gwen::Margin( 2, 10, 2 , 10 ) );
-    mPropertiesPlugin = props;
-    mPropertiesPlugin->SetName( mName );
+
     for( it=valMap.begin(); it!=valMap.end(); ++it){
+        
         element = (*it).second;
-        val = *(static_cast<float*>(element->pointer));
-        Gwen::Controls::Base* b = mPropertiesPlugin->Add( (*it).first );
-        Gwen::Controls::PropertyControlSlider* pRow = static_cast<Gwen::Controls::PropertyControlSlider*> (b);
-//        pRow->SetMargin( Gwen::Margin( 0, 4, 2 , 0 ) );
-        pRow->AddSlider(val,element->minValue,element->maxValue);
-        pRow->GetSlider()->onValueChanged.Add( this, &CrawplContainer::onSliderChange );
-        console() << "<<<<<< pRow->GetSlider() : " << pRow->GetSlider() << std::endl;
-        mValueMap[pRow->GetSlider()] = (*it).second;
+        
+        isColor = false;
+        if(element->type == OSCElement::OSCElementTypes::INTEGER){
+            val = *(static_cast<int*>(element->pointer));
+        }else if(element->type == OSCElement::OSCElementTypes::COLOR){
+            clr = *(static_cast<ColorAf*>(element->pointer));
+            isColor = true;
+        }else{
+            val = *(static_cast<float*>(element->pointer));
+        }
+        
+        
+        pRow = ctrl->AddItem( (*it).first );
+//        pRow->Dock( Gwen::Pos::Fill );
+        pRow->SetHeight( 20 );
+        
+        if( isColor ){
+            Gwen::Controls::Property::ColorSelector* clrs = new Gwen::Controls::Property::ColorSelector( this );
+            clrs->onChange.Add( this, &CrawplContainer::onColorChange );
+            clrs->SetWidth(100);
+//            L"ColorSelector", new Gwen::Controls::Property::ColorSelector( props ), L"255 0 0"
+            const string clrStr = toString((int)clr.r*255)+" "+toString((int)clr.b*255)+" "+toString((int)clr.b * 255);
+            pRow->SetCellContents( 1, clrs );
+            pRow->SetCellText( 2, "WORM COLOR" );
+            mClrValueMap[clrs] = element;
+            
+        }else{
+            Gwen::Controls::HorizontalSlider* pSlider = new Gwen::Controls::HorizontalSlider( this );
+            pSlider->SetRange( element->minValue, element->maxValue );
+            pSlider->SetFloatValue( val );
+            pSlider->SetName("SLIDER YEAH");
+            pSlider->onValueChanged.Add( this, &CrawplContainer::onSliderChange );
+            pSlider->SetHeight( 20 );
+            pSlider->SetWidth( 220 );
+            pRow->SetCellContents( 1, pSlider  );
+            pRow->SetCellText( 2, toString(val) );
+            mSliderLabelMap[pSlider] = pRow->GetCellContents(2);
+            mValueMap[pSlider] = element;
+        }
+    
+        Gwen::Controls::Button* btn = new Gwen::Controls::Button( this );
+        pRow->SetCellContents( 3, btn );
+        btn->onPress.Add( this, &CrawplContainer::onOscClick );
+        btn->SetText( "OSC" );
+        btn->SetWidth( 60 );
+        mOscButton = btn;
+        
+        mOscButtonMap[mOscButton] = element;
+        
         cnt++;
     }
-    props->SetSize(600, cnt*20);
+    
+    ctrl->SetSize(ctrl->GetSize().x, cnt*20+20);
+    ctrl->SetHidden( true );
 }
+
 
 void CrawplContainer::update(){
-    map<Gwen::Controls::Slider*, OSCElement*>::iterator it;
     float val;
+    map<Gwen::Controls::Slider*, OSCElement*>::iterator it;
     for( it=mValueMap.begin();it!=mValueMap.end();++it ){
-        val = *(static_cast<float*>((*it).second->pointer));
-        console() << (*it).first->GetFloatValue() << " => " << val << "     " << std::endl;
-        console()<<  "<>>><< pRow->GetSlider() : " << (*it).first << std::endl;
-        if( val != (*it).first->GetFloatValue() ){
-            (*it).first->SetValue( toString(val) );
+        if((*it).second->listeningToEvents){
+            (*it).first->SetDisabled( true );
+            OSCElement* element = (*it).second;
+            if(element->type == OSCElement::OSCElementTypes::INTEGER) val = *(static_cast<int*>(element->pointer));
+            else val = *(static_cast<float*>(element->pointer));
+            if( val != (*it).first->GetFloatValue() ){
+                (*it).first->SetFloatValue( val );
+                mSliderLabelMap[(*it).first]->SetValue( toString(val) );
+            }
+        }else{
+            (*it).first->SetDisabled( false );
         }
     }
-//    console() << "------------------------------------------" << std::endl;
+    string str;
+    if(mDataCrawler->isActive){
+        str = "ON";
+        mParentCat->SetText("Crawler #" + toString(mDataCrawler->crawlerID) + "   ( " + mPluginComboList->GetSelectedItem()->GetName() + " )");
+    }
+    else{
+        str = "OFF";
+        mParentCat->SetText("Crawler #" + toString(mDataCrawler->crawlerID) + "   ( " + str + " )");
+    }
+    mOnOffButton->SetText( str );
 }
 
+void CrawplContainer::updateValues(){
+}
+// ----------------------------------------------------------------------------------------
+
+//void CrawplContainer::getRowValue( Gwen::Controls::Layout::TableRow* row ){
+//
+//}
 
 // ----------------------------------------------------------------------------------------
 
+void CrawplContainer::onRowSelected(){
+    displayPluginSettings( mPluginsRowMap[mPluginList->GetSelectedRow()] );
+}
 
 void CrawplContainer::OnMouseClickLeft( int x, int y, bool bDown ) {
-
-//    y -= cigwen::fromGwen( LocalPosToCanvas() ).y;
-//    if(!bDown){
-//        if(y<30){
-//            resize(!bIsSmall);
-//        }
-//    }
 }
 
 void CrawplContainer::onSliderChange( Gwen::Controls::Base* pControl ){
-
-    Gwen::Controls::Slider* pSlider = ( Gwen::Controls::Slider* ) pControl;
+    Gwen::Controls::Slider* pSlider = static_cast<Gwen::Controls::Slider*> (pControl);
     float val = pSlider->GetFloatValue();
-    
     OSCElement* element = mValueMap[pSlider];
-    *(static_cast<float*>(element->pointer)) = val;
+    if(element->type == OSCElement::OSCElementTypes::INTEGER) *(static_cast<int*>(element->pointer)) = (int)val;
+    else *(static_cast<float*>(element->pointer)) = val;
+    mSliderLabelMap[pSlider]->SetValue( toString(val) );
+}
+
+void CrawplContainer::onOnOffClick( Gwen::Controls::Base* pControl ){
+    mDataCrawler->isActive = !mDataCrawler->isActive;
+}
+
+void CrawplContainer::onOscClick( Gwen::Controls::Base* b ){
+    sOpenOscSettingsWindow( mOscButtonMap[b] );
+}
+
+void CrawplContainer::onColorChange( Gwen::Controls::Base* b ){
+    Gwen::Controls::Property::ColorSelector* clrs = static_cast<Gwen::Controls::Property::ColorSelector*>(b);
+    string val = clrs->Gwen::Controls::Property::Text::GetPropertyValue().Get();
+    console() << " CrawplContainer::onColorChange : " << val << std::endl;
     
-//    console()<< "element->pointer : " << element->pointer << std::endl;
+    vector<string> tokens;
+    boost::split(tokens,val,boost::is_any_of(" "));
+    
+    OSCElement* element = mClrValueMap[b];
+    ColorAf* clr = static_cast<ColorAf*> (element->pointer);
+    clr->r = stoi(tokens[0]) / 255.0f;
+    clr->g = stoi(tokens[1]) / 255.0f;
+    clr->b = stoi(tokens[2]) / 255.0f;
+
+}
+
+void CrawplContainer::onPluginComboClick( Gwen::Controls::Base* pControl ){
+//    console() << " =====> " << mPluginComboList->GetSelectedItem()->GetName() << std::endl;
+    vector<BasePlugin*>::iterator it;
+    for(it=mPlugins.begin();it!=mPlugins.end();++it){
+        if( (*it)->pluginID().compare( mPluginComboList->GetSelectedItem()->GetName() ) == 0 ){
+            (*it)->activate(true);
+        }else{
+            (*it)->activate(false);
+        }
+    }
 }

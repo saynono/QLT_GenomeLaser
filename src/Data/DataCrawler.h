@@ -10,7 +10,7 @@
 #define QLT_GenomeLaser_DataCrawler_h
 
 
-#include "cinder/Timeline.h"
+//#include "cinder/Timeline.h"
 #include "GenomeData.h"
 
 class DataCrawler{
@@ -20,8 +20,8 @@ public:
     int     crawlerID;
     // dataset id
     int     chromosomeID;
-    // position in 0.0-1.0
-    cinder::Anim<int>   pos;
+    // position
+    float   pos;
     
     double lastUpdate;
     // in ticks per second
@@ -38,6 +38,7 @@ public:
     GenomeData::ROIDataSet roiDataSet;
     
     int     roiDataSetID;
+//    bool    isVisible;
     
 };
 

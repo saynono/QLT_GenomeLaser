@@ -18,11 +18,15 @@ void WindowManager::setup( MainController* mc, ViewManager* vm ){
 //    addColourCorrectionWindow();
     addCircularDataWindow();
     addCrawlerPluginWindow();
-
+    addMainMenu();
     
     setMainController( mc );
     setViewManager( vm );
     
+    mFullScreen = false;
+    
+    mMainController->getDataSaver()->sOnLoadedSettings.connect(  boost::bind(&SettingsPanel::updateValues, mSettingsControl) );
+
 //    mSyphonClient.setName("QLT Genome Laser Preview3D");
 
 }
@@ -34,7 +38,6 @@ void WindowManager::setMainController( MainController* mc ){
     setDataController( mMainController->getDataController() );
     setIldaFrameRef( mMainController->getFrameRef() );
     pCrawlerPluginWindow->setMainController( mMainController );
-
 }
 
 void WindowManager::setViewManager( ViewManager* vm ){
@@ -54,6 +57,9 @@ void WindowManager::update(){
     pStatusFPSLabel->SetText( toString((int)getFrameRate()) + " FPS        ");
     pCrawlerPluginWindow->update();
 //    mSyphonClient.publishTexture(&pPreview3DControl->getLaserPreview3d()->getTexture()->getTexture(0));
+    if ( mFullScreen != isFullScreen() ) {
+		setFullScreen( mFullScreen );
+	}
 }
 
 void WindowManager::draw(){
@@ -102,6 +108,15 @@ void WindowManager::createMainControls(){
     pStatus->SendToBack();
 }
 
+void WindowManager::addMainMenu(){
+    
+    MainMenu* menu = new MainMenu( mCanvas );
+    mMainMenu = menu;
+    menu->sOnSaveAppSettings.connect( boost::bind(&WindowManager::saveSettings, this, boost::arg<1>::arg() ) );
+    menu->sOnLoadAppSettings.connect( boost::bind(&WindowManager::loadSettings, this, boost::arg<1>::arg() ) );
+    
+}
+
 void WindowManager::setupMainArea(){
     
     mMainArea = new Gwen::Controls::Base( mTotalWindowArea );
@@ -132,46 +147,51 @@ void WindowManager::setupMainArea(){
 //        packet.String = "Hallosolo";
         pButton->SetText( "Preview" );
         pButton->onPress.Add( this, &WindowManager::zoomToPanel, packet );
-        pButton->AddAccelerator( "1" );
+//        pButton->AddAccelerator( "1" );
         pStatus->AddControl( pButton, false );
     }
     {
         Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
         pButton->SetText( "Preview3D" );
         pButton->onPress.Add( this, &WindowManager::zoomToPanel );
-        pButton->AddAccelerator( "2" );
+//        pButton->AddAccelerator( "2" );
         pStatus->AddControl( pButton, false );
     }
     {
         Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
         pButton->SetText( "Data Layer" );
         pButton->onPress.Add( this, &WindowManager::zoomToPanel );
-        pButton->AddAccelerator( "3" );
+//        pButton->AddAccelerator( "3" );
         pStatus->AddControl( pButton, false );
     }
     {
         Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
         pButton->SetText( "Crawlers & Plugins" );
         pButton->onPress.Add( this, &WindowManager::zoomToPanel );
-        pButton->AddAccelerator( "4" );
+//        pButton->AddAccelerator( "4" );
         pStatus->AddControl( pButton, false );
     }
     {
         Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
         pButton->SetText( "Show All Panels" );
         pButton->onPress.Add( this, &WindowManager::showAllPanels );
-        pButton->AddAccelerator( "0" );
+//        pButton->AddAccelerator( "0" );
         pStatus->AddControl( pButton, true );
     }    
+    {
+        Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
+        pButton->SetText( "Fullscreen" );
+        pButton->onPress.Add( this, &WindowManager::toggleFullscreen );
+//        pButton->AddAccelerator( "f" );
+        pStatus->AddControl( pButton, true );
+    }
 }
 
 // ---------------------------------------------------------------------------------------------------
 
 void WindowManager::addSettingsList(){
-        
     mSettingsControl = new SettingsPanel();
     mSettingsControl->setup( mTotalWindowArea  );
-
 }
 
 void WindowManager::addColourCorrectionWindow(){
@@ -238,9 +258,6 @@ void WindowManager::addCircularDataWindow(){
     pCircularControl = control;
     m_Splitter->SetPanel( panelId, control );
     
-    Gwen::Controls::Label* label =  new Gwen::Controls::Label( control );
-    label->SetText( "DATA LAYER" );
-    label->SetPos(10, 10);
 }
 
 void WindowManager::addCrawlerPluginWindow(){
@@ -252,12 +269,7 @@ void WindowManager::addCrawlerPluginWindow(){
     control->SetPadding(Gwen::Padding(0,0,0,0));
 	control->Dock( Gwen::Pos::Fill );
     pCrawlerPluginWindow = control;
-    m_Splitter->SetPanel( panelId, control );
-    
-    Gwen::Controls::Label* label =  new Gwen::Controls::Label( control );
-    label->SetText( "CRAWLERS AND PLUGING" );
-    label->SetPos(10, 10);
-    label->SetSize(30, 500);
+    m_Splitter->SetPanel( panelId, control );    
 }
 
 
@@ -273,9 +285,9 @@ void WindowManager::setIldaFrameRef( ciilda::Frame* frame ){
     mSettingsControl->setIldaFrame( frame );
 }
 
-void WindowManager::setLaserController(ciilda::LaserController* controller){
-    mSettingsControl->setLaserController(controller);
-}
+//void WindowManager::setLaserController(ciilda::LaserController* controller){
+//    mSettingsControl->setLaserController(controller);
+//}
 
 void WindowManager::setLaserPreview3d( LaserPreview3D* laserPreview3D ){
     mSettingsControl->setLaserPreview3d( laserPreview3D );
@@ -301,9 +313,15 @@ void WindowManager::reloadSkin(){
     console() << "reloadskin"<< std::endl;
 }
 
-void WindowManager::saveSettings(){
-    
+void WindowManager::saveSettings(string path){
+    mMainController->getDataSaver()->saveAppSettings(path);
 }
+
+void WindowManager::loadSettings(string path){
+    mMainController->getDataSaver()->loadAppSettings(path);
+}
+
+// ---------------------------------------------------------------------------------------------------
 
 ColourCorrectionWindow* WindowManager::getColorValueController(){
     return pColourControl;
@@ -312,6 +330,11 @@ ColourCorrectionWindow* WindowManager::getColorValueController(){
 void WindowManager::showAllPanels( Gwen::Controls::Base* pFromPanel )
 {
     m_Splitter->UnZoom();
+}
+
+void WindowManager::toggleFullscreen( Gwen::Controls::Base* b )
+{
+    mFullScreen = !mFullScreen;
 }
 
 void WindowManager::zoomToPanel( Gwen::Event::Info info ){

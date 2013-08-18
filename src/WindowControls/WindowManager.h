@@ -39,6 +39,7 @@
 #include "Preview3DWindow.h"
 #include "CircularDataWindow.h"
 #include "CrawlerPluginsWindow.h"
+#include "MainMenu.h"
 
 #include "SettingsPanel.h"
 #include "LaserPreview3D.h"
@@ -65,19 +66,22 @@ public:
 	void update();
 	void draw();
     
-    void saveSettings();
+    void saveSettings(string path);
+    void loadSettings(string path);
     
     ColourCorrectionWindow* getColorValueController();
 
     void setPreviewFbo( ci::gl::Fbo* fbo );
     void setIldaFrameRef( ciilda::Frame* frame );
-    void setLaserController(ciilda::LaserController* controller);
+//    void setLaserController(ciilda::LaserController* controller);
     void setLaserPreview3d( LaserPreview3D* laserPreview3D );
     void setCircularDataLayer( CircularDataLayer* circularDataLaser );
     void setDataController(DataController* d);
     void setPluginController(PluginController* d);
     LaserPreview3D* getLaserPreview3d();
     void reloadSkin();
+    
+    MainMenu* getMainMenu();
     
 private:
     
@@ -88,11 +92,13 @@ private:
     void addSettingsList();
     void addColourCorrectionWindow();
     void addCrawlerPluginWindow();
+    void addMainMenu();
     void createMainControls();
     
 //    void ZoomTest( Gwen::Controls::Base* pFromPanel );
     void showAllPanels( Gwen::Controls::Base* pFromPanel );
 //    void CenterPanels( Gwen::Controls::Base* pFromPanel );
+    void toggleFullscreen( Gwen::Controls::Base* b );
     
     void zoomToPanel( Gwen::Event::Info info );
     
@@ -102,6 +108,7 @@ private:
     Gwen::Controls::Base*       mMainArea;
     Gwen::Controls::DockBase*   mTotalWindowArea;
     Gwen::Controls::CrossSplitter* m_Splitter;
+    MainMenu*                   mMainMenu;
     
     MainController*             mMainController;
     ViewManager*                mViewManager;
@@ -119,6 +126,7 @@ private:
     
     ci::gl::Fbo*                mPreviewFbo;
     string                      mRenderDate;
+    bool                        mFullScreen;
     
     
 //    syphonServer                mSyphonClient;

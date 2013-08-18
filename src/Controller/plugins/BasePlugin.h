@@ -13,6 +13,7 @@
 #include "cinder/Rand.h"
 
 #include "OscMessage.h"
+#include "PluginUtils.h"
 
 #include "GenomeData.h"
 #include "ColouredShape2d.h"
@@ -31,21 +32,43 @@ public:
     enum OSCElementTypes {
         FLOAT = 0,
         INTEGER,
-        BANG
+        BANG,
+        COLOR
     };
     
-    OSCElement(){};
-    OSCElement( BasePlugin* plug, void* p, OSCElementTypes t ){
-        plugin = plug; pointer = p; type = t; minValue = numeric_limits<float>::min(); maxValue = numeric_limits<float>::max();
+//    OSCElement(){};
+    OSCElement( string n, BasePlugin* plug, void* p, OSCElementTypes t ){
+        name = n;
+        plugin = plug;
+        pointer = p;
+        type = t;
+        minValue = numeric_limits<float>::min();
+        maxValue = numeric_limits<float>::max();
+        listeningToEvents = true;
+        oscVariable = "";
     };
-    OSCElement( BasePlugin* plug, void* p, OSCElementTypes t, float minVal, float maxVal) {
-        plugin = plug; pointer = p; type = t; minValue = minVal; maxValue = maxVal;
+    OSCElement( string n, BasePlugin* plug, void* p, OSCElementTypes t, float minVal, float maxVal) {
+        name = n;
+        plugin = plug;
+        pointer = p;
+        type = t;
+        minValue = minVal;
+        maxValue = maxVal;
+        listeningToEvents = true;
+        oscVariable = "";
     };
+    
     BasePlugin*     plugin;
+    string          name;
     void*           pointer;
     OSCElementTypes type;
     float           minValue;
     float           maxValue;
+    bool            listeningToEvents;
+    string          oscVariable;
+    string          midiVariable;
+    boost::signals2::signal<void(OSCElement*)> sOscSettingsChanged;
+
     
 };
 
@@ -56,13 +79,12 @@ public:
     virtual ~BasePlugin(){};
 	virtual void setup(){};
     virtual void dispose(){};
-    virtual const ColouredShape2d& getShape(const GenomeData::BasePairDataSet& dataSet) = 0;//{return ColouredShape2d(); };
+    virtual const ColouredShape2d& getShape(const GenomeData::BasePairDataSet& dataSet) = 0;
 	
     virtual void onActivated(){};
     virtual void onDeActivated(){};
     
-    virtual const map<string, OSCElement*>& getOSCMapping() {};
-    virtual void processOSCMessage( const osc::Message& message ) {};
+    virtual const map<string, OSCElement*>& getOSCMapping() = 0;
 
     const string pluginID() { return mPluginID;};
 

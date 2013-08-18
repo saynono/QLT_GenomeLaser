@@ -20,6 +20,7 @@ class QLT_Main_App : public AppNative {
   public:
 	void setup();
     void shutdown();
+    void saveApplicationSettings();
 	void update();
 	void draw();
     void keyDown( KeyEvent event );
@@ -30,7 +31,6 @@ private:
     MainController              mMainController;
     ViewManager                 mViewManager;
     WindowManager               mWindowManager;
-    bool                        mFullScreen;
     
 };
 
@@ -48,13 +48,12 @@ void QLT_Main_App::setup()
     mViewManager.setup( &mMainController );
     mWindowManager.setup( &mMainController, &mViewManager );
     
+    mMainController.getDataSaver()->loadAppSettings("");
+    
     gl::disableDepthRead();
     gl::disableDepthWrite();
     gl::enableVerticalSync();
-    
-    mFullScreen = false;
-//    setFullScreen( mFullScreen );
-    
+        
 }
 
 
@@ -62,6 +61,9 @@ void QLT_Main_App::shutdown(){
     console() << "Exit. ByeBye..." << std::endl;
 }
 
+void QLT_Main_App::saveApplicationSettings(){
+    
+}
 
 void QLT_Main_App::update(){
     
@@ -71,11 +73,6 @@ void QLT_Main_App::update(){
 
     mLaserController->setPoints( mMainController.getFrame() );
     mLaserController->send();
-    
-	if ( mFullScreen != isFullScreen() ) {
-		setFullScreen( mFullScreen );
-	}
-
 }
 
 void QLT_Main_App::draw()
@@ -100,8 +97,11 @@ void QLT_Main_App::keyDown( KeyEvent event )
         case 27:
             quit();
             break;
-        case 'f':
-            mFullScreen = !mFullScreen;
+        case 282:
+        case 283:
+        case 284:
+        case 285:
+            mMainController.getDataController()->toggleCrawlerActivity(event.getCode()-282);
             break;
         default:
             console() << "event.getCode() : " << event.getCode() << std::endl;

@@ -11,18 +11,33 @@
 	
 void MainController::setup(){
     
-    mAmountCrawlers = 2;
+    mIldaFrame.params.output.doCapX = true;
+    mIldaFrame.params.output.doCapY = true;
+ 
+    // TODO: remove
+    mAmountCrawlers = 4;
+//    mAmountCrawlers = 1;
     
+    mDataSaver.setup();
     mDataManager.setup();
     mDataController.setup(&mDataManager, mAmountCrawlers);
     mShapeConverter.setup();
-    mPluginController.setup(mAmountCrawlers);
+    mPluginController.setup( mDataController.getCrawler(), &mDataSaver );
+    
+    mDataSaver.registerVariable( DataElement("IldaFrame.params.output.targetPointCount",&mIldaFrame.params.output.targetPointCount,DataElement::VarTypes::INTEGER) );
+    mDataSaver.registerVariable( DataElement("IldaFrame.params.output.blankCount",&mIldaFrame.params.output.blankCount,DataElement::VarTypes::INTEGER) );
+    mDataSaver.registerVariable( DataElement("IldaFrame.params.output.endCount",&mIldaFrame.params.output.endCount,DataElement::VarTypes::INTEGER) );
+    mDataSaver.registerVariable( DataElement("IldaFrame.params.output.transform.scale.x",&mIldaFrame.params.output.transform.scale.x,DataElement::VarTypes::FLOAT) );
+    mDataSaver.registerVariable( DataElement("IldaFrame.params.output.transform.scale.y",&mIldaFrame.params.output.transform.scale.y,DataElement::VarTypes::FLOAT) );
+    mDataSaver.registerVariable( DataElement("IldaFrame.params.draw.lines",&mIldaFrame.params.draw.lines,DataElement::VarTypes::BOOLEAN) );
+    mDataSaver.registerVariable( DataElement("IldaFrame.params.draw.points",&mIldaFrame.params.draw.points,DataElement::VarTypes::BOOLEAN) );
     
 }
 	
 void MainController::update(){
     mDataController.update();
     mPluginController.update();
+    mDataSaver.update();
     createShapes();
 }
 
@@ -53,6 +68,10 @@ PluginController* MainController::getPluginController(){
     return &mPluginController;
 }
 
+DataSaver* MainController::getDataSaver(){
+    return &mDataSaver;
+}
+
 //-----------------------------------------------------------------------------------------------------
 
 void MainController::createShapes(){
@@ -66,15 +85,26 @@ void MainController::createShapes(){
 
 
 void MainController::createTempDataBits(){
-        
+    int cnt = 0;
     for(int i=0;i<mAmountCrawlers;i++){
-        
-        // TODO check if plugin is visible and only then render shape
-        
-        const ColouredShape2d s = mPluginController.getShape(i, mDataController.getCrawler()->at(i).dataSet);
-        mCurrentShape.appendColouredShape2d(s);
-        
+        if(mDataController.getCrawler()->at(i).isActive){
+            mCurrentShape.appendColouredShape2d( mPluginController.getShape( &mDataController.getCrawler()->at(i) ) );
+            cnt++;
+        }
     }
+}
+
+void MainController::gatherApplicationData(map<string,string>* data){
+    
+//    data->operator[]("IldaFrame.params.output.targetPointCount") = toString(mIldaFrame.params.output.targetPointCount);
+//    data->operator[]("IldaFrame.params.output.blankCount") = toString(mIldaFrame.params.output.blankCount);
+//    data->operator[]("IldaFrame.params.output.endCount") = toString(mIldaFrame.params.output.endCount);
+//    data->operator[]("IldaFrame.params.output.transform.scale.x") = toString(mIldaFrame.params.output.transform.scale.x);
+//    data->operator[]("IldaFrame.params.output.transform.scale.y") = toString(mIldaFrame.params.output.transform.scale.y);
+//    
+//    data->operator[]("IldaFrame.params.draw.lines") = toString(mIldaFrame.params.draw.lines);
+//    data->operator[]("IldaFrame.params.draw.points") = toString(mIldaFrame.params.draw.points);
+//    data->operator[]("LaserPreview3D.paramsView.showFrame") = toString(mIldaFrame.params.draw.lines);
     
 }
 

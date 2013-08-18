@@ -39,6 +39,8 @@ public:
     void reset();
     void resetCrawler(DataCrawler* crawler);
     DataManager* getDataManager();
+    void toggleCrawlerActivity(int id);
+    void onDataStructureChange();
 
 private:
             
@@ -48,8 +50,6 @@ private:
     
     vector<DataCrawler>     mDataCrawler;
     map<int,int>            mRoiMapVisited;
-    int                     mTick;
-    float                   mTickFrequency;
 };
 
 

@@ -9,7 +9,6 @@
 #include "BitsAndLinesPlugin.h"
 
 BitsAndLinesPlugin::BitsAndLinesPlugin(): BasePlugin( "BitsAndLinesPlugin" ){
-    
 }
 	
 void BitsAndLinesPlugin::setup(){
@@ -26,17 +25,11 @@ void BitsAndLinesPlugin::setup(){
     mClr1 = ColorAf(Rand::randFloat(.01, .7),.7,Rand::randFloat(.0, .9),1);
     mClr2 = ColorAf(Rand::randFloat(.3, .9),Rand::randFloat(.3, .9),Rand::randFloat(.3, .9),1);
     
-    mOSCMap.insert( make_pair( "SPEED", new OSCElement( this, &mSpeed, OSCElement::FLOAT, 0.1, 10.0  )) );
-    mOSCMap.insert( make_pair( "LINE_HEIGHT", new OSCElement( this, &mLineHeight, OSCElement::FLOAT, 0, .1 )) );
-    mOSCMap.insert( make_pair( "LINE_POSITION", new OSCElement( this, &mLinePosition, OSCElement::FLOAT, 0, 1  )) );
-    mOSCMap.insert( make_pair( "LENGTH", new OSCElement( this, &mLength, OSCElement::FLOAT, 0, .4 )) );
-    
-    
-    console() << " SPEED  element->pointer : " << &mSpeed << std::endl;
-    console() << " LINE_HEIGHT  element->pointer : " << &mLineHeight << std::endl;
-    console() << " LINE_POSITION  element->pointer : " << &mLinePosition << std::endl;
-    console() << " LENGTH  element->pointer : " << &mLength << std::endl;
-    
+    mOSCMap.insert( make_pair( "SPEED", new OSCElement( "SPEED", this, &mSpeed, OSCElement::FLOAT, 0.1, 1.0  )) );
+    mOSCMap.insert( make_pair( "LINE_HEIGHT", new OSCElement( "LINE_HEIGHT", this, &mLineHeight, OSCElement::FLOAT, 0, .3 )) );
+    mOSCMap.insert( make_pair( "LINE_POSITION", new OSCElement( "LINE_POSITION", this, &mLinePosition, OSCElement::FLOAT, 0, 1  )) );
+    mOSCMap.insert( make_pair( "LENGTH", new OSCElement( "LENGTH", this, &mLength, OSCElement::FLOAT, 0, .4 )) );
+
 }
 
 void BitsAndLinesPlugin::dispose(){
@@ -51,57 +44,9 @@ const map<string, OSCElement*>& BitsAndLinesPlugin::getOSCMapping() {
 
 //------------------------------------------------------------------------------------------------------
 
-void BitsAndLinesPlugin::processOSCMessage( const osc::Message& message ) {
-    for (int i = 0; i < message.getNumArgs(); i++) {
-        if( message.getArgType(i) == osc::TYPE_INT32 ) {
-            try {
-                message.getArgAsInt32(i);
-            }
-            catch (...) {
-                console() << "Exception reading argument as int32" << std::endl;
-            }
-        }
-        else if( message.getArgType(i) == osc::TYPE_FLOAT ) {
-            try {
-                float val = message.getArgAsFloat(i);
-                mLength = toRadians( val*360 );
-                mLinePosition = val;
-            }
-            catch (...) {
-                console() << "Exception reading argument as float" << std::endl;
-            }
-        }
-        else if( message.getArgType(i) == osc::TYPE_STRING) {
-            try {
-                message.getArgAsString(i);
-            }
-            catch (...) {
-                console() << "Exception reading argument as string" << std::endl;
-            }
-        }
-    }
-    
-}
-
-
-//------------------------------------------------------------------------------------------------------
-
 const ColouredShape2d& BitsAndLinesPlugin::getShape( const GenomeData::BasePairDataSet& dataSet ){
 
-    
-//    int len = 8*10;
-//    char dataBits[(int)ceil(len/4)];
-//    int dataOffset = 20000;//+getElapsedFrames();
-    
-//    float startAngle = toRadians(-(float)getElapsedFrames()*mSpeed) + mStartAngle;
-    
-    
-//    float rotStepPair = mLength / (float) (dataSet.basePairsCount);
-    
     float p = dataSet.startPosition*mPairRadLength;
-//    console() << " offset: " << p << std::endl;
-//    console() << std::endl << "REAL " << dataSet.dataBitsString << std::endl;
-    
     float startAngle = p;//toRadians(-(float)dataSet.startPosition)*mPairRadLength + mStartAngle;
 
     convertBitChainToShape( dataSet.dataBitsString.c_str(), dataSet.basePairsCount, mLineHeight, startAngle, mPairRadLength, mLinePosition);
@@ -167,9 +112,6 @@ void BitsAndLinesPlugin::convertBitChainToShape(const char* data, int len, float
         p.rotate(rotStepPairDist);
             
     }
-    
-
-//    console() << "CALC " << dataBitsString << std::endl;
     
 }
 

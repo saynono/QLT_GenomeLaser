@@ -42,8 +42,6 @@ void SettingsPanel::setup(Gwen::Controls::DockBase *parent){
     Gwen::Controls::CollapsibleCategory* cat2 = pList->Add( "Laser Output Settings" );
     Gwen::Controls::CollapsibleCategory* cat3 = pList->Add( "Laser Preview Settings" );
     Gwen::Controls::CollapsibleCategory* cat4 = pList->Add( "Laser Colour Correction" );
-
-//    cat1->get
     
     Gwen::Padding padding = Gwen::Padding( 10, 0, 10, 20 );
     cat1->SetPadding( padding );
@@ -128,41 +126,31 @@ void SettingsPanel::setIldaFrame(ciilda::Frame* frame){
     ColourCorrectionWindow *control = new ColourCorrectionWindow( mLaserColourCorCat );
     control->setup();
     control->SetBounds( 10, 30, r.getWidth(), 200 );
-//	control->SetPos( r.getX1(), r.getY1() );
     control->SetPadding(Gwen::Padding(0,0,0,0));
-//	control->Dock( Gwen::Pos::Fill );
-    
-//    mLaserCatElements.push_back( control );
-    
-
-//    struct {
-//        bool doFlipX;
-//        bool doFlipY;
-//        Vec2f offset;
-//        Vec2f scale;
-//    } transform;
 
 }
 
-void SettingsPanel::setLaserController(ciilda::LaserController* controller){
-    mLaserController = controller;
-    
-    Gwen::Controls::Base* pSlider;
-    Gwen::Controls::Base* pCheckBox;
-    
-    pSlider = addSlider(mLaserCat, getBounds(mLaserCatElements), "Laser pps", mLaserController->getPPS(), 1000, 30000 );
-    mLaserCatElements.push_back(pSlider);
-    
-    bLaserControllerSet = true;
-
-}
+//void SettingsPanel::setLaserController(ciilda::LaserController* controller){
+////    console() << "SettingsPanel::setLaserController : " << controller << std::endl;
+//    mLaserController = controller;
+////    console() << "-------------::setLaserController : " << mLaserController << std::endl;
+//    Gwen::Controls::Base* pSlider;
+////    Gwen::Controls::Base* pCheckBox;
+//    
+//    pSlider = addSlider(mLaserCat, getBounds(mLaserCatElements), "Laser pps", mLaserController->getPPS(), 1000, 30000 );
+//    mLaserCatElements.push_back(pSlider);
+//    mSliderValueMap["Laser pps"] = pSlider;
+//
+//    bLaserControllerSet = true;
+//
+//}
 
 void SettingsPanel::setLaserPreview3d( LaserPreview3D* laserPreview3D ){
     mLaserPreview3D = laserPreview3D;
 
     Gwen::Controls::Base* pSlider;
     Gwen::Controls::Base* pCheckBox;
-    Gwen::Controls::Base* pLabel;
+//    Gwen::Controls::Base* pLabel;
 
     pSlider = addSlider(mLaserCat, getBounds(mLaserCatElements), "Laser Angle", mLaserPreview3D->getLaserAngle(), 0, 90 );
     mLaserCatElements.push_back(pSlider);
@@ -206,14 +194,11 @@ Gwen::Controls::Base* SettingsPanel::addCheckBox( Gwen::Controls::Base* pControl
     labeled->Checkbox()->SetChecked(selected);
     labeled->Checkbox()->SetName( name );
     labeled->Checkbox()->onCheckChanged.Add( this, &SettingsPanel::onCheckBoxLaserOutput );
+    mSliderValueMap[name] = labeled;
     return labeled;
 }
 
 Gwen::Controls::Base* SettingsPanel::addSlider( Gwen::Controls::Base* pControl , Rectf bounds, string name, int value, int valueMin, int valueMax){
-//
-//    int py = mSlider.size() * 20 + 50;
-//    int px = 10;
-//    int w = 200;
     
     int px = bounds.getX1();
     int py = bounds.getY1();
@@ -236,14 +221,11 @@ Gwen::Controls::Base* SettingsPanel::addSlider( Gwen::Controls::Base* pControl ,
     pSlider->SetSize( w, 20 );
     pSlider->SetRange( valueMin, valueMax );
     pSlider->SetFloatValue( value );
-
-//    pSlider->SetNotchCount( 10 );
-//    pSlider->SetClampToNotches( true );
     pSlider->SetName(name);
     pSlider->onValueChanged.Add( this, &SettingsPanel::onSliderLaserOutput );
     
     mLabelsMap[pSlider] = labelValue;
-    
+    mSliderValueMap[name] = pSlider;
     return pSlider;
 }
 
@@ -327,7 +309,6 @@ void SettingsPanel::onCheckBoxLaserOutput( Gwen::Controls::Base* pControl ){
     
     Gwen::Controls::CheckBox* pCheckBox = ( Gwen::Controls::CheckBox* ) pControl;
     string controlName = pControl->GetName().c_str();
-    console() << controlName << " : " << pCheckBox->GetValue().c_str() << std::endl;
     if (controlName.compare("Draw Lines") == 0){
         mIldaFrame->params.draw.lines = pCheckBox->IsChecked() == 1;
 //        console() <<  "mIldaFrame->params.draw.lines : " << mIldaFrame->params.draw.lines << std::endl;
@@ -351,10 +332,43 @@ void SettingsPanel::onCheckBoxLaserOutput( Gwen::Controls::Base* pControl ){
         mLaserPreview3D->paramsView.showFans = pCheckBox->IsChecked() == 1;
     }
     
-    
-    
-    
-    
-    
-    
 }
+
+void SettingsPanel::updateValues(){
+
+    updateValue("Show Frame",mLaserPreview3D->paramsView.showFrame);
+    updateValue("Draw Points",mIldaFrame->params.draw.points);
+    updateValue("Show Dots on Gauze",mLaserPreview3D->paramsView.showDotsOnGauze);
+    updateValue("Show Lines on Gauze",mLaserPreview3D->paramsView.showLinesOnGauze);
+    updateValue("Show Rays",mLaserPreview3D->paramsView.showRays);
+    updateValue("Show Fans",mLaserPreview3D->paramsView.showFans);
+
+    updateValue("Target Points Count",mIldaFrame->params.output.targetPointCount);
+    updateValue("Blank Count",mIldaFrame->params.output.blankCount);
+    updateValue("End Count",mIldaFrame->params.output.endCount);
+//    updateValue("Laser pps",mIldaFrame->params.output.blankCount);
+    updateValue("Laser Angle",mLaserPreview3D->getLaserAngle());
+    updateValue("Scaling",mIldaFrame->params.output.transform.scale.x*100.0f);
+    updateValue("Fans Intensity",mLaserPreview3D->paramsView.fansIntensity*100.0f);
+
+}
+
+void SettingsPanel::updateValue(string str, bool value){
+    if(mSliderValueMap.count(str)>0){
+        static_cast<Gwen::Controls::CheckBoxWithLabel*>(mSliderValueMap[str])->Checkbox()->SetChecked( value );
+    }
+}
+void SettingsPanel::updateValue(string str, float value){
+    if(mSliderValueMap.count(str)>0){
+        static_cast<Gwen::Controls::Slider*>(mSliderValueMap[str])->SetFloatValue( value );
+        mLabelsMap[ mSliderValueMap[str] ]->SetText( toString( value ) );
+    }
+}
+void SettingsPanel::updateValue(string str, int value){
+    if(mSliderValueMap.count(str)>0){
+        static_cast<Gwen::Controls::HorizontalSlider*>(mSliderValueMap[str])->SetFloatValue( value );
+        mLabelsMap[ mSliderValueMap[str] ]->SetText( toString( value ) );
+    }
+
+}
+

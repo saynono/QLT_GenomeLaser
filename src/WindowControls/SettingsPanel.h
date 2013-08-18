@@ -46,8 +46,10 @@ public:
 	void draw();
     
     void setIldaFrame(ciilda::Frame* frame);
-    void setLaserController(ciilda::LaserController* controller);
+//    void setLaserController(ciilda::LaserController* controller);
     void setLaserPreview3d( LaserPreview3D* laserPreview3D );
+    
+    void updateValues();
     
 private:
 
@@ -58,6 +60,10 @@ private:
     Gwen::Controls::Base* addProperty( Gwen::Controls::Base* pControl , Rectf bounds, string name, int val);
     Rectf getBounds(const vector<Gwen::Controls::Base*>& vec);
     
+    void updateValue(string str, float value);
+    void updateValue(string str, bool value);
+    void updateValue(string str, int value);
+
     
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -78,6 +84,8 @@ private:
     vector<Gwen::Controls::Base*>                               mLaserPreviewCatElements;
     map<Gwen::Controls::Base*,Gwen::Controls::Label*>           mLabelsMap;
     map<string,Gwen::Controls::Label*>                          mLabelsValueMap;
+    map<string,Gwen::Controls::CheckBoxWithLabel*>              mCheckboxValueMap;
+    map<string,Gwen::Controls::Base*>                           mSliderValueMap;
     
     bool                                        bIldaFrameSet;
     bool                                        bLaserControllerSet;

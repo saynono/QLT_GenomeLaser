@@ -27,7 +27,7 @@ public:
 	void setup( MainController* mc );
 	void update();
 	void draw();
-	
+    void gatherApplicationData( map<string, string>* data );
     LaserPreview3D* getLaserPreview3D();
     CircularDataLayer* getCircularDataLayer();
     
