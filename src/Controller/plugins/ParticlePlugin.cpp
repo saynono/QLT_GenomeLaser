@@ -31,12 +31,14 @@
  */
 #include "ParticlePlugin.h"
 
+const Vec2f ParticlePlugin::CENTRE = Vec2f(.5, .5);
+
 ParticlePlugin::ParticlePlugin(): BasePlugin( "ParticlePlugin" ){
     
 }
 
-void ParticlePlugin::setup(){
-    
+void ParticlePlugin::setup()
+{    
     /*mStartAngle = Rand::randFloat(-M_PI,M_PI);
     mSpeed = Rand::randFloat(-M_PI,M_PI);
     mLineHeight = Rand::randFloat(0.0,.3);
@@ -60,6 +62,7 @@ void ParticlePlugin::setup(){
     console() << " LINE_POSITION  element->pointer : " << &mLinePosition << std::endl;
     console() << " LENGTH  element->pointer : " << &mLength << std::endl;
     */
+    //mOSCMap.insert( make_pair( "CENTRE_ATTRACT", new OSCElement( this, &mSpeed, OSCElement::FLOAT, 1, 10  )) );
 }
 
 void ParticlePlugin::dispose(){
@@ -94,6 +97,20 @@ const ColouredShape2d& ParticlePlugin::getShape( const GenomeData::BasePairDataS
         case 'T':
             particle.addForce(Vec2f(0, 2));
             break;
+    }
+    
+    // keep them in the centre
+    Vec2f dirToCenter = CENTRE - particle.getPos();
+    float distToCenter = dirToCenter.length();
+    static const float maxDistance = 0.2f;
+    
+    if( distToCenter > maxDistance )
+    {
+        dirToCenter.normalize();
+        float pullStrength = 10.f;
+        Vec2f force = dirToCenter * ( ( distToCenter - maxDistance ) * pullStrength );
+        //cout << force << endl;
+        particle.addForce(force);
     }
     
     particle.update();
