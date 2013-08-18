@@ -218,6 +218,7 @@ void DataManager::updateDataCrawler( DataCrawler* dataCrawler ){
         dataCrawler->roiDataSetID = dataCrawler->roiDataSet.roiId;
         dataCrawler->lastUpdate = getElapsedSeconds();
         dataCrawler->pos = dataCrawler->roiDataSet.startPosition;
+        dataCrawler->speed = pow(Rand::randInt(1,3),2);
         sOnRoiChange();
     }
 //    int len = dataCrawler->length;

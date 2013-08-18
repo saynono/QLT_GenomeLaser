@@ -115,7 +115,9 @@
 		FFA7A60217B6D231000E8662 /* DataSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A60017B6D231000E8662 /* DataSaver.cpp */; };
 		FFA7A60517B6DB82000E8662 /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A60317B6DB81000E8662 /* MainMenu.cpp */; };
 		FFA7A60917B7FBC7000E8662 /* WebsPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A60717B7FBC7000E8662 /* WebsPlugin.cpp */; };
+		FFB38C3617BFC1E3000AFBA7 /* ScannerPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB38C3417BFC1E3000AFBA7 /* ScannerPlugin.cpp */; };
 		FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */; };
+		FFB71D1017BD9CFD002263EA /* SwirlPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB71D0E17BD9CFD002263EA /* SwirlPlugin.cpp */; };
 		FFD212A617BC42D900E03FC8 /* BitsPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFD212A417BC42D900E03FC8 /* BitsPlugin.cpp */; };
 		FFECD08617A9AD3200AB3B95 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFECD05217A9AD3200AB3B95 /* IpEndpointName.cpp */; };
 		FFECD08717A9AD3200AB3B95 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFECD05717A9AD3200AB3B95 /* NetworkingUtils.cpp */; };
@@ -414,8 +416,12 @@
 		FFA7A60417B6DB81000E8662 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenu.h; sourceTree = "<group>"; };
 		FFA7A60717B7FBC7000E8662 /* WebsPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WebsPlugin.cpp; path = ../src/Controller/plugins/Webs/WebsPlugin.cpp; sourceTree = "<group>"; };
 		FFA7A60817B7FBC7000E8662 /* WebsPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebsPlugin.h; path = ../src/Controller/plugins/Webs/WebsPlugin.h; sourceTree = "<group>"; };
+		FFB38C3417BFC1E3000AFBA7 /* ScannerPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScannerPlugin.cpp; path = ../src/Controller/plugins/Scanner/ScannerPlugin.cpp; sourceTree = "<group>"; };
+		FFB38C3517BFC1E3000AFBA7 /* ScannerPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScannerPlugin.h; path = ../src/Controller/plugins/Scanner/ScannerPlugin.h; sourceTree = "<group>"; };
 		FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsPanel.cpp; sourceTree = "<group>"; };
 		FFB6C8291788787D00F41E8C /* SettingsPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsPanel.h; sourceTree = "<group>"; };
+		FFB71D0E17BD9CFD002263EA /* SwirlPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SwirlPlugin.cpp; path = ../src/Controller/plugins/Swirl/SwirlPlugin.cpp; sourceTree = "<group>"; };
+		FFB71D0F17BD9CFD002263EA /* SwirlPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwirlPlugin.h; path = ../src/Controller/plugins/Swirl/SwirlPlugin.h; sourceTree = "<group>"; };
 		FFD212A217BC281E00E03FC8 /* PluginUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginUtils.h; path = ../src/Utils/PluginUtils.h; sourceTree = "<group>"; };
 		FFD212A417BC42D900E03FC8 /* BitsPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BitsPlugin.cpp; path = ../src/Controller/plugins/Bits/BitsPlugin.cpp; sourceTree = "<group>"; };
 		FFD212A517BC42D900E03FC8 /* BitsPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitsPlugin.h; path = ../src/Controller/plugins/Bits/BitsPlugin.h; sourceTree = "<group>"; };
@@ -704,6 +710,8 @@
 		FF24954D17A7148100F8B0C3 /* plugins */ = {
 			isa = PBXGroup;
 			children = (
+				FFB38C3317BFC1CC000AFBA7 /* Scanner */,
+				FFB71D0D17BD9CD8002263EA /* Swirl */,
 				FFD212A317BC42B700E03FC8 /* Bits */,
 				FFA7A60617B7FB94000E8662 /* Webs */,
 				FF24954E17A714A400F8B0C3 /* PluginController.cpp */,
@@ -1130,6 +1138,24 @@
 			name = Webs;
 			sourceTree = "<group>";
 		};
+		FFB38C3317BFC1CC000AFBA7 /* Scanner */ = {
+			isa = PBXGroup;
+			children = (
+				FFB38C3417BFC1E3000AFBA7 /* ScannerPlugin.cpp */,
+				FFB38C3517BFC1E3000AFBA7 /* ScannerPlugin.h */,
+			);
+			name = Scanner;
+			sourceTree = "<group>";
+		};
+		FFB71D0D17BD9CD8002263EA /* Swirl */ = {
+			isa = PBXGroup;
+			children = (
+				FFB71D0E17BD9CFD002263EA /* SwirlPlugin.cpp */,
+				FFB71D0F17BD9CFD002263EA /* SwirlPlugin.h */,
+			);
+			name = Swirl;
+			sourceTree = "<group>";
+		};
 		FFD212A317BC42B700E03FC8 /* Bits */ = {
 			isa = PBXGroup;
 			children = (
@@ -1401,6 +1427,8 @@
 				FFA7A60517B6DB82000E8662 /* MainMenu.cpp in Sources */,
 				FFA7A60917B7FBC7000E8662 /* WebsPlugin.cpp in Sources */,
 				FFD212A617BC42D900E03FC8 /* BitsPlugin.cpp in Sources */,
+				FFB71D1017BD9CFD002263EA /* SwirlPlugin.cpp in Sources */,
+				FFB38C3617BFC1E3000AFBA7 /* ScannerPlugin.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

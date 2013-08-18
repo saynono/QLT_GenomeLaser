@@ -13,6 +13,8 @@ void PluginController::setup( vector<DataCrawler>* crawlers, DataSaver* dataSave
     mAmountCrawlers = crawlers->size();
     mOscController.setup( dataSaver );
     for(int i=0;i<crawlers->size()  ;i++){
+        addPlugin( &crawlers->at(i), new ScannerPlugin() );
+        addPlugin( &crawlers->at(i), new SwirlPlugin() );
         addPlugin( &crawlers->at(i), new BitsPlugin() );
         addPlugin( &crawlers->at(i), new WebsPlugin() );
         addPlugin( &crawlers->at(i), new BitsAndLinesPlugin() );

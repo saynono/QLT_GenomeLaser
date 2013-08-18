@@ -1,8 +1,8 @@
 //
-//  BitsPlugin.h
+//  Swirl.h
 //  QLT_GenomeLaser
 //
-//  Created by say nono on 14.08.13.
+//  Created by say nono on 16.08.13.
 //  Copyright (c) 2013 http://say-nono.com. All rights reserved.
 //
 
@@ -16,12 +16,13 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-class BitsPlugin: public BasePlugin{
+class SwirlPlugin: public BasePlugin{
     
 public:
 	
-    BitsPlugin();
+    SwirlPlugin();
 	virtual void setup();
+//    virtual const string pluginID() { return "Bits";};
     virtual void dispose();
     virtual const map<string, OSCElement*>& getOSCMapping();
     virtual const ColouredShape2d& getShape( const GenomeData::BasePairDataSet& dataSet );
@@ -51,9 +52,5 @@ private:
     ColorAf                         mColorBright;
     float                           mCounter;
 };
-
-
-
-
 
 

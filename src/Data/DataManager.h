@@ -35,6 +35,7 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/Buffer.h"
 #include "cinder/Utilities.h"
+#include "cinder/Rand.h"
 #include "cinder/Xml.h"
 
 #include "GenomeData.h"

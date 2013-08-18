@@ -17,6 +17,8 @@
 #include "BitsAndLinesPlugin.h"
 #include "WebsPlugin.h"
 #include "BitsPlugin.h"
+#include "SwirlPlugin.h"
+#include "ScannerPlugin.h"
 #include "PluginOSCController.h"
 
 

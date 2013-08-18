@@ -1,27 +1,30 @@
 //
-//  BitsPlugin.h
+//  ScannerPlugin.h
 //  QLT_GenomeLaser
 //
-//  Created by say nono on 14.08.13.
+//  Created by say nono on 17.08.13.
 //  Copyright (c) 2013 http://say-nono.com. All rights reserved.
 //
 
 #pragma once
 
 #include "cinder/app/AppBasic.h"
-
+#include "cinder/Timeline.h"
 #include "BasePlugin.h"
+
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-class BitsPlugin: public BasePlugin{
+
+class ScannerPlugin: public BasePlugin{
     
 public:
 	
-    BitsPlugin();
+    ScannerPlugin();
 	virtual void setup();
+    //    virtual const string pluginID() { return "Bits";};
     virtual void dispose();
     virtual const map<string, OSCElement*>& getOSCMapping();
     virtual const ColouredShape2d& getShape( const GenomeData::BasePairDataSet& dataSet );
@@ -46,14 +49,12 @@ private:
     float                           mSphereRotation;
     double                          mTimeStamp;
     
+    ColorAf                         mColorStart;
+    ColorAf                         mColorEnd;
+    int                             mLastDataSetID;
+    Anim<float>                     mRotCounter;
     
-    ColorAf                         mColorDark;
-    ColorAf                         mColorBright;
-    float                           mCounter;
+    
 };
-
-
-
-
 
 
