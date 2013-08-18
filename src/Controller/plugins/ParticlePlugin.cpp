@@ -33,12 +33,14 @@
 
 const Vec2f ParticlePlugin::CENTRE = Vec2f(.5, .5);
 
-ParticlePlugin::ParticlePlugin(): BasePlugin( "ParticlePlugin" ){
-    
+ParticlePlugin::ParticlePlugin(): BasePlugin( "ParticlePlugin" ), maxDistance(0.2)
+{
 }
 
 void ParticlePlugin::setup()
-{    
+{
+    mOSCMap.insert( make_pair( "MAX_DISTANCE", new OSCElement( "MAX_DISTANCE", this, &maxDistance, OSCElement::FLOAT, 0.2, 0.5  )) );
+    
     /*mStartAngle = Rand::randFloat(-M_PI,M_PI);
     mSpeed = Rand::randFloat(-M_PI,M_PI);
     mLineHeight = Rand::randFloat(0.0,.3);
@@ -83,7 +85,7 @@ const ColouredShape2d& ParticlePlugin::getShape( const GenomeData::BasePairDataS
     
     Vec2f pCenter(.5,.5);
     
-    switch(dataSet.dataBitsString[0])
+    switch(dataSet.dataBitsString[dataSet.basePairsCount * dataSet.percent])
     {
         case 'A':
             particle.addForce(Vec2f(-2, 0));
@@ -102,7 +104,8 @@ const ColouredShape2d& ParticlePlugin::getShape( const GenomeData::BasePairDataS
     // keep them in the centre
     Vec2f dirToCenter = CENTRE - particle.getPos();
     float distToCenter = dirToCenter.length();
-    static const float maxDistance = 0.2f;
+    
+    //static const float maxDistance = 0.2f;
     
     if( distToCenter > maxDistance )
     {

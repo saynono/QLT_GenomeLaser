@@ -65,6 +65,7 @@ private:
     std::map<string, OSCElement*> mOSCMap;
     itg::Particle particle;
     deque<Vec2f> trail;
+    float maxDistance;
     
 };
 

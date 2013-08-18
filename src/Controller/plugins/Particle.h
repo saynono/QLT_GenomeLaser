@@ -51,6 +51,9 @@ namespace itg
         
         Vec2f getPos() const { return pos; }
         
+        void setVel(const Vec2f& vel) { this->vel = vel; }
+        Vec2f getVel() const { return vel; }
+        
     private:
         Vec2f force;
         Vec2f pos;
