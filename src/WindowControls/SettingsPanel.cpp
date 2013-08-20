@@ -21,6 +21,7 @@ void SettingsPanel::setup(Gwen::Controls::DockBase *parent){
     bLaserControllerSet = false;
     mLaserCatElements.clear();
 
+    
 ////    Gwen::Controls::DockBase* dock = new Gwen::Controls::DockBase( mCanvas );
 //    this->Dock( Gwen::Pos::Fill );
 //    Gwen::Controls::CollapsibleList* pList = new Gwen::Controls::CollapsibleList( this );
@@ -37,11 +38,21 @@ void SettingsPanel::setup(Gwen::Controls::DockBase *parent){
     tabControl->SetAllowReorder(false);
 
 	parent->GetLeft()->SetWidth( 250 );
-    
+
+    Gwen::Controls::CollapsibleCategory* cat0 = pList->Add( "Laser Button!" );
     Gwen::Controls::CollapsibleCategory* cat1 = pList->Add( "Laser Stats" );
     Gwen::Controls::CollapsibleCategory* cat2 = pList->Add( "Laser Output Settings" );
     Gwen::Controls::CollapsibleCategory* cat3 = pList->Add( "Laser Preview Settings" );
     Gwen::Controls::CollapsibleCategory* cat4 = pList->Add( "Laser Colour Correction" );
+    
+    
+    mLaserButton = new Gwen::Controls::Button( cat0 );
+    mLaserButton->SetText(" DISABLE LASER ");
+    mLaserButton->Dock( Gwen::Pos::Top );
+    mLaserButton->SetHeight(40);
+    mLaserButton->SetMargin( Gwen::Margin(5,7,5,7) );
+    mLaserButton->onPress.Add( this, &SettingsPanel::onLaserButtonClick );
+
     
     Gwen::Padding padding = Gwen::Padding( 10, 0, 10, 20 );
     cat1->SetPadding( padding );
@@ -360,6 +371,20 @@ void SettingsPanel::onCheckBoxLaserOutput( Gwen::Controls::Base* pControl ){
     }
     
 }
+
+void SettingsPanel::onLaserButtonClick( Gwen::Controls::Base* pControl ){
+    console() << "SettingsPanel::onLaserButtonClick " << std::endl;
+    sOnLaserButtonClick();
+}
+
+void SettingsPanel::onEnableLaser(){
+    mLaserButton->SetText("DISABLE LASER");    
+}
+
+void SettingsPanel::onDisableLaser(){
+    mLaserButton->SetText("ENABLE LASER");
+}
+
 
 void SettingsPanel::updateValues(){
 

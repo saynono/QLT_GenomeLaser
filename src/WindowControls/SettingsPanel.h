@@ -24,6 +24,7 @@
 #include "Gwen/Controls/HorizontalSlider.h"
 #include "Gwen/Controls/CheckBox.h"
 #include "Gwen/Controls/Label.h"
+#include "Gwen/Controls/Button.h"
 
 #include "CinderIldaFrame.h"
 #include "CinderLaserDac.h"
@@ -51,10 +52,20 @@ public:
     
     void updateValues();
     
+    void onEnableLaser();
+    void onDisableLaser();
+    
+public:
+    
+    Gwen::Event::Caller	onPress;
+    boost::signals2::signal<void(void)> sOnLaserButtonClick;
+    
+    
 private:
 
     void onSliderLaserOutput( Gwen::Controls::Base* pControl );
     void onCheckBoxLaserOutput( Gwen::Controls::Base* pControl );
+    void onLaserButtonClick( Gwen::Controls::Base* pControl );
     Gwen::Controls::Base* addCheckBox( Gwen::Controls::Base* pControl , Rectf bounds, string name, bool selected);
     Gwen::Controls::Base* addSlider( Gwen::Controls::Base* pControl , Rectf bounds, string name, float value, float valueMin, float valueMax);
     Gwen::Controls::Base* addProperty( Gwen::Controls::Base* pControl , Rectf bounds, string name, int val);
@@ -72,6 +83,8 @@ private:
     ciilda::LaserController*                    mLaserController;
     
     LaserPreview3D*                             mLaserPreview3D;
+    
+    Gwen::Controls::Button*                     mLaserButton;
 
     
     Gwen::Controls::CollapsibleCategory*        mLaserCat;

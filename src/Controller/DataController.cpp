@@ -67,7 +67,7 @@ void DataController::resetCrawler(DataCrawler* crawler){
     crawler->length = Rand::randInt(60, 100);
     crawler->speed = Rand::randInt(1,10);
     // TODO: remove
-    crawler->speed = 2;    
+//    crawler->speed = 2;    
 }
 
 // ------------------------------------------------------------------------------------------------------------------

@@ -31,6 +31,8 @@ void MainController::setup(){
     mIldaFrame.params.output.transform.scale.x = s;
     mIldaFrame.params.output.transform.scale.y = s;
     
+    bIsLaserEnabled = true;
+    
     mDataSaver.registerVariable( DataElement("IldaFrame.params.output.targetPointCount",&mIldaFrame.params.output.targetPointCount,DataElement::VarTypes::INTEGER) );
     mDataSaver.registerVariable( DataElement("IldaFrame.params.output.blankCount",&mIldaFrame.params.output.blankCount,DataElement::VarTypes::INTEGER) );
     mDataSaver.registerVariable( DataElement("IldaFrame.params.output.endCount",&mIldaFrame.params.output.endCount,DataElement::VarTypes::INTEGER) );
@@ -48,6 +50,31 @@ void MainController::update(){
     mPluginController.update();
     mDataSaver.update();
     createShapes();
+}
+
+//-----------------------------------------------------------------------------------------------------
+
+void MainController::toggleLaser(){
+    console() << "MainController::toggleLaser()" << std::endl;
+    if(bIsLaserEnabled) disableLaser();
+    else enableLaser();
+}
+
+void MainController::enableLaser(){
+    bIsLaserEnabled = true;
+    sOnEnableLaser();
+}
+
+void MainController::disableLaser(){
+    bIsLaserEnabled = false;
+	mCurrentShape.clear();
+    mIldaFrame.begin();
+    mIldaFrame.end();
+    sOnDisableLaser();
+}
+
+bool MainController::isLaserEnabled(){
+    return bIsLaserEnabled;
 }
 
 //-----------------------------------------------------------------------------------------------------

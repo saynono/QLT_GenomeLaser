@@ -34,7 +34,7 @@ void SwirlPlugin::setup(){
     mOSCMap.insert( make_pair( "CIRC_DIAMETER", new OSCElement( "SPOT_SIZE", this, &mCircDiameter, OSCElement::FLOAT, 0.0f, .5f )) );
     mOSCMap.insert( make_pair( "LINE_HEIGHT", new OSCElement( "SPOT_SIZE", this, &mLineHeight, OSCElement::FLOAT, 0.0f, 1.0f )) );
     mOSCMap.insert( make_pair( "SPHERE_ROT_SPEED", new OSCElement( "SPHERE_ROT_SPEED", this, &mSphereRotSpeed, OSCElement::FLOAT, -1.f, 1.f )) );
-    mOSCMap.insert( make_pair( "WORM_LENGTH", new OSCElement( "WORM_LENGTH", this, &mWormLength, OSCElement::FLOAT, 0.1f, 20.0f )) );
+    mOSCMap.insert( make_pair( "WORM_LENGTH", new OSCElement( "WORM_LENGTH", this, &mWormLength, OSCElement::FLOAT, 0.1f, 50.0f )) );
     mOSCMap.insert( make_pair( "WORM_COLOR", new OSCElement( "WORM_COLOR", this, &mColorDark, OSCElement::COLOR )) );
     //    mOSCMap.insert( make_pair( "WORM_SPEED", new OSCElement( "WORM_SPEED", this, &mWormSpeed, OSCElement::COLOR, -2.f, 2.0f )) );
     
@@ -67,7 +67,7 @@ const ColouredShape2d& SwirlPlugin::getShape( const GenomeData::BasePairDataSet&
     int basePairs = dataSet.roi.basePairsCount;
     
     float circDiameter = mCircDiameter;
-    float lineHeight = mLineHeight;
+    float lineHeight = mLineHeight*circDiameter;
     float lineHeight2 = lineHeight/2.0;
     float circDiaLong = circDiameter;
     float circDiaShort = circDiameter-lineHeight;
@@ -94,7 +94,7 @@ const ColouredShape2d& SwirlPlugin::getShape( const GenomeData::BasePairDataSet&
     mTimeStamp = getElapsedSeconds();
     mSphereRotation += mSphereRotSpeed * (mTimeStamp-tb);
     float rot = dataSet.roi.startPosition*rotStepPair;
-    //        rot += mSphereRotation;
+    rot += mSphereRotation;
     //        console() << " mSphereRotSpeed : " << mSphereRotSpeed << "          => " << (mSphereRotSpeed * (mTimeStamp-timeBefore)) << std::endl;
     
     pNorm.rotate(rot);
@@ -130,7 +130,7 @@ const ColouredShape2d& SwirlPlugin::getShape( const GenomeData::BasePairDataSet&
         p.normalize();
         p *= lerp(circDiaShort,circDiaLong,basePairBit/3.0f);
         //            mShape.color( mColorBright );
-        if(i==0) mShape.moveTo( p+pOffset );
+//        if(i==0) mShape.moveTo( p+pOffset );
         //            else mShape.lineTo( p+pOffset );
         pos = cnt++;//dataSet.roi.startPosition - dataSet.roi.startPosition + cnt++;
         drawWorm(wormStart,wormLength,pos,p+pOffset,pPrev+pOffset);
@@ -159,35 +159,19 @@ const ColouredShape2d& SwirlPlugin::getShape( const GenomeData::BasePairDataSet&
 
 void SwirlPlugin::drawWorm( float wormStart, float wormLength, int pos, Vec2f p, Vec2f pPrev){
     
-    //    if(pos == 0){
-    //        mShape.color( mColorDark );
-    //        mShape.moveTo( p );
-    //        return;
-    //    }
-    
     if(pos==0){
         return;
     }
     
-    //    pos += offset;
-    //    pos +=
     
-    float distStart = wormStart - (pos-1);
-    float distEnd = (wormStart-wormLength) - (pos-1);
+//    float distStart = wormStart - (pos-1);
+//    float distEnd = (wormStart-wormLength) - (pos-1);
+    float distEnd = wormStart - (pos-1);
+    float distStart = (wormStart-wormLength) - (pos-1);
     
-    if(distEnd > 1){
-        
-        //        mShape.color(mColorDark);
-        //        mShape.moveTo(pPrev);
-        //        mShape.lineTo(p);
-        
+    if(distStart > 1){
         return;
-    }else if(distStart < 0){
-        
-        //        mShape.color(mColorDark);
-        //        mShape.moveTo(pPrev);
-        //        mShape.lineTo(p);
-        
+    }else if(distEnd < 0){
         return;
     }
     
@@ -197,9 +181,8 @@ void SwirlPlugin::drawWorm( float wormStart, float wormLength, int pos, Vec2f p,
     float percentLineStart = ci::math<float>::clamp(distStart);
     float percentLineEnd = ci::math<float>::clamp(distEnd);
     
-    float percentMixStart = (distStart-percentLineStart) / wormLength;
-    float percentMixEnd = (distStart-percentLineEnd) / wormLength;
-    
+    float percentMixEnd = (distEnd-percentLineStart) / wormLength;
+    float percentMixStart = (distEnd-percentLineEnd) / wormLength;
     
     Vec2f center(.5,.5);
     
@@ -215,18 +198,25 @@ void SwirlPlugin::drawWorm( float wormStart, float wormLength, int pos, Vec2f p,
     
     float clrMixValue;
     
+//    mShape.getNumContours()
     mShape.color(clrStart);
-    mShape.moveTo(pCompStart);
+//    console() << "mShape.getNumContours() : " << mShape.getNumContours() <<  std::endl;
+//    if(percentLineEnd != 0) console() << "counter : " << mShape.getNumContours() << std::endl;
+//    if(percentLineEnd != 0)
+    if( mShape.getNumContours() == 0) mShape.moveTo(pCompStart);
     mShape.lineTo(pCompStart);
     //    for(float i=percentLineEnd;i<percentLineStart;i+=.02){
-    for(float i=percentLineStart;i<percentLineEnd;i+=.02){
-        clrMixValue = ci::math<float>::clamp((i-percentLineStart)/(percentLineEnd-percentLineStart));
-        clr = lerp( clrStart, clrEnd, clrMixValue );
-        //        pComp = lerp( pPrev, p, i );
-        pComp = PluginUtils::lerpLineDistorted(pPrev,p,center,i);
-        mShape.color(clr);
-        mShape.lineTo(pComp);
-    }
+    
+//    float step = 1.0f/((pCompStart-pCompEnd).length() / .02);
+//    
+//    for(float i=percentLineStart;i<percentLineEnd;i+=step){
+//        clrMixValue = ci::math<float>::clamp((i-percentLineStart)/(percentLineEnd-percentLineStart));
+//        clr = lerp( clrStart, clrEnd, clrMixValue );
+//        //        pComp = lerp( pPrev, p, i );
+//        pComp = PluginUtils::lerpLineDistorted(pPrev,p,center,i);
+//        mShape.color(clr);
+//        mShape.lineTo(pComp);
+//    }
     mShape.color(clrEnd);
     mShape.lineTo(pCompEnd);
     

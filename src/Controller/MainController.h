@@ -34,6 +34,11 @@ public:
 	void setup();
 	void update();
     
+    void toggleLaser();
+    void enableLaser();
+    void disableLaser();
+    bool isLaserEnabled();
+    
     PluginController* getPluginController();
     DataController* getDataController();
     DataManager* getDataManager();
@@ -45,6 +50,9 @@ public:
     ciilda::Frame* getFrameRef();
     const ciilda::Frame& getFrame() const;
     const ColouredShape2d& getShape() const;
+    
+    boost::signals2::signal<void(void)> sOnEnableLaser;
+    boost::signals2::signal<void(void)> sOnDisableLaser;
 
 private:
     
@@ -64,6 +72,8 @@ private:
     ciilda::Frame               mIldaFrame;
     
     float                       mAmountCrawlers;
+    
+    bool                        bIsLaserEnabled;
     
 };
 

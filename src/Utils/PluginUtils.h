@@ -11,6 +11,7 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/CinderMath.h"
 #include "cinder/Utilities.h"
+#include "cinder/Shape2d.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -73,6 +74,15 @@ public:
         pRes.rotateZ( M_PI_2 );
         return pRes.xy()*diameter;
         
+    }
+    
+    static Vec2f findClosestPointToShape(const Vec2f& vec, const Shape2d& shape){
+        Vec2f result;
+//        shape.
+//        for(){
+//            
+//        }
+        return result;
     }
 
 //    static Vec2f lerpLineDistortedCorrectSimple( Vec2f p1, Vec2f p2, Vec2f center, float val ){

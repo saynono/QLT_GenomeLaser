@@ -21,6 +21,16 @@ using namespace std;
 
 class ScannerPlugin: public BasePlugin{
     
+    
+private:
+    struct StarElement{
+        Anim<float> liveTime;
+        int         elementId;
+        Vec2f       position;
+        bool        isActive;
+        int         lastDirPos;
+    };
+
 public:
 	
     ScannerPlugin();
@@ -33,12 +43,17 @@ public:
 private:
     
     Vec2f lerpLineDistorted( Vec2f p1, Vec2f p2, Vec2f center, float val );
-    void addSpotShape( ColouredShape2d* s, Vec2f center, float size );
     void drawWorm( float wormStart, float wormLength, int pos, Vec2f p, Vec2f pPrev);
     int getBasePairBit(char d);
+    bool processElement(int pos, Vec2f vec, int dir);
+    void cleanupElements();
+    void recreateElements( const GenomeData::BasePairDataSet& dataSet );
+    void drawStarElement( ColouredShape2d* s, const StarElement& element );
+    void drawElements();
     
     std::map<string, OSCElement*>   mOSCMap;
     ColouredShape2d                 mShape;
+    ColouredShape2d                 mShapeTemp;
     
     float                           mRadBasePair;
     int                             mAmountBasePair;
@@ -56,7 +71,7 @@ private:
     int                             mLastDataSetID;
     Anim<float>                     mRotCounter;
     
-    map<int,Vec2f>                  mStarIdPositions;
+    map<int,StarElement>            mStarElements;
     
 };
 

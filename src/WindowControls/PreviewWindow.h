@@ -33,6 +33,9 @@ public:
     void setPreviewFbo(ci::gl::Fbo* fbo);
     void setIldaFrame(ciilda::Frame* frame);
     
+    void onEnabledLaser();
+    void onDisabledLaser();
+    
 private:
     ci::Matrix44f		mCubeRotation;
 	ci::CameraPersp		mCamera;

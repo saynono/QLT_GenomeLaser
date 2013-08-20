@@ -20,6 +20,8 @@ class QLT_Main_App : public AppNative {
   public:
 	void setup();
     void shutdown();
+    void startLaserOutput();
+    void stopLaserOutput();
     void saveApplicationSettings();
 	void update();
 	void draw();
@@ -37,6 +39,7 @@ private:
 void QLT_Main_App::setup()
 {
     
+    console() << "Welcome to the Genome Laser Project 2013" << std::endl;
 
     setWindowSize(getDisplay()->getWidth()-100, getDisplay()->getHeight()-100);
     setWindowPos((getDisplay()->getWidth() - getWindowWidth()) / 2 , (getDisplay()->getHeight() - getWindowHeight()) / 2);
@@ -50,6 +53,10 @@ void QLT_Main_App::setup()
     
     mMainController.getDataSaver()->loadAppSettings("");
     
+    
+    mMainController.sOnEnableLaser.connect(  boost::bind(&QLT_Main_App::startLaserOutput, this) );
+    mMainController.sOnDisableLaser.connect(  boost::bind(&QLT_Main_App::stopLaserOutput, this) );
+    
     gl::disableDepthRead();
     gl::disableDepthWrite();
     gl::enableVerticalSync();
@@ -58,11 +65,22 @@ void QLT_Main_App::setup()
 
 
 void QLT_Main_App::shutdown(){
+    mLaserController->kill();
     console() << "Exit. ByeBye..." << std::endl;
 }
 
-void QLT_Main_App::saveApplicationSettings(){
-    
+void QLT_Main_App::startLaserOutput(){
+    console() << "QLT_Main_App::startLaserOutput" << std::endl;
+    mLaserController->start();
+}
+
+void QLT_Main_App::stopLaserOutput(){
+    console() << "QLT_Main_App::stopLaserOutput" << std::endl;
+//    ciilda::Frame emptyFrame;
+//    mLaserController->setPoints( emptyFrame );
+    mLaserController->setBlankFrame();
+    mLaserController->send();
+    mLaserController->stop();
 }
 
 void QLT_Main_App::update(){
@@ -71,8 +89,10 @@ void QLT_Main_App::update(){
     mViewManager.update();
     mWindowManager.update();
 
-    mLaserController->setPoints( mMainController.getFrame() );
-    mLaserController->send();
+    if(mMainController.isLaserEnabled()){
+        mLaserController->setPoints( mMainController.getFrame() );
+        mLaserController->send();        
+    }
 }
 
 void QLT_Main_App::draw()
@@ -91,8 +111,13 @@ void QLT_Main_App::keyDown( KeyEvent event )
 //        case 'l':
 //            mWindowManager.reloadSkin();
 //            break;
-        case 'q':
-//            quit();
+        case 13: // ENTER enable Laser
+//            startLaserOutput();
+            mMainController.enableLaser();
+            break;
+        case 32: // SPACE disable Laser
+//            stopLaserOutput();
+            mMainController.disableLaser();
             break;
         case 27:
 //            quit();

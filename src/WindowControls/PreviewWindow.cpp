@@ -27,9 +27,6 @@ PreviewWindow::~PreviewWindow()
 	app::console() << "CustomControl destroyed." << std::endl;
 }
 
-
-
-
 void PreviewWindow::Render( Skin::Base* skin )
 {
     

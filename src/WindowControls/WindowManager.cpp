@@ -27,7 +27,9 @@ void WindowManager::setup( MainController* mc, ViewManager* vm ){
     
     mMainController->getDataSaver()->sOnLoadedSettings.connect(  boost::bind(&SettingsPanel::updateValues, mSettingsControl) );
 
-//    mSyphonClient.setName("QLT Genome Laser Preview3D");
+    mSettingsControl->sOnLaserButtonClick.connect(  boost::bind(&MainController::toggleLaser, mMainController) );
+    mMainController->sOnEnableLaser.connect(  boost::bind(&SettingsPanel::onEnableLaser, mSettingsControl) );
+    mMainController->sOnDisableLaser.connect(  boost::bind(&SettingsPanel::onDisableLaser, mSettingsControl) );
 
 }
 
