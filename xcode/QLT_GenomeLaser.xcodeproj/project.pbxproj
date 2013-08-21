@@ -116,6 +116,9 @@
 		FFA7A60517B6DB82000E8662 /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A60317B6DB81000E8662 /* MainMenu.cpp */; };
 		FFA7A60917B7FBC7000E8662 /* WebsPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A60717B7FBC7000E8662 /* WebsPlugin.cpp */; };
 		FFB38C3617BFC1E3000AFBA7 /* ScannerPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB38C3417BFC1E3000AFBA7 /* ScannerPlugin.cpp */; };
+		FFB38CCF17C3D797000AFBA7 /* libEasyLase.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB38CCD17C3D797000AFBA7 /* libEasyLase.dylib */; };
+		FFB38CD017C3D797000AFBA7 /* libftd2xx.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB38CCE17C3D797000AFBA7 /* libftd2xx.dylib */; };
+		FFB38CE317C425E7000AFBA7 /* CinderEasyLase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB38CE117C425E7000AFBA7 /* CinderEasyLase.cpp */; };
 		FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */; };
 		FFB71D1017BD9CFD002263EA /* SwirlPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB71D0E17BD9CFD002263EA /* SwirlPlugin.cpp */; };
 		FFD212A617BC42D900E03FC8 /* BitsPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFD212A417BC42D900E03FC8 /* BitsPlugin.cpp */; };
@@ -418,6 +421,11 @@
 		FFA7A60817B7FBC7000E8662 /* WebsPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebsPlugin.h; path = ../src/Controller/plugins/Webs/WebsPlugin.h; sourceTree = "<group>"; };
 		FFB38C3417BFC1E3000AFBA7 /* ScannerPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScannerPlugin.cpp; path = ../src/Controller/plugins/Scanner/ScannerPlugin.cpp; sourceTree = "<group>"; };
 		FFB38C3517BFC1E3000AFBA7 /* ScannerPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScannerPlugin.h; path = ../src/Controller/plugins/Scanner/ScannerPlugin.h; sourceTree = "<group>"; };
+		FFB38CCC17C3D797000AFBA7 /* easyLase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easyLase.h; sourceTree = "<group>"; };
+		FFB38CCD17C3D797000AFBA7 /* libEasyLase.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libEasyLase.dylib; sourceTree = "<group>"; };
+		FFB38CCE17C3D797000AFBA7 /* libftd2xx.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libftd2xx.dylib; sourceTree = "<group>"; };
+		FFB38CE117C425E7000AFBA7 /* CinderEasyLase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CinderEasyLase.cpp; sourceTree = "<group>"; };
+		FFB38CE217C425E7000AFBA7 /* CinderEasyLase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderEasyLase.h; sourceTree = "<group>"; };
 		FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsPanel.cpp; sourceTree = "<group>"; };
 		FFB6C8291788787D00F41E8C /* SettingsPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsPanel.h; sourceTree = "<group>"; };
 		FFB71D0E17BD9CFD002263EA /* SwirlPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SwirlPlugin.cpp; path = ../src/Controller/plugins/Swirl/SwirlPlugin.cpp; sourceTree = "<group>"; };
@@ -476,6 +484,8 @@
 				00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */,
 				00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */,
 				00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */,
+				FFB38CCF17C3D797000AFBA7 /* libEasyLase.dylib in Frameworks */,
+				FFB38CD017C3D797000AFBA7 /* libftd2xx.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,6 +616,7 @@
 		FF046193178CCF2F005FE797 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				FFB38CC817C3D797000AFBA7 /* easyLase */,
 				FF04619B178CCF2F005FE797 /* etherdream */,
 			);
 			path = lib;
@@ -656,6 +667,7 @@
 		FF0461FE178CCF30005FE797 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				FFB38CE017C425E7000AFBA7 /* cieasylase */,
 				FF0461FF178CCF30005FE797 /* cietherdream */,
 				FF046202178CCF30005FE797 /* ciilda */,
 				FF046206178CCF30005FE797 /* cilaserdac */,
@@ -1147,6 +1159,49 @@
 			name = Scanner;
 			sourceTree = "<group>";
 		};
+		FFB38CC817C3D797000AFBA7 /* easyLase */ = {
+			isa = PBXGroup;
+			children = (
+				FFB38CC917C3D797000AFBA7 /* libs */,
+			);
+			path = easyLase;
+			sourceTree = "<group>";
+		};
+		FFB38CC917C3D797000AFBA7 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				FFB38CCA17C3D797000AFBA7 /* driver */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		FFB38CCA17C3D797000AFBA7 /* driver */ = {
+			isa = PBXGroup;
+			children = (
+				FFB38CCB17C3D797000AFBA7 /* libEasyLase */,
+			);
+			path = driver;
+			sourceTree = "<group>";
+		};
+		FFB38CCB17C3D797000AFBA7 /* libEasyLase */ = {
+			isa = PBXGroup;
+			children = (
+				FFB38CCC17C3D797000AFBA7 /* easyLase.h */,
+				FFB38CCD17C3D797000AFBA7 /* libEasyLase.dylib */,
+				FFB38CCE17C3D797000AFBA7 /* libftd2xx.dylib */,
+			);
+			path = libEasyLase;
+			sourceTree = "<group>";
+		};
+		FFB38CE017C425E7000AFBA7 /* cieasylase */ = {
+			isa = PBXGroup;
+			children = (
+				FFB38CE117C425E7000AFBA7 /* CinderEasyLase.cpp */,
+				FFB38CE217C425E7000AFBA7 /* CinderEasyLase.h */,
+			);
+			path = cieasylase;
+			sourceTree = "<group>";
+		};
 		FFB71D0D17BD9CD8002263EA /* Swirl */ = {
 			isa = PBXGroup;
 			children = (
@@ -1429,6 +1484,7 @@
 				FFD212A617BC42D900E03FC8 /* BitsPlugin.cpp in Sources */,
 				FFB71D1017BD9CFD002263EA /* SwirlPlugin.cpp in Sources */,
 				FFB38C3617BFC1E3000AFBA7 /* ScannerPlugin.cpp in Sources */,
+				FFB38CE317C425E7000AFBA7 /* CinderEasyLase.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1459,6 +1515,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(CINDER_PATH)/blocks/Cinder-Gwen/lib/gwen/gwen/lib\"",
+					"\"$(SRCROOT)/../../../../../../Cinder_0.8.5/blocks/Cinder-Ilda/lib/easyLase/libs/driver/libEasyLase\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
@@ -1493,6 +1550,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(CINDER_PATH)/blocks/Cinder-Gwen/lib/gwen/gwen/lib\"",
+					"\"$(SRCROOT)/../../../../../../Cinder_0.8.5/blocks/Cinder-Ilda/lib/easyLase/libs/driver/libEasyLase\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";

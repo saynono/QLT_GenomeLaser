@@ -4,6 +4,7 @@
 
 #include "CinderIldaFrame.h"
 #include "CinderEtherdream.h"
+#include "CinderEasyLase.h"
 
 
 #include "MainController.h"
@@ -45,6 +46,7 @@ void QLT_Main_App::setup()
     setWindowPos((getDisplay()->getWidth() - getWindowWidth()) / 2 , (getDisplay()->getHeight() - getWindowHeight()) / 2);
     
     mLaserController = new ciilda::Etherdream();
+//    mLaserController = new ciilda::EasyLase();
     mLaserController->setup();
 
     mMainController.setup();
