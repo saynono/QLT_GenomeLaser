@@ -121,6 +121,8 @@
 		FFB38CE317C425E7000AFBA7 /* CinderEasyLase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB38CE117C425E7000AFBA7 /* CinderEasyLase.cpp */; };
 		FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */; };
 		FFB71D1017BD9CFD002263EA /* SwirlPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB71D0E17BD9CFD002263EA /* SwirlPlugin.cpp */; };
+		FFC4423317C67B9D0050BAF3 /* libEasyLase.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = FFB38CCD17C3D797000AFBA7 /* libEasyLase.dylib */; };
+		FFC4423417C67B9F0050BAF3 /* libftd2xx.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = FFB38CCE17C3D797000AFBA7 /* libftd2xx.dylib */; };
 		FFD212A617BC42D900E03FC8 /* BitsPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFD212A417BC42D900E03FC8 /* BitsPlugin.cpp */; };
 		FFECD08617A9AD3200AB3B95 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFECD05217A9AD3200AB3B95 /* IpEndpointName.cpp */; };
 		FFECD08717A9AD3200AB3B95 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFECD05717A9AD3200AB3B95 /* NetworkingUtils.cpp */; };
@@ -145,6 +147,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				FFC4423317C67B9D0050BAF3 /* libEasyLase.dylib in CopyFiles */,
+				FFC4423417C67B9F0050BAF3 /* libftd2xx.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
