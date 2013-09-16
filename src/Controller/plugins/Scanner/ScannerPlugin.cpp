@@ -29,8 +29,8 @@ void ScannerPlugin::setup(){
     mSphereRotSpeed = .1;
     mSphereRotation = 0;
     
-    mColorStart = ColorAf(.4,.8,.3,1);
-    mColorEnd = ColorAf(0.76,.3,.8,1);
+    mColorStart = ColorAf(0,0,0,1);
+    mColorEnd = ColorAf(0,0,0,1);
 
     
     mOSCMap.insert( make_pair( "RAD_PER_BASEPAIR", new OSCElement( "RAD_PER_BASEPAIR", this, &mRadBasePair, OSCElement::FLOAT, toRadians(0.1f), toRadians(60.0f)  )) );
@@ -71,6 +71,20 @@ const ColouredShape2d& ScannerPlugin::getShape( const GenomeData::BasePairDataSe
         timeline().apply( &mRotCounter, val, 2.7f, EaseInOutQuad() );
         recreateElements(dataSet);
     }
+    
+    float clrVal = dataSet.percent/8.0f;
+    clrVal += (dataSet.startPosition/10000000.0f) ;
+    clrVal += dataSet.chromosomeData.chromosomeID/20.0f;
+    clrVal = fmod(clrVal,1.0f);
+//    mColorStart = colors.getColor(0,clrVal);
+    mColorStart = lerp(mColorStart,mColors.getColor(0,clrVal),.01);
+    clrVal = fmod(clrVal+.3f,1.0f);
+//    mColorEnd = colors.getColor(1,clrVal);
+    mColorEnd = lerp(mColorEnd,mColors.getColor(1,clrVal),.01);
+  
+
+
+//    console() << "(dataSet.startPosition/100000.0f) : " << (dataSet.startPosition/100000.0f) << std::endl;
     
     mShape.clear();
     
@@ -121,7 +135,7 @@ const ColouredShape2d& ScannerPlugin::getShape( const GenomeData::BasePairDataSe
         Vec2f pWidth(.02*dir,0);
         Path2d path = mShape.getContour(0);
         for(int i=path.getNumPoints()-1;i>=0;i--){
-            mShapeTemp.lineTo( path.getPoint(i)+pWidth);
+//            mShapeTemp.lineTo( path.getPoint(i)+pWidth);
         }
     }
     
@@ -142,7 +156,7 @@ const ColouredShape2d& ScannerPlugin::getShape( const GenomeData::BasePairDataSe
         p *= lerp(circDiaShort,circDiaLong,basePairBit/3.0f);
         
         bitID = dataSet.roi.startPosition + i;
-        bool add = processElement( bitID , p, dir);
+        bool add = processElement( bitID , p, dir, d);
 //        if(add) stars.push_back( p );
         cnt++;
     }
@@ -176,7 +190,7 @@ const ColouredShape2d& ScannerPlugin::getShape( const GenomeData::BasePairDataSe
 // ------------------------------------------------------------------------------------------------------
 
 
-bool ScannerPlugin::processElement(int elementId, Vec2f vec, int dir){
+bool ScannerPlugin::processElement(int elementId, Vec2f vec, int dir, char d){
 //        console() << i << " => " << p.x << "  " << p.y << "     rotStepPair : "  << toDegrees(rotStepPair) << std::endl;
     bool add = false;
     if( dir == 1 && mShapeTemp.contains(vec)){
@@ -196,6 +210,8 @@ bool ScannerPlugin::processElement(int elementId, Vec2f vec, int dir){
             element.position = vec;
             element.isActive = true;
             element.lastDirPos = dir;
+            element.liveTicker = 0;
+            element.basePair = d;
 //            timeline().apply( &mAnimationColor, ColorA( 1.,1.,1.,0. ), 1.f, EaseOutSine() )
 //            .finishFn( std::bind( &FlightDateDestination::reachedAnimationEnd , this ) );            
             mStarElements[elementId] = element;
@@ -221,6 +237,7 @@ void  ScannerPlugin::cleanupElements(){
         if((*it).second.liveTime == 0 || (*it).first != (*it).second.elementId){
             elId = (*it).first;
             removeItemIds.push_back(elId);
+//            console() << (*it).second.elementId << "    delete : "  << (*it).second.liveTicker << std::endl;
         }
     }
     if( removeItemIds.size() == 0) return;
@@ -256,7 +273,8 @@ void ScannerPlugin::drawElements(){
     map<int,StarElement> ::iterator itDraw;
     for( itDraw=mStarElements.begin();itDraw!=mStarElements.end();++itDraw){
         if((*itDraw).second.liveTime > 0){
-            if((*itDraw).second.position.length()==0) console() << "  " << (*itDraw).first << " ? " << (*itDraw).second.elementId << "( "<< (*itDraw).second.position.x << "  " << (*itDraw).second.position.y << ") " <<std::endl;
+//            if((*itDraw).second.position.length()==0) console() << "  " << (*itDraw).first << " ? " << (*itDraw).second.elementId << "( "<< (*itDraw).second.position.x << "  " << (*itDraw).second.position.y << ") " <<std::endl;
+            (*itDraw).second.liveTicker ++;
             drawStarElement( &mShape, (*itDraw).second );
             cnt++;
         }
@@ -271,7 +289,13 @@ void ScannerPlugin::drawElements(){
 
 void ScannerPlugin::drawStarElement( ColouredShape2d* s, const StarElement& element ){
     
+    
+    bool on = (element.elementId >> element.liveTicker) & 0x01;
+//    console() << " Element : " << element.elementId << "        :  " << element.liveTicker << "         :: " << on << std::endl;
+
+    if(!on) return;
     //    ColorAf clr( 1,1,1,element.liveTime );
+    
     Vec2f center = element.position;
 //    console() << "DRAW STAR " << element.elementId << "     percent : " << element.liveTime << std::endl;
     ColorAf clr( element.liveTime,element.liveTime,element.liveTime,element.liveTime );
@@ -373,6 +397,11 @@ void ScannerPlugin::drawWorm( float wormStart, float wormLength, int pos, Vec2f 
     
 }
 
+// ------------------------------------------------------------------------------------------------------
+
+void ScannerPlugin::onActivated(){
+    console() << "ScannerPlugin::onActivated" <<std::endl;
+}
 
 // ------------------------------------------------------------------------------------------------------
 

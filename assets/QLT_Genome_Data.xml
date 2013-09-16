@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <QLT_Genome_Data>
-	<datapath>./data/exons/</datapath>
+	<datapath>./data/charles/</datapath>
 	<datasets>
 		<dataset id="0">
 			<title>Chromosome 1</title>

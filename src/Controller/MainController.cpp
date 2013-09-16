@@ -30,6 +30,8 @@ void MainController::setup(){
     mIldaFrame.params.output.scannerAngleY = sAngleMax;
     mIldaFrame.params.output.transform.scale.x = s;
     mIldaFrame.params.output.transform.scale.y = s;
+
+    mIldaFrame.params.output.transform.offset.y = .25;
     
     bIsLaserEnabled = true;
     
@@ -38,10 +40,13 @@ void MainController::setup(){
     mDataSaver.registerVariable( DataElement("IldaFrame.params.output.endCount",&mIldaFrame.params.output.endCount,DataElement::VarTypes::INTEGER) );
     mDataSaver.registerVariable( DataElement("IldaFrame.params.output.scannerAngleX",&mIldaFrame.params.output.scannerAngleX,DataElement::VarTypes::FLOAT) );
     mDataSaver.registerVariable( DataElement("IldaFrame.params.output.scannerAngleY",&mIldaFrame.params.output.scannerAngleX,DataElement::VarTypes::FLOAT) );
+    mDataSaver.registerVariable( DataElement("IldaFrame.params.output.moveStepDivider",&mIldaFrame.params.output.moveStepDivider,DataElement::VarTypes::FLOAT) );
     mDataSaver.registerVariable( DataElement("IldaFrame.params.output.transform.scale.x",&mIldaFrame.params.output.transform.scale.x,DataElement::VarTypes::FLOAT) );
     mDataSaver.registerVariable( DataElement("IldaFrame.params.output.transform.scale.y",&mIldaFrame.params.output.transform.scale.y,DataElement::VarTypes::FLOAT) );
+    mDataSaver.registerVariable( DataElement("IldaFrame.params.output.transform.offset.y",&mIldaFrame.params.output.transform.offset.y,DataElement::VarTypes::FLOAT) );
     mDataSaver.registerVariable( DataElement("IldaFrame.params.draw.lines",&mIldaFrame.params.draw.lines,DataElement::VarTypes::BOOLEAN) );
     mDataSaver.registerVariable( DataElement("IldaFrame.params.draw.points",&mIldaFrame.params.draw.points,DataElement::VarTypes::BOOLEAN) );
+    mDataSaver.registerVariable( DataElement("Output.mainSpeed",&mDataManager.mMainSpeed,DataElement::VarTypes::FLOAT) );
     
 }
 	

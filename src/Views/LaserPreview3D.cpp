@@ -188,7 +188,7 @@ void LaserPreview3D::drawLaserFans(float alpha){
     //    gl::enable( GL_DEPTH_TEST );
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-
+    
     gl::begin(GL_TRIANGLES);
     for(int i=0;i<l-1;i++){
         clr = mGauzeDots[i].clr;

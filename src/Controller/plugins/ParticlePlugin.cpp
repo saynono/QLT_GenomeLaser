@@ -128,7 +128,7 @@ const ColouredShape2d& ParticlePlugin::getShape( const GenomeData::BasePairDataS
         mShape.moveTo( PluginUtils::harshMaxDiameter(trail[0],pCenter,.5f) );
         for (unsigned i = 1; i < trail.size(); ++i)
         {
-            mShape.color(hsvToRGB(Vec3f(i / (float)trail.size(), 1.f, 1.f)));
+            mShape.color(hsvToRGB(Vec3f(i / ((float)trail.size()*10), 1.f, 1.f)));
             mShape.lineTo( PluginUtils::harshMaxDiameter(trail[i],pCenter,.5f) );
         }
     }

@@ -38,8 +38,8 @@ void SwirlPlugin::setup(){
     mOSCMap.insert( make_pair( "WORM_COLOR", new OSCElement( "WORM_COLOR", this, &mColorDark, OSCElement::COLOR )) );
     //    mOSCMap.insert( make_pair( "WORM_SPEED", new OSCElement( "WORM_SPEED", this, &mWormSpeed, OSCElement::COLOR, -2.f, 2.0f )) );
     
-    mColorDark = ColorAf(.4,1,0,1);
-    mColorBright = ColorAf(0.1,.8,.8,1);
+    mColorDark = ColorAf(0,0,0,1);
+    mColorBright = ColorAf(0,.8,.8,1);
     mCounter = 6;
     
 }
@@ -66,13 +66,21 @@ const ColouredShape2d& SwirlPlugin::getShape( const GenomeData::BasePairDataSet&
     
     int basePairs = dataSet.roi.basePairsCount;
     
-    float circDiameter = mCircDiameter;
-    float lineHeight = mLineHeight*circDiameter;
+    float circDiameter = (int)(mCircDiameter*10)/10.0f;
+    float lineHeight = .1;//mLineHeight*circDiameter;
     float lineHeight2 = lineHeight/2.0;
     float circDiaLong = circDiameter;
     float circDiaShort = circDiameter-lineHeight;
     
     float rotStepPair = toRadians(6.0f);// mRadBasePair;
+    
+    float clrVal = dataSet.percent/4.0f;
+    clrVal += (dataSet.startPosition/100000.0f) ;
+    clrVal = fmod(clrVal,1.0f);
+    mColorDark = lerp(mColorDark,mColors.getColor(0,clrVal),.01);
+    clrVal = fmod(clrVal+.3f,1.0f);
+    mColorBright = lerp(mColorBright,mColors.getColor(1,clrVal),.01);
+
     
     //    mWormSpaceLength = 100;
     mCounter+=mWormSpeed;

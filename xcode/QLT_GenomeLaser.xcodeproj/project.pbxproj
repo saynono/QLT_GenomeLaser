@@ -111,18 +111,18 @@
 		FF81B7A41798C3FC000F0D3C /* CircularDataWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81B7A21798C3F6000F0D3C /* CircularDataWindow.cpp */; };
 		FF81DBFA178B5D10000566C1 /* Preview3DWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF81DBF8178B5D0F000566C1 /* Preview3DWindow.cpp */; };
 		FF82DDC617A5CDE300631BF2 /* ColouredShape2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF82DDC417A5CDD100631BF2 /* ColouredShape2d.cpp */; };
+		FF8B6EAD17CF2EC70090C197 /* PulsePlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8B6EAB17CF2EC70090C197 /* PulsePlugin.cpp */; };
+		FF8B6EB117D1CD6D0090C197 /* BarsPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8B6EAF17D1CD6D0090C197 /* BarsPlugin.cpp */; };
 		FFA7A57B17B66991000E8662 /* PluginOscSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A57917B66990000E8662 /* PluginOscSettings.cpp */; };
 		FFA7A60217B6D231000E8662 /* DataSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A60017B6D231000E8662 /* DataSaver.cpp */; };
 		FFA7A60517B6DB82000E8662 /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A60317B6DB81000E8662 /* MainMenu.cpp */; };
 		FFA7A60917B7FBC7000E8662 /* WebsPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA7A60717B7FBC7000E8662 /* WebsPlugin.cpp */; };
 		FFB38C3617BFC1E3000AFBA7 /* ScannerPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB38C3417BFC1E3000AFBA7 /* ScannerPlugin.cpp */; };
-		FFB38CCF17C3D797000AFBA7 /* libEasyLase.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB38CCD17C3D797000AFBA7 /* libEasyLase.dylib */; };
-		FFB38CD017C3D797000AFBA7 /* libftd2xx.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB38CCE17C3D797000AFBA7 /* libftd2xx.dylib */; };
 		FFB38CE317C425E7000AFBA7 /* CinderEasyLase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB38CE117C425E7000AFBA7 /* CinderEasyLase.cpp */; };
 		FFB6C82A1788787D00F41E8C /* SettingsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB6C8281788787D00F41E8C /* SettingsPanel.cpp */; };
 		FFB71D1017BD9CFD002263EA /* SwirlPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB71D0E17BD9CFD002263EA /* SwirlPlugin.cpp */; };
-		FFC4423317C67B9D0050BAF3 /* libEasyLase.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = FFB38CCD17C3D797000AFBA7 /* libEasyLase.dylib */; };
-		FFC4423417C67B9F0050BAF3 /* libftd2xx.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = FFB38CCE17C3D797000AFBA7 /* libftd2xx.dylib */; };
+		FFC4423717CD3ACF0050BAF3 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFC4423517CD3ACF0050BAF3 /* Colors.cpp */; };
+		FFC4423B17CD867C0050BAF3 /* OoliganLogo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFC4423917CD867C0050BAF3 /* OoliganLogo.cpp */; };
 		FFD212A617BC42D900E03FC8 /* BitsPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFD212A417BC42D900E03FC8 /* BitsPlugin.cpp */; };
 		FFECD08617A9AD3200AB3B95 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFECD05217A9AD3200AB3B95 /* IpEndpointName.cpp */; };
 		FFECD08717A9AD3200AB3B95 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFECD05717A9AD3200AB3B95 /* NetworkingUtils.cpp */; };
@@ -141,15 +141,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		FFFD33D517B180C60082BA9C /* CopyFiles */ = {
+		FFFD33D517B180C60082BA9C /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FFC4423317C67B9D0050BAF3 /* libEasyLase.dylib in CopyFiles */,
-				FFC4423417C67B9F0050BAF3 /* libftd2xx.dylib in CopyFiles */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -415,6 +414,10 @@
 		FF81DBF9178B5D10000566C1 /* Preview3DWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preview3DWindow.h; sourceTree = "<group>"; };
 		FF82DDC417A5CDD100631BF2 /* ColouredShape2d.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ColouredShape2d.cpp; sourceTree = "<group>"; };
 		FF82DDC517A5CDD100631BF2 /* ColouredShape2d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColouredShape2d.h; sourceTree = "<group>"; };
+		FF8B6EAB17CF2EC70090C197 /* PulsePlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PulsePlugin.cpp; path = ../src/Controller/plugins/Pulse/PulsePlugin.cpp; sourceTree = "<group>"; };
+		FF8B6EAC17CF2EC70090C197 /* PulsePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PulsePlugin.h; path = ../src/Controller/plugins/Pulse/PulsePlugin.h; sourceTree = "<group>"; };
+		FF8B6EAF17D1CD6D0090C197 /* BarsPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BarsPlugin.cpp; path = ../src/Controller/plugins/Bars/BarsPlugin.cpp; sourceTree = "<group>"; };
+		FF8B6EB017D1CD6D0090C197 /* BarsPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BarsPlugin.h; path = ../src/Controller/plugins/Bars/BarsPlugin.h; sourceTree = "<group>"; };
 		FFA7A57917B66990000E8662 /* PluginOscSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PluginOscSettings.cpp; path = CrawlersAndPlugins/PluginOscSettings.cpp; sourceTree = "<group>"; };
 		FFA7A57A17B66990000E8662 /* PluginOscSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PluginOscSettings.h; path = CrawlersAndPlugins/PluginOscSettings.h; sourceTree = "<group>"; };
 		FFA7A60017B6D231000E8662 /* DataSaver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataSaver.cpp; path = ../src/Data/DataSaver.cpp; sourceTree = "<group>"; };
@@ -434,6 +437,10 @@
 		FFB6C8291788787D00F41E8C /* SettingsPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsPanel.h; sourceTree = "<group>"; };
 		FFB71D0E17BD9CFD002263EA /* SwirlPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SwirlPlugin.cpp; path = ../src/Controller/plugins/Swirl/SwirlPlugin.cpp; sourceTree = "<group>"; };
 		FFB71D0F17BD9CFD002263EA /* SwirlPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwirlPlugin.h; path = ../src/Controller/plugins/Swirl/SwirlPlugin.h; sourceTree = "<group>"; };
+		FFC4423517CD3ACF0050BAF3 /* Colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Colors.cpp; path = ../src/Controller/plugins/Colors.cpp; sourceTree = "<group>"; };
+		FFC4423617CD3ACF0050BAF3 /* Colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Colors.h; path = ../src/Controller/plugins/Colors.h; sourceTree = "<group>"; };
+		FFC4423917CD867C0050BAF3 /* OoliganLogo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OoliganLogo.cpp; path = ../src/Controller/plugins/Ooligan/OoliganLogo.cpp; sourceTree = "<group>"; };
+		FFC4423A17CD867C0050BAF3 /* OoliganLogo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OoliganLogo.h; path = ../src/Controller/plugins/Ooligan/OoliganLogo.h; sourceTree = "<group>"; };
 		FFD212A217BC281E00E03FC8 /* PluginUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginUtils.h; path = ../src/Utils/PluginUtils.h; sourceTree = "<group>"; };
 		FFD212A417BC42D900E03FC8 /* BitsPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BitsPlugin.cpp; path = ../src/Controller/plugins/Bits/BitsPlugin.cpp; sourceTree = "<group>"; };
 		FFD212A517BC42D900E03FC8 /* BitsPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitsPlugin.h; path = ../src/Controller/plugins/Bits/BitsPlugin.h; sourceTree = "<group>"; };
@@ -488,8 +495,6 @@
 				00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */,
 				00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */,
 				00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */,
-				FFB38CCF17C3D797000AFBA7 /* libEasyLase.dylib in Frameworks */,
-				FFB38CD017C3D797000AFBA7 /* libftd2xx.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -726,6 +731,9 @@
 		FF24954D17A7148100F8B0C3 /* plugins */ = {
 			isa = PBXGroup;
 			children = (
+				FF8B6EAE17D1CCB40090C197 /* Bars */,
+				FF8B6EAA17CF2E9C0090C197 /* Pulse */,
+				FFC4423817CD86370050BAF3 /* ooligan */,
 				FFB38C3317BFC1CC000AFBA7 /* Scanner */,
 				FFB71D0D17BD9CD8002263EA /* Swirl */,
 				FFD212A317BC42B700E03FC8 /* Bits */,
@@ -742,6 +750,8 @@
 				2800006E17B2930B00D3FA7F /* ParticlePlugin.h */,
 				2800007017B2968300D3FA7F /* Particle.cpp */,
 				2800007117B2968300D3FA7F /* Particle.h */,
+				FFC4423517CD3ACF0050BAF3 /* Colors.cpp */,
+				FFC4423617CD3ACF0050BAF3 /* Colors.h */,
 			);
 			name = plugins;
 			sourceTree = "<group>";
@@ -1145,6 +1155,24 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
+		FF8B6EAA17CF2E9C0090C197 /* Pulse */ = {
+			isa = PBXGroup;
+			children = (
+				FF8B6EAB17CF2EC70090C197 /* PulsePlugin.cpp */,
+				FF8B6EAC17CF2EC70090C197 /* PulsePlugin.h */,
+			);
+			name = Pulse;
+			sourceTree = "<group>";
+		};
+		FF8B6EAE17D1CCB40090C197 /* Bars */ = {
+			isa = PBXGroup;
+			children = (
+				FF8B6EAF17D1CD6D0090C197 /* BarsPlugin.cpp */,
+				FF8B6EB017D1CD6D0090C197 /* BarsPlugin.h */,
+			);
+			name = Bars;
+			sourceTree = "<group>";
+		};
 		FFA7A60617B7FB94000E8662 /* Webs */ = {
 			isa = PBXGroup;
 			children = (
@@ -1213,6 +1241,15 @@
 				FFB71D0F17BD9CFD002263EA /* SwirlPlugin.h */,
 			);
 			name = Swirl;
+			sourceTree = "<group>";
+		};
+		FFC4423817CD86370050BAF3 /* ooligan */ = {
+			isa = PBXGroup;
+			children = (
+				FFC4423917CD867C0050BAF3 /* OoliganLogo.cpp */,
+				FFC4423A17CD867C0050BAF3 /* OoliganLogo.h */,
+			);
+			name = ooligan;
 			sourceTree = "<group>";
 		};
 		FFD212A317BC42B700E03FC8 /* Bits */ = {
@@ -1315,7 +1352,7 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
-				FFFD33D517B180C60082BA9C /* CopyFiles */,
+				FFFD33D517B180C60082BA9C /* Copy Files */,
 			);
 			buildRules = (
 			);
@@ -1489,6 +1526,10 @@
 				FFB71D1017BD9CFD002263EA /* SwirlPlugin.cpp in Sources */,
 				FFB38C3617BFC1E3000AFBA7 /* ScannerPlugin.cpp in Sources */,
 				FFB38CE317C425E7000AFBA7 /* CinderEasyLase.cpp in Sources */,
+				FFC4423717CD3ACF0050BAF3 /* Colors.cpp in Sources */,
+				FFC4423B17CD867C0050BAF3 /* OoliganLogo.cpp in Sources */,
+				FF8B6EAD17CF2EC70090C197 /* PulsePlugin.cpp in Sources */,
+				FF8B6EB117D1CD6D0090C197 /* BarsPlugin.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

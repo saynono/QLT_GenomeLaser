@@ -80,6 +80,7 @@ public:
     void setPluginController(PluginController* d);
     LaserPreview3D* getLaserPreview3d();
     void reloadSkin();
+    void setFullscreen( Boolean b );
     
     MainMenu* getMainMenu();
     

@@ -12,6 +12,7 @@
 #include "cinder/Timeline.h"
 #include "cinder/CinderMath.h"
 #include "BasePlugin.h"
+#include "Colors.h"
 
 
 using namespace ci;
@@ -29,6 +30,9 @@ private:
         Vec2f       position;
         bool        isActive;
         int         lastDirPos;
+        int         dataPos;
+        int         liveTicker;
+        char        basePair;
     };
 
 public:
@@ -39,13 +43,15 @@ public:
     virtual void dispose();
     virtual const map<string, OSCElement*>& getOSCMapping();
     virtual const ColouredShape2d& getShape( const GenomeData::BasePairDataSet& dataSet );
+    virtual void onActivated();
+
     
 private:
     
     Vec2f lerpLineDistorted( Vec2f p1, Vec2f p2, Vec2f center, float val );
     void drawWorm( float wormStart, float wormLength, int pos, Vec2f p, Vec2f pPrev);
     int getBasePairBit(char d);
-    bool processElement(int pos, Vec2f vec, int dir);
+    bool processElement(int pos, Vec2f vec, int dir, char basePair);
     void cleanupElements();
     void recreateElements( const GenomeData::BasePairDataSet& dataSet );
     void drawStarElement( ColouredShape2d* s, const StarElement& element );
@@ -54,6 +60,9 @@ private:
     std::map<string, OSCElement*>   mOSCMap;
     ColouredShape2d                 mShape;
     ColouredShape2d                 mShapeTemp;
+    
+    Colors                          mColors;
+
     
     float                           mRadBasePair;
     int                             mAmountBasePair;

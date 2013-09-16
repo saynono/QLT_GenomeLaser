@@ -12,14 +12,17 @@
 void DataController::setup(DataManager* dm, int amount){
 	mDataManager = dm;
     mDataManager->sOnDataStructureChange.connect(  boost::bind( &DataController::onDataStructureChange, this ) );
-    
     GenomeData::ChromosomeDataSet cds = mDataManager->getChromosomeDataSet();
     
     for(int i=0;i<amount;i++){
         addCrawler(&cds);
     }
     
-    reset();
+//    tm d = *getdate(__DATE__);
+//    console() << "      ---> " << d.tm_hour << std::endl;
+    int chromosome = 0;
+    mDataManager->selectDataStructureById( chromosome );
+//    reset();
 
 }
 
@@ -31,7 +34,9 @@ void DataController::addCrawler(GenomeData::ChromosomeDataSet* cds){
     d.speed = 0;//Rand::randInt(1, 100);
     d.crawlerID = mDataCrawler.size();
     // only set the first one true
-    d.isActive = mDataCrawler.size() == 0;
+    // TODO
+//    d.isActive = mDataCrawler.size() == 0;
+    d.isActive = false;
     mDataCrawler.push_back(d);
 }
 
@@ -65,9 +70,9 @@ void DataController::resetCrawler(DataCrawler* crawler){
     crawler->pos = crawler->roiDataSet.startPosition;
     crawler->lastUpdate = getElapsedSeconds();
     crawler->length = Rand::randInt(60, 100);
-    crawler->speed = Rand::randInt(1,10);
+//    crawler->speed = Rand::randInt(5,10);
     // TODO: remove
-//    crawler->speed = 2;    
+    crawler->speed = 2;    
 }
 
 // ------------------------------------------------------------------------------------------------------------------

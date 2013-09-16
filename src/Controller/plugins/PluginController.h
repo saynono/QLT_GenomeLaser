@@ -20,6 +20,9 @@
 #include "SwirlPlugin.h"
 #include "ScannerPlugin.h"
 #include "PluginOSCController.h"
+#include "OoliganLogo.h"
+#include "PulsePlugin.h"
+#include "BarsPlugin.h"
 
 
 using namespace ci;

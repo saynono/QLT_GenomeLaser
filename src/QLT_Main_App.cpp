@@ -4,7 +4,7 @@
 
 #include "CinderIldaFrame.h"
 #include "CinderEtherdream.h"
-#include "CinderEasyLase.h"
+//#include "CinderEasyLase.h"
 
 
 #include "MainController.h"
@@ -62,7 +62,9 @@ void QLT_Main_App::setup()
     gl::disableDepthRead();
     gl::disableDepthWrite();
     gl::enableVerticalSync();
-        
+    
+//    mWindowManager.setFullscreen( true );
+    
 }
 
 
@@ -122,7 +124,7 @@ void QLT_Main_App::keyDown( KeyEvent event )
             mMainController.disableLaser();
             break;
         case 27:
-//            quit();
+            quit();
             break;
         case 282:
         case 283:

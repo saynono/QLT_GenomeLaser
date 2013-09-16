@@ -11,6 +11,7 @@
 #include "cinder/app/AppBasic.h"
 
 #include "BasePlugin.h"
+#include "Colors.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -51,6 +52,8 @@ private:
     ColorAf                         mColorDark;
     ColorAf                         mColorBright;
     float                           mCounter;
+    
+    Colors                          mColors;
 };
 
 

@@ -24,6 +24,7 @@ namespace GenomeData{
         int startPosition;
         int endPosition;
         int basePairsCount;
+        int positionTotal;
         ChromosomeDataSet chromosomeData;
     };
 

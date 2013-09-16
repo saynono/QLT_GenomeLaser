@@ -40,6 +40,7 @@ void WindowManager::setMainController( MainController* mc ){
     setDataController( mMainController->getDataController() );
     setIldaFrameRef( mMainController->getFrameRef() );
     pCrawlerPluginWindow->setMainController( mMainController );
+    mSettingsControl->setOutputOptions( mMainController );
 }
 
 void WindowManager::setViewManager( ViewManager* vm ){
@@ -338,6 +339,11 @@ void WindowManager::toggleFullscreen( Gwen::Controls::Base* b )
 {
     mFullScreen = !mFullScreen;
 }
+
+void WindowManager::setFullscreen( Boolean b ){
+    mFullScreen = b;
+}
+
 
 void WindowManager::zoomToPanel( Gwen::Event::Info info ){
     

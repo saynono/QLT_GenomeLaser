@@ -30,6 +30,7 @@
 #include "CinderLaserDac.h"
 #include "ColourCorrectionWindow.h"
 #include "LaserPreview3D.h"
+#include "MainController.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -49,6 +50,7 @@ public:
     void setIldaFrame(ciilda::Frame* frame);
 //    void setLaserController(ciilda::LaserController* controller);
     void setLaserPreview3d( LaserPreview3D* laserPreview3D );
+    void setOutputOptions( MainController* mc );
     
     void updateValues();
     
@@ -78,6 +80,7 @@ private:
     
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    MainController*                             mMainController;
     
     ciilda::Frame*                              mIldaFrame;
     ciilda::LaserController*                    mLaserController;

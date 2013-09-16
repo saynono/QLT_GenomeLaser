@@ -89,6 +89,8 @@ public:
     GenomeData::ROIDataSet getNextRoi( DataCrawler* dataCrawler );
     
     Buffer* getDataBuffer();
+    float getMainSpeed();
+    void setMainSpeed( float s );
     
     void updateDataCrawler( DataCrawler* dataCrawler );
     
@@ -97,6 +99,8 @@ public:
     
     boost::signals2::signal<void(void)> sOnDataStructureChange;
     boost::signals2::signal<void(void)> sOnRoiChange;
+
+    float                               mMainSpeed;
 
     
 private:
@@ -112,7 +116,7 @@ private:
     map<int, GenomeData::ROIDataSet>    mRoiIdMap;
     vector<GenomeDataStructure>         mDataStructure;
     map<int,int>                        mRoiMapVisited;
-
+    int                                 mBasePairCount;
     
 };
 

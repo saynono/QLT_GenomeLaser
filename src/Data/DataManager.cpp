@@ -14,7 +14,9 @@
 void DataManager::setup(){
     
     loadDataFile( "QLT_Genome_Data.xml" );
-    selectDataStructureById( 4 );
+//    selectDataStructureById( 4 );
+    mMainSpeed = 1;
+    mBasePairCount = 0;
     
 }
 
@@ -126,6 +128,10 @@ void DataManager::generateChromosomeMap(Buffer* b){
     
     int cnt = 0;
     int lineStart = 0;
+    
+    mRoiMap.clear();
+    mRoiIdMap.clear();
+
 //    char d;
 //    string line;
     while(cnt<size){
@@ -139,7 +145,7 @@ void DataManager::generateChromosomeMap(Buffer* b){
     
 //  ROIDataSet
     
-    console() << "DataManager::generateChromosomeMap : done"<< std::endl;
+    console() << "DataManager::generateChromosomeMap : done. Basepairs count : " << mBasePairCount << std::endl;
     
 }
 
@@ -151,6 +157,7 @@ void DataManager::addRoi(char* datas, int len){
     vector<string> tokens;
     boost::split(tokens,line,boost::is_any_of(","));
 
+    int positionTotal = stoi(tokens[2]);
     int pairs = stoi(tokens[1]);
     int start = stoi(tokens[0]);
     int end = start+pairs;
@@ -160,10 +167,12 @@ void DataManager::addRoi(char* datas, int len){
     roi.basePairsCount = pairs;
     roi.startPosition = start;
     roi.endPosition = end;
+    roi.positionTotal = positionTotal;
     roi.roiId = mRoiMap.size();
-    roi.roiDescription = "ROI Element ID_" + toString(roi.roiId);
+    roi.roiDescription = "ROI Element ID_" + toString(roi.roiId) + " " + toString(roi.positionTotal);
     mRoiMap.push_back(roi);
     mRoiIdMap[roi.roiId] = roi;
+    mBasePairCount += pairs;
 }
 
 GenomeData::ROIDataSet DataManager::getNextRoi( DataCrawler* dataCrawler ){
@@ -200,26 +209,36 @@ Buffer* DataManager::getDataBuffer(){
     return &mDataBuffer;
 }
 
+float DataManager::getMainSpeed(){
+    return mMainSpeed;
+}
+
+void DataManager::setMainSpeed( float s ){
+    mMainSpeed = s;
+}
+
 
 // ------------------------------------------------------------------------------------------------------------------------
 
 
 void DataManager::updateDataCrawler( DataCrawler* dataCrawler ){
-    
+        
     if(dataCrawler->length == 0) return;
     
     double time = getElapsedSeconds();
     double diff = time - dataCrawler->lastUpdate;
 
-    float pos = dataCrawler->roiDataSet.startPosition + (diff * (float)dataCrawler->speed);
+    float pos = dataCrawler->roiDataSet.startPosition + (diff * (float)dataCrawler->speed*mMainSpeed);
+//    console() << "DataManager::updateDataCrawler!  pos "  h<< pos << " diff:" << diff << std::endl;
     dataCrawler->pos = pos;
     if( dataCrawler->roiDataSet.endPosition <= pos ){
         dataCrawler->roiDataSet = getNextRoi(dataCrawler);
         dataCrawler->roiDataSetID = dataCrawler->roiDataSet.roiId;
         dataCrawler->lastUpdate = getElapsedSeconds();
         dataCrawler->pos = dataCrawler->roiDataSet.startPosition;
-        dataCrawler->speed = pow(Rand::randInt(1,3),2);
+        dataCrawler->speed = 2;//pow(Rand::randInt(1,4),2);
         sOnRoiChange();
+        console() << "DataManager::updateDataCrawler::resetCrawler " << std::endl;
     }
 //    int len = dataCrawler->length;
     int len = dataCrawler->roiDataSet.basePairsCount;

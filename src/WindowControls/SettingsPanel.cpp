@@ -77,6 +77,22 @@ void SettingsPanel::update(){
     }
 }
 
+void SettingsPanel::setOutputOptions(MainController* mc){
+    
+    mMainController = mc;
+    
+    Gwen::Controls::Base* pSlider;
+    Gwen::Controls::Base* pCheckBox;
+    Gwen::Controls::Base* pLabel;
+    
+    
+//    pLabel = addProperty(mLaserCat, getBounds(mLaserCatElements), "Main speed", mMainController->getDataManager()->getMainSpeed());
+//    mLaserCatElements.push_back(pLabel);
+    pSlider = addSlider(mLaserCat, getBounds(mLaserCatElements), "Main speed", mMainController->getDataManager()->getMainSpeed()*100, 50, 1000 );
+    mLaserCatElements.push_back(pSlider);
+    
+}
+
 void SettingsPanel::setIldaFrame(ciilda::Frame* frame){
     mIldaFrame = frame;
     
@@ -338,8 +354,11 @@ void SettingsPanel::onSliderLaserOutput( Gwen::Controls::Base* pControl ){
     }
     else if(controlName.compare("Fans Intensity") == 0){
         mLaserPreview3D->paramsView.fansIntensity = ( float ) pSlider->GetFloatValue() / 100.0;
-        
     }
+    else if(controlName.compare("Main speed") == 0){
+        mMainController->getDataManager()->setMainSpeed( ( float ) ((int)pSlider->GetFloatValue())/100.0 );
+    }
+    
     
 }
 
